@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-width=1.0">
+	<title layout:title-pattern="$CONTENT_TITLE - AssignHub">AssignHub</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<script th:src="@{/js/common.js}" defer></script>
+</head>
+
+<body>
+	<div class="sidebar">
+		<h1>AssignHub</h1>
+		<ul>
+			<li><a th:href="@{/employees}">👥 社員情報管理</a></li>
+			<li><a th:href="@{/companies}">🏢 企業情報管理</a></li>
+		</ul>
+	</div>
+
+	<div class="main-content">
+		<div layout:fragment="content"></div>
+	</div>
+
+	<div id="toast" class="toast" th:if="${toastMessage != null or toastError != null}"
+		th:classappend="${toastError != null} ? 'toast-error' : ''">
+		<span th:text="${toastMessage != null ? toastMessage : toastError}"></span>
+	</div>
+</body>
+
+</html>

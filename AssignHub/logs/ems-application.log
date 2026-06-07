@@ -1,0 +1,12 @@
+2026-05-31T16:42:23.355+09:00  INFO 12948 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.10 with PID 12948 (C:\pleiades\2023-12\workspace\AssignHub\target\classes started by User in C:\pleiades\2023-12\workspace\AssignHub)
+2026-05-31T16:42:23.355+09:00  INFO 12948 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-05-31T16:42:23.441+09:00  INFO 12948 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-05-31T16:42:23.442+09:00  INFO 12948 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-31T16:42:23.443+09:00  INFO 12948 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-31T16:42:23.452+09:00  INFO 12948 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 96 ms
+2026-05-31T16:42:23.520+09:00  INFO 12948 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-05-31T16:42:23.521+09:00  INFO 12948 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.198 seconds (process running for 634.292)
+2026-05-31T16:42:23.522+09:00  INFO 12948 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-05-31T16:42:30.082+09:00  INFO 12948 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-05-31T16:42:30.084+09:00  INFO 12948 --- [Thread-21] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-05-31T16:42:30.108+09:00  INFO 12948 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
