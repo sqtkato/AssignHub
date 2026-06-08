@@ -17,10 +17,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // ==========================================
     // 2. データテーブルの行選択・一括操作制御
     // ==========================================
-    const selectAll = document.getElementById('selectAll');
-    const rowCheckboxes = document.querySelectorAll('.row-checkbox');
-    const btnBulkDelete = document.getElementById('btnBulkDelete');
     const clickableRows = document.querySelectorAll('.clickable-row');
+	const selectAll = document.querySelector('.select-all');
+	const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+	const btnBulkDelete = document.querySelector('.bulk-delete-btn');
 
     // 一括操作ボタンの活性/非活性を切り替え
     function updateBulkActionButton() {
