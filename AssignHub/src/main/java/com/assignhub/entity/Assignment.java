@@ -45,5 +45,5 @@ public class Assignment {
     private String companyName;
     
     /** 役割名（表示用） */
-    private String roleName;
+    private String role;
 }
