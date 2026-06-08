@@ -1480,3 +1480,313 @@ org.thymeleaf.exceptions.TemplateInputException: Error resolving template [assig
 2026-06-08T15:21:25.196+09:00 DEBUG 9512 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
 2026-06-08T15:21:25.198+09:00 DEBUG 9512 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
 2026-06-08T15:21:25.202+09:00 DEBUG 9512 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:55:49.502+09:00 DEBUG 9512 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:55:49.502+09:00 DEBUG 9512 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:55:49.519+09:00 DEBUG 9512 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:56:21.516+09:00  INFO 9512 --- [RMI TCP Connection(65)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-08T15:56:21.527+09:00  INFO 9512 --- [RMI TCP Connection(65)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-08T15:56:21.739+09:00  INFO 9512 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-08T15:56:21.755+09:00  INFO 9512 --- [RMI TCP Connection(65)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-08T15:56:21.757+09:00  INFO 9512 --- [RMI TCP Connection(65)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-08T15:56:24.801+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 19380 (C:\Users\alath\git\AssignHub\AssignHub\target\classes started by alath in C:\Users\alath\git\AssignHub\AssignHub)
+2026-06-08T15:56:24.807+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-08T15:56:25.012+09:00  INFO 19380 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-08T15:56:25.012+09:00  INFO 19380 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-08T15:56:25.754+09:00  INFO 19380 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-08T15:56:25.765+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-08T15:56:25.765+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-08T15:56:25.798+09:00  INFO 19380 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 786 ms
+2026-06-08T15:56:26.455+09:00  INFO 19380 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-08T15:56:26.462+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 2.007 seconds (process running for 2.703)
+2026-06-08T15:56:28.816+09:00  INFO 19380 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-08T15:56:28.817+09:00  INFO 19380 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-08T15:56:28.818+09:00  INFO 19380 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-08T15:56:28.918+09:00  INFO 19380 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-08T15:56:29.168+09:00  INFO 19380 --- [http-nio-8080-exec-2] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6ab3c3ea
+2026-06-08T15:56:29.184+09:00  INFO 19380 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-08T15:56:29.192+09:00 DEBUG 19380 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:56:29.240+09:00 DEBUG 19380 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:56:29.280+09:00 DEBUG 19380 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:56:34.554+09:00 DEBUG 19380 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:56:34.554+09:00 DEBUG 19380 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:56:34.559+09:00 DEBUG 19380 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:56:37.594+09:00 DEBUG 19380 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:56:37.594+09:00 DEBUG 19380 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:56:37.602+09:00 DEBUG 19380 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:56:39.279+09:00 DEBUG 19380 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:56:39.279+09:00 DEBUG 19380 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:56:39.290+09:00 DEBUG 19380 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:57:25.889+09:00 DEBUG 19380 --- [http-nio-8080-exec-8] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:57:25.889+09:00 DEBUG 19380 --- [http-nio-8080-exec-8] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:57:25.901+09:00 DEBUG 19380 --- [http-nio-8080-exec-8] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:57:27.258+09:00 DEBUG 19380 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:57:27.258+09:00 DEBUG 19380 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:57:27.264+09:00 DEBUG 19380 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:57:28.391+09:00 DEBUG 19380 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:57:28.392+09:00 DEBUG 19380 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:57:28.396+09:00 DEBUG 19380 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:57:29.467+09:00 DEBUG 19380 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:57:29.467+09:00 DEBUG 19380 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:57:29.473+09:00 DEBUG 19380 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:57:33.502+09:00 DEBUG 19380 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:57:33.502+09:00 DEBUG 19380 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:57:33.509+09:00 DEBUG 19380 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:57:34.343+09:00 DEBUG 19380 --- [http-nio-8080-exec-8] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:57:34.344+09:00 DEBUG 19380 --- [http-nio-8080-exec-8] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:57:34.348+09:00 DEBUG 19380 --- [http-nio-8080-exec-8] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:57:34.915+09:00 DEBUG 19380 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:57:34.915+09:00 DEBUG 19380 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:57:34.918+09:00 DEBUG 19380 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:57:35.307+09:00 DEBUG 19380 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:57:35.307+09:00 DEBUG 19380 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:57:35.311+09:00 DEBUG 19380 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:57:35.684+09:00 DEBUG 19380 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:57:35.684+09:00 DEBUG 19380 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:57:35.684+09:00 DEBUG 19380 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:57:36.072+09:00 DEBUG 19380 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:57:36.079+09:00 DEBUG 19380 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:57:36.079+09:00 DEBUG 19380 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T15:57:37.832+09:00 DEBUG 19380 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T15:57:37.833+09:00 DEBUG 19380 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T15:57:37.836+09:00 DEBUG 19380 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T16:02:13.738+09:00  INFO 19380 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-08T16:02:13.744+09:00  INFO 19380 --- [Thread-1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-08T16:02:14.012+09:00  INFO 19380 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-08T16:02:14.018+09:00  INFO 19380 --- [Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-08T16:02:14.025+09:00  INFO 19380 --- [Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-08T16:02:14.099+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 19380 (C:\Users\alath\git\AssignHub\AssignHub\target\classes started by alath in C:\Users\alath\git\AssignHub\AssignHub)
+2026-06-08T16:02:14.100+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-08T16:02:14.319+09:00  INFO 19380 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-08T16:02:14.320+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-08T16:02:14.321+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-08T16:02:14.338+09:00  INFO 19380 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 233 ms
+2026-06-08T16:02:14.503+09:00  INFO 19380 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-08T16:02:14.507+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.433 seconds (process running for 350.747)
+2026-06-08T16:02:14.509+09:00  INFO 19380 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-08T16:16:50.781+09:00  INFO 19380 --- [http-nio-8080-exec-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-08T16:16:50.781+09:00  INFO 19380 --- [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-08T16:16:50.781+09:00  INFO 19380 --- [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-06-08T16:16:50.799+09:00  INFO 19380 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-06-08T16:16:50.820+09:00  INFO 19380 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@70dbfea9
+2026-06-08T16:16:50.820+09:00  INFO 19380 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-06-08T16:16:50.820+09:00 DEBUG 19380 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T16:16:50.822+09:00 DEBUG 19380 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T16:16:50.826+09:00 DEBUG 19380 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T16:16:50.993+09:00 DEBUG 19380 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T16:16:50.993+09:00 DEBUG 19380 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T16:16:50.996+09:00 DEBUG 19380 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T16:16:51.178+09:00 DEBUG 19380 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T16:16:51.178+09:00 DEBUG 19380 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T16:16:51.182+09:00 DEBUG 19380 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T16:16:51.386+09:00 DEBUG 19380 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T16:16:51.388+09:00 DEBUG 19380 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T16:16:51.396+09:00 DEBUG 19380 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T16:16:51.809+09:00 DEBUG 19380 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-08T16:16:51.809+09:00 DEBUG 19380 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-08T16:16:51.814+09:00 DEBUG 19380 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-08T16:17:42.032+09:00  INFO 19380 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-08T16:17:42.033+09:00  INFO 19380 --- [Thread-5] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-08T16:17:42.291+09:00  INFO 19380 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-08T16:17:42.293+09:00  INFO 19380 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-06-08T16:17:42.295+09:00  INFO 19380 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-06-08T16:17:42.360+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 19380 (C:\Users\alath\git\AssignHub\AssignHub\target\classes started by alath in C:\Users\alath\git\AssignHub\AssignHub)
+2026-06-08T16:17:42.360+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-08T16:17:42.525+09:00  INFO 19380 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-08T16:17:42.526+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-08T16:17:42.526+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-08T16:17:42.543+09:00  INFO 19380 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 178 ms
+2026-06-08T16:17:42.641+09:00  WARN 19380 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/webmvc/autoconfigure/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Ambiguous mapping. Cannot map 'assignmentController' method 
+com.assignhub.controller.AssignmentController#exportPage()
+to {GET [/assignments/export]}: There is already 'assignmentController' bean method
+com.assignhub.controller.AssignmentController#showExport(String, Integer, Model) mapped.
+2026-06-08T16:17:42.642+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-08T16:17:42.646+09:00  INFO 19380 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-08T16:17:42.671+09:00 ERROR 19380 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/webmvc/autoconfigure/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Ambiguous mapping. Cannot map 'assignmentController' method 
+com.assignhub.controller.AssignmentController#exportPage()
+to {GET [/assignments/export]}: There is already 'assignmentController' bean method
+com.assignhub.controller.AssignmentController#showExport(String, Integer, Model) mapped.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'assignmentController' method 
+com.assignhub.controller.AssignmentController#exportPage()
+to {GET [/assignments/export]}: There is already 'assignmentController' bean method
+com.assignhub.controller.AssignmentController#showExport(String, Integer, Model) mapped.
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.validateMethodMapping(AbstractHandlerMethodMapping.java:646) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.register(AbstractHandlerMethodMapping.java:606) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.registerHandlerMethod(AbstractHandlerMethodMapping.java:327) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.registerHandlerMethod(RequestMappingHandlerMapping.java:459) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.registerHandlerMethod(RequestMappingHandlerMapping.java:80) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lambda$detectHandlerMethods$1(AbstractHandlerMethodMapping.java:294) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:721) ~[na:na]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.detectHandlerMethods(AbstractHandlerMethodMapping.java:292) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.processCandidateBean(AbstractHandlerMethodMapping.java:261) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.initHandlerMethods(AbstractHandlerMethodMapping.java:220) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.afterPropertiesSet(AbstractHandlerMethodMapping.java:208) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.afterPropertiesSet(RequestMappingHandlerMapping.java:158) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1864) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1813) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 23 common frames omitted
+
+2026-06-08T16:18:19.128+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 19380 (C:\Users\alath\git\AssignHub\AssignHub\target\classes started by alath in C:\Users\alath\git\AssignHub\AssignHub)
+2026-06-08T16:18:19.128+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-08T16:18:19.430+09:00  INFO 19380 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-08T16:18:19.434+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-08T16:18:19.434+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-08T16:18:19.464+09:00  INFO 19380 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 333 ms
+2026-06-08T16:18:19.640+09:00  WARN 19380 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/webmvc/autoconfigure/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Ambiguous mapping. Cannot map 'assignmentController' method 
+com.assignhub.controller.AssignmentController#exportPage()
+to {GET [/assignments/export]}: There is already 'assignmentController' bean method
+com.assignhub.controller.AssignmentController#showExport(String, Integer, Model) mapped.
+2026-06-08T16:18:19.641+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-08T16:18:19.646+09:00  INFO 19380 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-08T16:18:19.649+09:00 ERROR 19380 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/webmvc/autoconfigure/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Ambiguous mapping. Cannot map 'assignmentController' method 
+com.assignhub.controller.AssignmentController#exportPage()
+to {GET [/assignments/export]}: There is already 'assignmentController' bean method
+com.assignhub.controller.AssignmentController#showExport(String, Integer, Model) mapped.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'assignmentController' method 
+com.assignhub.controller.AssignmentController#exportPage()
+to {GET [/assignments/export]}: There is already 'assignmentController' bean method
+com.assignhub.controller.AssignmentController#showExport(String, Integer, Model) mapped.
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.validateMethodMapping(AbstractHandlerMethodMapping.java:646) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.register(AbstractHandlerMethodMapping.java:606) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.registerHandlerMethod(AbstractHandlerMethodMapping.java:327) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.registerHandlerMethod(RequestMappingHandlerMapping.java:459) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.registerHandlerMethod(RequestMappingHandlerMapping.java:80) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lambda$detectHandlerMethods$1(AbstractHandlerMethodMapping.java:294) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:721) ~[na:na]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.detectHandlerMethods(AbstractHandlerMethodMapping.java:292) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.processCandidateBean(AbstractHandlerMethodMapping.java:261) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.initHandlerMethods(AbstractHandlerMethodMapping.java:220) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.afterPropertiesSet(AbstractHandlerMethodMapping.java:208) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.afterPropertiesSet(RequestMappingHandlerMapping.java:158) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1864) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1813) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 23 common frames omitted
+
+2026-06-08T16:19:00.220+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 19380 (C:\Users\alath\git\AssignHub\AssignHub\target\classes started by alath in C:\Users\alath\git\AssignHub\AssignHub)
+2026-06-08T16:19:00.221+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-08T16:19:00.418+09:00  INFO 19380 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-08T16:19:00.420+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-08T16:19:00.420+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-08T16:19:00.442+09:00  INFO 19380 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 219 ms
+2026-06-08T16:19:00.566+09:00  WARN 19380 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/webmvc/autoconfigure/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Ambiguous mapping. Cannot map 'assignmentController' method 
+com.assignhub.controller.AssignmentController#exportPage()
+to {GET [/assignments/export]}: There is already 'assignmentController' bean method
+com.assignhub.controller.AssignmentController#showExport(String, String, String, String, Model) mapped.
+2026-06-08T16:19:00.567+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-08T16:19:00.571+09:00  INFO 19380 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-08T16:19:00.573+09:00 ERROR 19380 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/webmvc/autoconfigure/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Ambiguous mapping. Cannot map 'assignmentController' method 
+com.assignhub.controller.AssignmentController#exportPage()
+to {GET [/assignments/export]}: There is already 'assignmentController' bean method
+com.assignhub.controller.AssignmentController#showExport(String, String, String, String, Model) mapped.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'assignmentController' method 
+com.assignhub.controller.AssignmentController#exportPage()
+to {GET [/assignments/export]}: There is already 'assignmentController' bean method
+com.assignhub.controller.AssignmentController#showExport(String, String, String, String, Model) mapped.
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.validateMethodMapping(AbstractHandlerMethodMapping.java:646) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.register(AbstractHandlerMethodMapping.java:606) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.registerHandlerMethod(AbstractHandlerMethodMapping.java:327) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.registerHandlerMethod(RequestMappingHandlerMapping.java:459) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.registerHandlerMethod(RequestMappingHandlerMapping.java:80) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lambda$detectHandlerMethods$1(AbstractHandlerMethodMapping.java:294) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:721) ~[na:na]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.detectHandlerMethods(AbstractHandlerMethodMapping.java:292) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.processCandidateBean(AbstractHandlerMethodMapping.java:261) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.initHandlerMethods(AbstractHandlerMethodMapping.java:220) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.afterPropertiesSet(AbstractHandlerMethodMapping.java:208) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.afterPropertiesSet(RequestMappingHandlerMapping.java:158) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1864) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1813) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 23 common frames omitted
+
+2026-06-08T16:19:26.814+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 19380 (C:\Users\alath\git\AssignHub\AssignHub\target\classes started by alath in C:\Users\alath\git\AssignHub\AssignHub)
+2026-06-08T16:19:26.814+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-08T16:19:26.953+09:00  INFO 19380 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-08T16:19:26.953+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-08T16:19:26.953+09:00  INFO 19380 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-08T16:19:26.967+09:00  INFO 19380 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 151 ms
+2026-06-08T16:19:27.131+09:00  INFO 19380 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-08T16:19:27.134+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.34 seconds (process running for 1383.374)
+2026-06-08T16:19:27.135+09:00  INFO 19380 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged

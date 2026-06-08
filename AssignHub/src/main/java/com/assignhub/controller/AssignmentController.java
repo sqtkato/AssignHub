@@ -266,7 +266,7 @@ public class AssignmentController {
 	        );
 	        return "redirect:/assignments";
 	    }
-
+	    
 	    return "redirect:/assignments";
 	}
 	
