@@ -67,4 +67,53 @@ public class AccountController {
 		return "redirect:/accounts";
 
 	}
+//	   /**
+//     * 社員データのエクスポート画面を表示する。
+//     *
+//     * @param keyword     現在の検索キーワード（状態保持用）
+//     * @param deptId 現在の絞り込み部署ID
+//     * @param model  画面描画用のモデル
+//     * @return エクスポート画面のテンプレートパス
+//     */
+//    @GetMapping("/export")
+//    public String showExport(@RequestParam(name = "keyword", required = false) String keyword,
+//            HttpServletRequest request,HttpServletResponse response, Model model) {
+//        String value = request.getParameter("pref");
+//        model.addAttribute("count", accountService.findAll(keyword, deptId, "emp_id", "asc").size());
+//        model.addAttribute("keyword", keyword);
+//        model.addAttribute("deptId", deptId);
+//        return "account/export";
+//    }
+//    /**
+//     * 検索条件に合致する社員データをCSV形式でダウンロードする。
+//     *
+//     * @param keyword 検索キーワード
+//     * @param deptId  絞り込み部署ID
+//     * @return ダウンロード用のCSVファイルバイナリデータ
+//     */
+//    @GetMapping("/export/download")
+//    public ResponseEntity<byte[]> downloadCsv(
+//            @RequestParam(name = "keyword", required = false) String keyword,
+//            @RequestParam(name = "deptId", required = false) Integer deptId) {
+//        List<Account> accounts = accountService.findAll(keyword, deptId, "emp_id", "asc");
+//        StringBuilder csvBuilder = new StringBuilder("ID,社員名,部署ID,入社年,郵便番号,住所,メールアドレス\n");
+//        for (Account acc : accounts) {
+//            csvBuilder.append(acc.getAccountId()).append(",")
+//                    .append(acc.getLoginId()).append(",")
+//                    .append(acc.getPermission()).append(",")
+//                    .append(acc.getDeleteFlg()).append(",")
+//                    .append(acc.getCreatedAt()).append(",")// != null ? emp.getPostalCode() : "").append(",")
+//                    .append(acc.getUpdatedAt()).append("\n");
+//        }
+//        byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
+//        byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+//        byte[] result = new byte[bom.length + csvBytes.length];
+//        System.arraycopy(bom, 0, result, 0, bom.length);
+//        System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("Content-Disposition", "attachment; filename=employees.csv");
+//        headers.add("Content-Type", "text/csv; charset=UTF-8");
+//        return new ResponseEntity<>(result, headers, HttpStatus.OK);
+//    }
+
 }
