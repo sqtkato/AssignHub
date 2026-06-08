@@ -46,4 +46,6 @@ public class Assignment {
 
     /** 更新日時 */
     private LocalDateTime updatedAt;
+
+    private String role;
 }
