@@ -85,6 +85,30 @@ public interface AssignmentMapper {
 	);
 	
 	/**
+	 * 指定した社員IDが有効な社員として存在するか確認する。
+	 *
+	 * @param empId 社員ID
+	 * @return 存在すれば1以上、存在しなければ0
+	 */
+	int existsEmployee(@Param("empId") Integer empId);
+
+	/**
+	 * 指定した企業IDが有効な企業として存在するか確認する。
+	 *
+	 * @param companyId 企業ID
+	 * @return 存在すれば1以上、存在しなければ0
+	 */
+	int existsCompany(@Param("companyId") Integer companyId);
+
+	/**
+	 * 指定した役割IDが役割マスタに存在するか確認する。
+	 *
+	 * @param roleId 役割ID
+	 * @return 存在すれば1以上、存在しなければ0
+	 */
+	int existsRole(@Param("roleId") Integer roleId);
+	
+	/**
 	 * アサイン情報の総件数を取得する。
 	 * @return アサイン情報の総件数
 	 */
