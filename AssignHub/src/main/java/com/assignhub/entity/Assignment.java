@@ -17,12 +17,6 @@ public class Assignment {
     /** 会社ID（外部キー） */
     private Integer companyId;
 
-    /** 作成日時 */
-    private LocalDateTime createdAt;
-
-    /** 更新日時 */
-    private LocalDateTime updatedAt;
-
     /** 契約開始日 */
     private LocalDate contractStartDate;
 
@@ -45,5 +39,13 @@ public class Assignment {
     private String companyName;
     
     /** 役割名（表示用） */
+    private String roleName;
+    
+    /** 作成日時 */
+    private LocalDateTime createdAt;
+
+    /** 更新日時 */
+    private LocalDateTime updatedAt;
+
     private String role;
 }
