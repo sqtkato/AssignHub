@@ -462,3 +462,71 @@ a:hover {
 	display: flex;
 	gap: 10px;
 }
+
+/* =========================================
+   アカウント
+========================================= */
+/* アカウントID (10%) */
+.table th.acc_id,
+.table td.acc_id {
+	width: 14%;
+}
+
+/* ログインID (25%) ※もし30文字近くなってもここで自動改行されます */
+.table th.acc_logId,
+.table td.acc_logId {
+	width: 25%;
+}
+
+/* 権限 (15%) */
+.table th.acc_per,
+.table td.acc_per {
+	width: 11%;
+}
+
+/* 社員名 (35%) ※文字数が増えやすいので広めに確保 */
+/* HTML側で <th> や <td> に class="acc_name" をつけるか、未指定の列として自動分配させます */
+.table th.acc_name,
+.table td.acc_name {
+	width: 35%;
+}
+
+/* 操作ボタン (15%) ※編集・削除ボタンが横並びで収まる幅 */
+.table th.col-action,
+.table td.col-action {
+	width: 15%;
+	text-align: center;
+}
+
+
+/* =========================================
+   検索バーの50%:50%横並び調整
+========================================= */
+/* 検索フォーム全体の枠 */
+.search-form {
+	display: flex;
+	align-items: flex-end; /* ボタンを下揃えにする */
+	gap: 15px;             /* フォームと検索ボタンの間のすき間 */
+	width: 100%;
+}
+
+/* 2つの検索条件を包むグループ */
+.search-form .form-group-search {
+	display: flex;
+	flex: 1;               /* 検索ボタン以外の残りの幅をすべて使う */
+	gap: 20px;             /* キーワード検索と権限の間のすき間 */
+	margin-bottom: 0;      /* 横並びにするため下マージンをリセット */
+}
+
+/* 「キーワード検索」と「権限」それぞれのブロック（ここを50%ずつにする） */
+.search-form .form-group-search .search-item {
+	flex: 1;               /* 均等（50%ずつ）に引き伸ばす */
+	display: flex;
+	flex-direction: column; /* ラベルと入力を上下に並べる */
+}
+
+/* 検索ボタンが上に浮かないように高さをフォームに合わせる */
+.search-form .btn {
+	height: 38px;          /* inputやselectの高さ（パディング込み）に合わせる */
+	box-sizing: border-box;
+}
