@@ -19,6 +19,8 @@ public class Account {
 	/** ログインID */
 	private String loginId;
 	
+	private String passwordHash;
+	
 	/** 権限 */
 	private String permission;
 	
