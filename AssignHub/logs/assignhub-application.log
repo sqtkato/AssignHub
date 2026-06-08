@@ -1790,3 +1790,6 @@ com.assignhub.controller.AssignmentController#showExport(String, String, String,
 2026-06-08T16:19:27.131+09:00  INFO 19380 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
 2026-06-08T16:19:27.134+09:00  INFO 19380 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.34 seconds (process running for 1383.374)
 2026-06-08T16:19:27.135+09:00  INFO 19380 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-08T16:21:40.909+09:00  INFO 19380 --- [RMI TCP Connection(40)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-08T16:21:40.910+09:00  INFO 19380 --- [RMI TCP Connection(40)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-08T16:21:41.232+09:00  INFO 19380 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
