@@ -25,4 +25,6 @@ public  interface AccountMapper {
 	 */
 	List<Account> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
 
+
+void save(Account account);
 }

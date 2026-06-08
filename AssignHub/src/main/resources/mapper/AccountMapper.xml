@@ -2,18 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.assignhub.mapper.AccountMapper">
 
-	<resultMap id="accountResultMap"
-		type="com.assignhub.entity.Account">
-		<id property="accountId" column="account_id" />
-		<result property="loginId" column="login_id" />
-		<result property="permission" column="permission" />
-		<result property="empName" column="emp_name" />
-	</resultMap>
+	<resultMap id="accountResultMap" type="com.assignhub.entity.Account">
+    <id property="accountId" column="account_id" />
+    <result property="loginId" column="login_id" />
+    <result property="permission" column="permission" />
+    <result property="empName" column="emp_name" />
+    <result property="passwordHash" column="password_hash" />
+</resultMap>
 	
 	<select id="findAll" resultMap="accountResultMap">
 		SELECT a.*, e.emp_name
 		FROM m_account a 
-		INNER JOIN m_employee e ON a.account_id = e.emp_id
+		left JOIN m_employee e ON a.account_id = e.emp_id
 		
 		<if test="keyword != null and keyword != ''">
 			<where>
@@ -22,5 +22,9 @@
 		</if>
 		ORDER BY ${sort} ${order}
 	</select>
+	<insert id="save" parameterType="com.assignhub.entity.Account">
+    INSERT INTO m_account (login_id, password_hash, permission, delete_flg)
+    VALUES (#{loginId}, #{passwordHash}, #{permission}, 0)
+</insert>
 	
 </mapper>

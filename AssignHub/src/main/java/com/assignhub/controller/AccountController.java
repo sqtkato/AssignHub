@@ -3,9 +3,12 @@ package com.assignhub.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.assignhub.entity.Account;
 import com.assignhub.service.AccountService;
 
 /**
@@ -17,9 +20,9 @@ import com.assignhub.service.AccountService;
 @Controller
 @RequestMapping("/accounts")
 public class AccountController {
-	
+
 	private final AccountService accountService;
-	
+
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
@@ -46,9 +49,22 @@ public class AccountController {
 		model.addAttribute("keyward", keyword);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
-		return"account/index";
+		return "account/index";
+	}
+
+	@GetMapping("/new")
+	public String newAccount(Model model) {
+	    // 【重要】ここで「account」という名前で空のオブジェクトを渡す！
+	    model.addAttribute("account", new Account());
+	    return "account/new"; // ここがHTMLのファイル名と一致しているか
+	}
+
+	@PostMapping("/create")
+	public String create(@ModelAttribute Account account) {
+
+		accountService.save(account);
+
+		return "redirect:/accounts";
+
+	}
 }
-
-
-}
-

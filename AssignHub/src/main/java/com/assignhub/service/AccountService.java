@@ -20,7 +20,7 @@ public class AccountService {
 	public AccountService(AccountMapper accountMapper) {
 		this.accountMapper = accountMapper;
 	}
-	
+
 	/**
 	 * 検索条件およびソート条件に合致する企業情報を全件取得する。
 	 *
@@ -33,4 +33,9 @@ public class AccountService {
 		return accountMapper.findAll(keyword, sort, order);
 	}
 
+	public void save(Account account) {
+		// マッパー経由でDBのINSERT/UPDATE処理を呼び出す
+		accountMapper.save(account);
+
+	}
 }
