@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>社員情報詳細</title>
+</head>
+
+<body>
+
+	<h1>社員情報詳細</h1>
+
+	<table>
+		<table>
+			<tr>
+				<th>作成日時</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>更新日時</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>社員ID</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>社員姓</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>社員名</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>社員姓カナ</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>社員名カナ</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>生年月日</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>入社年月</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>勤続年数</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>郵便番号</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>住所1</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>住所2</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>電話番号</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>メールアドレス</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>エンジニアタイプ</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>所属企業</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>所属部署</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>役職</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>ログインID</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>アサイン先企業</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>契約開始日</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>契約終了日</th>
+				<td></td>
+			</tr>
+			<tr>
+				<th>契約単価</th>
+				<td></td>
+			</tr>
+		</table>
+		<form th:action="@{/employees/{id}/delete(id=${emp.empId})}" method="post" style="display:inline;">
+		    <button type="submit" onclick="return confirm('本当に削除しますか？');">削除</button>
+		</form>
+
+		<form th:action="@{/employees/update}" method="post" style="display:inline;">
+		    <input type="hidden" name="empId" th:value="${emp.empId}">
+		    <button type="submit">更新</button>
+		</form>
+
+		<a th:href="@{/employees}">戻る</a>
+		
+</body>
+
+</html>
