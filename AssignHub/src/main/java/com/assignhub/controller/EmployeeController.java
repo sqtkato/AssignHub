@@ -90,6 +90,16 @@ public class EmployeeController {
 		attributes.addFlashAttribute("toastMessage", "社員情報を登録しました");
 		return "redirect:/employees";
 	}
+	
+	/**
+	 * 社員データのインポート画面を表示する。
+	 *
+	 * @return インポート画面のテンプレートパス
+	 */
+	@GetMapping("/import")
+	public String showImport() {
+		return "employee/import";
+	}
 
 	/**
 	 * フォームオブジェクトからエンティティオブジェクトへ値の詰め替えを行う。
