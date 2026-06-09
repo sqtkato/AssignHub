@@ -244,7 +244,7 @@ public class AssignmentController {
 	 * @param attributes リダイレクト属性オブジェクト
 	 * @return アサイン情報の一覧画面にリダイレクト
 	 */
-	@GetMapping("/export")
+	@PostMapping("/export")
 	public String export(
 			@RequestParam(name = "ids", required = false) List<Integer> ids,Model model) {
 			model.addAttribute("ids", ids);

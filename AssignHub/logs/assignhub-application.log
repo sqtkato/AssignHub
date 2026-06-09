@@ -590,3 +590,41 @@ org.springframework.web.HttpRequestMethodNotSupportedException: Request method '
 	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
 
 2026-06-09T10:21:11.654+09:00  WARN 22660 --- [http-nio-8080-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-06-09T10:26:04.765+09:00  INFO 22660 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-09T10:26:04.772+09:00  INFO 22660 --- [Thread-1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T10:26:05.077+09:00  INFO 22660 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T10:26:05.084+09:00  INFO 22660 --- [Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-09T10:26:05.089+09:00  INFO 22660 --- [Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-09T10:26:05.178+09:00  INFO 22660 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 22660 (C:\Users\alath\git\AssignHub\AssignHub\target\classes started by alath in C:\Users\alath\git\AssignHub\AssignHub)
+2026-06-09T10:26:05.178+09:00  INFO 22660 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T10:26:05.394+09:00  INFO 22660 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T10:26:05.395+09:00  INFO 22660 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T10:26:05.396+09:00  INFO 22660 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T10:26:05.413+09:00  INFO 22660 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 229 ms
+2026-06-09T10:26:05.598+09:00  INFO 22660 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T10:26:05.602+09:00  INFO 22660 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.45 seconds (process running for 304.073)
+2026-06-09T10:26:05.605+09:00  INFO 22660 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-09T10:26:09.046+09:00  INFO 22660 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-09T10:26:09.046+09:00  INFO 22660 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-09T10:26:09.046+09:00  INFO 22660 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-06-09T10:26:09.073+09:00  INFO 22660 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-06-09T10:26:09.081+09:00  INFO 22660 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7ae48a2
+2026-06-09T10:26:09.081+09:00  INFO 22660 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-06-09T10:26:09.081+09:00 DEBUG 22660 --- [http-nio-8080-exec-1] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT * FROM m_employee ORDER BY emp_id asc
+2026-06-09T10:26:09.081+09:00 DEBUG 22660 --- [http-nio-8080-exec-1] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-09T10:26:09.102+09:00 DEBUG 22660 --- [http-nio-8080-exec-1] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 3
+2026-06-09T10:26:11.468+09:00 DEBUG 22660 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T10:26:11.479+09:00 DEBUG 22660 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T10:26:11.484+09:00 DEBUG 22660 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-09T10:27:39.819+09:00  WARN 22660 --- [http-nio-8080-exec-3] c.a.controller.GlobalExceptionHandler    : 静的リソースが見つかりません: /assignments/export/download
+2026-06-09T10:28:34.897+09:00 DEBUG 22660 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T10:28:34.898+09:00 DEBUG 22660 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T10:28:34.902+09:00 DEBUG 22660 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-09T10:28:37.376+09:00 DEBUG 22660 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role_name FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T10:28:37.378+09:00 DEBUG 22660 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T10:28:37.385+09:00 DEBUG 22660 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 5
+2026-06-09T10:31:52.639+09:00  INFO 22660 --- [RMI TCP Connection(24)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-09T10:31:52.641+09:00  INFO 22660 --- [RMI TCP Connection(24)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T10:31:52.936+09:00  INFO 22660 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T10:31:52.940+09:00  INFO 22660 --- [RMI TCP Connection(24)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-06-09T10:31:52.943+09:00  INFO 22660 --- [RMI TCP Connection(24)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
