@@ -26,9 +26,9 @@
 					<div class="search-item">
 						<label>権限</label>
 						<select name="permission" class="form-control">
-							<option value="">すべて</option>
-							<option value="1" th:selected="${permission == '1' || permission == 1}">管理者</option>
-							<option value="0" th:selected="${permission == '0' || permission == 0}">一般</option>
+							<option value="" th:selected="${permission == null}">未選択</option>
+							<option value="0" th:selected="${permission != null and permission == 0}">一般</option>
+							<option value="1" th:selected="${permission != null and permission == 1}">管理</option>
 						</select>
 					</div>
 
@@ -48,8 +48,7 @@
 					</svg>
 					インポート
 				</a>
-				<a th:href="@{/accounts/export}" class="toolbar-btn" id="btnExport"
-					title="現在の検索条件でCSV出力">
+				<a th:href="@{/accounts/export}" class="toolbar-btn" id="btnExport" title="現在の検索条件でCSV出力">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>

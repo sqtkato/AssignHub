@@ -16,10 +16,24 @@ public class AccountService {
 		this.accountMapper = accountMapper;
 	}
 
-	public List<Account> findAll(String keyword, String sort, String order) {
-		return accountMapper.findAll(keyword, sort, order);
+
+	/**
+	 * 検索条件およびソート条件に合致する企業情報を全件取得する。
+	 *
+	 * @param keyword 検索キーワード（企業名の部分一致）
+	 * @param sort    ソート対象のカラム名
+	 * @param order   昇順（asc）または降順（desc）
+	 * @return 企業エンティティのリスト
+	 */
+	public List<Account> findAll(String keyword, String sort, String order, Integer permission) {
+		return accountMapper.findAll(keyword, sort, order, permission);
+
 	}
 
+	public List<Account> findByIds(List<Integer> ids){
+		return accountMapper.findByIds(ids);
+	}
+	
 	public void save(Account account) {
 		accountMapper.save(account);
 	}
