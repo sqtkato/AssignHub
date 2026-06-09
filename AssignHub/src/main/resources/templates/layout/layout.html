@@ -10,20 +10,42 @@
 </head>
 
 <body>
+
+	<!-- サイドバー -->
 	<div class="sidebar">
 		<h1>AssignHub</h1>
+
 		<ul>
-			<li><a th:href="@{/employees}">👥 社員情報管理</a></li>
-			<li><a th:href="@{/companies}">🏢 企業情報管理</a></li>
-			<li><a th:href="@{/accounts}">🪪 アカウント情報管理</a></li>
+			<li><a th:href="@{/employees}">👥社員情報</a></li>
+			<li><a th:href="@{/companies}">🏢企業情報</a></li>
+			<li><a th:href="@{/accounts}">🪪アカウント情報</a></li>
+			<li><a th:href="@{/assign-history}">アサイン履歴情報</a></li>
+			<li class="has-submenu">
+				<a th:href="@{/deleted}">削除・復元一覧</a>
+				<ul class="submenu">
+					<li><a th:href="@{/deleted/employees}">社員情報</a></li>
+					<li><a th:href="@{/deleted/companies}">企業情報</a></li>
+					<li><a th:href="@{/deleted/accounts}">アカウント情報</a></li>
+					<li><a th:href="@{/deleted/assign-history}">アサイン履歴情報</a></li>
+				</ul>
+			</li>
 		</ul>
+
+		<!-- 画像にある admin 表示 + ログアウト -->
 		<div class="sidebar-footer">
+
+			<!--			usernameの表示を行う場所。変更必要-->
+			<!--            <span th:text="${#authentication.name}">admin123</span>-->
+
+
 			<button type="button" class="btn-logout" onclick="openLogoutModal()">ログアウト</button>
+
 		</div>
 	</div>
 
+	<!-- メインコンテンツ -->
 	<div class="main-content">
-		<div layout:fragment="content"></div>
+		<div class="content-wrapper" layout:fragment="content"></div>
 	</div>
 
 	<div id="logoutOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; align-items:center; justify-content:center;">
@@ -71,6 +93,7 @@
 			if (e.target === this) closeLogoutModal();
 		});
 	</script>
+
 </body>
 
 </html>
