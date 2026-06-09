@@ -1,4 +1,4 @@
-package com.assignhub.controller;
+﻿package com.assignhub.controller;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -9,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -134,76 +131,27 @@ public class AssignmentController {
 	 * @return アサイン情報の新規登録画面のテンプレートパス
 	 */
 	@GetMapping("/new")
-	public String create(Model model) {
+	public String create(Model model, RedirectAttributes attributes) {
 		if (!model.containsAttribute("assignmentForm")) {
 			model.addAttribute("assignmentForm", new AssignmentForm());
 		}
+		
+		if (assignmentService.isMaxCount()) {
+			attributes.addFlashAttribute(
+					"toastError",
+					"登録可能なアサイン情報は最大500件までです。");
+			return "redirect:/assignments";
+		}
+		addComboBoxItems(model);
 		return "assignment/create";
 	}
 
-	/**
-	 * アサイン情報を新規登録する
-	 * 
-	 * @param form アサイン情報のフォームオブジェクト
-	 * @param result バリデーション結果
-	 * @param model モデルオブジェクト
-	 * @param attributes リダイレクト属性オブジェクト
-	 * @return 登録成功時はアサイン情報の一覧画面にリダイレクト、バリデーションエラー時は新規登録画面のテンプレートパス
-	 */
-	@PostMapping
-	public String store(@Validated @ModelAttribute("assignmentForm") AssignmentForm form,
-			BindingResult result,
-			Model model,
-			RedirectAttributes attributes) {
-
-		if (result.hasErrors()) {
-			return "assignment/create";
-		}
-
-		if (assignmentService.isMaxCount()) {
-			result.reject(
-					"maxCount",
-					"登録可能なアサイン情報は最大500件までです。");
-			return "assignment/create";
-		}
-
-		Assignment assignment = new Assignment();
-		copyFormToEntity(form, assignment);
-
-		/**
-		 * 契約開始日と契約終了日の順序をチェックする
-		 * 契約終了日が入力されている場合、契約開始日より前の日付は入力できないようにする
-		 */
-		if (assignment.getContractEndDate() != null
-				&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
-
-			result.rejectValue(
-					"contractEndDate",
-					"date.order",
-					"契約開始日より前の日付は入力できません。");
-
-			return "assignment/create";
-		}
 
 		/**
 		 * アサイン情報の重複をチェックする
 		 */
-		if (assignmentService.existsDuplicate(assignment)) {
-			result.reject(
-					"error",
-					"すでに同じ内容が登録されています。");
-			return "assignment/create";
-		}
 
-		assignmentService.save(assignment);
-		attributes.addFlashAttribute("toastMessage", "アサイン情報を登録しました");
-		return "redirect:/assignments";
-	}
 
-	@GetMapping("/{id}")
-	public String detail(@PathVariable Integer id) {
-		return "assignment/detail";
-	}
 
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable Integer id) {
@@ -341,6 +289,13 @@ public class AssignmentController {
 		e.setUnitPrice(f.getUnitPrice());
 		e.setRoleId(f.getRoleId());
 	}
+	
+	private void addComboBoxItems(Model model) {
+		model.addAttribute("employeeOptions", assignmentService.findEmployeeOptions());
+		model.addAttribute("companyOptions", assignmentService.findCompanyOptions());
+		model.addAttribute("roleOptions", assignmentService.findRoleOptions());
+	}
+
 
 	private String returnIndex(
 			Model model,
