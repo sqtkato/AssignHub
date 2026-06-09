@@ -74,6 +74,25 @@ public interface AssignmentMapper {
     void deleteBulk(@Param("ids") List<Integer> ids);
     
     /**
+     * 指定した社員IDが有効な社員として存在するか確認する。
+     * @param empId 社員ID
+     * @return 存在すれば1以上、存在しなければ0
+     */
+    int existsEmployee(@Param("empId") Integer empId);
+    /**
+     * 企業名から企業IDを取得する（企業名はUNIQUE）。
+     * @param companyName 企業名
+     * @return 企業ID。存在しなければnull
+     */
+    Integer findCompanyIdByName(@Param("companyName") String companyName);
+    /**
+     * 役割名から役割IDを取得する。
+     * @param role 役割名
+     * @return 役割ID。存在しなければnull
+     */
+    Integer findRoleIdByName(@Param("role") String role);
+    
+    /**
      * アサイン情報の重複をチェックする。
      * 社員ID、企業ID、契約開始日、契約終了日がすべて一致するデータを取得する。
      *

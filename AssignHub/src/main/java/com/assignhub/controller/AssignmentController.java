@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Assignment;
@@ -217,10 +218,66 @@ public class AssignmentController {
 	    return "assignment/edit";
 	}
 	
+	
 	@GetMapping("/import")
-	public String importPage() {
-	    return "assignment/import";
+	public String showImport() {
+		return "assignment/import";
 	}
+	
+	/**
+     * CSVファイルを用いたアサイン履歴情報の一括インポート処理を実行する。
+     *
+     * @param file  アップロードされたCSVファイル
+     * @param model 画面描画用のモデル
+     * @return インポート画面のテンプレートパス
+     */
+    @PostMapping("/import")
+    public String importCsv(
+            @RequestParam(name = "input_assign_file_upload", required = false) MultipartFile file,
+            Model model) {
+        if (file == null || file.isEmpty()) {
+            model.addAttribute("toastError", "ファイルを選択してください");
+            return "assignment/import";
+        }
+        try {
+            AssignmentService.ImportResult result = assignmentService.importCsv(file);
+            // import.html が個別属性を参照するため分解して渡す
+            model.addAttribute("successCount", result.successCount);
+            model.addAttribute("errorCount", result.errorCount);
+            model.addAttribute("importErrors", result.errors);
+            if (result.errorCount > 0) {
+                model.addAttribute("toastError",
+                        "以下の行でエラーが発生したため、取り込みをキャンセルしました。内容を修正して再アップロードしてください");
+            } else {
+                model.addAttribute("toastMessage",
+                        "アサイン情報を" + result.successCount + "件取り込みました");
+            }
+            return "assignment/import";
+        } catch (Exception e) {
+            model.addAttribute("toastError", "ファイルの読み込みに失敗しました");
+            return "assignment/import";
+        }
+    }
+    
+    /**
+     * インポート用のCSVテンプレートをダウンロードする。
+     *
+     * @return ダウンロード用のCSVファイルバイナリデータ
+     */
+    @GetMapping("/import/template")
+    public ResponseEntity<byte[]> downloadTemplate() {
+        String csvContent =
+                "アサインID,社員ID,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n";
+        byte[] csvBytes = csvContent.getBytes(StandardCharsets.UTF_8);
+        byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+        byte[] result = new byte[bom.length + csvBytes.length];
+        System.arraycopy(bom, 0, result, 0, bom.length);
+        System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=assignment_template.csv");
+        headers.add("Content-Type", "text/csv; charset=UTF-8");
+        return new ResponseEntity<>(result, headers, HttpStatus.OK);
+    }
 	
 	/**
 	 * アサイン情報を一括で削除する

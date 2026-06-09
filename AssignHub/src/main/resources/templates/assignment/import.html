@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<title>アサイン履歴情報インポート</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+
+		<div class="page-title-area">
+			<h2>アサイン履歴情報インポート</h2>
+		</div>
+
+		<div class="card">
+			<p>CSVファイルを選択してアサイン履歴情報を一括登録・更新します。</p>
+			<p class="form-help-text">
+				※既存のアサインIDと一致する場合は上書き更新、空欄の場合は新規登録されます。
+			</p>
+			<p class="form-help-text">対応形式: .csv (UTF-8) / BOMあり推奨、最大5MB</p>
+
+			<form th:action="@{/assignments/import}" method="post" enctype="multipart/form-data" id="importForm">
+
+				<div class="form-group">
+					<label for="input_assign_file_upload">アサイン履歴情報CSVを選択してください</label>
+					<input type="file" id="input_assign_file_upload" name="input_assign_file_upload" accept=".csv"
+						class="form-control" required>
+				</div>
+
+				<a id="lnk_csv_download" th:href="@{/assignments/import/template}"
+					class="toolbar-btn">CSVテンプレートダウンロード</a>
+
+				<button type="submit" id="btn_assign_import" class="toolbar-btn toolbar-btn-primary">インポート</button>
+
+				<button type="button" id="btn_assign_back" class="toolbar-btn"
+					th:onclick="|location.href='@{/assignments}'|">戻る</button>
+			</form>
+		</div>
+
+		<div class="card" th:if="${errorCount != null}">
+			<h3>処理結果</h3>
+
+			<div class="result-summary">
+				<span>正常取り込み</span>
+				<span id="txt_assign_success" class="result-count success" th:text="${successCount} + '件'">0件</span>
+				<span>エラー</span>
+				<span id="txt_assign_faild" class="result-count error" th:text="${errorCount} + '件'">0件</span>
+			</div>
+
+			<div th:if="${errorCount > 0}">
+				<div class="alert alert-danger">
+					<p>以下の行でエラーが発生したため、取り込みをキャンセルしました。内容を修正して再アップロードしてください。</p>
+				</div>
+
+				<table class="table">
+					<thead class="table-dark">
+						<tr>
+							<th>行数</th>
+							<th>対象項目</th>
+							<th>エラー内容</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="err : ${importErrors}">
+							<td th:text="${err.rowNum} + '行目'"></td>
+							<td th:text="${err.field}"></td>
+							<td th:text="${err.message}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+</html>

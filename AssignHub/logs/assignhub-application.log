@@ -2720,3 +2720,976 @@ java.sql.SQLSyntaxErrorException: Unknown column 'r.role' in 'field list'
 2026-06-09T10:46:12.095+09:00  INFO 13912 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
 2026-06-09T10:46:12.101+09:00  INFO 13912 --- [RMI TCP Connection(18)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2026-06-09T10:46:12.109+09:00  INFO 13912 --- [RMI TCP Connection(18)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-09T15:37:19.304+09:00  INFO 19932 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 19932 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T15:37:19.307+09:00  INFO 19932 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T15:37:19.522+09:00  INFO 19932 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-09T15:37:19.522+09:00  INFO 19932 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-09T15:37:20.249+09:00  INFO 19932 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T15:37:20.261+09:00  INFO 19932 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T15:37:20.261+09:00  INFO 19932 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T15:37:20.300+09:00  INFO 19932 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 777 ms
+2026-06-09T15:37:20.970+09:00  INFO 19932 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T15:37:20.974+09:00  INFO 19932 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 1.975 seconds (process running for 2.498)
+2026-06-09T15:37:26.565+09:00  INFO 19932 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-09T15:37:26.565+09:00  INFO 19932 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-09T15:37:26.568+09:00  INFO 19932 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-06-09T15:37:26.666+09:00  INFO 19932 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-09T15:37:26.873+09:00  INFO 19932 --- [http-nio-8080-exec-2] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@151ccb38
+2026-06-09T15:37:26.873+09:00  INFO 19932 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-09T15:37:26.892+09:00 DEBUG 19932 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT * FROM m_employee ORDER BY emp_id asc
+2026-06-09T15:37:26.922+09:00 DEBUG 19932 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-09T15:37:26.957+09:00 DEBUG 19932 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 5
+2026-06-09T15:37:28.092+09:00  WARN 19932 --- [http-nio-8080-exec-5] c.a.controller.GlobalExceptionHandler    : 静的リソースが見つかりません: /favicon.ico
+2026-06-09T15:37:29.515+09:00 DEBUG 19932 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T15:37:29.517+09:00 DEBUG 19932 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T15:37:29.525+09:00 DEBUG 19932 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T15:37:33.150+09:00 DEBUG 19932 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.countActive  : ==>  Preparing: SELECT COUNT(*) FROM t_assignment WHERE delete_flg = 0
+2026-06-09T15:37:33.151+09:00 DEBUG 19932 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.countActive  : ==> Parameters: 
+2026-06-09T15:37:33.154+09:00 DEBUG 19932 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.countActive  : <==      Total: 1
+2026-06-09T15:37:33.155+09:00 DEBUG 19932 --- [http-nio-8080-exec-9] c.a.m.A.findEmployeeOptions              : ==>  Preparing: SELECT emp_id AS id, CONCAT(last_name, first_name) AS name FROM m_employee ORDER BY emp_id
+2026-06-09T15:37:33.155+09:00 DEBUG 19932 --- [http-nio-8080-exec-9] c.a.m.A.findEmployeeOptions              : ==> Parameters: 
+2026-06-09T15:37:33.157+09:00 DEBUG 19932 --- [http-nio-8080-exec-9] c.a.m.A.findEmployeeOptions              : <==      Total: 5
+2026-06-09T15:37:33.158+09:00 DEBUG 19932 --- [http-nio-8080-exec-9] c.a.m.A.findCompanyOptions               : ==>  Preparing: SELECT company_id AS id, company_name AS name FROM m_company ORDER BY company_id
+2026-06-09T15:37:33.159+09:00 DEBUG 19932 --- [http-nio-8080-exec-9] c.a.m.A.findCompanyOptions               : ==> Parameters: 
+2026-06-09T15:37:33.160+09:00 DEBUG 19932 --- [http-nio-8080-exec-9] c.a.m.A.findCompanyOptions               : <==      Total: 3
+2026-06-09T15:37:33.160+09:00 DEBUG 19932 --- [http-nio-8080-exec-9] c.a.m.AssignmentMapper.findRoleOptions   : ==>  Preparing: SELECT role_id AS id, role AS name FROM m_role ORDER BY role_id
+2026-06-09T15:37:33.160+09:00 DEBUG 19932 --- [http-nio-8080-exec-9] c.a.m.AssignmentMapper.findRoleOptions   : ==> Parameters: 
+2026-06-09T15:37:33.161+09:00 DEBUG 19932 --- [http-nio-8080-exec-9] c.a.m.AssignmentMapper.findRoleOptions   : <==      Total: 5
+2026-06-09T15:37:35.128+09:00 DEBUG 19932 --- [http-nio-8080-exec-2] c.a.m.A.findEmployeeOptions              : ==>  Preparing: SELECT emp_id AS id, CONCAT(last_name, first_name) AS name FROM m_employee ORDER BY emp_id
+2026-06-09T15:37:35.128+09:00 DEBUG 19932 --- [http-nio-8080-exec-2] c.a.m.A.findEmployeeOptions              : ==> Parameters: 
+2026-06-09T15:37:35.128+09:00 DEBUG 19932 --- [http-nio-8080-exec-2] c.a.m.A.findEmployeeOptions              : <==      Total: 5
+2026-06-09T15:37:35.128+09:00 DEBUG 19932 --- [http-nio-8080-exec-2] c.a.m.A.findCompanyOptions               : ==>  Preparing: SELECT company_id AS id, company_name AS name FROM m_company ORDER BY company_id
+2026-06-09T15:37:35.128+09:00 DEBUG 19932 --- [http-nio-8080-exec-2] c.a.m.A.findCompanyOptions               : ==> Parameters: 
+2026-06-09T15:37:35.128+09:00 DEBUG 19932 --- [http-nio-8080-exec-2] c.a.m.A.findCompanyOptions               : <==      Total: 3
+2026-06-09T15:37:35.128+09:00 DEBUG 19932 --- [http-nio-8080-exec-2] c.a.m.AssignmentMapper.findRoleOptions   : ==>  Preparing: SELECT role_id AS id, role AS name FROM m_role ORDER BY role_id
+2026-06-09T15:37:35.128+09:00 DEBUG 19932 --- [http-nio-8080-exec-2] c.a.m.AssignmentMapper.findRoleOptions   : ==> Parameters: 
+2026-06-09T15:37:35.133+09:00 DEBUG 19932 --- [http-nio-8080-exec-2] c.a.m.AssignmentMapper.findRoleOptions   : <==      Total: 5
+2026-06-09T15:39:38.098+09:00  INFO 19932 --- [RMI TCP Connection(6)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-09T15:39:38.100+09:00  INFO 19932 --- [RMI TCP Connection(6)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T15:39:38.281+09:00  INFO 19932 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T15:39:38.285+09:00  INFO 19932 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-09T15:39:38.296+09:00  INFO 19932 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-09T15:48:17.542+09:00  INFO 28740 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 28740 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T15:48:17.545+09:00  INFO 28740 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T15:48:17.748+09:00  INFO 28740 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-09T15:48:17.748+09:00  INFO 28740 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-09T15:48:18.434+09:00  INFO 28740 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T15:48:18.445+09:00  INFO 28740 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T15:48:18.445+09:00  INFO 28740 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T15:48:18.479+09:00  INFO 28740 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 730 ms
+2026-06-09T15:48:19.065+09:00  INFO 28740 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T15:48:19.071+09:00  INFO 28740 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 1.875 seconds (process running for 2.365)
+2026-06-09T15:48:25.844+09:00  INFO 28740 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-09T15:48:25.844+09:00  INFO 28740 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-09T15:48:25.845+09:00  INFO 28740 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-06-09T15:48:25.912+09:00  INFO 28740 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-09T15:48:26.062+09:00  INFO 28740 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@168551c8
+2026-06-09T15:48:26.067+09:00  INFO 28740 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-09T15:48:26.076+09:00 DEBUG 28740 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T15:48:26.113+09:00 DEBUG 28740 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T15:48:26.144+09:00 DEBUG 28740 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T15:48:32.280+09:00 DEBUG 28740 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T15:48:32.280+09:00 DEBUG 28740 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T15:48:32.287+09:00 DEBUG 28740 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T15:48:35.495+09:00 DEBUG 28740 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T15:48:35.496+09:00 DEBUG 28740 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T15:48:35.504+09:00 DEBUG 28740 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T15:48:40.387+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T15:48:40.389+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 1(Integer)
+2026-06-09T15:48:40.395+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T15:48:40.396+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T15:48:40.397+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 2(Integer)
+2026-06-09T15:48:40.399+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T15:48:40.399+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T15:48:40.399+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 3(Integer)
+2026-06-09T15:48:40.399+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T15:48:40.399+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T15:48:40.403+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 4(Integer)
+2026-06-09T15:48:40.403+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T15:48:40.403+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T15:48:40.403+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 5(Integer)
+2026-06-09T15:48:40.403+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T15:48:40.403+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T15:48:40.403+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 6(Integer)
+2026-06-09T15:48:40.407+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T15:48:40.407+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T15:48:40.407+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 7(Integer)
+2026-06-09T15:48:40.407+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T15:48:40.407+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T15:48:40.407+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 8(Integer)
+2026-06-09T15:48:40.407+09:00 DEBUG 28740 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T15:49:39.865+09:00  INFO 28740 --- [RMI TCP Connection(5)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-09T15:49:39.868+09:00  INFO 28740 --- [RMI TCP Connection(5)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T15:49:40.050+09:00  INFO 28740 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T15:49:40.055+09:00  INFO 28740 --- [RMI TCP Connection(5)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-09T15:49:40.061+09:00  INFO 28740 --- [RMI TCP Connection(5)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-09T16:33:28.188+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T16:33:28.192+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T16:33:28.582+09:00  INFO 14420 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-09T16:33:28.594+09:00  INFO 14420 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-09T16:33:29.727+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T16:33:29.741+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T16:33:29.741+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T16:33:29.785+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1171 ms
+2026-06-09T16:33:31.140+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T16:33:31.154+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 3.363 seconds (process running for 3.96)
+2026-06-09T16:33:31.234+09:00  INFO 14420 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-09T16:33:31.234+09:00  INFO 14420 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-09T16:33:31.236+09:00  INFO 14420 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-06-09T16:33:31.400+09:00  INFO 14420 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-09T16:33:31.741+09:00  INFO 14420 --- [http-nio-8080-exec-2] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5021823a
+2026-06-09T16:33:31.750+09:00  INFO 14420 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-09T16:33:31.758+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT * FROM m_employee ORDER BY emp_id asc
+2026-06-09T16:33:31.793+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-09T16:33:31.875+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 5
+2026-06-09T16:33:33.755+09:00  WARN 14420 --- [http-nio-8080-exec-5] c.a.controller.GlobalExceptionHandler    : 静的リソースが見つかりません: /favicon.ico
+2026-06-09T16:33:34.969+09:00 DEBUG 14420 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T16:33:34.977+09:00 DEBUG 14420 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T16:33:34.986+09:00 DEBUG 14420 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T16:33:36.716+09:00 DEBUG 14420 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T16:33:36.716+09:00 DEBUG 14420 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T16:33:36.732+09:00 DEBUG 14420 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T16:33:38.416+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T16:33:38.418+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T16:33:38.418+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T16:33:39.352+09:00 DEBUG 14420 --- [http-nio-8080-exec-8] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T16:33:39.352+09:00 DEBUG 14420 --- [http-nio-8080-exec-8] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T16:33:39.354+09:00 DEBUG 14420 --- [http-nio-8080-exec-8] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T16:37:13.196+09:00  INFO 14420 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (0 additions, 0 deletions, 2 modifications)
+2026-06-09T16:37:13.201+09:00  INFO 14420 --- [Thread-1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T16:37:13.426+09:00  INFO 14420 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T16:37:13.430+09:00  INFO 14420 --- [Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-09T16:37:13.475+09:00  INFO 14420 --- [Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-09T16:37:13.542+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T16:37:13.542+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T16:37:13.721+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T16:37:13.722+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T16:37:13.722+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T16:37:13.740+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 194 ms
+2026-06-09T16:37:13.890+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T16:37:13.892+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.37 seconds (process running for 226.698)
+2026-06-09T16:37:13.893+09:00  INFO 14420 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-09T16:37:19.427+09:00  INFO 14420 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-09T16:37:19.429+09:00  INFO 14420 --- [Thread-5] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T16:37:19.605+09:00  INFO 14420 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T16:37:19.682+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T16:37:19.682+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T16:37:19.831+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T16:37:19.831+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T16:37:19.831+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T16:37:19.846+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 162 ms
+2026-06-09T16:37:19.985+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T16:37:19.988+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.326 seconds (process running for 232.794)
+2026-06-09T16:37:19.988+09:00  INFO 14420 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-09T16:37:53.188+09:00  INFO 14420 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 4 class path changes (2 additions, 0 deletions, 2 modifications)
+2026-06-09T16:37:53.189+09:00  INFO 14420 --- [Thread-9] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T16:37:53.376+09:00  INFO 14420 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T16:37:53.431+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T16:37:53.431+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T16:37:53.559+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T16:37:53.559+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T16:37:53.559+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T16:37:53.574+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 141 ms
+2026-06-09T16:37:53.694+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T16:37:53.697+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.281 seconds (process running for 266.502)
+2026-06-09T16:37:53.697+09:00  INFO 14420 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-09T16:38:09.486+09:00  INFO 14420 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 25 class path changes (0 additions, 24 deletions, 1 modification)
+2026-06-09T16:38:09.488+09:00  INFO 14420 --- [Thread-13] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T16:38:09.753+09:00  INFO 14420 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T16:38:09.821+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T16:38:09.821+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T16:38:09.984+09:00  WARN 14420 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.assignhub]' package. Please check your configuration.
+2026-06-09T16:38:10.049+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T16:38:10.051+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T16:38:10.051+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T16:38:10.103+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 279 ms
+2026-06-09T16:38:10.261+09:00  WARN 14420 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception with message: Failed to parse mapping resource: 'file [C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+2026-06-09T16:38:10.263+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-09T16:38:10.272+09:00  INFO 14420 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-09T16:38:10.301+09:00 ERROR 14420 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception with message: Failed to parse mapping resource: 'file [C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1362) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1194) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception with message: Failed to parse mapping resource: 'file [C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:183) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:72) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:152) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 26 common frames omitted
+Caused by: java.io.IOException: Failed to parse mapping resource: 'file [C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:695) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.SqlSessionFactoryBean.afterPropertiesSet(SqlSessionFactoryBean.java:572) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.SqlSessionFactoryBean.getObject(SqlSessionFactoryBean.java:712) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration.sqlSessionFactory(MybatisAutoConfiguration.java:189) ~[mybatis-spring-boot-autoconfigure-4.0.1.jar:4.0.1]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:155) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 29 common frames omitted
+Caused by: org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'file [C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'. Cause: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.assignhub.entity.Assignment'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.assignhub.entity.Assignment
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.configurationElement(XMLMapperBuilder.java:125) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.parse(XMLMapperBuilder.java:98) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:693) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	... 37 common frames omitted
+Caused by: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.assignhub.entity.Assignment'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.assignhub.entity.Assignment
+	at org.apache.ibatis.builder.BaseBuilder.resolveClass(BaseBuilder.java:103) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.resultMapElement(XMLMapperBuilder.java:222) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.resultMapElement(XMLMapperBuilder.java:214) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.resultMapElements(XMLMapperBuilder.java:206) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.configurationElement(XMLMapperBuilder.java:121) ~[mybatis-3.5.19.jar:3.5.19]
+	... 39 common frames omitted
+Caused by: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.assignhub.entity.Assignment'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.assignhub.entity.Assignment
+	at org.apache.ibatis.type.TypeAliasRegistry.resolveAlias(TypeAliasRegistry.java:128) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.BaseBuilder.resolveAlias(BaseBuilder.java:132) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.BaseBuilder.resolveClass(BaseBuilder.java:101) ~[mybatis-3.5.19.jar:3.5.19]
+	... 43 common frames omitted
+Caused by: java.lang.ClassNotFoundException: Cannot find class: com.assignhub.entity.Assignment
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:226) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:103) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.io.Resources.classForName(Resources.java:322) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.type.TypeAliasRegistry.resolveAlias(TypeAliasRegistry.java:124) ~[mybatis-3.5.19.jar:3.5.19]
+	... 45 common frames omitted
+
+2026-06-09T16:38:12.200+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T16:38:12.200+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T16:38:12.327+09:00  WARN 14420 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.assignhub]' package. Please check your configuration.
+2026-06-09T16:38:12.364+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T16:38:12.365+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T16:38:12.366+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T16:38:12.384+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 183 ms
+2026-06-09T16:38:12.396+09:00  WARN 14420 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'assignmentController': Lookup method resolution failed
+2026-06-09T16:38:12.396+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-09T16:38:12.400+09:00  INFO 14420 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-09T16:38:12.402+09:00 ERROR 14420 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'assignmentController': Lookup method resolution failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:482) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:352) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1321) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.assignhub.controller.AssignmentController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@3f6c5268]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:483) ~[spring-core-7.0.7.jar:7.0.7]
+	at org.springframework.util.ReflectionUtils.doWithLocalMethods(ReflectionUtils.java:320) ~[spring-core-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:460) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 26 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: com/assignhub/form/AssignmentForm
+	at java.base/java.lang.Class.getDeclaredMethods0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredMethods(Class.java:3404) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredMethods(Class.java:2506) ~[na:na]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:465) ~[spring-core-7.0.7.jar:7.0.7]
+	... 28 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.assignhub.form.AssignmentForm
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:469) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:123) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525) ~[na:na]
+	... 32 common frames omitted
+
+2026-06-09T16:39:53.801+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T16:39:53.802+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T16:39:53.897+09:00  WARN 14420 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.Error: Unresolved compilation problems: 
+	インポートされた com.assignhub.entity は見つかりません
+	インポートされた com.assignhub.entity は見つかりません
+	Assignment を型に解決できません
+	SelectOption を型に解決できません
+	SelectOption を型に解決できません
+	SelectOption を型に解決できません
+	Assignment を型に解決できません
+	Assignment を型に解決できません
+	Assignment を型に解決できません
+	Assignment を型に解決できません
+
+2026-06-09T16:39:53.900+09:00  INFO 14420 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-09T16:39:53.902+09:00 ERROR 14420 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+java.lang.Error: Unresolved compilation problems: 
+	インポートされた com.assignhub.entity は見つかりません
+	インポートされた com.assignhub.entity は見つかりません
+	Assignment を型に解決できません
+	SelectOption を型に解決できません
+	SelectOption を型に解決できません
+	SelectOption を型に解決できません
+	Assignment を型に解決できません
+	Assignment を型に解決できません
+	Assignment を型に解決できません
+	Assignment を型に解決できません
+
+	at com.assignhub.mapper.AssignmentMapper.<clinit>(AssignmentMapper.java:9) ~[classes/:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:469) ~[na:na]
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:216) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:103) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.io.Resources.classForName(Resources.java:322) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.mybatis.spring.mapper.ClassPathMapperScanner.processBeanDefinitions(ClassPathMapperScanner.java:353) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.mapper.ClassPathMapperScanner.doScan(ClassPathMapperScanner.java:326) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.scan(ClassPathBeanDefinitionScanner.java:257) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.mybatis.spring.mapper.MapperScannerConfigurer.postProcessBeanDefinitionRegistry(MapperScannerConfigurer.java:402) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:349) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:148) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:795) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:603) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+
+2026-06-09T16:40:08.692+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T16:40:08.693+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T16:40:08.832+09:00  WARN 14420 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.Error: Unresolved compilation problems: 
+	インポートされた com.assignhub.entity は見つかりません
+	インポートされた com.assignhub.entity は見つかりません
+	Assignment を型に解決できません
+	SelectOption を型に解決できません
+	SelectOption を型に解決できません
+	SelectOption を型に解決できません
+	Assignment を型に解決できません
+	Assignment を型に解決できません
+	Assignment を型に解決できません
+	Assignment を型に解決できません
+
+2026-06-09T16:40:08.833+09:00  INFO 14420 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-09T16:40:08.836+09:00 ERROR 14420 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+java.lang.Error: Unresolved compilation problems: 
+	インポートされた com.assignhub.entity は見つかりません
+	インポートされた com.assignhub.entity は見つかりません
+	Assignment を型に解決できません
+	SelectOption を型に解決できません
+	SelectOption を型に解決できません
+	SelectOption を型に解決できません
+	Assignment を型に解決できません
+	Assignment を型に解決できません
+	Assignment を型に解決できません
+	Assignment を型に解決できません
+
+	at com.assignhub.mapper.AssignmentMapper.<clinit>(AssignmentMapper.java:9) ~[classes/:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:469) ~[na:na]
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:216) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:103) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.io.Resources.classForName(Resources.java:322) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.mybatis.spring.mapper.ClassPathMapperScanner.processBeanDefinitions(ClassPathMapperScanner.java:353) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.mapper.ClassPathMapperScanner.doScan(ClassPathMapperScanner.java:326) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.scan(ClassPathBeanDefinitionScanner.java:257) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.mybatis.spring.mapper.MapperScannerConfigurer.postProcessBeanDefinitionRegistry(MapperScannerConfigurer.java:402) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:349) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:148) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:795) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:603) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+
+2026-06-09T16:40:27.056+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T16:40:27.056+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T16:40:27.168+09:00  WARN 14420 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.assignhub]' package. Please check your configuration.
+2026-06-09T16:40:27.200+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T16:40:27.201+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T16:40:27.201+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T16:40:27.219+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 162 ms
+2026-06-09T16:40:27.284+09:00  WARN 14420 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception with message: Failed to parse mapping resource: 'file [C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+2026-06-09T16:40:27.288+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-09T16:40:27.292+09:00  INFO 14420 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-09T16:40:27.294+09:00 ERROR 14420 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception with message: Failed to parse mapping resource: 'file [C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1362) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1194) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception with message: Failed to parse mapping resource: 'file [C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:183) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:72) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:152) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 26 common frames omitted
+Caused by: java.io.IOException: Failed to parse mapping resource: 'file [C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:695) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.SqlSessionFactoryBean.afterPropertiesSet(SqlSessionFactoryBean.java:572) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.SqlSessionFactoryBean.getObject(SqlSessionFactoryBean.java:712) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration.sqlSessionFactory(MybatisAutoConfiguration.java:189) ~[mybatis-spring-boot-autoconfigure-4.0.1.jar:4.0.1]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:155) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 29 common frames omitted
+Caused by: org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'file [C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'. Cause: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.assignhub.entity.Assignment'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.assignhub.entity.Assignment
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.configurationElement(XMLMapperBuilder.java:125) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.parse(XMLMapperBuilder.java:98) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:693) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	... 37 common frames omitted
+Caused by: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.assignhub.entity.Assignment'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.assignhub.entity.Assignment
+	at org.apache.ibatis.builder.BaseBuilder.resolveClass(BaseBuilder.java:103) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.resultMapElement(XMLMapperBuilder.java:222) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.resultMapElement(XMLMapperBuilder.java:214) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.resultMapElements(XMLMapperBuilder.java:206) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.configurationElement(XMLMapperBuilder.java:121) ~[mybatis-3.5.19.jar:3.5.19]
+	... 39 common frames omitted
+Caused by: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.assignhub.entity.Assignment'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.assignhub.entity.Assignment
+	at org.apache.ibatis.type.TypeAliasRegistry.resolveAlias(TypeAliasRegistry.java:128) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.BaseBuilder.resolveAlias(BaseBuilder.java:132) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.BaseBuilder.resolveClass(BaseBuilder.java:101) ~[mybatis-3.5.19.jar:3.5.19]
+	... 43 common frames omitted
+Caused by: java.lang.ClassNotFoundException: Cannot find class: com.assignhub.entity.Assignment
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:226) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:103) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.io.Resources.classForName(Resources.java:322) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.type.TypeAliasRegistry.resolveAlias(TypeAliasRegistry.java:124) ~[mybatis-3.5.19.jar:3.5.19]
+	... 45 common frames omitted
+
+2026-06-09T16:40:29.627+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T16:40:29.627+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T16:40:29.799+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T16:40:29.800+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T16:40:29.800+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T16:40:29.822+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 191 ms
+2026-06-09T16:40:29.987+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T16:40:29.989+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.381 seconds (process running for 422.795)
+2026-06-09T16:40:29.990+09:00  INFO 14420 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-09T16:41:24.826+09:00  INFO 14420 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-09T16:41:24.828+09:00  INFO 14420 --- [Thread-17] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T16:41:25.091+09:00  INFO 14420 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T16:41:25.159+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T16:41:25.159+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T16:41:25.330+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T16:41:25.331+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T16:41:25.331+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T16:41:25.356+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 194 ms
+2026-06-09T16:41:25.521+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T16:41:25.524+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.386 seconds (process running for 478.329)
+2026-06-09T16:41:25.525+09:00  INFO 14420 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-09T16:42:35.821+09:00  INFO 14420 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 6 class path changes (0 additions, 0 deletions, 6 modifications)
+2026-06-09T16:42:35.821+09:00  INFO 14420 --- [Thread-36] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T16:42:36.060+09:00  INFO 14420 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T16:42:36.140+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T16:42:36.140+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T16:42:36.309+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T16:42:36.309+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T16:42:36.309+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T16:42:36.327+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 185 ms
+2026-06-09T16:42:36.456+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T16:42:36.457+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.344 seconds (process running for 549.263)
+2026-06-09T16:42:36.458+09:00  INFO 14420 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-09T16:46:56.362+09:00  INFO 14420 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat-3].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-09T16:46:56.362+09:00  INFO 14420 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-09T16:46:56.366+09:00  INFO 14420 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-06-09T16:46:56.369+09:00  INFO 14420 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-06-09T16:46:56.384+09:00  INFO 14420 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6cfe8236
+2026-06-09T16:46:56.384+09:00  INFO 14420 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-06-09T16:46:56.384+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T16:46:56.384+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T16:46:56.402+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T16:46:58.588+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T16:46:58.588+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T16:46:58.594+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T16:47:00.346+09:00 ERROR 14420 --- [http-nio-8080-exec-7] c.a.controller.GlobalExceptionHandler    : 【システムエラー】予期せぬ例外が発生しました。
+
+org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "import"
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.convertIfNecessary(AbstractNamedValueMethodArgumentResolver.java:295) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:134) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:224) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:174) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: java.lang.NumberFormatException: For input string: "import"
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67) ~[na:na]
+	at java.base/java.lang.Integer.parseInt(Integer.java:668) ~[na:na]
+	at java.base/java.lang.Integer.valueOf(Integer.java:999) ~[na:na]
+	at org.springframework.util.NumberUtils.parseNumber(NumberUtils.java:201) ~[spring-core-7.0.7.jar:7.0.7]
+	at org.springframework.beans.propertyeditors.CustomNumberEditor.setAsText(CustomNumberEditor.java:115) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterDelegate.doConvertTextValue(TypeConverterDelegate.java:434) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterDelegate.doConvertValue(TypeConverterDelegate.java:407) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterDelegate.convertIfNecessary(TypeConverterDelegate.java:158) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterSupport.convertIfNecessary(TypeConverterSupport.java:75) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterSupport.convertIfNecessary(TypeConverterSupport.java:51) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.validation.DataBinder.convertIfNecessary(DataBinder.java:843) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.convertIfNecessary(AbstractNamedValueMethodArgumentResolver.java:287) ~[spring-web-7.0.7.jar:7.0.7]
+	... 43 common frames omitted
+
+2026-06-09T16:47:00.357+09:00  WARN 14420 --- [http-nio-8080-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "import"]
+2026-06-09T16:47:05.815+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T16:47:05.815+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T16:47:05.815+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T16:51:00.384+09:00 ERROR 14420 --- [http-nio-8080-exec-4] c.a.controller.GlobalExceptionHandler    : 【システムエラー】予期せぬ例外が発生しました。
+
+org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "import"
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.convertIfNecessary(AbstractNamedValueMethodArgumentResolver.java:295) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:134) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:224) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:174) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: java.lang.NumberFormatException: For input string: "import"
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67) ~[na:na]
+	at java.base/java.lang.Integer.parseInt(Integer.java:668) ~[na:na]
+	at java.base/java.lang.Integer.valueOf(Integer.java:999) ~[na:na]
+	at org.springframework.util.NumberUtils.parseNumber(NumberUtils.java:201) ~[spring-core-7.0.7.jar:7.0.7]
+	at org.springframework.beans.propertyeditors.CustomNumberEditor.setAsText(CustomNumberEditor.java:115) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterDelegate.doConvertTextValue(TypeConverterDelegate.java:434) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterDelegate.doConvertValue(TypeConverterDelegate.java:407) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterDelegate.convertIfNecessary(TypeConverterDelegate.java:158) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterSupport.convertIfNecessary(TypeConverterSupport.java:75) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterSupport.convertIfNecessary(TypeConverterSupport.java:51) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.validation.DataBinder.convertIfNecessary(DataBinder.java:843) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.convertIfNecessary(AbstractNamedValueMethodArgumentResolver.java:287) ~[spring-web-7.0.7.jar:7.0.7]
+	... 43 common frames omitted
+
+2026-06-09T16:51:00.384+09:00  WARN 14420 --- [http-nio-8080-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "import"]
+2026-06-09T16:51:00.433+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T16:51:00.437+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 1(Integer)
+2026-06-09T16:51:00.439+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T16:51:22.984+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T16:51:22.984+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 1(Integer)
+2026-06-09T16:51:22.984+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:21:12.035+09:00  WARN 14420 --- [HikariPool-2:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2m15s61ms454µs700ns).
+2026-06-09T17:22:29.096+09:00  INFO 14420 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (0 additions, 0 deletions, 2 modifications)
+2026-06-09T17:22:29.101+09:00  INFO 14420 --- [Thread-40] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T17:22:29.283+09:00  INFO 14420 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T17:22:29.287+09:00  INFO 14420 --- [Thread-40] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-06-09T17:22:29.289+09:00  INFO 14420 --- [Thread-40] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-06-09T17:22:29.420+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T17:22:29.420+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T17:22:29.587+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T17:22:29.588+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T17:22:29.588+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T17:22:29.602+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 176 ms
+2026-06-09T17:22:29.772+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T17:22:29.773+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.372 seconds (process running for 2942.579)
+2026-06-09T17:22:29.774+09:00  INFO 14420 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-09T17:23:10.166+09:00  INFO 14420 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-09T17:23:10.168+09:00  INFO 14420 --- [Thread-44] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T17:23:10.352+09:00  INFO 14420 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T17:23:10.421+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T17:23:10.422+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T17:23:10.555+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T17:23:10.556+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T17:23:10.557+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T17:23:10.571+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 147 ms
+2026-06-09T17:23:10.696+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T17:23:10.698+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.294 seconds (process running for 2983.504)
+2026-06-09T17:23:10.698+09:00  INFO 14420 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-09T17:23:34.622+09:00  INFO 14420 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-09T17:23:34.624+09:00  INFO 14420 --- [Thread-48] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T17:23:34.808+09:00  INFO 14420 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T17:23:34.863+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T17:23:34.863+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T17:23:34.986+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T17:23:34.986+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T17:23:34.986+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T17:23:35.002+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 138 ms
+2026-06-09T17:23:35.120+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T17:23:35.122+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.273 seconds (process running for 3007.929)
+2026-06-09T17:23:35.122+09:00  INFO 14420 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-09T17:23:37.041+09:00  INFO 14420 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat-3].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-09T17:23:37.041+09:00  INFO 14420 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-09T17:23:37.043+09:00  INFO 14420 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-06-09T17:24:22.714+09:00  INFO 14420 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-09T17:24:22.715+09:00  INFO 14420 --- [Thread-52] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T17:24:22.909+09:00  INFO 14420 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T17:24:22.980+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T17:24:22.980+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T17:24:23.101+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T17:24:23.101+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T17:24:23.101+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T17:24:23.115+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 134 ms
+2026-06-09T17:24:23.214+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T17:24:23.215+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.25 seconds (process running for 3056.021)
+2026-06-09T17:24:23.216+09:00  INFO 14420 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-09T17:25:28.241+09:00  INFO 14420 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat-3].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-09T17:25:28.241+09:00  INFO 14420 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-09T17:25:28.241+09:00  INFO 14420 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-06-09T17:25:28.249+09:00  INFO 14420 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-06-09T17:25:28.260+09:00  INFO 14420 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2dd93b21
+2026-06-09T17:25:28.260+09:00  INFO 14420 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-06-09T17:25:28.260+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:25:28.263+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:25:28.277+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:25:29.780+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:25:29.780+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:25:29.789+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:25:31.140+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:25:31.140+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:25:31.144+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:18.174+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:26:18.174+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 1(Integer)
+2026-06-09T17:26:18.184+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:26:18.184+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:26:18.184+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 2(Integer)
+2026-06-09T17:26:18.184+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:26:18.184+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:26:18.184+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 3(Integer)
+2026-06-09T17:26:18.184+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:26:18.184+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:26:18.184+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 4(Integer)
+2026-06-09T17:26:18.197+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:26:18.197+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:26:18.197+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 5(Integer)
+2026-06-09T17:26:18.200+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:26:18.200+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:26:18.200+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 6(Integer)
+2026-06-09T17:26:18.200+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:26:18.200+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:26:18.200+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 7(Integer)
+2026-06-09T17:26:18.200+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:26:18.200+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:26:18.200+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 8(Integer)
+2026-06-09T17:26:18.200+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:26:38.895+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:38.897+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:38.899+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:39.048+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:39.061+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:39.063+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:42.578+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:42.584+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:42.586+09:00 DEBUG 14420 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:43.391+09:00 DEBUG 14420 --- [http-nio-8080-exec-7] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:43.391+09:00 DEBUG 14420 --- [http-nio-8080-exec-7] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:43.398+09:00 DEBUG 14420 --- [http-nio-8080-exec-7] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:43.782+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:43.782+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:43.786+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:44.212+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:44.213+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:44.213+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:44.564+09:00 DEBUG 14420 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:44.564+09:00 DEBUG 14420 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:44.566+09:00 DEBUG 14420 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:44.954+09:00 DEBUG 14420 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:44.954+09:00 DEBUG 14420 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:44.957+09:00 DEBUG 14420 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:45.327+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:45.327+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:45.327+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:45.677+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:45.677+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:45.677+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:46.033+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:46.033+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:46.033+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:46.351+09:00 DEBUG 14420 --- [http-nio-8080-exec-8] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:46.352+09:00 DEBUG 14420 --- [http-nio-8080-exec-8] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:46.352+09:00 DEBUG 14420 --- [http-nio-8080-exec-8] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:26:46.790+09:00 DEBUG 14420 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:26:46.790+09:00 DEBUG 14420 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:26:46.790+09:00 DEBUG 14420 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:27:45.363+09:00 DEBUG 14420 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:27:45.363+09:00 DEBUG 14420 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:27:45.367+09:00 DEBUG 14420 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:28:04.255+09:00 ERROR 14420 --- [http-nio-8080-exec-10] c.a.controller.GlobalExceptionHandler    : 【システムエラー】予期せぬ例外が発生しました。
+
+org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "import"
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.convertIfNecessary(AbstractNamedValueMethodArgumentResolver.java:295) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:134) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:224) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:174) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: java.lang.NumberFormatException: For input string: "import"
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67) ~[na:na]
+	at java.base/java.lang.Integer.parseInt(Integer.java:668) ~[na:na]
+	at java.base/java.lang.Integer.valueOf(Integer.java:999) ~[na:na]
+	at org.springframework.util.NumberUtils.parseNumber(NumberUtils.java:201) ~[spring-core-7.0.7.jar:7.0.7]
+	at org.springframework.beans.propertyeditors.CustomNumberEditor.setAsText(CustomNumberEditor.java:115) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterDelegate.doConvertTextValue(TypeConverterDelegate.java:434) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterDelegate.doConvertValue(TypeConverterDelegate.java:407) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterDelegate.convertIfNecessary(TypeConverterDelegate.java:158) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterSupport.convertIfNecessary(TypeConverterSupport.java:75) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.TypeConverterSupport.convertIfNecessary(TypeConverterSupport.java:51) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.validation.DataBinder.convertIfNecessary(DataBinder.java:843) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.convertIfNecessary(AbstractNamedValueMethodArgumentResolver.java:287) ~[spring-web-7.0.7.jar:7.0.7]
+	... 43 common frames omitted
+
+2026-06-09T17:28:04.260+09:00  WARN 14420 --- [http-nio-8080-exec-10] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "import"]
+2026-06-09T17:30:11.664+09:00  INFO 14420 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-09T17:30:11.665+09:00  INFO 14420 --- [Thread-56] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-09T17:30:11.855+09:00  INFO 14420 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-09T17:30:11.857+09:00  INFO 14420 --- [Thread-56] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-06-09T17:30:11.859+09:00  INFO 14420 --- [Thread-56] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2026-06-09T17:30:11.942+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.18 with PID 14420 (C:\Users\c3s_217\git\AssignHub\AssignHub\target\classes started by c3s_217 in C:\Users\c3s_217\git\AssignHub\AssignHub)
+2026-06-09T17:30:11.942+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-09T17:30:12.088+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-09T17:30:12.089+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-09T17:30:12.089+09:00  INFO 14420 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-09T17:30:12.103+09:00  INFO 14420 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 155 ms
+2026-06-09T17:30:12.228+09:00  INFO 14420 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-09T17:30:12.240+09:00  INFO 14420 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.317 seconds (process running for 3405.046)
+2026-06-09T17:30:12.240+09:00  INFO 14420 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-09T17:30:16.361+09:00  INFO 14420 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat-3].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-09T17:30:16.361+09:00  INFO 14420 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-09T17:30:16.361+09:00  INFO 14420 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-06-09T17:42:48.383+09:00  INFO 14420 --- [http-nio-8080-exec-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2026-06-09T17:42:48.396+09:00  INFO 14420 --- [http-nio-8080-exec-9] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2bab373a
+2026-06-09T17:42:48.396+09:00  INFO 14420 --- [http-nio-8080-exec-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2026-06-09T17:42:48.396+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:42:48.396+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:42:48.406+09:00 DEBUG 14420 --- [http-nio-8080-exec-9] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:42:50.047+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:42:50.047+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:42:50.051+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:42:54.743+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:42:54.744+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 1(Integer)
+2026-06-09T17:42:54.746+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:42:54.748+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:42:54.749+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 2(Integer)
+2026-06-09T17:42:54.753+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:42:54.753+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:42:54.754+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 3(Integer)
+2026-06-09T17:42:54.754+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:42:54.754+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:42:54.754+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 4(Integer)
+2026-06-09T17:42:54.754+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:42:54.754+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:42:54.759+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 5(Integer)
+2026-06-09T17:42:54.762+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:42:54.763+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:42:54.765+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 6(Integer)
+2026-06-09T17:42:54.767+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:42:54.767+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:42:54.768+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 7(Integer)
+2026-06-09T17:42:54.770+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:42:54.771+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:42:54.771+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 8(Integer)
+2026-06-09T17:42:54.774+09:00 DEBUG 14420 --- [http-nio-8080-exec-5] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:45:39.879+09:00 DEBUG 14420 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:45:39.879+09:00 DEBUG 14420 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:45:39.882+09:00 DEBUG 14420 --- [http-nio-8080-exec-6] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:45:41.642+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.countActive  : ==>  Preparing: SELECT COUNT(*) FROM t_assignment WHERE delete_flg = 0
+2026-06-09T17:45:41.642+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.countActive  : ==> Parameters: 
+2026-06-09T17:45:41.683+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.mapper.AssignmentMapper.countActive  : <==      Total: 1
+2026-06-09T17:45:41.683+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.m.A.findEmployeeOptions              : ==>  Preparing: SELECT emp_id AS id, CONCAT(last_name, first_name) AS name FROM m_employee ORDER BY emp_id
+2026-06-09T17:45:41.683+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.m.A.findEmployeeOptions              : ==> Parameters: 
+2026-06-09T17:45:41.683+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.m.A.findEmployeeOptions              : <==      Total: 5
+2026-06-09T17:45:41.683+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.m.A.findCompanyOptions               : ==>  Preparing: SELECT company_id AS id, company_name AS name FROM m_company ORDER BY company_id
+2026-06-09T17:45:41.683+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.m.A.findCompanyOptions               : ==> Parameters: 
+2026-06-09T17:45:41.683+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.m.A.findCompanyOptions               : <==      Total: 3
+2026-06-09T17:45:41.683+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.m.AssignmentMapper.findRoleOptions   : ==>  Preparing: SELECT role_id AS id, role AS name FROM m_role ORDER BY role_id
+2026-06-09T17:45:41.683+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.m.AssignmentMapper.findRoleOptions   : ==> Parameters: 
+2026-06-09T17:45:41.683+09:00 DEBUG 14420 --- [http-nio-8080-exec-4] c.a.m.AssignmentMapper.findRoleOptions   : <==      Total: 5
+2026-06-09T17:46:08.231+09:00 DEBUG 14420 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:46:08.231+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findById     : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_name, ec.company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.assignment_id = ? AND a.delete_flg = 0
+2026-06-09T17:46:08.231+09:00 DEBUG 14420 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:46:08.231+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findById     : ==> Parameters: 1(Integer)
+2026-06-09T17:46:08.231+09:00 DEBUG 14420 --- [http-nio-8080-exec-10] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
+2026-06-09T17:46:08.242+09:00 DEBUG 14420 --- [http-nio-8080-exec-1] c.a.mapper.AssignmentMapper.findById     : <==      Total: 1
+2026-06-09T17:46:31.918+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, CONCAT(e.last_name, e.first_name) AS emp_name, c.company_name, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 ORDER BY a.assignment_id
+2026-06-09T17:46:31.918+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-09T17:46:31.923+09:00 DEBUG 14420 --- [http-nio-8080-exec-2] c.a.mapper.AssignmentMapper.findAll      : <==      Total: 8
