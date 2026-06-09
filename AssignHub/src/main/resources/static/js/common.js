@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // ==========================================
     // 1. Toast通知の表示制御
     // ==========================================
-    const toastElement = document.getElementById("toastMessage");
+    const toastElement = document.getElementById("toast");
     if (toastElement && toastElement.textContent.trim() !== "") {
         toastElement.classList.add("show");
         setTimeout(function() {
