@@ -155,7 +155,7 @@ h2{
 
 .btn-secondary {
 	font-size: 24px;
-	background-color: #fff;
+	background-color: #e5e7eb;
 	color: white;
 }
 
@@ -545,14 +545,13 @@ h2{
 	box-sizing: border-box;
 }
 
-<<<<<<< HEAD
 /* =========================================
    テーブルスクロール
 ========================================= */
 
 .table-scroll{
 	
-	max-height: 360px;
+	max-height: 400px;
 	overflow-y: auto;
 }
 
@@ -562,5 +561,3 @@ h2{
   top: 0;
   z-index: 10;
 }
-=======
->>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git

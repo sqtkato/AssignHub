@@ -125,5 +125,17 @@ public class AccountController {
         headers.add("Content-Type", "text/csv; charset=UTF-8");
         return new ResponseEntity<>(result, headers, HttpStatus.OK);
     }
+    
+    /**
+	 * アカウントを一件論理削除
+	 * 
+	 * @param id 削除対象のアカウントID
+	 * @return 一覧画面へのリダイレクトパス
+	 */
+	@PostMapping("/{id}/delete")
+	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+		accountService.delete(id);
+		return "redirect:/accounts";
+	}
 
 }

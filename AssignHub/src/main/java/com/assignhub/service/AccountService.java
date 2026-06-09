@@ -3,6 +3,7 @@ package com.assignhub.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.assignhub.entity.Account;
 import com.assignhub.mapper.AccountMapper;
@@ -41,5 +42,15 @@ public class AccountService {
 	// 追加：ログインIDの重複チェック
 	public boolean existsByLoginId(String loginId) {
 		return accountMapper.existsByLoginId(loginId);
+	}
+	
+	/**
+	 * アカウントを一件論理削除。
+	 *
+	 * @param id　削除対象のアカウントID
+	 */
+	@Transactional
+	public void delete(Integer id) {
+		accountMapper.delete(id);
 	}
 }
