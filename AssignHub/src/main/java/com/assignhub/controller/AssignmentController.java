@@ -306,4 +306,3 @@ public class AssignmentController {
 
 	    return "assignment/index";
 	}
-}

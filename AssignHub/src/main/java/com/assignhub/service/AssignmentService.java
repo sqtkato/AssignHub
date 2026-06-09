@@ -99,4 +99,4 @@ public class AssignmentService {
 	public boolean isMaxCount() {
 	    return assignmentMapper.countActive() >= 500;
 	}
-}
+		
