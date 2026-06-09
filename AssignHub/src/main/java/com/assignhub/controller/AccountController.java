@@ -10,11 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
 import com.assignhub.service.AccountService;
@@ -89,11 +87,13 @@ public class AccountController {
      * @param model  画面描画用のモデル
      * @return エクスポート画面のテンプレートパス
      */
-    @GetMapping("/export")
+    @PostMapping("/export")
     public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
             Model model) {
-    	System.out.println(ids);
+    	if(ids.size()==0) {return "account/index";}
         model.addAttribute("count", accountService.findByIds(ids).size());
+        List<Account> accounts = accountService.findByIds(ids);
+        model.addAttribute("accounts", accounts);
         model.addAttribute("ids", ids);
         return "account/export";
     }
@@ -104,7 +104,7 @@ public class AccountController {
      * @param deptId  絞り込み部署ID
      * @return ダウンロード用のCSVファイルバイナリデータ
      */
-    @GetMapping("/export/download")
+    @PostMapping("/export/download")
     public ResponseEntity<byte[]> downloadCsv(
     		@RequestParam(name = "ids", required = false) List<Integer> ids) {
         List<Account> accounts = accountService.findByIds(ids);

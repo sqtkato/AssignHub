@@ -44,7 +44,7 @@
 			</form>
 		</div>
 
-		<form th:action="@{/accounts/bulk-delete}" method="post" id="listForm">
+		<form method="post" id="listForm">
 			<div class="table-toolbar">
 				<a th:href="@{/accounts/import}" class="toolbar-btn" title="CSVファイルから一括登録">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -55,7 +55,7 @@
 					</svg>
 					インポート
 				</a>
-				<a th:href="@{/accounts/export}" class="toolbar-btn" id="btnExport" title="現在の検索条件でCSV出力">
+				<button type="submit" formaction="/accounts/export" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -63,8 +63,8 @@
 						<line x1="12" y1="3" x2="12" y2="15"></line>
 					</svg>
 					エクスポート
-				</a>
-				<button type="submit" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
+				</button>
+				<button type="submit" formaction="/accounts/bulk-delete" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
 					onclick="return confirm('選択した項目を一括削除しますか？');">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
