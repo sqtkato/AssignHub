@@ -32,7 +32,7 @@
 			<!-- AND permission = #{permission} -->
 			<!-- </if> -->
 		</where>
-		ORDER BY ${sort} ${order}
+		ORDER BY a.account_id ASC
 	</select>
 	<insert id="save" parameterType="com.assignhub.entity.Account">
 		INSERT INTO m_account (login_id, password_hash, permission, delete_flg)
