@@ -16,18 +16,31 @@ import com.assignhub.entity.Account;
 public interface AccountMapper {
 
 	/**
-	 * 条件に一致する論理削除されていないアカウント情報を全件取得する。
+	 * 条件に一致する論理削除されていない企業情報を全件取得する。
 	 *
-	 * @param keyword 検索ワード（複数カラムの部分一致）
+	 * @param keyword 検索ワード（企業名の部分一致）
 	 * @param sort    ソート対象のカラム名
 	 * @param order   ソート順（asc または desc）
 	 * @return アカウントエンティティのリスト
 	 */
-	List<Account> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order,
-			@Param("permission") Integer permission);
+	List<Account> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order, @Param("permission") Integer permission);
 
-	void save(Account account);
+	/**
+	 * チェックボックスにチェックをつけたアカウント情報を全件取得する。
+	 *
+	 * @param keyword 検索ワード（企業名の部分一致）
+	 * @param sort    ソート対象のカラム名
+	 * @param order   ソート順（asc または desc）
+	 * @return アカウントエンティティのリスト
+	 */
+	List<Account> findByIds(@Param("ids") List<Integer> ids);
+
 	
+	
+	void save(Account account);
+
+	boolean existsByLoginId(@Param("loginId") String loginId);
+
 	/**
 	 * アカウントを一件論理削除。
 	 * 

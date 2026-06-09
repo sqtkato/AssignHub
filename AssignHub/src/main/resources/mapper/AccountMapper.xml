@@ -12,14 +12,14 @@
 	</resultMap>
 
 	<select id="findAll" resultMap="accountResultMap">
-		SELECT a.*, e.emp_name
+		SELECT a.*, concat(e.last_name , " " , e.first_name)as emp_name
 		FROM m_account a
 		left JOIN m_employee e ON
 		a.account_id = e.emp_id
 
 		<where>
-			a.delete_flg = 0 
-			
+			a.delete_flg = 0
+
 			<if test="keyword != null and keyword != ''">
 				AND (
 				e.emp_name LIKE CONCAT('%', #{keyword}, '%')
@@ -27,17 +27,41 @@
 				CONCAT('%', #{keyword}, '%')
 				OR a.account_id LIKE CONCAT('%',
 				#{keyword}, '%')
+
+				)
+
 				<!-- ★他に検索対象にしたいカラムがあれば、ここに OR で追加していきます -->
-				) 
+				)
 			</if>
 
-			 <if test="permission != null"> 
-			 AND permission = #{permission} 
-			 </if> 
+			<if test="permission != null">
+				AND permission = #{permission}
+			</if>
 		</where>
 		ORDER BY a.account_id ASC
 	</select>
 	
+
+	<!-- 追加：ログインIDの重複チェック -->
+	<select id="existsByLoginId" resultType="boolean">
+		SELECT COUNT(*) > 0
+		FROM m_account
+		WHERE login_id = #{loginId}
+	</select>
+	<select id="findByIds" resultMap="accountResultMap">
+		SELECT a.account_id, a.login_id,a.permission,concat(e.last_name , " " , e.first_name)as emp_name
+		FROM m_account a
+		left JOIN m_employee e ON
+		a.account_id = e.emp_id
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
+
+
+
+
 	<insert id="save" parameterType="com.assignhub.entity.Account">
 		INSERT INTO m_account (login_id,
 		password_hash, permission, delete_flg)
