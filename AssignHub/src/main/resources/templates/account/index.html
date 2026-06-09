@@ -18,12 +18,6 @@
 				<div class="form-group form-group-search">
 
 					<div class="search-item">
-						<label>キーワード検索</label>
-						<input type="text" name="keyword" class="form-control" th:value="${keyword}"
-							placeholder="例：山田 太郎">
-					</div>
-
-					<div class="search-item">
 						<label>権限</label>
 						<select name="permission" class="form-control">
 							<option value="" th:selected="${permission == null}">未選択</option>
@@ -36,8 +30,6 @@
 						<input type="text" name="keyword" class="form-control" th:value="${keyword}"
 							placeholder="例：山田 太郎">
 					</div>
-
-
 
 				</div>
 				<button type="submit" class="btn btn-secondary">🔍</button>

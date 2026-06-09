@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>アカウント情報インポート</title>
+	<style>
+		.import-desc { font-size: 14px; color: #333; margin-bottom: 25px; line-height: 1.8; }
+		.upload-box { background: #d4f0f5; border: 2px dashed #4a90a4; border-radius: 4px; padding: 35px 40px; text-align: center; margin-bottom: 35px; }
+		.upload-box .big { font-size: 18px; font-weight: bold; margin-bottom: 12px; }
+		.upload-box .small { font-size: 14px; color: #333; margin-bottom: 25px; }
+		.file-inner { background: #fff; border: 1px solid #999; border-radius: 3px; padding: 18px 20px; display: inline-block; min-width: 60%; text-align: left; }
+		.file-inner input[type="file"] { font-size: 14px; }
+		.btn-area { text-align: center; margin-bottom: 35px; }
+		.import-btn { padding: 12px 45px; font-size: 16px; font-weight: bold; border: none; cursor: pointer; margin: 0 20px; border-radius: 3px; }
+		.import-btn-do { background: #1f3a5f; color: #fff; }
+		.import-btn-back { background: #bbb; color: #333; }
+		.import-divider { border: none; border-top: 1px solid #333; margin-bottom: 30px; }
+		.result h3 { font-size: 22px; margin-bottom: 25px; }
+		.result-cards { display: flex; gap: 30px; }
+		.result-card { flex: 1; padding: 30px; text-align: center; border-radius: 4px; }
+		.result-card .label { font-size: 14px; margin-bottom: 15px; }
+		.result-card .num { font-size: 32px; font-weight: bold; }
+		.card-success { background: #d8f5dd; color: #2a7d3f; }
+		.card-error { background: #f7dada; color: #b03030; }
+		.err-msg { color: red; font-weight: bold; margin: 25px 0 15px; line-height: 1.6; }
+		.err-table { width: 100%; border-collapse: collapse; }
+		.err-table th { background: #1f3a5f; color: #fff; padding: 12px; text-align: left; font-size: 16px; }
+		.err-table td { padding: 12px; border-bottom: 1px solid #ccc; color: #b03030; }
+	</style>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="page-title-area">
+			<h2>アカウント情報のインポート</h2>
+		</div>
+
+		<p class="import-desc">
+			CSVファイルを選択してアカウント情報を一括登録・更新します。<br>
+			※既存のログインIDと一致する場合は上書き更新、空欄の場合は新規登録されます。
+		</p>
+
+		<form th:action="@{/accounts/import}" method="post" enctype="multipart/form-data">
+			<div class="upload-box">
+				<div class="big">アカウントデータCSVを選択してください</div>
+				<div class="small">対応形式: .csv (UTF-8) / BOMあり推奨、最大5M</div>
+				<div class="file-inner">
+					<input type="file" name="file" accept=".csv">
+				</div>
+				<p th:if="${fileError}" th:text="${fileError}" style="color:red; margin-top:15px;"></p>
+			</div>
+
+			<div class="btn-area">
+				<button type="submit" class="import-btn import-btn-do">インポート</button>
+				<a th:href="@{/accounts}" class="import-btn import-btn-back" style="text-decoration:none; display:inline-block;">戻る</a>
+			</div>
+		</form>
+
+		<hr class="import-divider">
+
+		<div class="result" th:if="${done}">
+			<h3>
+				処理結果
+				<span th:if="${globalError}" th:text="${globalError}"
+					style="color:red; font-size:14px; font-weight:normal; margin-left:15px;"></span>
+			</h3>
+			<div class="result-cards">
+				<div class="result-card card-success">
+					<div class="label">正常取り込み</div>
+					<div class="num" th:text="${successCount} + '件'">0件</div>
+				</div>
+				<div class="result-card card-error">
+					<div class="label">エラー</div>
+					<div class="num" th:text="${errorCount} + '件'">0件</div>
+				</div>
+			</div>
+
+			<div th:if="${errorCount > 0 and globalError == null}">
+				<p class="err-msg">
+					以下の行でエラーが発生したため、取り込みをキャンセルしました。<br>
+					内容を修正して再アップロードしてください。
+				</p>
+				<table class="err-table">
+					<thead>
+						<tr>
+							<th>行数</th>
+							<th>対象項目</th>
+							<th>エラー内容</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="err : ${errors}">
+							<td th:text="${err.row}"></td>
+							<td th:text="${err.target}"></td>
+							<td th:text="${err.message}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
