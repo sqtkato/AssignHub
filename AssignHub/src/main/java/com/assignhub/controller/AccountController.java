@@ -86,7 +86,11 @@ public class AccountController {
     @PostMapping("/export")
     public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
             Model model) {
-    	if(ids.size()==0) {return "account/index";}
+
+        if (ids == null) {
+            model.addAttribute("message", "対象が選択されていません");
+            return "redirect:/accounts";
+        }
         model.addAttribute("count", accountService.findByIds(ids).size());
         List<Account> accounts = accountService.findByIds(ids);
         model.addAttribute("accounts", accounts);
@@ -117,7 +121,7 @@ public class AccountController {
         System.arraycopy(bom, 0, result, 0, bom.length);
         System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=employees.csv");
+        headers.add("Content-Disposition", "attachment; filename=account.csv");
         headers.add("Content-Type", "text/csv; charset=UTF-8");
         return new ResponseEntity<>(result, headers, HttpStatus.OK);
     }
