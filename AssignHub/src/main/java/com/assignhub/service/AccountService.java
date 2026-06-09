@@ -33,6 +33,10 @@ public class AccountService {
 		return accountMapper.findAll(keyword, sort, order);
 	}
 
+	public List<Account> findByIds(List<Integer> ids){
+		return accountMapper.findByIds(ids);
+	}
+	
 	public void save(Account account) {
 		// マッパー経由でDBのINSERT/UPDATE処理を呼び出す
 		accountMapper.save(account);

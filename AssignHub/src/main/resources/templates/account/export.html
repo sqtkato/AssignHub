@@ -3,13 +3,13 @@
 	layout:decorate="~{layout/layout}">
 
 <head>
-	<title>社員情報エクスポート</title>
+	<title>アカウント情報エクスポート</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
-			<h2>社員情報エクスポート</h2>
+			<h2>アカウント情報のエクスポート</h2>
 		</div>
 		<div class="card form-card-wide">
 			<p class="instruction">以下の条件と内容でCSVファイルを出力します。よろしければ「ダウンロード」ボタンを押してください。</p>
@@ -28,11 +28,11 @@
 				</table>
 			</div>
 			<div class="action-area">
-				<a th:href="@{/accounts/export/download(keyword=${keyword}, deptId=${deptId})}"
+				<a th:href="@{/accounts/export/download(accountId=${accountId})}"
 					class="btn btn-primary btn-wide">ダウンロード</a>
 				<a th:href="@{/accounts}" class="btn btn-secondary btn-wide">戻る</a>
 			</div>
-			<p class="export-note">※出力される項目：社員ID, 社員名, 部署ID, 入社年, 郵便番号, 住所, メールアドレス</p>
+			<p class="export-note">※詳細情報がエクスポートされます。</p>
 		</div>
 	</div>
 </body>

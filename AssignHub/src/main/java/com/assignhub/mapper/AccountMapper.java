@@ -25,6 +25,17 @@ public  interface AccountMapper {
 	 */
 	List<Account> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
 
+	/**
+	 * チェックボックスにチェックをつけたアカウント情報を全件取得する。
+	 *
+	 * @param keyword 検索ワード（企業名の部分一致）
+	 * @param sort    ソート対象のカラム名
+	 * @param order   ソート順（asc または desc）
+	 * @return アカウントエンティティのリスト
+	 */
+	List<Account> findByIds(@Param("ids") List<Integer> ids);
+
+	
 
 void save(Account account);
 }
