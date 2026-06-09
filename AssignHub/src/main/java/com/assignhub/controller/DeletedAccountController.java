@@ -13,20 +13,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Company;
 import com.assignhub.form.CompanyForm;
-import com.assignhub.service.CompanyService;
 
 @Controller
 @RequestMapping("/companies")
 public class DeletedAccountController {
-	private final CompanyService companyService;
+	private final DeletedAccountService deletedaccountService;
 
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param companyService 企業サービス
 	 */
-	public CompanyController(CompanyService companyService) {
-		this.companyService = companyService;
+	public DeletedAccountController(DeletedAccountService deletedaccountService) {
+		this.deletedaccountService = deletedaccountService;
 	}
 
 	/**
@@ -42,7 +41,7 @@ public class DeletedAccountController {
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
 			@RequestParam(name = "sort", defaultValue = "company_id") String sort,
 			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-		model.addAttribute("companies", companyService.findAll(keyword, sort, order));
+		model.addAttribute("companies", deletedaccountService.findAll(keyword, sort, order));
 		model.addAttribute("keyward", keyword);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
@@ -79,7 +78,7 @@ public class DeletedAccountController {
 		}
 		Company company = new Company();
 		copyFormToEntity(form, company);
-		companyService.save(company);
+		deletedaccountService.save(company);
 		attributes.addFlashAttribute("toastMessage", "企業情報を登録しました");
 		return "redirect:/companies";
 	}
@@ -93,4 +92,48 @@ public class DeletedAccountController {
 	private void copyFormToEntity(CompanyForm f, Company e) {
 		e.setCompanyName(" ");
 	}
+	
+	
+	
+//一覧
+	public String index() {
+		return "deletedaccount/index";
+	}
+
+//	検索
+	public String serch() {
+		return "deletedaccount/serch";
+	}
+	
+//一つ復元
+	public String recover() {
+		return "deletedaccount/recover";
+	}
+
+//	一つ削除
+	public String deleted() {
+		return "deletedaccount/deleted";
+	}
+
+//	一括復元
+	public String bulkrecover() {
+		return "deletedaccount/bulkrecover";
+	}
+	
+//一括削除
+	public String buikdeleted() {
+		return "deletedaccount/bulkdeleted";
+	}
+	
+//	エクスポート確認画面
+	public String exportconfirm() {
+		return "deletedaccount/exportconfirm";
+	}
+	
+//	エクスポート実行画面
+	public String exportcomplete() {
+		return "deletedaccount/exportcomplete";
+	}
+	
+
 }
