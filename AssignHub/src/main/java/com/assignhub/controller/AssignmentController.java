@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -135,7 +138,7 @@ public class AssignmentController {
 		if (!model.containsAttribute("assignmentForm")) {
 			model.addAttribute("assignmentForm", new AssignmentForm());
 		}
-		
+
 		if (assignmentService.isMaxCount()) {
 			attributes.addFlashAttribute(
 					"toastError",
@@ -146,12 +149,61 @@ public class AssignmentController {
 		return "assignment/create";
 	}
 
+	/**
+	* アサイン情報を新規登録する
+	* 
+	* @param form アサイン情報のフォームオブジェクト
+	* @param result バリデーション結果
+	* @param model モデルオブジェクト
+	* @param attributes リダイレクト属性オブジェクト
+	* @return 登録成功時はアサイン情報の一覧画面にリダイレクト、バリデーションエラー時は新規登録画面のテンプレートパス
+	*/
+	@PostMapping
+	public String store(@Validated @ModelAttribute("assignmentForm") AssignmentForm form,
+			BindingResult result,
+			Model model,
+			RedirectAttributes attributes) {
+		if (result.hasErrors()) {
+			addComboBoxItems(model);
+			return "assignment/create";
+		}
+
+		Assignment assignment = new Assignment();
+		copyFormToEntity(form, assignment);
+
+		/**
+		 * 契約開始日と契約終了日の順序をチェックする
+		 * 契約終了日が入力されている場合、契約開始日より前の日付は入力できないようにする
+		 */
+		if (assignment.getContractEndDate() != null
+				&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
+			addComboBoxItems(model);
+			model.addAttribute("toastError",
+					"契約開始日より前の日付は入力できません。");
+			return "assignment/create";
+		}
 
 		/**
 		 * アサイン情報の重複をチェックする
 		 */
+		if (assignmentService.existsDuplicate(assignment)) {
+			addComboBoxItems(model);
+			model.addAttribute("toastError",
+					"すでに同じ内容が登録されています。");
+			return "assignment/create";
+		}
 
+		assignmentService.save(assignment);
+		attributes.addFlashAttribute("toastMessage", "アサイン情報を登録しました");
+		return "redirect:/assignments";
+	}
 
+	@GetMapping("/{id}")
+	public String detail(@PathVariable Integer id, Model model) {
+		Assignment assignment = assignmentService.findById(id);
+		model.addAttribute("assignment", assignment);
+		return "assignment/detail";
+	}
 
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable Integer id) {
@@ -219,24 +271,23 @@ public class AssignmentController {
 			@RequestParam(name = "txt_contract_end_date", required = false) String txtContractEndDate,
 			@RequestParam List<Integer> ids, Model model, RedirectAttributes redirectAttributes) {
 		if (ids == null || ids.isEmpty()) {
-			redirectAttributes.addFlashAttribute
-			("toastError", "エクスポートする対象が選択されていません");
+			redirectAttributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
 			return "redirect/assignments";
 		}
-			List<Assignment> assignments = assignmentService.findAll(
-					txtEmpName,
-					txtAssignName,
-					txtCompanyName,
-					txtContractStartDate,
-					txtContractEndDate);
-			List<Assignment> assignment = ids.stream().map(assignmentService::findById).toList();
-			model.addAttribute("assignments", assignments);
-			model.addAttribute("count", assignment.size());
-			model.addAttribute("ids", ids);
-			return "assignment/export";
-		
+		List<Assignment> assignments = assignmentService.findAll(
+				txtEmpName,
+				txtAssignName,
+				txtCompanyName,
+				txtContractStartDate,
+				txtContractEndDate);
+		List<Assignment> assignment = ids.stream().map(assignmentService::findById).toList();
+		model.addAttribute("assignments", assignments);
+		model.addAttribute("count", assignment.size());
+		model.addAttribute("ids", ids);
+		return "assignment/export";
+
 	}
-	
+
 	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "txt_emp_name", required = false) String txtEmpName,
@@ -289,13 +340,12 @@ public class AssignmentController {
 		e.setUnitPrice(f.getUnitPrice());
 		e.setRoleId(f.getRoleId());
 	}
-	
+
 	private void addComboBoxItems(Model model) {
 		model.addAttribute("employeeOptions", assignmentService.findEmployeeOptions());
 		model.addAttribute("companyOptions", assignmentService.findCompanyOptions());
 		model.addAttribute("roleOptions", assignmentService.findRoleOptions());
 	}
-
 
 	private String returnIndex(
 			Model model,
