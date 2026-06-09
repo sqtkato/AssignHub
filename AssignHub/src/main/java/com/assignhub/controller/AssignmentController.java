@@ -200,6 +200,13 @@ public class AssignmentController {
 	public String importPage() {
 		return "assignment/import";
 	}
+	
+	
+	
+	@GetMapping("/export")
+	public String exportPage() {
+	    return "assignment/export";
+	}
 
 	/**
 	 * アサイン情報を一括で削除する

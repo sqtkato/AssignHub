@@ -22,7 +22,7 @@
 
         <result property="empName" column="emp_name"/>
         <result property="companyName" column="company_name"/>
-        <result property="roleName" column="role_name"/>
+        <result property="role" column="role"/>
         
     </resultMap>
 
@@ -40,7 +40,7 @@
         	a.updated_at,
         	CONCAT(e.last_name, e.first_name) AS emp_name,
         	c.company_name,
-        	r.role_name
+        	r.role
     	FROM t_assignment a
     	INNER JOIN m_employee e
         	ON a.emp_id = e.emp_id
@@ -91,7 +91,7 @@
         	a.updated_at,
         	CONCAT(e.last_name, e.first_name) AS emp_name,
         	c.company_name,
-        	r.role_name
+        	r.role
     	FROM t_assignment a
     	INNER JOIN m_employee e
         	ON a.emp_id = e.emp_id
