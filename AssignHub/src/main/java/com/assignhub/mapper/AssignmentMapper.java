@@ -27,7 +27,7 @@ public interface AssignmentMapper {
 	 * @return アサイン情報のリスト
 	 */
 	List<Assignment> findAll(@Param("txtEmpName") String txtEmpName, 
-			@Param("txtassignName") String txtAssignName,
+			@Param("txtAssignName") String txtAssignName,
 			@Param("txtCompanyName") String txtCompanyName,
 			@Param("txtContractStartDate") String txtContractStartDate,
 			@Param("txtContractEndDate") String txtContractEndDate);
