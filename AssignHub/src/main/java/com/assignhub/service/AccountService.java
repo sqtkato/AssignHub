@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.assignhub.entity.Account;
@@ -111,5 +112,15 @@ public class AccountService {
 			}
 		}
 		return count;
+	}
+	
+	/**
+	 * アカウントを一件論理削除。
+	 *
+	 * @param id　削除対象のアカウントID
+	 */
+	@Transactional
+	public void delete(Integer id) {
+		accountMapper.delete(id);
 	}
 }
