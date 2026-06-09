@@ -29,8 +29,8 @@ public class AccountService {
 	 * @param order   昇順（asc）または降順（desc）
 	 * @return 企業エンティティのリスト
 	 */
-	public List<Account> findAll(String keyword, String sort, String order) {
-		return accountMapper.findAll(keyword, sort, order);
+	public List<Account> findAll(String keyword, String sort, String order, Integer permission) {
+		return accountMapper.findAll(keyword, sort, order, permission);
 	}
 
 	public void save(Account account) {
