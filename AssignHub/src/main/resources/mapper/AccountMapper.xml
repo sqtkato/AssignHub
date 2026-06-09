@@ -18,22 +18,24 @@
 		a.account_id = e.emp_id
 
 		<where>
+			a.delete_flg = 0 
+			
 			<if test="keyword != null and keyword != ''">
-				(
+				AND (
 				e.emp_name LIKE CONCAT('%', #{keyword}, '%')
 				OR a.login_id LIKE
 				CONCAT('%', #{keyword}, '%')
 				OR a.account_id LIKE CONCAT('%',
 				#{keyword}, '%')
 				<!-- ★他に検索対象にしたいカラムがあれば、ここに OR で追加していきます -->
-				)
+				) 
 			</if>
 
-			<!-- <if test="permission != null"> -->
-			<!-- AND permission = #{permission} -->
-			<!-- </if> -->
+			 <if test="permission != null"> 
+			 AND permission = #{permission} 
+			 </if> 
 		</where>
-		ORDER BY ${sort} ${order}
+		ORDER BY a.account_id ASC
 	</select>
 
 	<select id="findByIds" resultMap="accountResultMap">

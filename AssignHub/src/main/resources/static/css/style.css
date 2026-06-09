@@ -22,6 +22,19 @@ a:hover {
 }
 
 /* =========================================
+   Layout （メインコンテンツ　ヘッダー)
+========================================= */
+
+.page-title-area{
+border-bottom: #004494 2px solid;	
+margin-bottom: 20px;
+}
+
+h2{
+	margin-bottom: 0;	
+}
+
+/* =========================================
    Layout (サイドバーとメインコンテンツ)
 ========================================= */
 .sidebar {
@@ -503,7 +516,7 @@ a:hover {
    検索バーの50%:50%横並び調整
 ========================================= */
 /* 検索フォーム全体の枠 */
-.search-form {
+.acc .search-form {
 	display: flex;
 	align-items: flex-end; /* ボタンを下揃えにする */
 	gap: 15px;             /* フォームと検索ボタンの間のすき間 */
@@ -511,7 +524,7 @@ a:hover {
 }
 
 /* 2つの検索条件を包むグループ */
-.search-form .form-group-search {
+.acc .search-form .form-group-search {
 	display: flex;
 	flex: 1;               /* 検索ボタン以外の残りの幅をすべて使う */
 	gap: 20px;             /* キーワード検索と権限の間のすき間 */
