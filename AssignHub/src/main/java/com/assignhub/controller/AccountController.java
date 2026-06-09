@@ -44,8 +44,9 @@ public class AccountController {
 	@GetMapping
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
 			@RequestParam(name = "sort", defaultValue = "login_id") String sort,
-			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-		model.addAttribute("accounts", accountService.findAll(keyword, sort, order));
+			@RequestParam(name = "order", defaultValue = "asc") String order, Model model,
+			@RequestParam(name = "permission", required = false)Integer permission) {
+		model.addAttribute("accounts", accountService.findAll(keyword, sort, order, permission));
 		model.addAttribute("keyward", keyword);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);

@@ -23,7 +23,7 @@ public  interface AccountMapper {
 	 * @param order   ソート順（asc または desc）
 	 * @return アカウントエンティティのリスト
 	 */
-	List<Account> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+	List<Account> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order, @Param("permission") Integer permission);
 
 
 void save(Account account);

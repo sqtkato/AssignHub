@@ -31,9 +31,9 @@
 				) 
 			</if>
 
-			<!-- <if test="permission != null"> -->
-			<!-- AND permission = #{permission} -->
-			<!-- </if> -->
+			 <if test="permission != null"> 
+			 AND permission = #{permission} 
+			 </if> 
 		</where>
 		ORDER BY a.account_id ASC
 	</select>
