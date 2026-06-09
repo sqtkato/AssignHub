@@ -91,12 +91,5 @@ public class AssignmentService {
 
     	return duplicate != null;
 	}
-	
-	/**
-	 * アサイン情報の最大件数をチェックする。
-	 * @return アサイン情報の件数が500件以上の場合はtrue、そうでない場合はfalse
-	 */
-	public boolean isMaxCount() {
-	    return assignmentMapper.countActive() >= 500;
-	}
+}
 		

@@ -149,13 +149,13 @@ public class AssignmentController {
 			return "assignment/create";
 		}
 		
-		if (assignmentService.isMaxCount()) {
-		    result.reject(
-		            "maxCount",
-		            "登録可能なアサイン情報は最大500件までです。"
-		    );
-		    return "assignment/create";
-		}
+//		if (assignmentService.isMaxCount()) {
+//		    result.reject(
+//		            "maxCount",
+//		            "登録可能なアサイン情報は最大500件までです。"
+//		    );
+//		    return "assignment/create";
+//		}
 
 		Assignment assignment = new Assignment();
 		copyFormToEntity(form, assignment);
@@ -306,3 +306,4 @@ public class AssignmentController {
 
 	    return "assignment/index";
 	}
+}
