@@ -1,59 +1,59 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 
 <head>
-	<title>社員情報エクスポート</title>
+    <title>アサイン履歴情報エクスポート</title>
 </head>
 
 <body>
-	<div layout:fragment="content">
-		<div class="page-title-area">
-			<h2>社員情報エクスポート</h2>
-		</div>
-		<div class="card form-card-wide">
-			<p class="instruction">以下の条件と内容でCSVファイルを出力します。<br>よろしければ「エクスポート」ボタンを押してください。</p>
+<div layout:fragment="content">
 
-			<div class="export-confirm-box">
-				<h4 class="export-confirm-title">出力条件の確認</h4>
-				<table class="export-table">
-					<tr>
-						<td class="label">出力対象件数:</td>
-						<td class="value"><span class="export-count" th:text="${count}">0</span> 件</td>
-					</tr>
-					<tr>
-						<td class="label">文字コード:</td>
-						<td class="value">UTF-8</td>
-					</tr>
-				</table>
-				<table class="table">
-					<thead class="table-dark">
-						<tr>
-							<th>アサインID</th>
-							<th>社員名</th>
-							<th>アサイン先企業名</th>
-						</tr>
-					</thead>
+    <div class="page-title-area">
+        <h2>アサイン履歴情報エクスポート</h2>
+    </div>
 
-					<tbody>
-						<tr th:each="assign : ${assignments}" class="clickable-row">
+    <div class="card form-card">
+        <p>
+            <span th:text="${count}">0</span>件のアサイン履歴情報をCSV出力します。
+        </p>
 
-							<td th:text="${assign.assignmentId}"></td>
-							<td th:text="${assign.empName}"></td>
-							<td th:text="${assign.companyName}"></td>
-						</tr>
-					</tbody>
-				</table>
-				<p class="export-note">※出力される項目：アサインID,社員ID,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割</p>
-			</div>
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>社員名</th>
+                <th>アサイン先企業名</th>
+                <th>契約開始日</th>
+                <th>契約終了日</th>
+                <th>契約単価</th>
+                <th>役割</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="assign : ${assignments}">
+                <td th:text="${assign.assignmentId}"></td>
+                <td th:text="${assign.empName}"></td>
+                <td th:text="${assign.companyName}"></td>
+                <td th:text="${assign.contractStartDate}"></td>
+                <td th:text="${assign.contractEndDate != null ? assign.contractEndDate : 'ー'}"></td>
+                <td th:text="${assign.unitPrice}"></td>
+                <td th:text="${assign.role}"></td>
+            </tr>
+            </tbody>
+        </table>
 
-		</div>
-		<div class="action-area">
-			<a th:href="@{/assignments/export/download(ids=${ids})}"
-				class="btn btn-primary btn-wide">エクスポート</a>
-			<a th:href="@{/assignments}" class="btn btn-secondary btn-wide">戻る</a>
-		</div>
-	</div>
+        <form th:action="@{/assignments/export/download}" method="get" class="form-actions">
+            <input type="hidden"
+                   name="ids"
+                   th:each="id : ${ids}"
+                   th:value="${id}">
+            <button type="submit" class="btn btn-primary">CSVダウンロード</button>
+            <a th:href="@{/assignments}" class="btn btn-secondary">戻る</a>
+        </form>
+    </div>
+
+</div>
 </body>
-
 </html>

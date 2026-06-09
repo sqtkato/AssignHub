@@ -34,9 +34,17 @@ public class Assignment {
     
     /** 社員名（表示用） */
     private String empName;
+
+    private String empNameKana;
     
 	/** 企業名（表示用） */
     private String companyName;
+
+    private String companyNameKana;
+
+    private String assignCompanyName;
+
+    private String engineerType;
     
     /** 役割名（表示用） */
     private String roleName;
