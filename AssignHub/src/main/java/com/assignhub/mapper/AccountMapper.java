@@ -38,4 +38,6 @@ public  interface AccountMapper {
 	
 
 void save(Account account);
+
+boolean existsByLoginId(@Param("loginId") String loginId);
 }

@@ -27,8 +27,12 @@
 				CONCAT('%', #{keyword}, '%')
 				OR a.account_id LIKE CONCAT('%',
 				#{keyword}, '%')
+
+				)
+
 				<!-- ★他に検索対象にしたいカラムがあれば、ここに OR で追加していきます -->
 				) 
+
 			</if>
 
 			 <if test="permission != null"> 
@@ -38,6 +42,12 @@
 		ORDER BY a.account_id ASC
 	</select>
 
+	<!-- 追加：ログインIDの重複チェック -->
+	<select id="existsByLoginId" resultType="boolean">
+		SELECT COUNT(*) > 0
+		FROM m_account
+		WHERE login_id = #{loginId}
+	</select>
 	<select id="findByIds" resultMap="accountResultMap">
 		SELECT a.account_id, a.login_id,a.permission,concat(e.last_name , " " , e.first_name)as emp_name
 		FROM m_account a
