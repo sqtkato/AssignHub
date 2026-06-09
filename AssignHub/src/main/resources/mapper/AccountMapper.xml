@@ -14,9 +14,11 @@
 	<select id="findAll" resultMap="accountResultMap">
 		SELECT a.*, e.emp_name
 		FROM m_account a
-		left JOIN m_employee e ON a.account_id = e.emp_id
+		left JOIN m_employee e ON
+		a.account_id = e.emp_id
 
 		<where>
+			a.delete_flg = 0
 			<if test="keyword != null and keyword != ''">
 				(
 				e.emp_name LIKE CONCAT('%', #{keyword}, '%')
@@ -35,8 +37,10 @@
 		ORDER BY a.account_id ASC
 	</select>
 	<insert id="save" parameterType="com.assignhub.entity.Account">
-		INSERT INTO m_account (login_id, password_hash, permission, delete_flg)
-		VALUES (#{loginId}, #{passwordHash}, #{permission}, 0)
+		INSERT INTO m_account (login_id,
+		password_hash, permission, delete_flg)
+		VALUES (#{loginId},
+		#{passwordHash}, #{permission}, 0)
 	</insert>
 
 </mapper>
