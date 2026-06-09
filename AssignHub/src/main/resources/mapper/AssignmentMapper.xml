@@ -21,7 +21,11 @@
 
 
         <result property="empName" column="emp_name"/>
+        <result property="empNameKana" column="emp_name_kana"/>
         <result property="companyName" column="company_name"/>
+        <result property="companyNameKana" column="company_name_kana"/>
+        <result property="assignCompanyName" column="assign_company_name"/>
+        <result property="engineerType" column="engineer_type"/>
         <result property="role" column="role"/>
         
     </resultMap>
@@ -84,6 +88,30 @@
     	ORDER BY a.assignment_id
 	</select>
 
+    <select id="findEmployeeOptions" resultType="com.assignhub.entity.SelectOption">
+        SELECT
+            emp_id AS id,
+            CONCAT(last_name, first_name) AS name
+        FROM m_employee
+        ORDER BY emp_id
+    </select>
+
+    <select id="findCompanyOptions" resultType="com.assignhub.entity.SelectOption">
+        SELECT
+            company_id AS id,
+            company_name AS name
+        FROM m_company
+        ORDER BY company_id
+    </select>
+
+    <select id="findRoleOptions" resultType="com.assignhub.entity.SelectOption">
+        SELECT
+            role_id AS id,
+            role AS name
+        FROM m_role
+        ORDER BY role_id
+    </select>
+
     <select id="findById" resultMap="assignmentResultMap">
     	SELECT
         	a.assignment_id,
@@ -97,13 +125,19 @@
         	a.created_at,
         	a.updated_at,
         	CONCAT(e.last_name, e.first_name) AS emp_name,
-        	c.company_name,
+        	CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana,
+        	e.engineer_type,
+        	c.company_name AS assign_company_name,
+        	ec.company_name,
+        	ec.company_name_kana,
         	r.role
     	FROM t_assignment a
     	INNER JOIN m_employee e
         	ON a.emp_id = e.emp_id
     	INNER JOIN m_company c
         	ON a.company_id = c.company_id
+    	INNER JOIN m_company ec
+        	ON e.company_id = ec.company_id
     	INNER JOIN m_role r
         	ON a.role_id = r.role_id
     	WHERE a.assignment_id = #{id}

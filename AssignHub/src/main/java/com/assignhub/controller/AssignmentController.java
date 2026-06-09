@@ -1,4 +1,4 @@
-package com.assignhub.controller;
+﻿package com.assignhub.controller;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -132,10 +132,18 @@ public class AssignmentController {
 	 * @return アサイン情報の新規登録画面のテンプレートパス
 	 */
 	@GetMapping("/new")
-	public String create(Model model) {
+	public String create(Model model, RedirectAttributes attributes) {
 		if (!model.containsAttribute("assignmentForm")) {
 			model.addAttribute("assignmentForm", new AssignmentForm());
 		}
+		
+		if (assignmentService.isMaxCount()) {
+			attributes.addFlashAttribute(
+					"toastError",
+					"登録可能なアサイン情報は最大500件までです。");
+			return "redirect:/assignments";
+		}
+		addComboBoxItems(model);
 		return "assignment/create";
 	}
 	
@@ -156,17 +164,10 @@ public class AssignmentController {
         RedirectAttributes attributes) {
 
 		if (result.hasErrors()) {
+			addComboBoxItems(model);
 			return "assignment/create";
 		}
 		
-		if (assignmentService.isMaxCount()) {
-		    result.reject(
-		            "maxCount",
-		            "登録可能なアサイン情報は最大500件までです。"
-		    );
-		    return "assignment/create";
-		}
-
 		Assignment assignment = new Assignment();
 		copyFormToEntity(form, assignment);
 		
@@ -176,6 +177,7 @@ public class AssignmentController {
 		 */
 		if (assignment.getContractEndDate() != null
         	&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
+			addComboBoxItems(model);
 
     		result.rejectValue(
             	"contractEndDate",
@@ -189,6 +191,7 @@ public class AssignmentController {
 		 * アサイン情報の重複をチェックする
 		 */
 		if (assignmentService.existsDuplicate(assignment)) {
+			addComboBoxItems(model);
         	result.reject(
             	"error",
             	"すでに同じ内容が登録されています。"
@@ -202,7 +205,9 @@ public class AssignmentController {
 	}
 	
 	@GetMapping("/{id}")
-	public String detail(@PathVariable Integer id) {
+	public String detail(@PathVariable Integer id, Model model) {
+	    Assignment assignment = assignmentService.findById(id);
+	    model.addAttribute("assignment", assignment);
 	    return "assignment/detail";
 	}
 	
@@ -296,6 +301,12 @@ public class AssignmentController {
 	    e.setContractEndDate(f.getContractEndDate());
 	    e.setUnitPrice(f.getUnitPrice());
 	    e.setRoleId(f.getRoleId());
+	}
+
+	private void addComboBoxItems(Model model) {
+	    model.addAttribute("employeeOptions", assignmentService.findEmployeeOptions());
+	    model.addAttribute("companyOptions", assignmentService.findCompanyOptions());
+	    model.addAttribute("roleOptions", assignmentService.findRoleOptions());
 	}
 	
 	private String returnIndex(

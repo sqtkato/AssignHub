@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.assignhub.entity.Assignment;
+import com.assignhub.entity.SelectOption;
 import com.assignhub.mapper.AssignmentMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,18 @@ public class AssignmentService {
     public List<Assignment> findAll(String txtEmpName, String txtAssignName, String txtCompanyName,
     		String txtContractStartDate, String txtContractEndDate) {
         return assignmentMapper.findAll(txtEmpName, txtAssignName, txtCompanyName, txtContractStartDate, txtContractEndDate);
+    }
+
+    public List<SelectOption> findEmployeeOptions() {
+        return assignmentMapper.findEmployeeOptions();
+    }
+
+    public List<SelectOption> findCompanyOptions() {
+        return assignmentMapper.findCompanyOptions();
+    }
+
+    public List<SelectOption> findRoleOptions() {
+        return assignmentMapper.findRoleOptions();
     }
     
     /**
@@ -93,11 +106,7 @@ public class AssignmentService {
 
     	return duplicate != null;
 	}
-	
-	/**
-	 * アサイン情報の最大件数をチェックする。
-	 * @return アサイン情報の件数が500件以上の場合はtrue、そうでない場合はfalse
-	 */
+
 	public boolean isMaxCount() {
 	    return assignmentMapper.countActive() >= 500;
 	}
