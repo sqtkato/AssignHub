@@ -179,9 +179,8 @@ public class AssignmentController {
         	&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
 			addComboBoxItems(model);
 
-    		result.rejectValue(
-            	"contractEndDate",
-            	"date.order",
+			result.rejectValue("contractEndDate",
+					"date.order",
             	"契約開始日より前の日付は入力できません。");
 
     		return "assignment/create";
@@ -192,8 +191,7 @@ public class AssignmentController {
 		 */
 		if (assignmentService.existsDuplicate(assignment)) {
 			addComboBoxItems(model);
-        	result.reject(
-            	"error",
+			attributes.addFlashAttribute("toastMessage",
             	"すでに同じ内容が登録されています。"
         	);
         	return "assignment/create";
