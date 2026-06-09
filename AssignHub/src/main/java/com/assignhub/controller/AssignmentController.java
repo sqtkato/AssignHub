@@ -168,7 +168,6 @@ public class AssignmentController {
 			return "assignment/create";
 		}
 		
-
 		Assignment assignment = new Assignment();
 		copyFormToEntity(form, assignment);
 		

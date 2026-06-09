@@ -91,10 +91,6 @@ public interface AssignmentMapper {
     	@Param("contractStartDate") LocalDate contractStartDate,
     	@Param("contractEndDate") LocalDate contractEndDate
 	);
-	
-	/**
-	 * アサイン情報の総件数を取得する。
-	 * @return アサイン情報の総件数
-	 */
+
 	int countActive();
 }
