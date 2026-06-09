@@ -48,6 +48,9 @@ public interface AccountMapper {
 	 */
 	void delete(Integer id);
 	
-	Account findByLoginId(String loginId);
+	Account findById(Integer id);
 	
+	Account findByLoginId(String loginId);
+
+	void update(Account account);
 }
