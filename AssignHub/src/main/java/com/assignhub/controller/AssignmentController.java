@@ -201,11 +201,6 @@ public class AssignmentController {
 		return "assignment/import";
 	}
 
-	@GetMapping("/export")
-	public String exportPage() {
-		return "assignment/export";
-	}
-
 	/**
 	 * アサイン情報を一括で削除する
 	 * 
@@ -249,35 +244,19 @@ public class AssignmentController {
 	 * @param attributes リダイレクト属性オブジェクト
 	 * @return アサイン情報の一覧画面にリダイレクト
 	 */
-	@PostMapping("/export")
-	public String export(
-			@RequestParam(name = "ids", required = false) List<Integer> ids,
-			RedirectAttributes attributes) {
-
-		if (ids == null || ids.isEmpty()) {
-			attributes.addFlashAttribute(
-					"toastError",
-					"エクスポートする対象が選択されていません");
-			return "redirect:/assignments";
-		}
-
-		return "redirect:/assignments";
-	}
-
-	/**
-	 * 社員データのエクスポート画面を表示する。
-	 *
-	 * @param keyword     現在の検索キーワード（状態保持用）
-	 * @param deptId 現在の絞り込み部署ID
-	 * @param model  画面描画用のモデル
-	 * @return エクスポート画面のテンプレートパス
-	 */
 	@GetMapping("/export")
-	public String showExport(Model model) {
-		model.addAttribute("count", assignmentService.findAll());
-//		model.addAttribute("keyword", keyword);
-//		model.addAttribute("deptId", deptId);
+	public String export(
+			@RequestParam(name = "ids", required = false) List<Integer> ids,Model model) {
+			model.addAttribute("ids", ids);
 		return "assignment/export";
+		//		if (ids == null || ids.isEmpty()) {
+		//			attributes.addFlashAttribute(
+		//					"toastError",
+		//					"エクスポートする対象が選択されていません");
+		//			return "redirect:/assignments";
+		//		}
+		//
+		//		return "redirect:/assignments";
 	}
 
 	/**
