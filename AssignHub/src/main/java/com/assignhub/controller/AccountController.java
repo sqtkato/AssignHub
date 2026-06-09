@@ -60,7 +60,12 @@ public class AccountController {
 	}
 
 	@PostMapping("/create")
-	public String create(@ModelAttribute Account account) {
+	public String create(@ModelAttribute Account account, Model model) {
+		
+		 if (accountService.existsByLoginId(account.getLoginId())) {
+		        model.addAttribute("loginIdError", "このログインIDは既に使用されています");
+		        return "account/new";
+		    }
 
 		accountService.save(account);
 
