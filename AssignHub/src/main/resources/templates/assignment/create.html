@@ -21,27 +21,28 @@
 				
 				<div class="form-group">
 					<label>社員名 <span class="badge-required">必須</span></label>
-					<select name="empName">
+					<!--コンボボックス-->
+					<select id="assignments" name="cmb_emp_name">
 					  <option value="">未選択</option>
-					  <option th:each="item : ${items}"
-					          th:value="${item.id}"
-					          th:text="${item.name}">
+					  <option th:each="assign : ${assignments}"
+					          th:value="${assign.assignmentId}"
+					          th:text="${assign.empName}">
 					  </option>
 					</select>
-					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					<div class="error-message" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}">
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label>企業名 <span class="badge-required">必須</span></label>
-					<select name="companyName">
+					<select id="assignments" name="cmb_company_name">
 					  <option value="">未選択</option>
-					  <option th:each="item : ${items}"
-					          th:value="${item.id}"
-					          th:text="${item.name}">
+					  <option th:each="assign : ${assignments}"
+					          th:value="${assign.assignmentId}"
+					          th:text="${assign.companyName}">
 					  </option>
 					</select>
-					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					<div class="error-message" th:if="${#fields.hasErrors('companyId')}" th:errors="*{companyId}">
 					</div>
 				</div>
 				
@@ -58,21 +59,27 @@
                 </div>
 				
 				<div class="form-group">
+                    <label>契約単価</label>
+                    <input type="text" id="txt_unit_price" name="txt_unit_price" maxlength="10"
+                           class="form-control" th:value="${txt_unit_price}" placeholder="例：100000">
+                </div>
+				
+				<div class="form-group">
 					<label>役割 <span class="badge-required">必須</span></label>
-					<select name="role">
+					<select id="assignments" name="cmb_role_id">
 					 <option value="">未選択</option>
-					 <option th:each="item : ${items}"
-					          th:value="${item.id}"
-					          th:text="${item.name}">
+					 <option th:each="assign : ${assignments}"
+					          th:value="${assign.assignmentId}"
+					          th:text="${assign.roleId}">
 					  </option>
 					</select>
-					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					<div class="error-message" th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}">
 					</div>
 				</div>
 				
 				<div class="form-actions">
 					<button type="submit" class="btn btn-primary">登録</button>
-					<a th:href="@{/companies}" class="btn btn-secondary">戻る</a>
+					<a th:href="@{/assignments}" class="btn btn-secondary">戻る</a>
 				</div>
 			</form>
 		</div>
