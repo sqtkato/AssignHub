@@ -85,12 +85,14 @@ a:hover {
 	border-bottom: 1px solid #ddd;
 	padding: 12px;
 	text-align: left;
+	text-align: center;
 }
 
 .table th {
 	background-color: #f8f9fa;
 	font-weight: bold;
 }
+
 
 .table-dark th {
 	background-color: #343a40;
@@ -104,7 +106,6 @@ a:hover {
 	width: 40px;
 	text-align: center;
 }
-
 /* =========================================
    Buttons & Toolbars (ボタンとツールバー)
 ========================================= */
@@ -475,3 +476,103 @@ a:hover {
 .search-row .form-group {
     flex: 1;
 }
+
+/* =========================================
+   ボタン類 (標準)
+   ========================================= */
+.btn {
+	display: inline-block;
+	padding: 8px 16px;
+	font-size: 0.95rem;
+	border-radius: 4px;
+	text-decoration: none;
+	cursor: pointer;
+	border: none;
+	font-weight: bold;
+	transition: all 0.2s;
+}
+
+.btn-primary {
+	background-color: #0078d4;
+	color: #ffffff;
+	box-shadow: 0 2px 4px rgba(0, 120, 212, 0.3);
+}
+
+.btn-primary:hover {
+	background-color: #005a9e;
+	color: #ffffff;
+}
+
+.btn-secondary {
+	background-color: #e5e7eb;
+	color: #374151;
+}
+
+.btn-secondary:hover {
+	background-color: #d1d5db;
+	color: #111827;
+}
+
+.btn-outline-danger {
+	background-color: transparent;
+	color: #dc2626;
+	border: 1px solid #dc2626;
+}
+
+.btn-outline-danger:hover {
+	background-color: #fef2f2;
+	color: #b91c1c;
+}
+
+.btn-wide {
+	padding: 12px 40px;
+	font-size: 1.05rem;
+}
+
+
+/* =========================================
+    (export用スタイル)
+========================================= */
+.export-confirm-box {
+	background-color: #f8fafc;
+	padding: 25px;
+	border-radius: 8px;
+	margin-bottom: 30px;
+	border-left: 5px solid #2c3e50;
+}
+
+.export-confirm-title {
+	margin-top: 0;
+	color: #0f2c4c;
+	margin-bottom: 15px;
+}
+
+.export-table {
+	width: 100%;
+	border-spacing: 0 10px;
+	font-size: 0.95rem;
+}
+
+.export-table td.label {
+	width: 180px;
+	color: #666;
+}
+
+.export-table td.value {
+	font-weight: bold;
+	text-align: center;
+}
+
+.export-count {
+	font-size: 2rem;
+	color: #0078d4;
+	font-weight: bold;
+}
+
+.export-note {
+	margin-top: 20px;
+	font-size: 0.85rem;
+	color: #999;
+	text-align: center;
+}
+
