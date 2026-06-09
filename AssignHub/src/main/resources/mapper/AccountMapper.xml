@@ -12,17 +12,24 @@
 	</resultMap>
 
 	<select id="findAll" resultMap="accountResultMap">
-		SELECT a.*, e.emp_name
+		SELECT a.*, concat(e.last_name , " " , e.first_name)as emp_name
 		FROM m_account a
-		left JOIN m_employee e ON a.account_id = e.emp_id
+		left JOIN m_employee e ON
+		a.account_id = e.emp_id
+
 		<where>
 			a.delete_flg = 0
 
 			<if test="keyword != null and keyword != ''">
 				AND (
 				e.emp_name LIKE CONCAT('%', #{keyword}, '%')
-				OR a.login_id LIKE CONCAT('%', #{keyword}, '%')
-				OR a.account_id LIKE CONCAT('%', #{keyword}, '%')
+				OR a.login_id LIKE
+				CONCAT('%', #{keyword}, '%')
+				OR a.account_id LIKE CONCAT('%',
+				#{keyword}, '%')
+
+				)
+
 				<!-- ★他に検索対象にしたいカラムがあれば、ここに OR で追加していきます -->
 				)
 			</if>
@@ -34,16 +41,32 @@
 		ORDER BY a.account_id ASC
 	</select>
 
-	<insert id="save" parameterType="com.assignhub.entity.Account">
-		INSERT INTO m_account (login_id, password_hash, permission, delete_flg)
-		VALUES (#{loginId}, #{passwordHash}, #{permission}, 0)
-	</insert>
-
-	<select id="findByLoginId" resultMap="accountResultMap">
-		SELECT *
+	<!-- 追加：ログインIDの重複チェック -->
+	<select id="existsByLoginId" resultType="boolean">
+		SELECT COUNT(*) > 0
 		FROM m_account
 		WHERE login_id = #{loginId}
-		  AND delete_flg = 0
 	</select>
+	<select id="findByIds" resultMap="accountResultMap">
+		SELECT a.account_id, a.login_id,a.permission,concat(e.last_name , " " , e.first_name)as emp_name
+		FROM m_account a
+		left JOIN m_employee e ON
+		a.account_id = e.emp_id
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
+
+
+
+
+	<insert id="save" parameterType="com.assignhub.entity.Account">
+		INSERT INTO m_account (login_id,
+		password_hash, permission, delete_flg)
+		VALUES (#{loginId},
+		#{passwordHash}, #{permission}, 0)
+	</insert>
+
 
 </mapper>

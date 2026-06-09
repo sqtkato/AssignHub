@@ -13,8 +13,8 @@ import com.assignhub.entity.Account;
  * @author SQT）加藤
  */
 @Mapper
-public  interface AccountMapper {
-	
+public interface AccountMapper {
+
 	/**
 	 * 条件に一致する論理削除されていない企業情報を全件取得する。
 	 *
@@ -25,8 +25,20 @@ public  interface AccountMapper {
 	 */
 	List<Account> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order, @Param("permission") Integer permission);
 
+	/**
+	 * チェックボックスにチェックをつけたアカウント情報を全件取得する。
+	 *
+	 * @param keyword 検索ワード（企業名の部分一致）
+	 * @param sort    ソート対象のカラム名
+	 * @param order   ソート順（asc または desc）
+	 * @return アカウントエンティティのリスト
+	 */
+	List<Account> findByIds(@Param("ids") List<Integer> ids);
+
+	
+	
 
 void save(Account account);
 
-Account findByLoginId(@Param("loginId") String loginId);
+	boolean existsByLoginId(@Param("loginId") String loginId);
 }

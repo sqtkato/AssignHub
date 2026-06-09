@@ -12,14 +12,10 @@ public class AccountService {
 
 	private final AccountMapper accountMapper;
 
-	/**
-	 * コンストラクタによる依存性の注入。
-	 *
-	 * @param companyMapper 企業マスタに対するマッパー
-	 */
 	public AccountService(AccountMapper accountMapper) {
 		this.accountMapper = accountMapper;
 	}
+
 
 	/**
 	 * 検索条件およびソート条件に合致する企業情報を全件取得する。
@@ -31,11 +27,19 @@ public class AccountService {
 	 */
 	public List<Account> findAll(String keyword, String sort, String order, Integer permission) {
 		return accountMapper.findAll(keyword, sort, order, permission);
+
 	}
 
+	public List<Account> findByIds(List<Integer> ids){
+		return accountMapper.findByIds(ids);
+	}
+	
 	public void save(Account account) {
-		// マッパー経由でDBのINSERT/UPDATE処理を呼び出す
 		accountMapper.save(account);
+	}
 
+	// 追加：ログインIDの重複チェック
+	public boolean existsByLoginId(String loginId) {
+		return accountMapper.existsByLoginId(loginId);
 	}
 }
