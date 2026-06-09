@@ -47,4 +47,6 @@ public interface AccountMapper {
 	 * @param id 削除対象のアカウントID。
 	 */
 	void delete(Integer id);
+	
+	Account findByLoginId(String loginId);
 }
