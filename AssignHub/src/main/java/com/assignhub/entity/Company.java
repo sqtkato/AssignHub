@@ -18,28 +18,28 @@ public class Company {
 	private String companyName;
 	
 	/** 企業名カナ */
-	private String compNameKana;
+	private String companyNameKana;
 	
 	/** 郵便番号 */
-	private String compZipCode;
+	private String companyZipCode;
 	
 	/** 住所1 */
-	private String compAddress1;
+	private String companyAddress1;
 	
 	/** 住所2 */
-	private String compAddress2;
+	private String companyAddress2;
 	
 	/** TEL */
-	private String compTel;
+	private String companyTel;
 	
 	/** FAX */
 	private String fax;
 	
 	/** 設立年度 */
-	private int foundedYear;
+	private Integer foundedYear;
 	
 	/** 社員数 */
-	private int employeeCount;
+	private Integer employeeCount;
 	
 	/** 代表者姓 */
 	private String repLastName;
@@ -58,4 +58,8 @@ public class Company {
 
 	/** 更新日時 */
 	private LocalDateTime updatedAt;
+	
+	/** 削除フラグ*/
+	private Integer delete_flag;
+	
 }
