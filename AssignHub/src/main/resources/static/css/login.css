@@ -18,15 +18,16 @@ body {
 }
 
 .login-card {
-    width: 330px;
-    min-height: 395px;
+    width: 500px;
+    height: 650px;
     padding: 24px 18px 32px;
     background-color: #ffffff;
+	position: relative;
 }
 
 .login-title {
     margin: 0;
-    font-size: 28px;
+    font-size: 36px;
     font-weight: 700;
     text-align: center;
     color: #1f4e79;
@@ -40,7 +41,8 @@ body {
 }
 
 .form-group {
-    margin-bottom: 14px;
+    width: 300px;
+    margin: 0 auto 20px;
 }
 
 .form-label {
@@ -63,28 +65,27 @@ body {
 }
 
 .form-input {
-    display: block;
-    width: 140px;
-    height: 18px;
+    width: 250px;
+    height: 38px;
     margin: 12px auto 0;
     border: 2px solid #1f4e79;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .error-area {
-    width: 210px;
+    height: 80px;
+    width: 250px;
     margin: 4px auto 0;
     color: #ff0000;
     font-size: 11px;
     font-weight: 700;
-    line-height: 1.35;
 }
-
 .error-area p {
     margin: 0;
 }
 
 .login-error {
+    min-height: 20px;
     margin: 18px 0 16px;
     text-align: center;
     color: #ff0000;
@@ -93,16 +94,20 @@ body {
 }
 
 .button-area {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    width: 100%;
     text-align: center;
 }
 
 .login-button {
-    width: 105px;
-    height: 34px;
+    width: 150px;
+    height: 45px;
     border: none;
     color: #ffffff;
     background-color: #1f4e79;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
 }
