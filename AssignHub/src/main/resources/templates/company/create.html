@@ -22,7 +22,79 @@
 					<label>企業名 <span class="badge-required">必須</span></label>
 					<input type="text" th:field="*{companyName}" class="form-control"
 						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
-						placeholder="例：株式会社テクノソリューション">
+						placeholder="例：株式会社システム">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+					<label>企業名カナ <span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{companyName}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
+						placeholder="例：カブシキガイシャシステム">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+					<label>設立年度 </label>
+					<input type="text" th:field="*{companyName}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
+						placeholder="例：2026">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+					<label>社員数 </label>
+					<input type="text" th:field="*{companyName}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
+						placeholder="例：100">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+					<label>郵便番号 <span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{companyName}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
+						placeholder="例：102007">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+					<label>住所１（自動入力されます） <span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{companyName}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
+						placeholder="例：東京都千代田区九段北">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+					<label>住所２ </label>
+					<input type="text" th:field="*{companyName}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
+						placeholder="例：1-1-1-1システムビル2F">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+					<label>TEL <span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{companyName}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
+						placeholder="例：00000000000">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+					<label>FAX </label>
+					<input type="text" th:field="*{companyName}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
+						placeholder="例：000000000">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+					<label>代表者姓 </label>
+					<input type="text" th:field="*{companyName}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
+						placeholder="例：鈴木">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+					<label>代表者名 </label>
+					<input type="text" th:field="*{companyName}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
+						placeholder="例：太郎">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+					<label>代表者姓カナ </label>
+					<input type="text" th:field="*{companyName}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
+						placeholder="例：スズキ">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+					<label>代表者名カナ </label>
+					<input type="text" th:field="*{companyName}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
+						placeholder="例：タロウ">
 					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
 					</div>
 				</div>
