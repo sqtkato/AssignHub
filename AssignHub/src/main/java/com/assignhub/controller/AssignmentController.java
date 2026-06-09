@@ -38,7 +38,8 @@ public class AssignmentController {
 	/**
 	 * アサイン情報の一覧を表示する	
 	 * @param txtEmpName 社員名の検索キーワード
-	 * @param txtCompanyName 企業名の検索キーワード
+	 * @param txtAssignName アサイン先企業名の検索キーワード
+	 * @param txtCompanyName 所属企業名の検索キーワード
 	 * @param txtContractStartDate 契約開始日の検索キーワード
 	 * @param txtContractEndDate 契約終了日の検索キーワード
 	 * @param model モデルオブジェクト
@@ -47,6 +48,7 @@ public class AssignmentController {
 	@GetMapping
 	public String index(
 	        @RequestParam(name = "txt_emp_name", required = false) String txtEmpName,
+	        @RequestParam(name = "txt_assign_name", required = false) String txtAssignName,
 	        @RequestParam(name = "txt_company_name", required = false) String txtCompanyName,
 	        @RequestParam(name = "txt_contract_start_date", required = false) String txtContractStartDate,
 	        @RequestParam(name = "txt_contract_end_date", required = false) String txtContractEndDate,
@@ -57,13 +59,19 @@ public class AssignmentController {
 	    
 	    if (txtEmpName != null && txtEmpName.length() > 100) {
 	        model.addAttribute("toastError", "社員名は100文字以内で入力してください。");
-	        return returnIndex(model, txtEmpName, txtCompanyName,
+	        return returnIndex(model, txtEmpName, txtAssignName, txtCompanyName,
+	                txtContractStartDate, txtContractEndDate);
+	    }
+	    
+	    if (txtAssignName != null && txtAssignName.length() > 50) {
+	        model.addAttribute("toastError", "アサイン先企業名は50文字以内で入力してください。");
+	        return returnIndex(model, txtEmpName, txtAssignName, txtCompanyName,
 	                txtContractStartDate, txtContractEndDate);
 	    }
 	    
 	    if (txtCompanyName != null && txtCompanyName.length() > 50) {
-	        model.addAttribute("toastError", "アサイン先企業名は50文字以内で入力してください。");
-	        return returnIndex(model, txtEmpName, txtCompanyName,
+	        model.addAttribute("toastError", "所属企業は50文字以内で入力してください。");
+	        return returnIndex(model, txtEmpName, txtAssignName, txtCompanyName,
 	                txtContractStartDate, txtContractEndDate);
 	    }
 	    
@@ -73,7 +81,7 @@ public class AssignmentController {
 	        }
 	    } catch (Exception e) {
 	        model.addAttribute("toastError", "契約開始日は正しい日付を入力してください。");
-	        return returnIndex(model, txtEmpName, txtCompanyName,
+	        return returnIndex(model, txtEmpName, txtAssignName, txtCompanyName,
 	                txtContractStartDate, txtContractEndDate);
 	    }
 	    
@@ -83,7 +91,7 @@ public class AssignmentController {
 	        }
 	    } catch (Exception e) {
 	        model.addAttribute("toastError", "契約終了日は正しい日付を入力してください。");
-	        return returnIndex(model, txtEmpName, txtCompanyName,
+	        return returnIndex(model, txtEmpName, txtAssignName, txtCompanyName,
 	                txtContractStartDate, txtContractEndDate);
 	    }
 	    
@@ -95,19 +103,21 @@ public class AssignmentController {
 	                "toastError",
 	                "契約開始日は契約終了日以前の日付を入力してください。");
 
-	        return returnIndex(model, txtEmpName, txtCompanyName,
+	        return returnIndex(model, txtEmpName, txtAssignName, txtCompanyName,
 	                txtContractStartDate, txtContractEndDate);
 	    }
 
 	    List<Assignment> assignments =
 	            assignmentService.findAll(
 	                    txtEmpName,
+	                    txtAssignName,
 	                    txtCompanyName,
 	                    txtContractStartDate,
 	                    txtContractEndDate);
 
 	    model.addAttribute("assignments", assignments);
 	    model.addAttribute("txt_emp_name", txtEmpName);
+	    model.addAttribute("txt_assign_name", txtAssignName);
 	    model.addAttribute("txt_company_name", txtCompanyName);
 	    model.addAttribute("txt_contract_start_date", txtContractStartDate);
 	    model.addAttribute("txt_contract_end_date", txtContractEndDate);
@@ -291,18 +301,20 @@ public class AssignmentController {
 	private String returnIndex(
 	        Model model,
 	        String txtEmpName,
+	        String txtAssignName,
 	        String txtCompanyName,
 	        String txtContractStartDate,
 	        String txtContractEndDate) {
 
 	    model.addAttribute("txt_emp_name", txtEmpName);
+	    model.addAttribute("txt_assign_name", txtAssignName);
 	    model.addAttribute("txt_company_name", txtCompanyName);
 	    model.addAttribute("txt_contract_start_date", txtContractStartDate);
 	    model.addAttribute("txt_contract_end_date", txtContractEndDate);
 
 	    model.addAttribute(
 	            "assignments",
-	            assignmentService.findAll(null, null, null, null));
+	            assignmentService.findAll(null, null, null, null, null));
 
 	    return "assignment/index";
 	}
