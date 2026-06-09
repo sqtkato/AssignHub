@@ -47,14 +47,10 @@
 		<div class="content-wrapper" layout:fragment="content"></div>
 	</div>
 
-	<div id="logoutOverlay"
-		style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; align-items:center; justify-content:center;">
-		<div
-			style="background:#fff; border-radius:12px; padding:2rem; width:340px; text-align:center; border:1px solid #ddd;">
-			<div
-				style="width:48px; height:48px; border-radius:50%; background:#fef2f2; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
-				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-					stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<div id="logoutOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; align-items:center; justify-content:center;">
+		<div style="background:#fff; border-radius:12px; padding:2rem; width:340px; text-align:center; border:1px solid #ddd;">
+			<div style="width:48px; height:48px; border-radius:50%; background:#fef2f2; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
 					<polyline points="16 17 21 12 16 7"></polyline>
 					<line x1="21" y1="12" x2="9" y2="12"></line>
@@ -92,11 +88,10 @@
 			document.getElementById('logoutOverlay').style.display = 'none';
 		}
 
-		document.getElementById('logoutOverlay').addEventListener('click', function (e) {
+		document.getElementById('logoutOverlay').addEventListener('click', function(e) {
 			if (e.target === this) closeLogoutModal();
 		});
 	</script>
-
 
 </body>
 
