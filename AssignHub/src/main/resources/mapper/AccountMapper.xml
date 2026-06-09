@@ -15,28 +15,28 @@
 		SELECT a.*, e.emp_name
 		FROM m_account a
 		left JOIN m_employee e ON a.account_id = e.emp_id
-
 		<where>
 			<if test="keyword != null and keyword != ''">
 				(
 				e.emp_name LIKE CONCAT('%', #{keyword}, '%')
-				OR a.login_id LIKE
-				CONCAT('%', #{keyword}, '%')
-				OR a.account_id LIKE CONCAT('%',
-				#{keyword}, '%')
-				<!-- ★他に検索対象にしたいカラムがあれば、ここに OR で追加していきます -->
+				OR a.login_id LIKE CONCAT('%', #{keyword}, '%')
+				OR a.account_id LIKE CONCAT('%', #{keyword}, '%')
 				)
 			</if>
-
-			<!-- <if test="permission != null"> -->
-			<!-- AND permission = #{permission} -->
-			<!-- </if> -->
 		</where>
 		ORDER BY ${sort} ${order}
 	</select>
+
 	<insert id="save" parameterType="com.assignhub.entity.Account">
 		INSERT INTO m_account (login_id, password_hash, permission, delete_flg)
 		VALUES (#{loginId}, #{passwordHash}, #{permission}, 0)
 	</insert>
+
+	<select id="findByLoginId" resultMap="accountResultMap">
+		SELECT *
+		FROM m_account
+		WHERE login_id = #{loginId}
+		  AND delete_flg = 0
+	</select>
 
 </mapper>

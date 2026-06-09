@@ -27,4 +27,6 @@ public  interface AccountMapper {
 
 
 void save(Account account);
+
+Account findByLoginId(@Param("loginId") String loginId);
 }
