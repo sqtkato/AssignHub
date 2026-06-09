@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.assignhub.entity.Assignment;
+import com.assignhub.entity.SelectOption;
 
 /**
  * AssignmentMapperは、Assignmentエンティティに対するデータベース操作を定義するMyBatisのMapper Interfaceです。
@@ -26,9 +27,16 @@ public interface AssignmentMapper {
 	 * @return アサイン情報のリスト
 	 */
 	List<Assignment> findAll(@Param("txtEmpName") String txtEmpName, 
+			@Param("txtassignName") String txtAssignName,
 			@Param("txtCompanyName") String txtCompanyName,
 			@Param("txtContractStartDate") String txtContractStartDate,
 			@Param("txtContractEndDate") String txtContractEndDate);
+
+	List<SelectOption> findEmployeeOptions();
+
+	List<SelectOption> findCompanyOptions();
+
+	List<SelectOption> findRoleOptions();
 	
 	/**
 	 * IDを指定してアサイン情報を1件取得する。
@@ -83,10 +91,6 @@ public interface AssignmentMapper {
     	@Param("contractStartDate") LocalDate contractStartDate,
     	@Param("contractEndDate") LocalDate contractEndDate
 	);
-	
-	/**
-	 * アサイン情報の総件数を取得する。
-	 * @return アサイン情報の総件数
-	 */
+
 	int countActive();
 }
