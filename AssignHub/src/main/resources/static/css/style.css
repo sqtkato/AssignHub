@@ -154,7 +154,8 @@ h2{
 }
 
 .btn-secondary {
-	background-color: #6c757d;
+	font-size: 24px;
+	background-color: #fff;
 	color: white;
 }
 
@@ -542,4 +543,21 @@ h2{
 .search-form .btn {
 	height: 38px;          /* inputやselectの高さ（パディング込み）に合わせる */
 	box-sizing: border-box;
+}
+
+/* =========================================
+   テーブルスクロール
+========================================= */
+
+.table-scroll{
+	
+	max-height: 360px;
+	overflow-y: auto;
+}
+
+
+.table-scroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }

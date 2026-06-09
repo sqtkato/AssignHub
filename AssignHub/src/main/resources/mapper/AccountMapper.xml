@@ -37,11 +37,17 @@
 		</where>
 		ORDER BY a.account_id ASC
 	</select>
+	
 	<insert id="save" parameterType="com.assignhub.entity.Account">
 		INSERT INTO m_account (login_id,
 		password_hash, permission, delete_flg)
 		VALUES (#{loginId},
 		#{passwordHash}, #{permission}, 0)
 	</insert>
-
+	
+	<update id="delete">
+		UPDATE m_account
+		SET delete_flg = 1
+		WHERE account_id = #{id}
+	</update>
 </mapper>

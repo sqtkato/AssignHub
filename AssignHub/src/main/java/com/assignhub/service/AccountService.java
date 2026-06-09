@@ -3,6 +3,7 @@ package com.assignhub.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.assignhub.entity.Account;
 import com.assignhub.mapper.AccountMapper;
@@ -36,6 +37,15 @@ public class AccountService {
 	public void save(Account account) {
 		// マッパー経由でDBのINSERT/UPDATE処理を呼び出す
 		accountMapper.save(account);
-
+	}
+	
+	/**
+	 * アカウントを一件論理削除。
+	 *
+	 * @param id　削除対象のアカウントID
+	 */
+	@Transactional
+	public void delete(Integer id) {
+		accountMapper.delete(id);
 	}
 }

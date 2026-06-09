@@ -4,9 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
 import com.assignhub.service.AccountService;
@@ -68,6 +70,20 @@ public class AccountController {
 		return "redirect:/accounts";
 
 	}
+	
+	
+	/**
+	 * アカウントを一件論理削除
+	 * 
+	 * @param id 削除対象のアカウントID
+	 * @return 一覧画面へのリダイレクトパス
+	 */
+	@PostMapping("/{id}/delete")
+	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+		accountService.delete(id);
+		return "redirect:/accounts";
+	}
+	
 //	   /**
 //     * 社員データのエクスポート画面を表示する。
 //     *
