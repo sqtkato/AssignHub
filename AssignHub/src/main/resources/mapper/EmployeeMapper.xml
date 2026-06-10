@@ -30,24 +30,47 @@
 	</resultMap>
 
 	<select id="findAll" resultMap="employeeResultMap">
-		SELECT e.*, 
-		       c.company_name AS company_name_belong, 
-		       c2.company_name AS company_name_assign
-		FROM m_employee e
-		LEFT JOIN m_company c
-		ON e.company_id = c.company_id
-		LEFT JOIN t_assignment a
-		ON a.emp_id = e.emp_id
-		AND a.contract_end_date is null
-		LEFT JOIN m_company c2
-        ON a.company_id = c2.company_id
-		<if test="keyword != null and keyword != ''">
-			<where>
-				emp_name LIKE CONCAT('%', #{keyword}, '%')
-			</where>
-		</if>
-		ORDER BY ${sort} ${order}
-	</select>
+    SELECT e.*, 
+           c.company_name AS company_name_belong, 
+           c2.company_name AS company_name_assign
+    FROM m_employee e
+    LEFT JOIN m_company c
+    ON e.company_id = c.company_id
+    LEFT JOIN t_assignment a
+    ON a.emp_id = e.emp_id
+    AND a.contract_end_date is null
+    LEFT JOIN m_company c2
+    ON a.company_id = c2.company_id
+    WHERE 
+    e.delete_flg = 0
+    
+    <where>
+        <if test="keyword_name != null and keyword_name != ''">
+            AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%', #{keyword_name}, '%') 
+        </if>
+        
+        <if test="keyword_company_assign != null and keyword_company_assign != ''">
+            AND c2.company_name LIKE CONCAT('%', #{keyword_company_assign}, '%')
+        </if>
+        
+        <if test="keyword_company != null and keyword_company != ''">
+            AND c.company_name LIKE CONCAT('%', #{keyword_company}, '%')
+        </if>
+        
+        <if test="keyword_engineer_type != null and keyword_engineer_type != ''">
+            AND e.engineer_type LIKE CONCAT('%', #{keyword_engineer_type}, '%')
+        </if>
+    </where>
+    
+    <choose>
+       <when test="sort == 'emp_name'">
+           ORDER BY CONCAT(e.last_name, e.first_name) ${order}
+       </when>
+       <otherwise>
+        ORDER BY ${sort} ${order}
+       </otherwise>
+   </choose>
+   </select>
 
 	<select id="findById" resultMap="employeeResultMap">
 		SELECT *
@@ -64,4 +87,23 @@
 		#{empName}, #{hireYear}, NOW(), NOW()
 		)
 	</insert>
+	
+	<update id="delete">
+		UPDATE m_employee
+		SET delete_flg = 1
+		WHERE
+		emp_id = #{id}
+	</update>
+	
+	<update id="deleteBulk">
+		UPDATE m_employee
+		SET delete_flg = 1
+		WHERE emp_id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</update>
+	
+	
 </mapper>

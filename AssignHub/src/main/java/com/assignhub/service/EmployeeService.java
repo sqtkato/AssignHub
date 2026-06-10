@@ -39,8 +39,8 @@ public class EmployeeService {
 	 * @param order   昇順（asc）または降順（desc）
 	 * @return 社員エンティティのリスト
 	 */
-	public List<Employee> findAll(String keyword, String sort, String order) {
-		return employeeMapper.findAll(keyword, sort, order);
+	public List<Employee> findAll(String keyword_name, String keyword_company_assign, String keyword_company, String keyword_engineer_type, String sort, String order) {
+		return employeeMapper.findAll(keyword_name, keyword_company_assign, keyword_company, keyword_engineer_type, sort, order);
 	}
 
 	/**
@@ -51,6 +51,18 @@ public class EmployeeService {
 	 */
 	public Employee findById(Integer id) {
 		return employeeMapper.findById(id);
+	}
+	
+	@Transactional
+	public void delete(Integer id) {
+		employeeMapper.delete(id);
+	}
+	
+	@Transactional
+	public void deleteBulk(List<Integer> ids) {
+		if (ids != null && !ids.isEmpty()) {
+			employeeMapper.deleteBulk(ids);
+		}
 	}
 
 	/**
