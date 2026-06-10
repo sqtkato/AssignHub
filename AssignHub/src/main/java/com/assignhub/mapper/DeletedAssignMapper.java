@@ -9,7 +9,7 @@ import com.assignhub.entity.DeletedAccount;
 import com.assignhub.entity.DeletedAssign;
 
 @Mapper
-public class DeletedAssignMapper {
+public interface DeletedAssignMapper {
 	/**
 	 * 論理削除済みのアサイン履歴情報を全件取得する（一覧表示・検索用）。
 	 *
@@ -68,11 +68,11 @@ List<DeletedAssign> findallByIds(@Param("ids") List<Integer> ids);
 	 */
 	int countcompanyspartnerByAssignId(@Param("id") Integer id);
 	/**
-	 * 指定されたアサインIDに紐づく企業数(パートナー所属）をカウントする（単一復元の不在条件チェック用）。
+	 * 指定されたアサインIDのいずれかに紐づく企業数(パートナー所属）をカウントする（単一復元の不在条件チェック用）。
 	 */
-	
+	int countcompanyspartnerByAssignIds(@Param("ids") List<Integer> ids);
 	/**
-	 * 指定されたアサインIDのいずれかに紐づく社員数をカウントする（一括復元の不在条件チェック用）。
+	 * 指定されたアサインIDに紐づく社員情報(プロパー)をカウントする（一括復元の不在条件チェック用）。
 	 */
 	int countEmployeesByAssignIds(@Param("ids") List<Integer> ids);
 	
