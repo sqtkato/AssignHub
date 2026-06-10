@@ -36,7 +36,7 @@ public interface AccountMapper {
 	List<Account> findByIds(@Param("ids") List<Integer> ids);
 
 	Account findByLoginId(String loginId);
-
+	
 	void save(Account account);
 
 	boolean existsByLoginId(@Param("loginId") String loginId);
@@ -49,7 +49,6 @@ public interface AccountMapper {
 	 * @param id 削除対象のアカウントID。
 	 */
 	void delete(Integer id);
-
 
 	// ===== インポート機能用に追加 =====
 

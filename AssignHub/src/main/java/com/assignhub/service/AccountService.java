@@ -43,15 +43,10 @@ public class AccountService {
 	public List<Account> findByIds(List<Integer> ids){
 		return accountMapper.findByIds(ids);
 	}
-<<<<<<< HEAD
 
     public Account findByLoginId(String loginId) {
         return accountMapper.findByLoginId(loginId);
     }
-=======
->>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
-	
-<<<<<<< HEAD
     public Account login(String loginId, String password) {
 
         // ① loginIdでユーザー取得
@@ -67,19 +62,13 @@ public class AccountService {
         return null;
     }
 
-=======
-	
->>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 	public void save(Account account) {
-<<<<<<< HEAD
 		account.setPasswordHash(passwordEncoder.encode(account.getPasswordHash()));
 		if (account.getAccountId() == null) {
 			accountMapper.save(account); 
 		} else {
 			accountMapper.update(account);
 		}
-=======
->>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 
 	    account.setPasswordHash(
 	        passwordEncoder.encode(account.getPasswordHash())
@@ -98,7 +87,7 @@ public class AccountService {
 	public boolean existsByLoginId(String loginId) {
 		return accountMapper.existsByLoginId(loginId);
 	}
-<<<<<<< HEAD
+
 
 	// ===== ここから アカウント情報インポート機能 =====
 
@@ -244,9 +233,6 @@ public class AccountService {
 		}
 		return count;
 	}
-=======
-	
->>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 	/**
 	 * アカウントを一件論理削除。
 	 *
@@ -261,7 +247,7 @@ public class AccountService {
 	public Account findById(Integer id) {
 		return accountMapper.findById(id);
 	}
-<<<<<<< HEAD
+
 
 	// 指定された複数の社員IDのデータを一括で物理削除する。
 	@Transactional
@@ -269,14 +255,7 @@ public class AccountService {
 		if (ids != null && !ids.isEmpty()) {
 			accountMapper.deleteBulk(ids);
 		}
-=======
-	
-	
 
-	public void update(Account account) {
-		accountMapper.update(account);
-		
->>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 	}
 
 

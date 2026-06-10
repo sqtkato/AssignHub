@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function() {
             updateBulkActionButton();
         });
     }
-    	// ==========================================
+       	// ==========================================
     // ★【新しく追加】一括削除ボタンのクリック制御
 
     // ==========================================
@@ -112,6 +112,4 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
-
-	
 });
