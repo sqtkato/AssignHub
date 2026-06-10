@@ -1,5 +1,7 @@
 package com.assignhub.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -111,27 +113,56 @@ public class DeletedAccountController {
 	
 //一つ復元
 	@GetMapping
-	public String recover() {
-		return "deletedAccount/recover";
-	}
+	public String recover(@RequestParam(name = "ids", required = false) List<Integer> ids,
+				RedirectAttributes attributes) {
+			if (ids == null || ids.isEmpty()) {
+				attributes.addFlashAttribute("toastError", "");
+				return "deletedAccount/recover";
+			}
+			DeletedAccountService.deleteBulk(ids);
+			attributes.addFlashAttribute("toastMessage", ids.size() + "");
+			return "deletedAccount/recover";}
 
 //	一つ削除
 	@GetMapping
-	public String deleted() {
-		return "deletedAccount/deleted";
-	}
+	public String deleted(@RequestParam(name = "ids", required = false) List<Integer> ids,
+				RedirectAttributes attributes) {
+			if (ids == null || ids.isEmpty()) {
+				attributes.addFlashAttribute("toastError", "");
+				return "deletedAccount/deleted";
+			}
+	
+			DeletedAccountService.deleteBulk(ids);
+			attributes.addFlashAttribute("toastMessage", ids.size() + "");
+			return "deletedAccount/deleted";	
+		}
+		
 
 //	一括復元
 	@GetMapping
-	public String bulkRecover() {
-		return "deletedAccount/bulkRecover";
-	}
+	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
+				RedirectAttributes attributes) {
+			if (ids == null || ids.isEmpty()) {
+				attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
+				return "deletedAccount/bulkRecover";
+			}
+			DeletedAccountService.deleteBulk(ids);
+			attributes.addFlashAttribute("toastMessage", ids.size() + "");
+			return "deletedAccount/bulkRecover";	
+		}
 	
 //一括削除
 	@GetMapping
-	public String bulkDeleted() {
-		return "deletedAccount/bulkDeleted";
-	}
+	public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids,
+				RedirectAttributes attributes) {
+			if (ids == null || ids.isEmpty()) {
+				attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
+				return "deletedAccount/bulkDeleted";
+			}
+			DeletedAccountService.deleteBulk(ids);
+			attributes.addFlashAttribute("toastMessage", ids.size() + "");
+			return "deletedAccount/bulkDeleted";
+			}
 	
 //	エクスポート画面へ遷移
 	@PostMapping
