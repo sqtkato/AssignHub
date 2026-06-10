@@ -81,25 +81,4 @@ public class Employee {
 	/** 更新日時 */
 	private LocalDateTime updatedAt;
 	
-	/** 契約開始日 */
-	private LocalDateTime contractStartDate;
-	
-	/** 契約終了日 */
-	private LocalDateTime contractEndDate;
-	
-	/** 契約単価 */
-	private Integer unitPrice;
-	
-	/** ログインID */
-	private String loginId;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

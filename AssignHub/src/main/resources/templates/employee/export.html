@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	
 <head>
 <meta charset="UTF-8">
@@ -23,7 +23,7 @@
 			<table>
 				<tr>
 					<td>出力対象件数:</td>
-					<td><span>0</span> 件</td>
+					<td class="value"><span th:text="${count}">0</span> 件</td>
 				</tr>
 				<tr>
 					<td>文字コード:</td>
@@ -31,28 +31,31 @@
 				</tr>
 			</table>
 			
-			<table>
-				<thead>
-				<tr>
-					<th>社員ID</th>
-					<th>社員名</th>
-					<th>アサイン先企業</th>
-					<th>所属企業</th>
-				</tr>
-				</thead>
-				
-				<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				</tbody>
-			</table>
+			<div>
+				<table>
+					<thead>
+					<tr>
+						<th>社員ID</th>
+						<th>社員名</th>
+						<th>アサイン先企業</th>
+						<th>所属企業</th>
+					</tr>
+					</thead>
+					
+					<tbody>
+						<tr th:each="emp : ${employees}" class="clickable-row">
+							<td th:text="${emp.empId}"></td>
+							<td th:text="${emp.lastName} + ' ' + ${emp.firstName}"></td>
+							<td th:text="${emp.companyNameAssign}"></td>
+							<td th:text="${emp.companyName ?: 'ー'}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<p>※ 詳細情報がエクスポートされます</p>
+			</div>
 			
-			<button>エクスポート</button>
-			<a>戻る</a>
+			<a th:href="@{/employees/export/download}">エクスポート</a>
+			<a th:href="@{/employees}">戻る</a>
 			
 		</div>
 	</div>

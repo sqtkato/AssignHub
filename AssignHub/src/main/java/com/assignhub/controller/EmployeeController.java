@@ -1,10 +1,16 @@
 package com.assignhub.controller;
 
+<<<<<<< HEAD
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+=======
+import java.util.List;
+
+>>>>>>> stash
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,11 +58,17 @@ public class EmployeeController {
 	 * @return 一覧画面のテンプレートパス
 	 */
 	@GetMapping
-	public String index(@RequestParam(name = "keyword", required = false) String keyword,
+	public String index(@RequestParam(name = "keyword_name", required = false) String keyword_name,
+			@RequestParam(name = "keyword_company_assign", required = false) String keyword_company_assign,
+			@RequestParam(name = "keyword_company", required = false) String keyword_company,
+			@RequestParam(name = "keyword_engineer_type", required = false) String keyword_engineer_type,
 			@RequestParam(name = "sort", defaultValue = "emp_id") String sort,
 			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-		model.addAttribute("employees", employeeService.findAll(keyword, sort, order));
-		model.addAttribute("keyward", keyword);
+		model.addAttribute("employees", employeeService.findAll(keyword_name, keyword_company_assign, keyword_company, keyword_engineer_type, sort, order));
+		model.addAttribute("keyword_name", keyword_name);
+		model.addAttribute("keyword_company_assign", keyword_company_assign);
+		model.addAttribute("keyword_company", keyword_company);
+		model.addAttribute("keyword_engineer_type", keyword_engineer_type);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
 		return "employee/index";
@@ -109,7 +121,7 @@ public class EmployeeController {
 	public String detail(@PathVariable("id") Integer id, Model model) {
 	    // 1. 社員情報を取得（アサイン情報、部署情報も一緒にロード）
 	    Employee emp = employeeService.findById(id);
-	    model.addAttribute("emp", emp);
+	    model.addAttribute("employee", emp);
 	    
 	    return "employee/detail";
 	}
@@ -124,27 +136,90 @@ public class EmployeeController {
 		return "employee/import";
 	}
 	
+<<<<<<< HEAD
 	/**
-	 * インポート用のCSVテンプレートをダウンロードする。
+	 * 社員データのエクスポート画面を表示する。
+	 *
+	 * @param keyword     現在の検索キーワード（状態保持用）
+	 * @param model  画面描画用のモデル
+	 * @return エクスポート画面のテンプレートパス
+	 */
+	@GetMapping("/export")
+	public String showExport(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
+	    
+		model.addAttribute("employees", employeeService.findAll(keyword, "emp_id", "asc"));
+	    model.addAttribute("count", employeeService.findAll(null, "emp_id", "asc").size());
+	    model.addAttribute("keyword", keyword);
+	    return "employee/export";
+	}
+
+	
+	/**
+	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
 	 *
 	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
-	@GetMapping("/import/template")
-	public ResponseEntity<byte[]> downloadTemplate() {
-		String csvContent = "ID(新規は空欄),社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,"
-				+ "勤続年数,生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,所属企業,"
-				+ "役職,電話番号,メールアドレス\n";
-		byte[] csvBytes = csvContent.getBytes(StandardCharsets.UTF_8);
+	@GetMapping("/export/download")
+	public ResponseEntity<byte[]> downloadCsv() {
+		List<Employee> employees = employeeService.findAll(null ,"emp_id", "asc");
+		StringBuilder csvBuilder = new StringBuilder(
+				"社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,"
+				+ "生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,"
+				+ "所属企業,所属部署,役職,電話番号,メールアドレス\n"
+				);
+		for (Employee emp : employees) {
+			csvBuilder.append(emp.getEmpId()).append(",")
+					.append(emp.getLastName()).append(",")
+					.append(emp.getFirstName()).append(",")
+					.append(emp.getLastNameKana()).append(",")
+					.append(emp.getFirstNameKana()).append(",")
+					.append(emp.getHireDate()).append(",")
+					.append(emp.getYearsOfService()).append(",")
+					.append(emp.getBirthDate()).append(",")
+					.append(emp.getZipCode()).append(",")
+					.append(emp.getAddress1()).append(",")
+					.append(emp.getAddress2()).append(",")
+					.append(emp.getEngineerType()).append(",")
+					.append(emp.getAccountId()).append(",")
+					.append(emp.getCompanyName()).append(",")
+					.append(emp.getDepartment()).append(",")
+					.append(emp.getJobTitle()).append(",")
+					.append(emp.getEmpTel()).append(",")
+					.append(emp.getEmail()).append("\n");
+		}
+		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
 		byte[] result = new byte[bom.length + csvBytes.length];
 		System.arraycopy(bom, 0, result, 0, bom.length);
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment; filename=employee_template.csv");
+		headers.add("Content-Disposition", "attachment; filename=employees.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
+=======
+	@PostMapping("/{id}/delete")
+	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+		employeeService.delete(id);
+		attributes.addFlashAttribute("toastMessage", "社員情報を削除しました");
+		return "redirect:/employees";
+	}
+	
+	@PostMapping("/bulk-delete")
+	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
+			RedirectAttributes attributes) {
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "削除する対象が選択されていません");
+			return "redirect:/employees";
+		}
+		employeeService.deleteBulk(ids);
+		attributes.addFlashAttribute("toastMessage", ids.size() + "件の社員情報を削除しました");
+		return "redirect:/employees";
+	}
+	
+	
+>>>>>>> stash
 
 	/**
 	 * フォームオブジェクトからエンティティオブジェクトへ値の詰め替えを行う。
