@@ -123,27 +123,30 @@ public class DeletedAccountController {
 	
 //一つ復元
 	@GetMapping
-	public String recover(@RequestParam(name = "ids", required = false) List<Integer> ids,
+	public String recover(@RequestParam(name = "id", required = false) List<Integer> id,
 				RedirectAttributes attributes) {
-			if (ids == null || ids.isEmpty()) {
+			if (id == null || id.isEmpty()) {
 				attributes.addFlashAttribute("toastError", "");
 				return "deletedAccount/recover";
 			}
-			DeletedAccountService.deleteBulk(ids);
-			attributes.addFlashAttribute("toastMessage", ids.size() + "");
+			deletedAccountService.restoreAccount(id);
+			attributes.addFlashAttribute("toastMessage", id.size() + "");
 			return "deletedAccount/recover";}
 
 //	一つ削除
 	@GetMapping
-	public String deleted(@RequestParam(name = "ids", required = false) List<Integer> ids,
+	public String deleted(@RequestParam(name = "id", required = false) List<Integer> id,
 				RedirectAttributes attributes) {
-			if (ids == null || ids.isEmpty()) {
-				attributes.addFlashAttribute("toastError", "");
+			if (id == null || id.isEmpty()) {
+				attributes.addFlashAttribute("toastError", "紐づく社員情報（プロパー）が存在するため、物理削除できません。先に社員情報を物理削除してください。");
 				return "deletedAccount/deleted";
 			}
-	
-			DeletedAccountService.deleteBulk(ids);
-			attributes.addFlashAttribute("toastMessage", ids.size() + "");
+			if (id == null || id.isEmpty()) {
+				attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するため、物理削除できません。先にアサイン履歴情報を物理削除してください。");
+				return "deletedAccount/deleted";
+			}
+			deletedAccountService.physicalDeleteAccount(id);
+			attributes.addFlashAttribute("toastMessage", id.size() + "");
 			return "deletedAccount/deleted";	
 		}
 		
@@ -156,7 +159,7 @@ public class DeletedAccountController {
 				attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
 				return "deletedAccount/bulkRecover";
 			}
-			DeletedAccountService.deleteBulk(ids);
+			deletedAccountService.restoreAccountsBulk(ids);
 			attributes.addFlashAttribute("toastMessage", ids.size() + "");
 			return "deletedAccount/bulkRecover";	
 		}
@@ -169,7 +172,15 @@ public class DeletedAccountController {
 				attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
 				return "deletedAccount/bulkDeleted";
 			}
-			DeletedAccountService.deleteBulk(ids);
+			if (ids == null || ids.isEmpty()) {
+				attributes.addFlashAttribute("toastError", "紐づく社員情報（プロパー）が存在するため、物理削除できません。先に社員情報を物理削除してください。");
+				return "deletedAccount/bulkDeleted";
+			}
+			if (ids == null || ids.isEmpty()) {
+				attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するため、物理削除できません。先にアサイン履歴情報を物理削除してください。");
+				return "deletedAccount/bulkDeleted";
+			}
+			deletedAccountService.physicalDeleteAccountsBulk(ids);
 			attributes.addFlashAttribute("toastMessage", ids.size() + "");
 			return "deletedAccount/bulkDeleted";
 			}
