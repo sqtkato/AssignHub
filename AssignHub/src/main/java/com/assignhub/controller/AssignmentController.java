@@ -167,10 +167,6 @@ public class AssignmentController {
         Model model,
         RedirectAttributes attributes) {
 
-		if (result.hasErrors()) {
-			addComboBoxItems(model);
-			return "assignment/create";
-		}
 		
 		Assignment assignment = new Assignment();
 		copyFormToEntity(form, assignment);
@@ -187,7 +183,11 @@ public class AssignmentController {
 					"date.order",
 					"契約開始日より前の日付は入力できません。");
 
-    		return "assignment/create";
+		}
+		
+		if (result.hasErrors()) {
+			addComboBoxItems(model);
+			return "assignment/create";
 		}
 		
 		/**
@@ -197,7 +197,7 @@ public class AssignmentController {
 			addComboBoxItems(model);
 			result.reject(
 					"duplicate",
-					"すでに同じ内容が登録されています。");
+					"既に同じ内容が登録されています。");
         	return "assignment/create";
     	}
 		

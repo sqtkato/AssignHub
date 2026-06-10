@@ -17,7 +17,7 @@ public class AssignmentForm {
     private Integer assignmentId;
 
     /** 社員名 */
-    @NotNull(message = "社員名は必須です")
+    @NotNull(message = "社員名を選択してください")
     private Integer empId;
 
     /** 企業名 */
