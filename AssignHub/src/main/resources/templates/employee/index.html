@@ -9,7 +9,7 @@
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
-			<h2>社員情報管理</h2>
+			<h2>社員情報一覧</h2>
 		</div>
 
 		<div class="card">
@@ -53,6 +53,34 @@
 										th:text="${currentSort == 'emp_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
 								</a>
 							</th>
+							<th>
+								<a class="sortable-header"
+									th:href="@{/employees(keyword=${keyword}, sort='emp_name', order=${currentSort == 'emp_name' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+									アサイン先企業 <span class="sort-icon" th:classappend="${currentSort == 'emp_name'} ? 'active'"
+										th:text="${currentSort == 'emp_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+								</a>
+							</th>
+							<th>
+								<a class="sortable-header"
+									th:href="@{/employees(keyword=${keyword}, sort='emp_name', order=${currentSort == 'emp_name' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+									エンジニアタイプ <span class="sort-icon" th:classappend="${currentSort == 'emp_name'} ? 'active'"
+										th:text="${currentSort == 'emp_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+								</a>
+							</th>
+							<th>
+								<a class="sortable-header"
+									th:href="@{/employees(keyword=${keyword}, sort='emp_name', order=${currentSort == 'emp_name' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+									所属企業 <span class="sort-icon" th:classappend="${currentSort == 'emp_name'} ? 'active'"
+										th:text="${currentSort == 'emp_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+								</a>
+							</th>
+							<th>
+								<a class="sortable-header"
+									th:href="@{/employees(keyword=${keyword}, sort='emp_name', order=${currentSort == 'emp_name' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+									操作 <span class="sort-icon" th:classappend="${currentSort == 'emp_name'} ? 'active'"
+										th:text="${currentSort == 'emp_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+								</a>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -60,7 +88,11 @@
 							<td class="col-checkbox"><input type="checkbox" name="ids" th:value="${emp.empId}"
 									class="row-checkbox"></td>
 							<td th:text="${emp.empId}"></td>
-							<td th:text="${emp.empName}"></td>
+							<td th:text="${emp.lastName} + ' ' + ${emp.firstName}"></td>
+							<td th:text="${emp.companyNameAssign}"></td>
+							<td th:text="${emp.engineerType}"></td>
+							<td th:text="${emp.companyName ?: 'ー'}"></td>
+							<td th:text="ー"></td>
 							</td>
 						</tr>
 						<tr th:if="${#lists.isEmpty(employees)}">
