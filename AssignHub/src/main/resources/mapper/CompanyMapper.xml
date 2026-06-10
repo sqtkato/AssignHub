@@ -85,4 +85,26 @@
         0, NOW(), NOW()
     )
 </insert>
+	
+	<update id="update">
+		UPDATE m_company
+		SET company_name = #{companyName},
+		company_name_kana = #{companyNameKana};
+		company_zipcode = #{companyZipCode};
+		company_address1 = #{companyAddress1};
+		company_address2 = #{companyAddress2};
+		company_tel = #{companyTel};
+		company_fax = #{fax};
+		founded_year = #{foundedYear},
+		employee_count = #{employeeCount};
+		rep_firstname = #{repFirstName};
+		rep_lastname = #{repLastName};
+		rep_firstname_kana = #{repFirstNameKana};
+		rep_lastname_kana = #{repLastNameKana};
+		delet_flg ={delet_flg};
+		updated_at = NOW()
+		WHERE company_id = #{companyId}
+	</update>
+	
+	
 </mapper>

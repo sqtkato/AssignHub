@@ -48,8 +48,8 @@ public class CompanyService {
 	 * @param id 取得対象の企業ID
 	 * @return 該当する企業エンティティ（存在しない、または論理削除済みの場合はnull）
 	 */
-	public Company findById(Integer id) {
-		return companyMapper.findById(id);
+	public Company findByCompanyId(Integer companyId) {
+		return companyMapper.findByCompanyId(companyId);
 	}
 
 	
@@ -71,10 +71,10 @@ public class CompanyService {
 	 * @param excludecompanyId 除外する企業ID（新規登録時はnullを渡す）
 	 * @return 重複していればtrue
 	 */
-	public boolean isDuplicate(String companyName, Integer companyId) {
-		return companyMapper.existsByCompanyName(companyName, companyId);
+	public boolean isCompanyNameDuplicate(String companyName, Integer excludeCompanyId) {
+		int count = companyMapper.countByCompanyName(companyName, excludeCompanyId);
+		return count > 0;
 	}
-
 	public void delete(Integer id) {
 		companyMapper.delete(id);
 

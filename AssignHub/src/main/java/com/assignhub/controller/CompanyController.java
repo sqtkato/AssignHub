@@ -179,6 +179,61 @@ public class CompanyController {
 	
 	
 
+	
+	/**
+	 * 企業情報の編集画面を表示する。
+	 *
+	 * @param company_id    編集対象の部署ID
+	 * @param model 画面描画用のモデル
+	 * @return 企業情報編集画面のテンプレートパス
+	 */
+	@GetMapping("/{id}/edit")
+	public String edit(@PathVariable("id") Integer companyId, Model model) {
+		if (!model.containsAttribute("companyForm")) {
+			Company comp = companyService.findByCompanyId(companyId);
+			CompanyForm form = new CompanyForm();
+			form.setCompanyId(comp.getCompanyId());
+			form.setCompanyName(comp.getCompanyName());
+			form.setFoundedYear(comp.getFoundedYear());
+			model.addAttribute("companyForm", form);
+		}
+		return "companies/edit";
+	}
+
+	/**
+	 * 企業情報の更新処理を実行する。
+	 *
+	 * @param companyId             更新対象の企業ID
+	 * @param companyForm 入力された部署情報フォーム
+	 * @param result         バリデーション結果
+	 * @param attributes     リダイレクト時にメッセージを引き継ぐための属性
+	 * @param model          画面描画用のモデル
+	 * @return 成功時は一覧画面へのリダイレクト、失敗時は編集画面のテンプレートパス
+	 */
+	@PostMapping("/{id}/edit")
+	public String update(@PathVariable("id") Integer companyId,
+			@Validated @ModelAttribute("companyForm") CompanyForm companyForm,
+			BindingResult result, RedirectAttributes attributes, Model model) {
+
+		if (companyService.isCompanyNameDuplicate(companyForm.getCompanyName(), companyId)) {
+			result.rejectValue("companyName", "error.companyForm", "この企業名はすでに使用されています");
+		}
+
+		if (result.hasErrors()) {
+			model.addAttribute("companies", companyService.findAll(null, "companyId", "asc"));
+			return "companies/edit";
+		}
+
+		Company comp = new Company();
+		comp.setCompanyId(companyId);
+		copyFormToEntity(companyForm, comp);
+		companyService.save(comp);
+
+		attributes.addFlashAttribute("toastMessage", "企業情報を更新しました");
+
+		return "redirect:/companies";
+	}
+
 	/**
 	 * フォームオブジェクトからエンティティオブジェクトへ値の詰め替えを行う。
 	 *
