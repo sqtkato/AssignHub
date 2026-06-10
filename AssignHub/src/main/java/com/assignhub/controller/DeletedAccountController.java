@@ -142,6 +142,8 @@ public class DeletedAccountController {
 //　エクスポートのダウンロード処理
 	@PostMapping
 	public String exportComplete() {
+		if  
+		result.reject("エクスポートする対象が選択されていません")
 		return "deletedAccount/export";
 	}
 	
