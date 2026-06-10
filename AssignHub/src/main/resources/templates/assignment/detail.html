@@ -5,6 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>アサイン履歴情報詳細</title>
+	<link rel="stylesheet" th:href="@{/css/assignment.css}">
 </head>
 
 <body>
@@ -79,26 +80,48 @@
 				</tr>
 			</table>
 			<div class="form-actions">
-				<button type="button" id="btn_assign_edit" class="btn btn-primary" title="変更"
-				th:onclick="|location.href='@{/assignments/{id}/edit(id=${assignment.assignmentId}, from='detail')}'|">
+				<button type="button" id="btn_assign_edit" class="btn btn-primary"
+					th:onclick="|location.href='@{/assignments/{id}/edit(id=${assignment.assignmentId}, from='detail')}'|">
 					変更
 				</button>
 
 				<form th:action="@{/assignments/{id}/delete(id=${assignment.assignmentId})}" method="post">
-					<button type="submit" id="btn_delete_flg" class="btn btn-icon-delete" title="削除"
-						onclick="return confirm('本当に削除しますか？');">削除
+					<button type="button" id="btn_delete_flg" class="btn btn-icon-delete"
+						th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
 					</button>
 				</form>
 
-				<button type="button" id="btn_assign_back" th:onclick="|location.href='@{/assignments}'|" class="btn btn-secondary">戻る
+				<button type="button" id="btn_assign_back" th:onclick="|location.href='@{/assignments}'|"
+					class="btn btn-secondary">戻る
 				</button>
-
-
 
 			</div>
 
 
 		</div>
+
+		<!-- 削除確認モーダル -->
+		<div id="deleteOverlay" class="modal-overlay">
+			<div class="modal-box">
+				<div class="modal-icon modal-icon-danger">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+						stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="3 6 5 6 21 6"></polyline>
+						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+					</svg>
+				</div>
+				<p class="modal-title">アサイン履歴を削除しますか？</p>
+				<p class="modal-subtitle">この操作は取り消せません。</p>
+				<div class="modal-actions">
+					<button type="button" onclick="closeDeleteModal()" class="modal-btn modal-btn-cancel">キャンセル</button>
+					<form id="deleteForm" method="post">
+						<button type="submit" class="modal-btn modal-btn-danger">削除する</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script th:src="@{/js/assignment.js}"></script>
+	</div>
 </body>
 
 </html>
