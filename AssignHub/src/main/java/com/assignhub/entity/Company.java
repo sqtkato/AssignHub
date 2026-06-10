@@ -17,35 +17,49 @@ public class Company {
 	/** 企業名 */
 	private String companyName;
 	
-	private String compNameKana;
+	/** 企業名カナ */
+	private String companyNameKana;
 	
-	private Integer foundedYear;
+	/** 郵便番号 */
+	private String companyZipCode;
 	
-	private Integer employeeCount;
+	/** 住所1 */
+	private String companyAddress1;
 	
-	private String compZipCode;
+	/** 住所2 */
+	private String companyAddress2;
 	
-	private String compAddress1;
+	/** TEL */
+	private String companyTel;
 	
-	private String compAddress2;
-	
-	private String compTel;
-	
+	/** FAX */
 	private String fax;
 	
-	private String repFirstName;
+	/** 設立年度 */
+	private Integer foundedYear;
 	
-	private String repFirstNameKana;
+	/** 社員数 */
+	private Integer employeeCount;
 	
+	/** 代表者姓 */
 	private String repLastName;
 	
+	/** 代表者姓カナ */
 	private String repLastNameKana;
 	
+	/** 代表者名 */
+	private String repFirstName;
 	
+	/** 代表者名カナ */
+	private String repFirstNameKana;
 
 	/** 作成日時 */
 	private LocalDateTime createdAt;
 
 	/** 更新日時 */
 	private LocalDateTime updatedAt;
+	
+	/** 削除フラグ*/
+	private Integer delete_flag;
+	
 }
