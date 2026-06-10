@@ -1,5 +1,11 @@
 package com.assignhub.controller;
 
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -116,6 +122,68 @@ public class EmployeeController {
 	@GetMapping("/import")
 	public String showImport() {
 		return "employee/import";
+	}
+	
+	/**
+	 * 社員データのエクスポート画面を表示する。
+	 *
+	 * @param keyword     現在の検索キーワード（状態保持用）
+	 * @param model  画面描画用のモデル
+	 * @return エクスポート画面のテンプレートパス
+	 */
+	@GetMapping("/export")
+	public String showExport(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
+	    
+		model.addAttribute("employees", employeeService.findAll(keyword, "emp_id", "asc"));
+	    model.addAttribute("count", employeeService.findAll(null, "emp_id", "asc").size());
+	    model.addAttribute("keyword", keyword);
+	    return "employee/export";
+	}
+
+	
+	/**
+	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
+	 *
+	 * @return ダウンロード用のCSVファイルバイナリデータ
+	 */
+	@GetMapping("/export/download")
+	public ResponseEntity<byte[]> downloadCsv() {
+		List<Employee> employees = employeeService.findAll(null ,"emp_id", "asc");
+		StringBuilder csvBuilder = new StringBuilder(
+				"社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,"
+				+ "生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,"
+				+ "所属企業,所属部署,役職,電話番号,メールアドレス\n"
+				);
+		for (Employee emp : employees) {
+			csvBuilder.append(emp.getEmpId()).append(",")
+					.append(emp.getLastName()).append(",")
+					.append(emp.getFirstName()).append(",")
+					.append(emp.getLastNameKana()).append(",")
+					.append(emp.getFirstNameKana()).append(",")
+					.append(emp.getHireDate()).append(",")
+					.append(emp.getYearsOfService()).append(",")
+					.append(emp.getBirthDate()).append(",")
+					.append(emp.getZipCode()).append(",")
+					.append(emp.getAddress1()).append(",")
+					.append(emp.getAddress2()).append(",")
+					.append(emp.getEngineerType()).append(",")
+					.append(emp.getAccountId()).append(",")
+					.append(emp.getCompanyName()).append(",")
+					.append(emp.getDepartment()).append(",")
+					.append(emp.getJobTitle()).append(",")
+					.append(emp.getEmpTel()).append(",")
+					.append(emp.getEmail()).append("\n");
+		}
+		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
+		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+		byte[] result = new byte[bom.length + csvBytes.length];
+		System.arraycopy(bom, 0, result, 0, bom.length);
+		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=employees.csv");
+		headers.add("Content-Type", "text/csv; charset=UTF-8");
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
 	/**
