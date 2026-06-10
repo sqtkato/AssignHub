@@ -4307,3 +4307,45 @@ java.sql.SQLSyntaxErrorException: Table 'assignhub.m_company' doesn't exist
 2026-06-10T15:11:22.687+09:00  INFO 4092 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
 2026-06-10T15:11:22.688+09:00  INFO 4092 --- [RMI TCP Connection(89)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-24 - Shutdown initiated...
 2026-06-10T15:11:22.690+09:00  INFO 4092 --- [RMI TCP Connection(89)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-24 - Shutdown completed.
+2026-06-10T16:06:01.404+09:00  INFO 13480 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.10 with PID 13480 (C:\Users\c3s_216\git\AssignHub\AssignHub\target\classes started by c3s_216 in C:\Users\c3s_216\git\AssignHub\AssignHub)
+2026-06-10T16:06:01.407+09:00  INFO 13480 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-10T16:06:01.653+09:00  INFO 13480 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-10T16:06:01.653+09:00  INFO 13480 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-10T16:06:02.568+09:00  INFO 13480 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-10T16:06:02.582+09:00  INFO 13480 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-10T16:06:02.583+09:00  INFO 13480 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-10T16:06:02.625+09:00  INFO 13480 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 971 ms
+2026-06-10T16:06:03.461+09:00  INFO 13480 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-10T16:06:03.470+09:00  INFO 13480 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 2.425 seconds (process running for 2.951)
+2026-06-10T16:06:05.281+09:00  INFO 13480 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-10T16:06:05.281+09:00  INFO 13480 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-10T16:06:05.281+09:00  INFO 13480 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-06-10T16:06:05.411+09:00  INFO 13480 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-10T16:06:05.639+09:00  INFO 13480 --- [http-nio-8080-exec-2] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@596e17f8
+2026-06-10T16:06:05.643+09:00  INFO 13480 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-10T16:06:05.650+09:00 DEBUG 13480 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, concat(e.last_name , " " , e.first_name)as emp_name FROM m_account a left JOIN m_employee e ON a.account_id = e.emp_id WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-10T16:06:05.682+09:00 DEBUG 13480 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-10T16:06:05.713+09:00 DEBUG 13480 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : <==      Total: 7
+2026-06-10T16:06:10.224+09:00 DEBUG 13480 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, concat(e.last_name , " " , e.first_name)as emp_name FROM m_account a left JOIN m_employee e ON a.account_id = e.emp_id WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-10T16:06:10.225+09:00 DEBUG 13480 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-10T16:06:10.231+09:00 DEBUG 13480 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : <==      Total: 7
+2026-06-10T16:06:10.874+09:00 DEBUG 13480 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, concat(e.last_name , " " , e.first_name)as emp_name FROM m_account a left JOIN m_employee e ON a.account_id = e.emp_id WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-10T16:06:10.876+09:00 DEBUG 13480 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-10T16:06:10.881+09:00 DEBUG 13480 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : <==      Total: 7
+2026-06-10T16:06:12.530+09:00 DEBUG 13480 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, concat(e.last_name , " " , e.first_name)as emp_name FROM m_account a left JOIN m_employee e ON a.account_id = e.emp_id WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-10T16:06:12.531+09:00 DEBUG 13480 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-10T16:06:12.535+09:00 DEBUG 13480 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : <==      Total: 7
+2026-06-10T16:06:16.839+09:00 DEBUG 13480 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, concat(e.last_name , " " , e.first_name)as emp_name FROM m_account a left JOIN m_employee e ON a.account_id = e.emp_id WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-10T16:06:16.839+09:00 DEBUG 13480 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-10T16:06:16.843+09:00 DEBUG 13480 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : <==      Total: 7
+2026-06-10T16:06:30.616+09:00 DEBUG 13480 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-10T16:06:30.617+09:00 DEBUG 13480 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: wakuiwaku123(String)
+2026-06-10T16:06:30.621+09:00 DEBUG 13480 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-10T16:06:30.725+09:00 DEBUG 13480 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, concat(e.last_name , " " , e.first_name)as emp_name FROM m_account a left JOIN m_employee e ON a.account_id = e.emp_id WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-10T16:06:30.725+09:00 DEBUG 13480 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-10T16:06:30.729+09:00 DEBUG 13480 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : <==      Total: 7
+2026-06-10T16:08:41.408+09:00  INFO 13480 --- [RMI TCP Connection(6)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-10T16:08:41.410+09:00  INFO 13480 --- [RMI TCP Connection(6)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-10T16:08:41.562+09:00  INFO 13480 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-10T16:08:41.565+09:00  INFO 13480 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-10T16:08:41.573+09:00  INFO 13480 --- [RMI TCP Connection(6)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
