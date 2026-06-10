@@ -55,4 +55,9 @@ public interface AccountMapper {
 
 	/** アカウントを更新する（ログインID・パスワード・権限を上書き）。 */
 	void update(Account account);
+	/**
+	 * アカウント情報を一括で削除する。
+	 */
+	void deleteBulk(@Param("ids") List<Integer> ids);
+
 }
