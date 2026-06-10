@@ -7,6 +7,8 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -23,10 +25,12 @@ public class AssignmentForm {
     private Integer companyId;
 
     /** 契約開始日 */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "契約開始日を選択してください")
     private LocalDate contractStartDate;
 
     /** 契約終了日 */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate contractEndDate;
 
     /** 契約単価 */

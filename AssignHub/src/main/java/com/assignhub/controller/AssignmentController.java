@@ -214,9 +214,61 @@ public class AssignmentController {
 	}
 	
 	@GetMapping("/{id}/edit")
-	public String edit(@PathVariable Integer id) {
+	public String edit(@PathVariable("id") Integer id, Model model) {
+		if (!model.containsAttribute("assignmentForm")) {
+		
+			Assignment emp = assignmentService.findById(id);
+			AssignmentForm form = new AssignmentForm();
+			form.setEmpId(emp.getEmpId());
+			form.setAssignmentId(emp.getAssignmentId());
+			form.setCompanyId(emp.getCompanyId());
+			form.setContractStartDate(emp.getContractStartDate());
+			form.setContractEndDate(emp.getContractEndDate());
+			form.setUnitPrice(emp.getUnitPrice());
+			form.setRoleId(emp.getRoleId());
+			model.addAttribute("assignmentForm", form);
+		}
+		addComboBoxItems(model);
 	    return "assignment/edit";
 	}
+	
+	
+	@PostMapping("/{id}/edit")
+	public String update(@PathVariable("id") Integer id,
+			@Validated @ModelAttribute("assignmentForm") AssignmentForm form,
+			BindingResult result, RedirectAttributes attributes, Model model) {
+
+		
+		Assignment assignment = new Assignment();
+		copyFormToEntity(form, assignment);
+		/**
+		 * 契約開始日と契約終了日の順序をチェックする
+		 * 契約終了日が入力されている場合、契約開始日より前の日付は入力できないようにする
+		 */
+		if (assignment.getContractEndDate() != null
+        	&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
+			addComboBoxItems(model);
+			result.rejectValue(
+					"contractEndDate",
+					"date.order",
+					"契約開始日より前の日付は入力できません。");
+
+		}
+		
+		if (result.hasErrors()) {
+			model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
+			addComboBoxItems(model);
+			return "assignment/edit";
+		}
+
+		Assignment emp = new Assignment();
+		emp.setEmpId(id);
+		copyFormToEntity(form, emp);
+		assignmentService.save(emp);
+		attributes.addFlashAttribute("toastMessage", "社員情報を更新しました");
+		return "redirect:/assignments";
+	}
+
 	
 	
 	@GetMapping("/import")
@@ -379,6 +431,7 @@ public class AssignmentController {
 	 * @param e アサイン情報のエンティティオブジェクト
 	 */
 	private void copyFormToEntity(AssignmentForm f, Assignment e) {
+		e.setAssignmentId(f.getAssignmentId());
 	    e.setEmpId(f.getEmpId());
 	    e.setCompanyId(f.getCompanyId());
 	    e.setContractStartDate(f.getContractStartDate());
