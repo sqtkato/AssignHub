@@ -3,6 +3,8 @@ package com.assignhub.service;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -119,7 +121,6 @@ public class AssignmentService {
     private static final int UNIT_PRICE_MAX_DIGITS = 10;
     /** CSV列数（アサインID,社員ID,社員名,企業名,作成日時,更新日時,開始日,終了日,単価,役割） */
     private static final int CSV_COLUMN_COUNT = 10;
-    private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     /**
      * アップロードされたCSVを解析し、バリデーションおよび一括登録・更新を行う。
      * 1件でもエラーがあれば全体をロールバックする（all-or-nothing）。
@@ -139,8 +140,14 @@ public class AssignmentService {
         }
         Set<String> seenInCsv = new HashSet<>();
         int insertPlan = 0;
+        
+        CharsetDecoder decoder = StandardCharsets.UTF_8
+                .newDecoder()
+                .onMalformedInput(CodingErrorAction.REPORT)
+                .onUnmappableCharacter(CodingErrorAction.REPORT);
+        
         try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
+                new InputStreamReader(file.getInputStream(), decoder)))  {
             String line;
             int rowNum = 1;
             boolean isFirstLine = true;
@@ -337,13 +344,16 @@ public class AssignmentService {
             return null;
         }
     }
-    /** yyyy/MM/dd をLocalDateに変換。失敗時null。 */
+    /** yyyy/MM/dd または yyyy-MM-dd をLocalDateに変換。失敗時null。 */
     private LocalDate parseDate(String s) {
-        try {
-            return LocalDate.parse(s, DATE_FMT);
-        } catch (Exception e) {
-            return null;
+        for (String p : new String[]{"yyyy/MM/dd", "yyyy-MM-dd"}) {
+            try {
+                return LocalDate.parse(s, DateTimeFormatter.ofPattern(p));
+            } catch (Exception e) {
+                /* 次のフォーマットを試す */
+            }
         }
+        return null;
     }
     
     /**

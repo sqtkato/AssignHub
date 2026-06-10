@@ -1,5 +1,6 @@
 package com.assignhub.controller;
 
+import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
@@ -315,6 +316,9 @@ public class AssignmentController {
                 model.addAttribute("toastMessage",
                         "アサイン情報を" + result.successCount + "件取り込みました");
             }
+            return "assignment/import";
+        } catch (MalformedInputException e) {
+            model.addAttribute("toastError", "CSVファイルはUTF-8形式でアップロードしてください");
             return "assignment/import";
         } catch (Exception e) {
             model.addAttribute("toastError", "ファイルの読み込みに失敗しました");
