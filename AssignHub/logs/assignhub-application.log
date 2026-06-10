@@ -4302,3 +4302,8 @@ java.sql.SQLSyntaxErrorException: Table 'assignhub.m_company' doesn't exist
 2026-06-10T15:09:09.758+09:00 DEBUG 4092 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, concat(e.last_name , " " , e.first_name)as emp_name FROM m_account a left JOIN m_employee e ON a.account_id = e.emp_id WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
 2026-06-10T15:09:09.758+09:00 DEBUG 4092 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
 2026-06-10T15:09:09.761+09:00 DEBUG 4092 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : <==      Total: 7
+2026-06-10T15:11:22.541+09:00  INFO 4092 --- [RMI TCP Connection(89)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-10T15:11:22.541+09:00  INFO 4092 --- [RMI TCP Connection(89)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-10T15:11:22.687+09:00  INFO 4092 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-10T15:11:22.688+09:00  INFO 4092 --- [RMI TCP Connection(89)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-24 - Shutdown initiated...
+2026-06-10T15:11:22.690+09:00  INFO 4092 --- [RMI TCP Connection(89)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-24 - Shutdown completed.
