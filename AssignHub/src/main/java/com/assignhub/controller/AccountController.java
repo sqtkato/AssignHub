@@ -168,12 +168,6 @@ public class AccountController {
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result, RedirectAttributes attributes, Model model) {
 
-		//			if (accountService.isEmailDuplicate(accountForm.getEmailAddress(), id)) {
-		//				result.rejectValue("emailAddress", "error.rookyForm", "このメールアドレスはすでに他の社員に使用されています");
-		//			}
-		//			if (result.hasErrors()) {
-		//				model.addAttribute("rookies", accountService.findAll(null, "rooky_id", "asc"));
-		//				return "edit";}
 
 		Account acc = new Account();
 		acc.setAccountId(id);
