@@ -13,19 +13,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Company;
 import com.assignhub.form.CompanyForm;
+import com.assignhub.service.DeletedAccountService;
 
 @Controller
 @RequestMapping("/companies")
 public class DeletedAccountController {
-	private final DeletedAccountService deletedaccountService;
+	private final DeletedAccountService deletedAccountService;
 
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param companyService 企業サービス
 	 */
-	public DeletedAccountController(DeletedAccountService deletedaccountService) {
-		this.deletedaccountService = deletedaccountService;
+	public DeletedAccountController(DeletedAccountService deletedAccountService) {
+		this.deletedAccountService = deletedAccountService;
 	}
 
 	/**
@@ -41,7 +42,7 @@ public class DeletedAccountController {
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
 			@RequestParam(name = "sort", defaultValue = "company_id") String sort,
 			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-		model.addAttribute("companies", deletedaccountService.findAll(keyword, sort, order));
+		model.addAttribute("companies", deletedAccountService.findAll(keyword, sort, order));
 		model.addAttribute("keyward", keyword);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
@@ -96,43 +97,52 @@ public class DeletedAccountController {
 	
 	
 //一覧
-	public String index() {
-		return "deletedaccount/index";
+	@GetMapping
+	public String index(@RequestParam(name = "keyword", required = false) String keyword,
+			@RequestParam(name = "sort", defaultValue = "company_id") String sort,
+			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
+		model.addAttribute("companies", deletedAccountService.findAll(keyword, sort, order));
+		model.addAttribute("keyward", keyword);
+		model.addAttribute("currentSort", sort);
+		model.addAttribute("currentOrder", order);
+		return "deletedAccount/index";
 	}
 
-//	検索
-	public String serch() {
-		return "deletedaccount/serch";
-	}
 	
 //一つ復元
+	@GetMapping
 	public String recover() {
-		return "deletedaccount/recover";
+		return "deletedAccount/recover";
 	}
 
 //	一つ削除
+	@GetMapping
 	public String deleted() {
-		return "deletedaccount/deleted";
+		return "deletedAccount/deleted";
 	}
 
 //	一括復元
-	public String bulkrecover() {
-		return "deletedaccount/bulkrecover";
+	@GetMapping
+	public String bulkRecover() {
+		return "deletedAccount/bulkRecover";
 	}
 	
 //一括削除
-	public String buikdeleted() {
-		return "deletedaccount/bulkdeleted";
+	@GetMapping
+	public String bulkDeleted() {
+		return "deletedAccount/bulkDeleted";
 	}
 	
-//	エクスポート確認画面
-	public String exportconfirm() {
-		return "deletedaccount/exportconfirm";
+//	エクスポート画面へ遷移
+	@GetMapping
+	public String exportConfirm() {
+		return "deletedAccount/export";
 	}
 	
-//	エクスポート実行画面
-	public String exportcomplete() {
-		return "deletedaccount/exportcomplete";
+//　エクスポートのダウンロード処理
+	@GetMapping
+	public String exportComplete() {
+		return "deletedAccount/export";
 	}
 	
 
