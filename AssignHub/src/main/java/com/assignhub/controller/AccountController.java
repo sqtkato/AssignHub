@@ -83,45 +83,53 @@ public class AccountController {
 		return "redirect:/accounts";
 	}
 
-    @PostMapping("/export")
-    public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
-            Model model) {
-    	if(ids.size()==0) {return "account/index";}
-        model.addAttribute("count", accountService.findByIds(ids).size());
-        List<Account> accounts = accountService.findByIds(ids);
-        model.addAttribute("accounts", accounts);
-        model.addAttribute("ids", ids);
-        return "account/export";
-    }
-    /**
-     * 検索条件に合致する社員データをCSV形式でダウンロードする。
-     *
-     * @param keyword 検索キーワード
-     * @param deptId  絞り込み部署ID
-     * @return ダウンロード用のCSVファイルバイナリデータ
-     */
-    @PostMapping("/export/download")
-    public ResponseEntity<byte[]> downloadCsv(
-    		@RequestParam(name = "ids", required = false) List<Integer> ids) {
-        List<Account> accounts = accountService.findByIds(ids);
-        StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名\n");
-        for (Account acc : accounts) {
-            csvBuilder.append(acc.getAccountId()).append(",")
-                    .append(acc.getLoginId()).append(",")
-                    .append(acc.getPermission()).append(",")
-                    .append(acc.getEmpName()).append("\n");
-        }
-        byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
-        byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
-        byte[] result = new byte[bom.length + csvBytes.length];
-        System.arraycopy(bom, 0, result, 0, bom.length);
-        System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=employees.csv");
-        headers.add("Content-Type", "text/csv; charset=UTF-8");
-        return new ResponseEntity<>(result, headers, HttpStatus.OK);
-    }
-    
+	@PostMapping("/export")
+	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
+			Model model, RedirectAttributes attributes) {
+		// ★【最優先】まず最初にnullチェックを行う
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
+			return "redirect:/accounts"; // 元の一覧画面に戻す
+		}
+		if (ids.size() == 0) {
+			return "account/index";
+		}
+		model.addAttribute("count", accountService.findByIds(ids).size());
+		List<Account> accounts = accountService.findByIds(ids);
+		model.addAttribute("accounts", accounts);
+		model.addAttribute("ids", ids);
+		return "account/export";
+	}
+
+	/**
+	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
+	 *
+	 * @param keyword 検索キーワード
+	 * @param deptId  絞り込み部署ID
+	 * @return ダウンロード用のCSVファイルバイナリデータ
+	 */
+	@PostMapping("/export/download")
+	public ResponseEntity<byte[]> downloadCsv(
+			@RequestParam(name = "ids", required = false) List<Integer> ids) {
+
+		List<Account> accounts = accountService.findByIds(ids);
+		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名\n");
+		for (Account acc : accounts) {
+			csvBuilder.append(acc.getAccountId()).append(",")
+					.append(acc.getLoginId()).append(",")
+					.append(acc.getPermission()).append(",")
+					.append(acc.getEmpName()).append("\n");
+		}
+		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
+		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+		byte[] result = new byte[bom.length + csvBytes.length];
+		System.arraycopy(bom, 0, result, 0, bom.length);
+		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=employees.csv");
+		headers.add("Content-Type", "text/csv; charset=UTF-8");
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
+	}
 
 	/**
 	 * アカウント情報インポート画面を表示する。
@@ -168,8 +176,8 @@ public class AccountController {
 		}
 		return "account/import";
 	}
-	
-    /**
+
+	/**
 	 * アカウントを一件論理削除
 	 * 
 	 * @param id 削除対象のアカウントID
@@ -180,6 +188,25 @@ public class AccountController {
 		accountService.delete(id);
 		return "redirect:/accounts";
 
+	}
+
+	/**
+	 * 選択された複数の社員情報を一括で物理削除する。
+	 *
+	 * @param ids        削除対象となるアカウントIDのリスト
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @return 一覧画面へのリダイレクト
+	 */
+	@PostMapping("/bulk-delete")
+	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
+			RedirectAttributes attributes) {
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "削除する対象が選択されていません");
+			return "redirect:/accounts";
+		}
+		accountService.deleteBulk(ids);
+		attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を削除しました");
+		return "redirect:/accounts";
 	}
 
 }

@@ -90,7 +90,7 @@ h2{
 .table {
 	width: 100%;
 	border-collapse: collapse;
-	margin-top: 10px;
+/*	margin-top: 10px;	スクロールきもいことなるので排除中	*/
 }
 
 .table th,
@@ -154,9 +154,8 @@ h2{
 }
 
 .btn-secondary {
-	font-size: 24px;
 	background-color: #e5e7eb;
-	color: white;
+	color: #374151;
 }
 
 .btn-secondary:hover {
@@ -281,7 +280,7 @@ h2{
 	position: fixed;
 	z-index: 1000;
 	right: 30px;
-	top: 30px;
+	bottom: 30px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	opacity: 0;
 	transition: opacity 0.5s, top 0.5s;
@@ -290,7 +289,12 @@ h2{
 .toast.show {
 	visibility: visible;
 	opacity: 1;
-	top: 50px;
+	bottom: 50px;
+}
+
+/* ★【追加】Java側でエラーが発生した（toastErrorがある）場合の赤色設定 */
+.toast-error {
+	background-color: #dc3545;
 }
 
 /* =========================================
@@ -478,30 +482,30 @@ h2{
 }
 
 /* =========================================
-   アカウント
+   アカウント一覧表示
 ========================================= */
+
 /* アカウントID (10%) */
 .table th.acc_id,
 .table td.acc_id {
-	width: 14%;
+	width: 12%;
 }
 
 /* ログインID (25%) ※もし30文字近くなってもここで自動改行されます */
 .table th.acc_logId,
 .table td.acc_logId {
-	width: 25%;
+	width: 28%;
 }
 
 /* 権限 (15%) */
 .table th.acc_per,
 .table td.acc_per {
-	width: 11%;
+	width: 9%;
 }
 
 /* 社員名 (35%) ※文字数が増えやすいので広めに確保 */
-/* HTML側で <th> や <td> に class="acc_name" をつけるか、未指定の列として自動分配させます */
-.table th.acc_name,
-.table td.acc_name {
+.table th.emp_name,
+.table td.emp_name {
 	width: 35%;
 }
 
@@ -549,15 +553,16 @@ h2{
    テーブルスクロール
 ========================================= */
 
-.table-scroll{
-	
-	max-height: 400px;
-	overflow-y: auto;
+.table-scroll {
+	max-height: 340px; 
+	overflow-y: auto;         
+}
+.table thead th {
+	position: sticky;
+	top: 0;
+	z-index: 10;
 }
 
-
-.table-scroll thead th {
-  position: sticky;
-  top: 0;
-  z-index: 10;
+.export-table{
+	margin-bottom: 30px;
 }

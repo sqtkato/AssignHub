@@ -26,10 +26,10 @@ public class AccountService {
 	/**
 	 * 検索条件およびソート条件に合致する企業情報を全件取得する。
 	 *
-	 * @param keyword 検索キーワード（企業名の部分一致）
+	 * @param keyword 検索キーワード（各カラム部分一致）
 	 * @param sort    ソート対象のカラム名
 	 * @param order   昇順（asc）または降順（desc）
-	 * @return 企業エンティティのリスト
+	 * @return エンティティのリスト
 	 */
 	public List<Account> findAll(String keyword, String sort, String order, Integer permission) {
 		return accountMapper.findAll(keyword, sort, order, permission);
@@ -122,5 +122,13 @@ public class AccountService {
 	@Transactional
 	public void delete(Integer id) {
 		accountMapper.delete(id);
+	}
+	
+	// 指定された複数の社員IDのデータを一括で物理削除する。
+	@Transactional
+	public void deleteBulk(List<Integer> ids) {
+		if (ids != null && !ids.isEmpty()) {
+			accountMapper.deleteBulk(ids);
+		}
 	}
 }
