@@ -118,6 +118,36 @@ a:hover {
 	width: 40px;
 	text-align: center;
 }
+
+/*テーブルの色*/
+
+.detail-table {
+	border: 1px solid #333;
+	border-collapse: collapse;
+}
+.detail-table th {
+	background-color: #2c3e50;
+	color: #fff;
+	width: 250px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.detail-table td {
+	background-color: #fff;
+	text-align: left;
+	padding-left: 20px;
+}
+
+.detail-table tr:last-child th,
+.detail-table tr:last-child td {
+	border-bottom: none;
+}
+
+.detail-table th,
+.detail-table td {
+	border-bottom: 1px solid #ddd;
+}
 /* =========================================
    Buttons & Toolbars (ボタンとツールバー)
 ========================================= */
@@ -223,6 +253,15 @@ a:hover {
 
 .btn-icon-delete:hover {
 	background-color: #f8d7da;
+}
+
+.detail-actions {
+	justify-content: center;
+	gap: 90px;
+}
+
+.detail-actions form {
+	margin: 0;
 }
 
 /* =========================================

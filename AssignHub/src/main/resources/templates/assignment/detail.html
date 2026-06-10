@@ -18,7 +18,7 @@
 		</div>
 
 		<div class="card">
-			<table class="table">
+			<table class = "table detail-table">
 				<tr>
 
 				<tr>
@@ -79,14 +79,14 @@
 					<td th:text="${assignment.role}">
 				</tr>
 			</table>
-			<div class="form-actions">
+			<div class="form-actions detail-actions">
 				<button type="button" id="btn_assign_edit" class="btn btn-primary"
 					th:onclick="|location.href='@{/assignments/{id}/edit(id=${assignment.assignmentId}, from='detail')}'|">
 					変更
 				</button>
 
 				<form th:action="@{/assignments/{id}/delete(id=${assignment.assignmentId})}" method="post">
-					<button type="button" id="btn_delete_flg" class="btn btn-icon-delete"
+					<button type="button" id="btn_delete_flg" class="btn modal-btn-danger"
 						th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
 					</button>
 				</form>
