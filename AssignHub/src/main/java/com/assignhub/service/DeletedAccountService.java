@@ -9,9 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.assignhub.entity.DeletedAccount;
 import com.assignhub.mapper.DeletedAccountMapper;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class DeletedAccountService {
 
@@ -32,10 +29,10 @@ public class DeletedAccountService {
      * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
      */
     public List<DeletedAccount> getExportData(List<Integer> ids) {
-        if (ids == null || ids.isEmpty()) {
-            throw new IllegalArgumentException("対象が選択されていません。");
+        if (ids != null && ids.isEmpty()) {
+        	return deletedAccountMapper.deletedfindByIds(ids);
         }
-        return deletedAccountMapper.deletedfindByIds(ids);
+        return null;
     }
 
     /**
@@ -52,10 +49,9 @@ public class DeletedAccountService {
      */
     @Transactional
     public void restoreAccountsBulk(List<Integer> ids) {
-        if (ids == null || ids.isEmpty()) {
-            throw new IllegalArgumentException("復元対象が選択されていません。");
+        if (ids != null && ids.isEmpty()) {        
+        	deletedAccountMapper.restoreBulk(ids);
         }
-        deletedAccountMapper.restoreBulk(ids);
     }
 
     /**
@@ -63,17 +59,6 @@ public class DeletedAccountService {
      */
     @Transactional
     public void physicalDeleteAccount(Integer id) {
-        // 【不在条件チェック1】社員情報の紐づき確認
-        int employeeCount = deletedAccountMapper.countEmployeesByAccountId(id);
-        if (employeeCount > 0) {
-            throw new IllegalArgumentException("社員情報に紐づいているため、物理削除できません。");
-        }
-        // 【不在条件チェック2】アサイン履歴の紐づき確認
-        int assignmentCount = deletedAccountMapper.countAssignmentsByAccountId(id);
-        if (assignmentCount > 0) {
-            throw new IllegalArgumentException("アサイン履歴情報に紐づいているため、物理削除できません。");
-        }
-
         deletedAccountMapper.physicalDelete(id);
     }
 
@@ -82,20 +67,32 @@ public class DeletedAccountService {
      */
     @Transactional
     public void physicalDeleteAccountsBulk(List<Integer> ids) {
-        if (ids == null || ids.isEmpty()) {
-            throw new IllegalArgumentException("削除対象が選択されていません。");
+        if (ids != null && !ids.isEmpty()) {
+            deletedAccountMapper.physicalDeleteBulk(ids);
         }
-        // 【不在条件チェック1】社員情報の紐づき確認
-        int employeeCount = deletedAccountMapper.countEmployeesByAccountIds(ids);
-        if (employeeCount > 0) {
-            throw new IllegalArgumentException("社員情報に紐づいているデータが含まれているため、物理削除できません。");
-        }
-        // 【不在条件チェック2】アサイン履歴の紐づき確認
-        int assignmentCount = deletedAccountMapper.countAssignmentsByAccountIds(ids);
-        if (assignmentCount > 0) {
-            throw new IllegalArgumentException("アサイン履歴情報に紐づいているデータが含まれているため、物理削除できません。");
-        }
+    }
 
-        deletedAccountMapper.physicalDeleteBulk(ids);
-}
+    // =======================================================
+    // Controllerからのチェック用メソッド（booleanを返す）
+    // =======================================================
+
+    /** 単一アカウントに紐づく社員情報が存在するか判定 */
+    public boolean hasAttachedEmployees(Integer id) {
+        return deletedAccountMapper.countEmployeesByAccountId(id) > 0;
+    }
+
+    /** 複数アカウントの中に、紐づく社員情報が存在するものが含まれているか判定 */
+    public boolean hasAttachedEmployeesBulk(List<Integer> ids) {
+        return deletedAccountMapper.countEmployeesByAccountIds(ids) > 0;
+    }
+
+    /** 単一アカウントに紐づくアサイン履歴が存在するか判定 */
+    public boolean hasAttachedAssignments(Integer id) {
+        return deletedAccountMapper.countAssignmentsByAccountId(id) > 0;
+    }
+
+    /** 複数アカウントの中に、紐づくアサイン履歴が存在するものが含まれているか判定 */
+    public boolean hasAttachedAssignmentsBulk(List<Integer> ids) {
+        return deletedAccountMapper.countAssignmentsByAccountIds(ids) > 0;
+    }
 }

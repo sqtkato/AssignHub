@@ -9,22 +9,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.assignhub.entity.Company;
 import com.assignhub.entity.DeletedAccount;
-import com.assignhub.form.CompanyForm;
 import com.assignhub.service.DeletedAccountService;
 
 @Controller
-@RequestMapping("/companies")
+@RequestMapping("/deleted-accouts")
 public class DeletedAccountController {
 	private final DeletedAccountService deletedAccountService;
 
@@ -36,150 +32,94 @@ public class DeletedAccountController {
 	public DeletedAccountController(DeletedAccountService deletedAccountService) {
 		this.deletedAccountService = deletedAccountService;
 	}
-
-	/**
-	 * 企業一覧画面を表示する。検索・ソート条件に応じたデータを取得する。
-	 *
-	 * @param keyword 検索キーワード（任意）
-	 * @param sort ソート対象のカラム名（デフォルト: company_id）
-	 * @param order ソート順（デフォルト: asc）
-	 * @param model 画面描画用モデル
-	 * @return 一覧画面のテンプレートパス
-	 */
-	@GetMapping
-	public String index(@RequestParam(name = "keyword", required = false) String keyword,
-			@RequestParam(name = "sort", defaultValue = "company_id") String sort,
-			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-		model.addAttribute("companies", deletedAccountService.findAll(keyword, sort, order));
-		model.addAttribute("keyward", keyword);
-		model.addAttribute("currentSort", sort);
-		model.addAttribute("currentOrder", order);
-		return "company/index";
-	}
-
-	/**
-	 * 企業の新規登録画面を表示する。
-	 *
-	 * @param model 画面描画用モデル
-	 * @return 新規登録画面のテンプレートパス
-	 */
-	@GetMapping("/new")
-	public String create(Model model) {
-		if (!model.containsAttribute("companyForm")) {
-			model.addAttribute("companyForm", new CompanyForm());
-		}
-		return "company/create";
-	}
-
-	/**
-	 * 入力された企業情報をデータベースに登録する。
-	 *
-	 * @param form 入力フォームデータ
-	 * @param result バリデーション結果
-	 * @param attributes リダイレクト先へ渡すフラッシュスコープ
-	 * @return 成功時は一覧画面へリダイレクト、失敗時は登録画面へ戻る
-	 */
-	@PostMapping
-	public String store(@Validated @ModelAttribute("companyForm") CompanyForm form, BindingResult result,
-			RedirectAttributes attributes) {
-		if (result.hasErrors()) {
-			return "company/create";
-		}
-		Company company = new Company();
-		copyFormToEntity(form, company);
-		deletedaccountService.save(company);
-		attributes.addFlashAttribute("toastMessage", "企業情報を登録しました");
-		return "redirect:/companies";
-	}
-
-	/**
-	 * フォームオブジェクトからエンティティオブジェクトへ値の詰め替えを行う。
-	 *
-	 * @param f 入力フォーム
-	 * @param e 更新対象のエンティティ
-	 */
-	private void copyFormToEntity(CompanyForm f, Company e) {
-		e.setCompanyName(" ");
-	}
 	
 	
 	
-//一覧
 	@GetMapping
-	public String index(@RequestParam(name = "keyword", required = false) String keyword,
-			@RequestParam(name = "sort", defaultValue = "company_id") String sort,
-			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-		model.addAttribute("companies", deletedAccountService.findAll(keyword, sort, order));
-		model.addAttribute("keyward", keyword);
-		model.addAttribute("currentSort", sort);
-		model.addAttribute("currentOrder", order);
-		return "deletedAccount/index";
-	}
+    public String index(
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "sort", defaultValue = "account_id") String sort, // デフォルトをaccount_idに修正
+            @RequestParam(name = "order", defaultValue = "asc") String order,
+            @RequestParam(name = "permission", required = false) Integer permission, // permissionを追加
+            Model model) {
+        
+        model.addAttribute("accounts", deletedAccountService.getDeletedAccounts(keyword, sort, order, permission));
+        model.addAttribute("keyword", keyword); 
+        model.addAttribute("permission", permission);
+        model.addAttribute("currentSort", sort);
+        model.addAttribute("currentOrder", order);
+        
+        return "deletedAccount/index";
+    }
 
-	
-//一つ復元
-	@GetMapping
-	public String recover(@RequestParam(name = "id", required = false) List<Integer> id,
-				RedirectAttributes attributes) {
-			if (id == null || id.isEmpty()) {
-				attributes.addFlashAttribute("toastError", "");
-				return "deletedAccount/recover";
-			}
-			deletedAccountService.restoreAccount(id);
-			attributes.addFlashAttribute("toastMessage", id.size() + "");
-			return "deletedAccount/recover";}
+    // ==========================================
+    // 復元処理
+    // ==========================================
+    
+    /* 単一復元 */
+    @PostMapping("/{id}/restore") 
+    public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+        deletedAccountService.restoreAccount(id);
+        attributes.addFlashAttribute("toastMessage", "アカウント情報を復元しました");
+        return "redirect:/deleted-accounts"; 
+    }
 
-//	一つ削除
-	@GetMapping
-	public String deleted(@RequestParam(name = "id", required = false) List<Integer> id,
-				RedirectAttributes attributes) {
-			if (id == null || id.isEmpty()) {
-				attributes.addFlashAttribute("toastError", "紐づく社員情報（プロパー）が存在するため、物理削除できません。先に社員情報を物理削除してください。");
-				return "deletedAccount/deleted";
-			}
-			if (id == null || id.isEmpty()) {
-				attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するため、物理削除できません。先にアサイン履歴情報を物理削除してください。");
-				return "deletedAccount/deleted";
-			}
-			deletedAccountService.physicalDeleteAccount(id);
-			attributes.addFlashAttribute("toastMessage", id.size() + "");
-			return "deletedAccount/deleted";	
-		}
-		
+    /* 一括復元 */
+    @PostMapping("/restore-bulk")
+    public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
+        if (ids == null || ids.isEmpty()) {
+            attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
+            return "redirect:/deleted-accounts";
+        }
+        deletedAccountService.restoreAccountsBulk(ids);
+        attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を復元しました");
+        return "redirect:/deleted-accounts";
+    }
+    
+    // ==========================================
+    // 物理削除処理
+    // ==========================================
 
-//	一括復元
-	@GetMapping
-	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
-				RedirectAttributes attributes) {
-			if (ids == null || ids.isEmpty()) {
-				attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
-				return "deletedAccount/bulkRecover";
-			}
-			deletedAccountService.restoreAccountsBulk(ids);
-			attributes.addFlashAttribute("toastMessage", ids.size() + "");
-			return "deletedAccount/bulkRecover";	
-		}
-	
-//一括削除
-	@GetMapping
-	public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids,
-				RedirectAttributes attributes) {
-			if (ids == null || ids.isEmpty()) {
-				attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
-				return "deletedAccount/bulkDeleted";
-			}
-			if (ids == null || ids.isEmpty()) {
-				attributes.addFlashAttribute("toastError", "紐づく社員情報（プロパー）が存在するため、物理削除できません。先に社員情報を物理削除してください。");
-				return "deletedAccount/bulkDeleted";
-			}
-			if (ids == null || ids.isEmpty()) {
-				attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するため、物理削除できません。先にアサイン履歴情報を物理削除してください。");
-				return "deletedAccount/bulkDeleted";
-			}
-			deletedAccountService.physicalDeleteAccountsBulk(ids);
-			attributes.addFlashAttribute("toastMessage", ids.size() + "");
-			return "deletedAccount/bulkDeleted";
-			}
+    /* 単一削除 */
+    @PostMapping("/{id}/delete")
+    public String deleted(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+        // Serviceの判定メソッドを使って不在条件をチェック
+        if (deletedAccountService.hasAttachedEmployees(id)) {
+            attributes.addFlashAttribute("toastError", "紐づく社員情報が存在するため、物理削除できません。先に社員情報を物理削除してください。");
+            return "redirect:/deleted-accounts";
+        }
+        if (deletedAccountService.hasAttachedAssignments(id)) {
+            attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するため、物理削除できません。先にアサイン履歴情報を物理削除してください。");
+            return "redirect:/deleted-accounts";
+        }
+        
+        deletedAccountService.physicalDeleteAccount(id);
+        attributes.addFlashAttribute("toastMessage", "アカウント情報を完全に削除しました");
+        return "redirect:/deleted-accounts";
+    }
+
+    /* 一括削除 */
+    @PostMapping("/delete-bulk")
+    public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
+        if (ids == null || ids.isEmpty()) {
+            attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
+            return "redirect:/deleted-accounts";
+        }
+        
+        // Serviceの判定メソッドを使って一括不在条件をチェック
+        if (deletedAccountService.hasAttachedEmployeesBulk(ids)) {
+            attributes.addFlashAttribute("toastError", "紐づく社員情報が存在するアカウントが含まれているため、物理削除できません。");
+            return "redirect:/deleted-accounts";
+        }
+        if (deletedAccountService.hasAttachedAssignmentsBulk(ids)) {
+            attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するアカウントが含まれているため、物理削除できません。");
+            return "redirect:/deleted-accounts";
+        }
+        
+        deletedAccountService.physicalDeleteAccountsBulk(ids);
+        attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を完全に削除しました");
+        return "redirect:/deleted-accounts";
+    }
 	
 //	エクスポート画面へ遷移	
 	@GetMapping("/export")
