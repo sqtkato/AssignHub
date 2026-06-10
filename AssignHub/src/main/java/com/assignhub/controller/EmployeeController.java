@@ -1,5 +1,10 @@
 package com.assignhub.controller;
 
+import java.nio.charset.StandardCharsets;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -116,6 +121,28 @@ public class EmployeeController {
 	@GetMapping("/import")
 	public String showImport() {
 		return "employee/import";
+	}
+	
+	/**
+	 * インポート用のCSVテンプレートをダウンロードする。
+	 *
+	 * @return ダウンロード用のCSVファイルバイナリデータ
+	 */
+	@GetMapping("/import/template")
+	public ResponseEntity<byte[]> downloadTemplate() {
+		String csvContent = "ID(新規は空欄),社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,"
+				+ "勤続年数,生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,所属企業,"
+				+ "役職,電話番号,メールアドレス\n";
+		byte[] csvBytes = csvContent.getBytes(StandardCharsets.UTF_8);
+		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+		byte[] result = new byte[bom.length + csvBytes.length];
+		System.arraycopy(bom, 0, result, 0, bom.length);
+		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=employee_template.csv");
+		headers.add("Content-Type", "text/csv; charset=UTF-8");
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
 	/**
