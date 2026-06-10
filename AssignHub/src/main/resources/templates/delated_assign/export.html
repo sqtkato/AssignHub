@@ -3,13 +3,13 @@
 	layout:decorate="~{layout/layout}">
 
 <head>
-	<title>論理削除アカウント情報エクスポート</title>
+	<title>論理削除アサイン履歴情報エクスポート</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
-			<h2>論理削除アカウント情報エクスポート</h2>
+			<h2>論理削除アサイン履歴情報エクスポート</h2>
 		</div>
 		<div class="card form-card-wide">
 			<p class="instruction">以下の条件と内容でCSVファイルを出力します。よろしければ「エクスポート」ボタンを押してください。</p>
@@ -32,10 +32,9 @@
 				<table class="table header-only-table table-dark">
 					<thead>
 						<tr>
-							<th class="acc_id">アカウントID</th>
-							<th class="acc_logId">ログインID</th>
-							<th class="acc_per">権限</th>
-							<th class="acc_name">氏名</th>
+							<th class="acc_id">ID</th>
+							<th class="acc_logId">社員名</th>
+							<th class="acc_per">アサイン先企業名</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -43,7 +42,6 @@
 							<td th:text="${account.accountId}" class="acc_id"></td>
 							<td th:text="${account.loginId}" class="acc_logId"></td>
 							<td th:text="${account.permission}" class="acc_per"></td>
-							<td th:text="${account.empName}" class="acc_name"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -52,18 +50,16 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>アカウントID</th>
-						<th>ログインID</th>
-						<th>氏名</th>
-						<th>権限</th>
+						<th>ID</th>
+						<th>社員名</th>
+						<th>アサイン先企業名</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="account : ${accounts}">
 						<td th:text="${account.accountId}"></td>
 						<td th:text="${account.loginId}"></td>
-						<td th:text="${account.permission}"></td>						
-						<td th:text="${account.empName}"></td>
+						<td th:text="${account.permission}"></td>					
 					</tr>
 				</tbody>
 			</table>
