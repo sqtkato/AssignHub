@@ -136,6 +136,19 @@ public class AccountController {
 			return "account/import";
 		}
 
+		// No.4 文字コードチェック（UTF-8で読めるか試す）
+				try {
+					java.nio.charset.CharsetDecoder decoder =
+							java.nio.charset.StandardCharsets.UTF_8.newDecoder();
+					decoder.onMalformedInput(java.nio.charset.CodingErrorAction.REPORT);
+					decoder.onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT);
+					decoder.decode(java.nio.ByteBuffer.wrap(file.getBytes()));
+				} catch (Exception e) {
+					// UTF-8として読めない → 文字コードが違う
+					model.addAttribute("fileError", "UTF-8のCSVファイルを選択してください。");
+					return "account/import";
+				}
+		
 		try {
 			int total = accountService.countDataRows(file);
 
