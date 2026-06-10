@@ -12,11 +12,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
@@ -78,16 +77,13 @@ public class AccountController {
 		if (result.hasErrors()) {
 			return "account/create";
 		}
-
-		if (accountService.existsByLoginId(form.getLoginId())) {
+		if (accountService.existsByLoginId(account.getLoginId())) {
 			model.addAttribute("loginIdError", "このログインIDは既に使用されています");
 			return "account/create";
 		}
-
 		Account account = new Account();
 		copyFormToEntity(form, account);
 		accountService.save(account);
-
 		return "redirect:/accounts";
 	}
 
@@ -126,10 +122,9 @@ public class AccountController {
 	 * @param deptId  絞り込み部署ID
 	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
-	@PostMapping("/export/download")
+	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
-
 		List<Account> accounts = accountService.findByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名\n");
 		for (Account acc : accounts) {
@@ -144,11 +139,12 @@ public class AccountController {
 		System.arraycopy(bom, 0, result, 0, bom.length);
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment; filename=account.csv");
-
+		headers.add("Content-Disposition", "attachment; filename=employees.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
+
+	// ===== ここから アカウント情報インポート機能 =====
 
 	/**
 	 * アカウント情報インポート画面を表示する。
@@ -165,28 +161,70 @@ public class AccountController {
 	public String doImport(@RequestParam("file") MultipartFile file, Model model) {
 		model.addAttribute("done", true);
 
+		// 没选文件
 		if (file == null || file.isEmpty()) {
 			model.addAttribute("fileError", "ファイルを選択してください");
 			return "account/import";
 		}
 
+		// No.2 非CSV文件
+		String filename = file.getOriginalFilename();
+		if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
+			model.addAttribute("fileError", "ファイル形式が正しくありません。.csvファイルを選択してください。");
+			return "account/import";
+		}
+
+		// No.3 超过5MB
+		if (file.getSize() > 5 * 1024 * 1024) {
+			model.addAttribute("fileError", "ファイルサイズは5MB以内にしてください。");
+			return "account/import";
+		}
+
+		// No.4 文字コードチェック（UTF-8で読めるか試す）
+				try {
+					java.nio.charset.CharsetDecoder decoder =
+							java.nio.charset.StandardCharsets.UTF_8.newDecoder();
+					decoder.onMalformedInput(java.nio.charset.CodingErrorAction.REPORT);
+					decoder.onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT);
+					decoder.decode(java.nio.ByteBuffer.wrap(file.getBytes()));
+				} catch (Exception e) {
+					// UTF-8として読めない → 文字コードが違う
+					model.addAttribute("fileError", "UTF-8のCSVファイルを選択してください。");
+					return "account/import";
+				}
+		
 		try {
 			int total = accountService.countDataRows(file);
 
+			// No.5 超过500件
 			if (total > 500) {
-				model.addAttribute("globalError", "登録件数が上限（500件）に達しています");
+				model.addAttribute("globalError", "登録後の件数が上限に達しています。アカウント登録条件は500件です。");
 				model.addAttribute("successCount", 0);
 				model.addAttribute("errorCount", total);
 				return "account/import";
 			}
 
+			// ① 先校验（No.6〜13、No.7存在チェック、権限チェック）
 			List<ImportError> errors = accountService.validate(file);
 
 			if (!errors.isEmpty()) {
+				// 有错 → 全部取消，不写DB
 				model.addAttribute("successCount", 0);
 				model.addAttribute("errorCount", errors.size());
 				model.addAttribute("errors", errors);
+				return "account/import";
+			}
+
+			// ② 校验全通过 → 写入DB（INSERT/UPDATE）
+			List<ImportError> dbErrors = accountService.importData(file);
+
+			if (!dbErrors.isEmpty()) {
+				// No.14 写入有失败
+				model.addAttribute("successCount", total - dbErrors.size());
+				model.addAttribute("errorCount", dbErrors.size());
+				model.addAttribute("errors", dbErrors);
 			} else {
+				// 全部成功
 				model.addAttribute("successCount", total);
 				model.addAttribute("errorCount", 0);
 			}
@@ -194,6 +232,27 @@ public class AccountController {
 			model.addAttribute("fileError", "ファイルの読み込みに失敗しました");
 		}
 		return "account/import";
+	}
+
+	/**
+	 * CSVテンプレート（見本）をダウンロードする。
+	 */
+	@GetMapping("/import/template")
+	public ResponseEntity<byte[]> downloadTemplate() {
+		String csv = "アカウントID,ログインID,パスワード,権限\n"
+				   + ",user001,pass1234,0\n";
+
+		byte[] csvBytes = csv.getBytes(StandardCharsets.UTF_8);
+		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+		byte[] result = new byte[bom.length + csvBytes.length];
+		System.arraycopy(bom, 0, result, 0, bom.length);
+		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=account_template.csv");
+		headers.add("Content-Type", "text/csv; charset=UTF-8");
+
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
 	/**
@@ -206,8 +265,7 @@ public class AccountController {
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		accountService.delete(id);
 		return "redirect:/accounts";
-	}
-
+	
 	/**
 	 * 選択された複数の社員情報を一括で物理削除する。
 	 *
