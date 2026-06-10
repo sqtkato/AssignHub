@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+<<<<<<< HEAD
 import org.springframework.web.multipart.MultipartFile;
+=======
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
@@ -71,13 +74,21 @@ public class AccountController {
 	}
 	
 	@GetMapping("/new")
+<<<<<<< HEAD
 	public String newAccount(Model model, HttpSession session) {
         model.addAttribute("currentLoginId",session.getAttribute("loginId"));
 		model.addAttribute("account", new AccountForm());
 		return "account/create"; 
+=======
+	public String newAccount(Model model) {
+		// 【重要】ここで「account」という名前で空のオブジェクトを渡す！
+		model.addAttribute("account", new Account());
+		return "account/new"; // ここがHTMLのファイル名と一致しているか
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 	}
 
 	@PostMapping("/create")
+<<<<<<< HEAD
 	public String create(@Validated @ModelAttribute("account") AccountForm form,
 			BindingResult result, Model model, HttpSession session) {
         model.addAttribute("currentLoginId",session.getAttribute("loginId"));
@@ -85,13 +96,19 @@ public class AccountController {
 			return "account/create";
 		}
 		if (accountService.existsByLoginId(form.getLoginId())) {
+=======
+	public String create(@ModelAttribute Account account, Model model) {
+
+		if (accountService.existsByLoginId(account.getLoginId())) {
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 			model.addAttribute("loginIdError", "このログインIDは既に使用されています");
-			return "account/create";
+			return "account/new";
 		}
-		Account account = new Account();
-		copyFormToEntity(form, account);
+
 		accountService.save(account);
+
 		return "redirect:/accounts";
+
 	}
 
 	/**
@@ -104,6 +121,7 @@ public class AccountController {
 	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
+<<<<<<< HEAD
 			Model model, HttpSession session, RedirectAttributes attributes) {
 		
         model.addAttribute("currentLoginId",session.getAttribute("loginId"));
@@ -115,6 +133,13 @@ public class AccountController {
 		if (ids.size() == 0) {
 			return "account/index";
 
+=======
+			Model model) {
+
+		if (ids == null) {
+			model.addAttribute("message", "対象が選択されていません");
+			return "redirect:/accounts";
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 		}
 		model.addAttribute("count", accountService.findByIds(ids).size());
 		List<Account> accounts = accountService.findByIds(ids);
@@ -152,6 +177,7 @@ public class AccountController {
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
+<<<<<<< HEAD
 	// ===== ここから アカウント情報インポート機能 =====
 
 	/**
@@ -264,6 +290,8 @@ public class AccountController {
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
+=======
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 	/**
 	 * アカウントを一件論理削除
 	 * 
@@ -274,6 +302,7 @@ public class AccountController {
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		accountService.delete(id);
 		return "redirect:/accounts";
+<<<<<<< HEAD
 	
 	/**
 	 * 選択された複数の社員情報を一括で物理削除する。
@@ -293,15 +322,25 @@ public class AccountController {
 		accountService.deleteBulk(ids);
 		attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を削除しました");
 		return "redirect:/accounts";
+=======
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 	}
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable("id") Integer id, HttpSession session, Model model) {
 		if (!model.containsAttribute("accountForm")) {
+<<<<<<< HEAD
 	        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
 			Account acc = accountService.findById(id);
+=======
+			Account acc = accountService.findById(id);
+			;
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 			AccountForm form = new AccountForm();
 			form.setAccountId(acc.getAccountId());
 			form.setLoginId(acc.getLoginId());
@@ -316,6 +355,7 @@ public class AccountController {
 	public String update(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result, RedirectAttributes attributes, Model model) {
+<<<<<<< HEAD
 
 		if (result.hasErrors()) {
 			return "account/edit";
@@ -326,7 +366,12 @@ public class AccountController {
 			return "account/edit";
 		}
 	
+=======
+		
+		
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 		Account acc = new Account();
+<<<<<<< HEAD
 		// :bulb: 画面から届いたデータを、DBに送るオブジェクトにしっかりセットする！
 	    acc.setLoginId(accountForm.getLoginId());
 	    acc.setPermission(accountForm.getPermission());
@@ -334,6 +379,10 @@ public class AccountController {
 	    acc.setPasswordHash(accountForm.getPasswordHash());
 	    acc.setAccountId(id);
 		accountService.save(acc);
+=======
+		acc.setAccountId(id);
+		accountService.update(acc);
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 		return "redirect:/accounts";
 	}
 
@@ -344,4 +393,3 @@ public class AccountController {
 		e.setPermission(f.getPermission());
 	}
 }
-

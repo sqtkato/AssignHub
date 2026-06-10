@@ -35,7 +35,11 @@ public interface AccountMapper {
 	 */
 	List<Account> findByIds(@Param("ids") List<Integer> ids);
 
+<<<<<<< HEAD
 	Account findByLoginId(String loginId);
+=======
+	
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 	
 	void save(Account account);
 
@@ -45,10 +49,11 @@ public interface AccountMapper {
 	
 	/**
 	 * アカウントを一件論理削除。
-	 *
+	 * 
 	 * @param id 削除対象のアカウントID。
 	 */
 	void delete(Integer id);
+<<<<<<< HEAD
 
 	// ===== インポート機能用に追加 =====
 
@@ -56,10 +61,14 @@ public interface AccountMapper {
 	Account findById(@Param("accountId") Integer accountId);
 
 	/** アカウントを更新する（ログインID・パスワード・権限を上書き）。 */
-	void update(Account account);
-	/**
-	 * アカウント情報を一括で削除する。
-	 */
-	void deleteBulk(@Param("ids") List<Integer> ids);
+=======
+	
+	Account findById(Integer id);
+	
+	Account findByLoginId(String loginId);
 
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
+	void update(Account account);
+
+	
 }
