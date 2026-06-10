@@ -53,7 +53,7 @@ List<DeletedAssign> findallByIds(@Param("ids") List<Integer> ids);
 	 * @return 影響を受けた行数（実際に削除された件数）
 	 */
 	int physicalDeleteBulk(@Param("ids") List<Integer> ids);
-
+	
 	/**
 	 * 指定されたアサインIDに紐づく企業数(派遣先)をカウントする（単一復元の不在条件チェック用）。
 	 */
