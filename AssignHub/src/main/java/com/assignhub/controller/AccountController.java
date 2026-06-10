@@ -93,17 +93,17 @@ public class AccountController {
 	 * @param model  画面描画用のモデル
 	 * @return エクスポート画面のテンプレートパス
 	 */
-    @PostMapping("/export")
+	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			Model model) {
 
-        if (ids == null) {
-            model.addAttribute("message", "対象が選択されていません");
-            return "redirect:/accounts";
-        }
+		if (ids == null) {
+			model.addAttribute("message", "対象が選択されていません");
+			return "redirect:/accounts";
+		}
 		model.addAttribute("count", accountService.findByIds(ids).size());
-        List<Account> accounts = accountService.findByIds(ids);
-        model.addAttribute("accounts", accounts);
+		List<Account> accounts = accountService.findByIds(ids);
+		model.addAttribute("accounts", accounts);
 		model.addAttribute("ids", ids);
 		return "account/export";
 	}
@@ -115,7 +115,7 @@ public class AccountController {
 	 * @param deptId  絞り込み部署ID
 	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
-    @PostMapping("/export/download")
+	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Account> accounts = accountService.findByIds(ids);
@@ -132,7 +132,7 @@ public class AccountController {
 		System.arraycopy(bom, 0, result, 0, bom.length);
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 		HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=account.csv");
+		headers.add("Content-Disposition", "attachment; filename=account.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
@@ -152,7 +152,8 @@ public class AccountController {
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable("id") Integer id, Model model) {
 		if (!model.containsAttribute("accountForm")) {
-			Account acc = accountService. findById(id);;
+			Account acc = accountService.findById(id);
+			;
 			AccountForm form = new AccountForm();
 			form.setAccountId(acc.getAccountId());
 			form.setLoginId(acc.getLoginId());
@@ -167,18 +168,13 @@ public class AccountController {
 	public String update(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result, RedirectAttributes attributes, Model model) {
-
-
+		
+		
 		Account acc = new Account();
 		acc.setAccountId(id);
-		copyFormToEntity(accountForm, acc);
 		accountService.update(acc);
 		return "redirect:/accounts";
 	}
-	
-	
-
-	
 
 	private void copyFormToEntity(AccountForm f, Account e) {
 		e.setAccountId(f.getAccountId());

@@ -45,7 +45,7 @@ public class AccountService {
 	    );
 
 		accountMapper.save(account);
-		accountMapper.update(account);
+		
 	}
 	// 追加：ログインIDの重複チェック
 	public boolean existsByLoginId(String loginId) {
@@ -66,14 +66,16 @@ public class AccountService {
 	public Account findById(Integer id) {
 		return accountMapper.findById(id);
 	}
-	//	public void update(Integer id) {
-//		 accountMapper.update(id);}
+	
 	
 
 	public void update(Account account) {
 		accountMapper.update(account);
 		
-	}	
+	}
+
+
+		
 	
 
 	
