@@ -5,15 +5,42 @@
 	<resultMap id="employeeResultMap"
 		type="com.assignhub.entity.Employee">
 		<id property="empId" column="emp_id" />
-		<result property="empName" column="emp_name" />
-		<result property="hireYear" column="hire_year" />
+		<result property="lastName" column="last_name" />
+		<result property="firstName" column="first_name" />
+		<result property="lastNameKana" column="last_name_kana" />
+		<result property="firstNameKana" column="first_name_kana" />
+		<result property="hireDate" column="hire_date" />
+		<result property="yearsOfService" column="years_of_servise" />
+		<result property="BirthDate" column="birth_date" />
+		<result property="zipCode" column="zip_code" />
+		<result property="address1" column="address1" />
+		<result property="address2" column="address2" />
+		<result property="engineerType" column="engineer_type" />
+		<result property="accountId" column="account_id" />
+		<result property="companyId" column="company_id" />
+		<result property="companyName" column="company_name_belong" />
+		<result property="companyNameAssign" column="company_name_assign" />
+		<result property="department" column="department" />
+		<result property="jobTitle" column="job_title" />
+		<result property="empTel" column="emp_tel" />
+		<result property="email" column="email" />
+		<result property="deleteFlg" column="delete_flg" />
 		<result property="createdAt" column="created_at" />
 		<result property="updatedAt" column="updated_at" />
 	</resultMap>
 
 	<select id="findAll" resultMap="employeeResultMap">
-		SELECT *
-		FROM m_employee
+		SELECT e.*, 
+		       c.company_name AS company_name_belong, 
+		       c2.company_name AS company_name_assign
+		FROM m_employee e
+		LEFT JOIN m_company c
+		ON e.company_id = c.company_id
+		LEFT JOIN t_assignment a
+		ON a.emp_id = e.emp_id
+		AND a.contract_end_date is null
+		LEFT JOIN m_company c2
+        ON a.company_id = c2.company_id
 		<if test="keyword != null and keyword != ''">
 			<where>
 				emp_name LIKE CONCAT('%', #{keyword}, '%')
