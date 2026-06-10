@@ -49,7 +49,7 @@ public class DeletedAccountController {
         model.addAttribute("currentSort", sort);
         model.addAttribute("currentOrder", order);
         
-        return "deletedAccount/index";
+        return "deleted_account/index";
     }
 
     // ==========================================
@@ -127,10 +127,10 @@ public class DeletedAccountController {
 		//引数内書き換え
 		model.addAttribute("count", deletedAccountService.getExportData(ids));
 		
-		return "deletedAccount/export";
+		return "deleted_account/export";
 	}
 	
-//　エクスポートのダウンロード処理
+//エクスポートのダウンロード処理
 	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
 			Model model) {

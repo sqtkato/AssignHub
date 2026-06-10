@@ -15,9 +15,9 @@ public interface DeletedCompanyMapper {
      */
     List<DeletedCompany> deletedfindAll(
             @Param("keyword") String keyword, 
+            @Param("tel") String tel,
             @Param("sort") String sort, 
-            @Param("order") String order, 
-            @Param("companyType") Integer companyType); 
+            @Param("order") String order);
     
     List<DeletedCompany> deletedfindByIds(@Param("ids") List<Integer> ids);
     
