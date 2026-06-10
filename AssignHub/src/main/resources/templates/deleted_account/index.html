@@ -3,73 +3,106 @@
 	layout:decorate="~{layout/layout}">
 
 <head>
-	<title>企業情報一覧</title>
+	<title>アカウント情報削除/復元一覧</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
-			<h2>企業情報管理</h2>
+			<h2>アカウント情報削除/復元</h2>
 		</div>
-
-		<div class="card">
-			<form th:action="@{/companies}" method="get" class="search-form">
-				<div class="form-group form-group-search">
-					<label>キーワード検索（企業名）</label>
-					<input type="text" name="keyword" class="form-control" th:value="${keyword}" placeholder="例：テクノ">
-				</div>
-				<button type="submit" class="btn btn-secondary">検索</button>
-			</form>
-		</div>
-
-		<form th:action="@{/companies/bulk-delete}" method="post" id="listForm">
+		<form th:action="@{/departments/bulk-delete}" method="post" id="listForm">
 			<div class="table-toolbar">
-				<a th:href="@{/companies/new}" class="toolbar-btn toolbar-btn-primary" title="新しい企業を登録">
+				<!--				ここにコンボボックスが入る-->
+				<div class="card">
+					<form th:action="@{/companies}" method="get" class="search-form">
+						<div class="form-group form-group-search">
+							<label>社員</label>
+							<input type="text" name="keyword" class="form-control" th:value="${keyword}">
+						</div>
+						<button type="submit" class="btn btn-secondary">検索</button>
+					</form>
+				</div>
+				<button type="submit" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を復元"
+					onclick="return confirm('選択した項目を一括復元しますか？');">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
-						<line x1="12" y1="5" x2="12" y2="19"></line>
-						<line x1="5" y1="12" x2="19" y2="12"></line>
+						<polyline points="3 6 5 6 21 6"></polyline>
+						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
 					</svg>
-					新規登録
+					一括復元
+				</button>
+				<a th:href="@{/departments/export(keyword=${keyword})}" class="toolbar-btn" title="現在の検索条件でCSV出力">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="17 8 12 3 7 8"></polyline>
+						<line x1="12" y1="3" x2="12" y2="15"></line>
+					</svg>
+					エクスポート
 				</a>
-			</div>
-
-			<div class="card">
-				<table class="table">
-					<thead class="table-dark">
-						<tr>
-							<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
-							<th>
-								<a class="sortable-header"
-									th:href="@{/companies(keyword=${keyword}, sort='company_id', order=${currentSort == 'company_id' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-									ID <span class="sort-icon"
-										th:classappend="${currentSort == 'company_id'} ? 'active'"
-										th:text="${currentSort == 'company_id' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
-								</a>
-							</th>
-							<th>
-								<a class="sortable-header"
-									th:href="@{/companies(keyword=${keyword}, sort='company_name', order=${currentSort == 'company_name' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-									企業名 <span class="sort-icon"
-										th:classappend="${currentSort == 'company_name'} ? 'active'"
-										th:text="${currentSort == 'company_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
-								</a>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="comp : ${companies}" class="clickable-row">
-							<td class="col-checkbox"><input type="checkbox" name="ids" th:value="${comp.companyId}"
-									class="row-checkbox"></td>
-							<td th:text="${comp.companyId}"></td>
-							<td th:text="${comp.companyName}"></td>
-						</tr>
-						<tr th:if="${#lists.isEmpty(companies)}">
-							<td colspan="5" class="text-center">該当するデータがありません。</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+				<button type="submit" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
+					onclick="return confirm('選択した項目を一括復元しますか？');">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="3 6 5 6 21 6"></polyline>
+						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+					</svg>
+					一括削除
+				</button>
+				<!--			この下より各項目名やフィールドネームを適宜変更してください。枠が足りない場合は他をコピーして増やしてください。-->
+				<div class="card">
+					<table class="table">
+						<thead class="table-dark">
+							<tr>
+								<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
+								<th>
+									<a class="sortable-header"
+										th:href="@{/companies(keyword=${keyword}, sort='company_id', order=${currentSort == 'company_id' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+										アカウントID <span class="sort-icon"
+											th:classappend="${currentSort == 'company_id'} ? 'active'"
+											th:text="${currentSort == 'company_id' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+									</a>
+								</th>
+								<th>
+									<a class="sortable-header"
+										th:href="@{/companies(keyword=${keyword}, sort='company_id', order=${currentSort == 'company_id' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+										ログインID <span class="sort-icon"
+											th:classappend="${currentSort == 'company_id'} ? 'active'"
+											th:text="${currentSort == 'company_id' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+									</a>
+								</th>
+								<th>
+									<a class="sortable-header"
+										th:href="@{/companies(keyword=${keyword}, sort='company_name', order=${currentSort == 'company_name' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+										権限 <span class="sort-icon"
+											th:classappend="${currentSort == 'company_name'} ? 'active'"
+											th:text="${currentSort == 'company_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+									</a>
+								</th>
+								<th>
+									<a class="sortable-header"
+										th:href="@{/companies(keyword=${keyword}, sort='company_name', order=${currentSort == 'company_name' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+										社員名 <span class="sort-icon"
+											th:classappend="${currentSort == 'company_name'} ? 'active'"
+											th:text="${currentSort == 'company_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+									</a>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="comp : ${companies}" class="clickable-row">
+								<td class="col-checkbox"><input type="checkbox" name="ids" th:value="${comp.companyId}"
+										class="row-checkbox"></td>
+								<td th:text="${comp.companyId}"></td>
+								<td th:text="${comp.companyName}"></td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(companies)}">
+								<td colspan="5" class="text-center">該当するデータがありません。</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 		</form>
 	</div>
 </body>

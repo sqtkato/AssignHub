@@ -2,9 +2,11 @@ package com.assignhub.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.ems.domain.entity.Employee;
+import com.assignhub.entity.DeletedAccount;
+import com.assignhub.mapper.DeletedAccountMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,12 +22,12 @@ public class DeletedAccountService {
 }
 //	検索条件およびソート条件に合致するアカウント情報を全件取得する。
 	public List< DeletedAccount> findAll(String keyword, Integer deptId, String sort, String order) {
-		return employeeMapper.findAll(keyword, deptId, sort, order);
+		return deletedaccountMapper.findAll(keyword, deptId, sort, order);
 	}
 	
 //	論理削除済みの一覧
 	public List< DeletedAccount> findAll(String keyword, Integer deptId, String sort, String order) {
-		return employeeMapper.findAll(keyword, deptId, sort, order);
+		return deletedaccountMapper.findAll(keyword, deptId, sort, order);
 	}
 
 //	 IDをアカウント指定して、アカウント情報を1件取得する。
