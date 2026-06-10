@@ -102,4 +102,29 @@
 		WHERE login_id = #{loginId}
 		AND delete_flg = 0
 	</select>
+	
+	<update id="update">
+		UPDATE m_account
+		SET account_Id = #{accountId},
+		login_id =#{loginId},
+	    permission= #{permission},
+		password_Hash = #{passwordHash},
+		updated_at = NOW()
+		WHERE account_id =#{accountId}
+	</update>
+	
+	<select id="findById" resultMap="accountResultMap">
+		SELECT * FROM m_account 
+        WHERE account_id = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE m_account
+		SET account_Id = #{accountId},
+		login_id =#{loginId},
+	    permission= #{permission},
+		password_Hash = #{passwordHash},
+		updated_at = NOW()
+		WHERE account_id =#{accountId}
+	</update>
 </mapper>

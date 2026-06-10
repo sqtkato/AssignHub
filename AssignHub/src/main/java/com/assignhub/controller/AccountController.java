@@ -8,17 +8,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
-import com.assignhub.form.ImportError;
+import com.assignhub.form.AccountForm;
 import com.assignhub.service.AccountService;
 
 /**
@@ -81,8 +82,17 @@ public class AccountController {
 		accountService.save(account);
 
 		return "redirect:/accounts";
+
 	}
 
+	/**
+	 * 社員データのエクスポート画面を表示する。
+	 *
+	 * @param keyword     現在の検索キーワード（状態保持用）
+	 * @param deptId 現在の絞り込み部署ID
+	 * @param model  画面描画用のモデル
+	 * @return エクスポート画面のテンプレートパス
+	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			Model model, RedirectAttributes attributes) {
@@ -187,7 +197,6 @@ public class AccountController {
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		accountService.delete(id);
 		return "redirect:/accounts";
-
 	}
 
 	/**
@@ -210,3 +219,43 @@ public class AccountController {
 	}
 
 }
+
+	@GetMapping("/{id}/edit")
+	public String edit(@PathVariable("id") Integer id, Model model) {
+		if (!model.containsAttribute("accountForm")) {
+			Account acc = accountService. findById(id);;
+			AccountForm form = new AccountForm();
+			form.setAccountId(acc.getAccountId());
+			form.setLoginId(acc.getLoginId());
+			form.setPasswordHash(acc.getPasswordHash());
+			form.setPermission(acc.getPermission());
+			model.addAttribute("accountForm", form);
+		}
+		return "account/edit";
+	}
+
+	@PostMapping("/{id}/edit")
+	public String update(@PathVariable("id") Integer id,
+			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
+			BindingResult result, RedirectAttributes attributes, Model model) {
+
+
+		Account acc = new Account();
+		acc.setAccountId(id);
+		copyFormToEntity(accountForm, acc);
+		accountService.update(acc);
+		return "redirect:/accounts";
+	}
+	
+	
+
+	
+
+	private void copyFormToEntity(AccountForm f, Account e) {
+		e.setAccountId(f.getAccountId());
+		e.setLoginId(f.getLoginId());
+		e.setPasswordHash(f.getPasswordHash());
+		e.setPermission(f.getPermission());
+	}
+}
+

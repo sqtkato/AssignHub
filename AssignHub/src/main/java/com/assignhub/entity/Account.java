@@ -22,7 +22,7 @@ public class Account {
 	private String passwordHash;
 	
 	/** 権限 */
-	private String permission;
+	private Integer permission;
 	
 	/** 削除フラグ */
 	private String deleteFlg;
@@ -36,4 +36,8 @@ public class Account {
 	/** 社員名　（外部DBから取得）*/
 	private String empName;
 
-}
+	
+		
+	}
+
+

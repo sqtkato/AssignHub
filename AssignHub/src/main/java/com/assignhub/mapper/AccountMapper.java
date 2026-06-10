@@ -48,7 +48,12 @@ public interface AccountMapper {
 	 */
 	void delete(Integer id);
 	
+	Account findById(Integer id);
+	
 	Account findByLoginId(String loginId);
+
+	void update(Account account);
+
 	
 	/**
 	 * アカウント情報を一括で削除する。
