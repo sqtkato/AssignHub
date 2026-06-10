@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>アカウント情報の新規登録</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="page-title-area">
+        <h2>アカウント情報の新規登録</h2>
+    </div>
+
+    <div class="card form-card">
+        <form th:action="@{/accounts/create}" method="post" th:object="${account}"
+              onsubmit="return validate()">
+
+            <div class="form-group">
+                <label>ログインID <span class="badge-required">必須</span></label>
+                <input type="text" th:field="*{loginId}" id="loginId" class="form-control">
+                <div id="loginId-errors"></div>
+                <span class="error-message" th:if="${loginIdError}" th:text="${loginIdError}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>パスワード <span class="badge-required">必須</span></label>
+                <input type="password" th:field="*{passwordHash}" id="passwordHash" class="form-control">
+                <div id="passwordHash-errors"></div>
+            </div>
+
+            <div class="form-group">
+                <label>権限付与</label>
+                <select th:field="*{permission}" class="form-control">
+                    <option value="0">一般</option>
+                    <option value="1">管理</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">登録</button>
+                <a th:href="@{/accounts}" class="btn btn-secondary">戻る</a>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        function validate() {
+            const loginId  = document.getElementById('loginId').value;
+            const password = document.getElementById('passwordHash').value;
+
+            const loginErrs = [];
+            const passErrs  = [];
+
+            if (!loginId) {
+                loginErrs.push('ログインIDは必須です');
+            } else {
+                if (!/^[a-zA-Z0-9]+$/.test(loginId)) {
+                    loginErrs.push('ログインIDは半角英数字のみで入力してください');
+                }
+                if (loginId.length < 5 || loginId.length > 12) {
+                    loginErrs.push('ログインIDは5文字以上12文字以内で入力してください');
+                }
+            }
+
+            if (!password) {
+                passErrs.push('パスワードは必須です');
+            } else {
+                if (!/^[a-zA-Z0-9@_]+$/.test(password)) {
+                    passErrs.push('パスワードは半角英数字または記号("@","_")のみで入力してください');
+                }
+                if (password.length < 8 || password.length > 20) {
+                    passErrs.push('パスワードは8文字以上20文字以内で入力してください');
+                }
+            }
+
+            showErrors('loginId', loginErrs);
+            showErrors('passwordHash', passErrs);
+
+            return loginErrs.length === 0 && passErrs.length === 0;
+        }
+
+        function showErrors(fieldId, messages) {
+            const errArea = document.getElementById(fieldId + '-errors');
+            const input   = document.getElementById(fieldId);
+
+            errArea.innerHTML = messages
+                .map(m => `<span class="error-message">${m}</span>`)
+                .join('');
+
+            if (messages.length > 0) {
+                input.classList.add('input-error');
+            } else {
+                input.classList.remove('input-error');
+            }
+        }
+    </script>
+
+</div>
+</body>
+</html>

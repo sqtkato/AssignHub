@@ -28,28 +28,6 @@
 				</table>
 			</div>
 
-<<<<<<< HEAD
-			<div class="table-scroll export-table">
-				<table class="table header-only-table table-dark">
-					<thead>
-						<tr>
-							<th class="acc_id">アカウントID</th>
-							<th class="acc_logId">ログインID</th>
-							<th class="acc_per">権限</th>
-							<th class="acc_name">氏名</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="account : ${accounts}">
-							<td th:text="${account.accountId}" class="acc_id"></td>
-							<td th:text="${account.loginId}" class="acc_logId"></td>
-							<td th:text="${account.permission}" class="acc_per"></td>
-							<td th:text="${account.empName}" class="acc_name"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-=======
 			<table class="table">
 				<thead>
 					<tr>
@@ -63,12 +41,11 @@
 					<tr th:each="account : ${accounts}">
 						<td th:text="${account.accountId}"></td>
 						<td th:text="${account.loginId}"></td>
-						<td th:text="${account.permission}"></td>						
 						<td th:text="${account.empName}"></td>
+						<td th:text="${account.permission}"></td>
 					</tr>
 				</tbody>
 			</table>
->>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 
 
 			<div class="action-area">

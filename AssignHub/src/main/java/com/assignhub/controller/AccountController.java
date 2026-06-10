@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
-import com.assignhub.form.ImportError;
 import com.assignhub.service.AccountService;
 
 /**
@@ -68,29 +66,23 @@ public class AccountController {
 
 	@GetMapping("/new")
 	public String newAccount(Model model) {
-
-		model.addAttribute("account", new AccountForm());
-		return "account/create"; 
+		// 【重要】ここで「account」という名前で空のオブジェクトを渡す！
+		model.addAttribute("account", new Account());
+		return "account/new"; // ここがHTMLのファイル名と一致しているか
 	}
 
 	@PostMapping("/create")
-	public String create(@Validated @ModelAttribute("account") AccountForm form,
-			BindingResult result, Model model) {
+	public String create(@ModelAttribute Account account, Model model) {
 
-		if (result.hasErrors()) {
-			return "account/create";
-		}
-
-		if (accountService.existsByLoginId(form.getLoginId())) {
+		if (accountService.existsByLoginId(account.getLoginId())) {
 			model.addAttribute("loginIdError", "このログインIDは既に使用されています");
-			return "account/create";
+			return "account/new";
 		}
 
-		Account account = new Account();
-		copyFormToEntity(form, account);
 		accountService.save(account);
 
 		return "redirect:/accounts";
+
 	}
 
 	/**
@@ -103,16 +95,11 @@ public class AccountController {
 	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
+			Model model) {
 
-			Model model, RedirectAttributes attributes) {
-		// ★【最優先】まず最初にnullチェックを行う
-		if (ids == null || ids.isEmpty()) {
-			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
-			return "redirect:/accounts"; // 元の一覧画面に戻す
-		}
-		if (ids.size() == 0) {
-			return "account/index";
-
+		if (ids == null) {
+			model.addAttribute("message", "対象が選択されていません");
+			return "redirect:/accounts";
 		}
 		model.addAttribute("count", accountService.findByIds(ids).size());
 		List<Account> accounts = accountService.findByIds(ids);
@@ -131,7 +118,6 @@ public class AccountController {
 	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
-
 		List<Account> accounts = accountService.findByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名\n");
 		for (Account acc : accounts) {
@@ -147,55 +133,8 @@ public class AccountController {
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Disposition", "attachment; filename=account.csv");
-
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
-	}
-
-	/**
-	 * アカウント情報インポート画面を表示する。
-	 */
-	@GetMapping("/import")
-	public String importPage() {
-		return "account/import";
-	}
-
-	/**
-	 * CSVファイルをアップロードしてアカウント情報を一括登録・更新する。
-	 */
-	@PostMapping("/import")
-	public String doImport(@RequestParam("file") MultipartFile file, Model model) {
-		model.addAttribute("done", true);
-
-		if (file == null || file.isEmpty()) {
-			model.addAttribute("fileError", "ファイルを選択してください");
-			return "account/import";
-		}
-
-		try {
-			int total = accountService.countDataRows(file);
-
-			if (total > 500) {
-				model.addAttribute("globalError", "登録件数が上限（500件）に達しています");
-				model.addAttribute("successCount", 0);
-				model.addAttribute("errorCount", total);
-				return "account/import";
-			}
-
-			List<ImportError> errors = accountService.validate(file);
-
-			if (!errors.isEmpty()) {
-				model.addAttribute("successCount", 0);
-				model.addAttribute("errorCount", errors.size());
-				model.addAttribute("errors", errors);
-			} else {
-				model.addAttribute("successCount", total);
-				model.addAttribute("errorCount", 0);
-			}
-		} catch (Exception e) {
-			model.addAttribute("fileError", "ファイルの読み込みに失敗しました");
-		}
-		return "account/import";
 	}
 
 	/**
@@ -209,6 +148,7 @@ public class AccountController {
 		accountService.delete(id);
 		return "redirect:/accounts";
 	}
+
 
 	/**
 	 * 選択された複数の社員情報を一括で物理削除する。
@@ -230,12 +170,11 @@ public class AccountController {
 	}
 
 
-
-
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable("id") Integer id, Model model) {
 		if (!model.containsAttribute("accountForm")) {
-			Account acc = accountService. findById(id);;
+			Account acc = accountService.findById(id);
+			;
 			AccountForm form = new AccountForm();
 			form.setAccountId(acc.getAccountId());
 			form.setLoginId(acc.getLoginId());
@@ -250,11 +189,10 @@ public class AccountController {
 	public String update(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result, RedirectAttributes attributes, Model model) {
-
-
+		
+		
 		Account acc = new Account();
 		acc.setAccountId(id);
-		copyFormToEntity(accountForm, acc);
 		accountService.update(acc);
 		return "redirect:/accounts";
 	}
@@ -266,4 +204,3 @@ public class AccountController {
 		e.setPermission(f.getPermission());
 	}
 }
-
