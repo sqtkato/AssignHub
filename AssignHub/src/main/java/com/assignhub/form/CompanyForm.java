@@ -27,22 +27,22 @@ public class CompanyForm {
 	
 	@NotBlank(message = "企業名カナは必須です")
 	@Size(max = 100, message = "企業名カナは100文字以内で入力してください")
-	private String compNameKana;
+	private String companyNameKana;
 	
 	@NotBlank(message = "郵便番号は必須です")
 	@Size(max = 7, message = "郵便番号は7桁以内で入力してください")
-	private String compZipCode;
+	private String companyZipCode;
 	
 	@NotBlank(message = "住所１は必須です")
 	@Size(max = 100, message = "住所１は100文字以内で入力してください")
-	private String compAddress1;
+	private String companyAddress1;
 	
 	@Size(max = 100, message = "住所２は100文字以内で入力してください")
-	private String compAddress2;
+	private String companyAddress2;
 	
 	@NotBlank(message = "電話番号は必須です")
 	@Size(max = 11, message = "電話番号10桁または11桁で入力してください")
-	private String compTel;
+	private String companyTel;
 	
 	@Size(max = 20, message = "FAX番号は20文字以内で入力してください")
 	private String fax;

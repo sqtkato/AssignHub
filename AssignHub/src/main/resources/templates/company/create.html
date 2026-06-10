@@ -28,10 +28,10 @@
 				</div>
 				<div class="form-group">
 					<label>企業名カナ <span class="badge-required">必須</span></label>
-					<input type="text" th:field="*{compNameKana}" class="form-control"
-						th:classappend="${#fields.hasErrors('compNameKana')} ? 'input-error'"
+					<input type="text" th:field="*{companyNameKana}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyNameKana')} ? 'input-error'"
 						placeholder="例：カブシキガイシャシステム">
-					<div class="error-message" th:if="${#fields.hasErrors('compNameKana')}" th:errors="*{compNameKana}">
+					<div class="error-message" th:if="${#fields.hasErrors('companyNameKana')}" th:errors="*{companyNameKana}">
 					</div>
 				</div>
 				<div class="form-group">
@@ -52,34 +52,34 @@
 				</div>
 				<div class="form-group">
 					<label>郵便番号<span class="badge-required">必須</span></label>
-					<input type="text" th:field="*{compZipCode}" class="form-control"
-						th:classappend="${#fields.hasErrors('compZipCode')} ? 'input-error'"
+					<input type="text" th:field="*{companyZipCode}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyZipCode')} ? 'input-error'"
 						placeholder="例：1020073">
-					<div class="error-message" th:if="${#fields.hasErrors('compZipCode')}" th:errors="*{compZipCode}">
+					<div class="error-message" th:if="${#fields.hasErrors('companyZipCode')}" th:errors="*{companyZipCode}">
 					</div>
 				</div>
 				<div class="form-group">
 					<label>住所1(自動入力されます) <span class="badge-required">必須</span></label>
-					<input type="text" th:field="*{compAddress1}" class="form-control"
-						th:classappend="${#fields.hasErrors('compAddress1')} ? 'input-error'"
+					<input type="text" th:field="*{companyAddress1}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyAddress1')} ? 'input-error'"
 						placeholder="例：東京都千代田区九段北">
-					<div class="error-message" th:if="${#fields.hasErrors('compAddress1')}" th:errors="*{compAddress1}">
+					<div class="error-message" th:if="${#fields.hasErrors('companyAddress1')}" th:errors="*{companyAddress1}">
 					</div>
 				</div>
 				<div class="form-group">
 					<label>住所2 </label>
-					<input type="text" th:field="*{compAddress2}" class="form-control"
-						th:classappend="${#fields.hasErrors('compAddress2')} ? 'input-error'"
+					<input type="text" th:field="*{companyAddress2}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyAddress2')} ? 'input-error'"
 						placeholder="例：1-1-1-1システムビル2F">
-					<div class="error-message" th:if="${#fields.hasErrors('compAddress2')}" th:errors="*{compAddress2}">
+					<div class="error-message" th:if="${#fields.hasErrors('companyAddress2')}" th:errors="*{companyAddress2}">
 					</div>
 				</div>
 				<div class="form-group">
 					<label>TEL <span class="badge-required">必須</span></label>
-					<input type="text" th:field="*{compTel}" class="form-control"
-						th:classappend="${#fields.hasErrors('compTel')} ? 'input-error'"
+					<input type="text" th:field="*{companyTel}" class="form-control"
+						th:classappend="${#fields.hasErrors('companyTel')} ? 'input-error'"
 						placeholder="例：00-0000-0000">
-					<div class="error-message" th:if="${#fields.hasErrors('compTel')}" th:errors="*{compTel}">
+					<div class="error-message" th:if="${#fields.hasErrors('companyTel')}" th:errors="*{companyTel}">
 					</div>
 				</div>
 				<div class="form-group">

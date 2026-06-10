@@ -99,28 +99,28 @@ public class CompanyController {
 		}
 		
 		//郵便番号の形式が不正の場合
-		if (companyForm.getCompZipCode() != null && !companyForm.getCompZipCode().isEmpty()) {
-		    if (!companyForm.getCompZipCode().matches("^[0-9]*$")) {
+		if (companyForm.getCompanyZipCode() != null && !companyForm.getCompanyZipCode().isEmpty()) {
+		    if (!companyForm.getCompanyZipCode().matches("^[0-9]*$")) {
 		        result.rejectValue("compZipCode", "error", "郵便番号の形式が正しくありません ハイフンなしで入力してください");
 		//郵便番号が8桁以上入力された場合        
-		    } else if (companyForm.getCompZipCode().length() != 7) {
+		    } else if (companyForm.getCompanyZipCode().length() != 7) {
 		        result.rejectValue("compZipCode", "error", "郵便番号は7桁で入力してください");
 		    }
 		}
 		
 		//TELが重複している場合
-		if (companyService.isTelDuplicate(companyForm.getCompTel(), null)) {
+		if (companyService.isTelDuplicate(companyForm.getCompanyTel(), null)) {
 			result.rejectValue("compTel", "error.companyForm", "この電話番号は既に登録されています");
 		}
 		if (companyService.isFaxDuplicate(companyForm.getFax(), null)) {
 			result.rejectValue("fax", "error.companyForm", "このFAX電話は既に登録されています");
 		}
 		// TELの形式が不正の場合
-		if (companyForm.getCompTel() != null && !companyForm.getCompTel().isEmpty()) {
-		    if (!companyForm.getCompTel().matches("^[0-9]*$")) {
+		if (companyForm.getCompanyTel() != null && !companyForm.getCompanyTel().isEmpty()) {
+		    if (!companyForm.getCompanyTel().matches("^[0-9]*$")) {
 		        result.rejectValue("compTel", "error", "電話番号の形式が正しくありません ハイフンなしで入力してください");
 		//TELが9桁以下または12桁以上入力の場合
-		    } else if (companyForm.getCompTel().length() < 10 || companyForm.getCompTel().length() > 11) {
+		    } else if (companyForm.getCompanyTel().length() < 10 || companyForm.getCompanyTel().length() > 11) {
 		        result.rejectValue("compTel", "error", "電話番号は10桁または11桁内で入力してください");
 		    }
 		}
@@ -187,11 +187,11 @@ public class CompanyController {
 	 */
 	private void copyFormToEntity(CompanyForm f, Company e) {
 		e.setCompanyName(f.getCompanyName());
-	    e.setCompNameKana(f.getCompNameKana());
-	    e.setCompZipCode(f.getCompZipCode());
-	    e.setCompAddress1(f.getCompAddress1());
-	    e.setCompAddress2(f.getCompAddress2());
-	    e.setCompTel(f.getCompTel());
+	    e.setCompanyNameKana(f.getCompanyNameKana());
+	    e.setCompanyZipCode(f.getCompanyZipCode());
+	    e.setCompanyAddress1(f.getCompanyAddress1());
+	    e.setCompanyAddress2(f.getCompanyAddress2());
+	    e.setCompanyTel(f.getCompanyTel());
 	    e.setFax(f.getFax());
 	    e.setFoundedYear(f.getFoundedYear());
 	    e.setEmployeeCount(f.getEmployeeCount());

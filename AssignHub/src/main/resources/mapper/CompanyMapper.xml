@@ -6,8 +6,8 @@
 		type="com.assignhub.entity.Company">
 		<id property="companyId" column="company_id" />
 		<result property="companyName" column="company_name" />
-		<result property="compAddress1" column="company_address1" />
-		<result property="compTel" column="company_tel" />	
+		<result property="companyAddress1" column="company_address1" />
+		<result property="companyTel" column="company_tel" />	
 		<result property="createdAt" column="created_at" />
 		<result property="updatedAt" column="updated_at" />
 	</resultMap>
@@ -78,9 +78,9 @@
         rep_firstname, rep_lastname, rep_firstname_kana, rep_lastname_kana,
         delete_flg, created_at, updated_at)
     VALUES (
-        #{companyName}, #{compNameKana},
-        #{compZipCode}, #{compAddress1}, #{compAddress2},
-        #{compTel}, #{fax}, #{foundedYear}, #{employeeCount},
+        #{companyName}, #{companyNameKana},
+        #{companyZipCode}, #{companyAddress1}, #{companyAddress2},
+        #{companyTel}, #{fax}, #{foundedYear}, #{employeeCount},
         #{repFirstName}, #{repLastName}, #{repFirstNameKana}, #{repLastNameKana},
         0, NOW(), NOW()
     )
