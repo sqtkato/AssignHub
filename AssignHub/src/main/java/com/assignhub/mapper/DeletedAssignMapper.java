@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.assignhub.entity.DeletedAccount;
 import com.assignhub.entity.DeletedAssign;
 
 @Mapper
@@ -90,4 +89,4 @@ List<DeletedAssign> findallByIds(@Param("ids") List<Integer> ids);
 }
 
 
-}
+

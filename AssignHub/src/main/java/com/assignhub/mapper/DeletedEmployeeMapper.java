@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.assignhub.entity.DeletedAccount;
 
-public class DeletedEmployeeMapper {
+public interface DeletedEmployeeMapper {
 	/**
 	 * 論理削除済みのアカウント情報を全件取得する（一覧表示・検索用）。
 	 *

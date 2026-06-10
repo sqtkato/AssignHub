@@ -29,60 +29,38 @@
 			</div>
 
 			<div class="table-scroll export-table">
-				<table class="table header-only-table table-dark">
+				<table class="table table-dark">
 					<thead>
 						<tr>
-							<th class="acc_id">アカウントID</th>
-							<th class="acc_logId">ログインID</th>
-							<th class="acc_per">権限</th>
-							<th class="acc_name">氏名</th>
+							<th>アカウントID</th>
+							<th>ログインID</th>
+							<th>権限</th>
+							<th>氏名</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="account : ${accounts}">
-							<td th:text="${account.accountId}" class="acc_id"></td>
-							<td th:text="${account.loginId}" class="acc_logId"></td>
-							<td th:text="${account.permission}" class="acc_per"></td>
-							<td th:text="${account.empName}" class="acc_name"></td>
+							<td th:text="${account.accountId}"></td>
+							<td th:text="${account.loginId}"></td>
+							<td th:text="${account.permission == 1 ? '管理' : '一般'}"></td>						
+							<td th:text="${account.empName}"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 
-			<table class="table">
-				<thead>
-					<tr>
-						<th>アカウントID</th>
-						<th>ログインID</th>
-						<th>氏名</th>
-						<th>権限</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="account : ${accounts}">
-						<td th:text="${account.accountId}"></td>
-						<td th:text="${account.loginId}"></td>
-						<td th:text="${account.permission}"></td>						
-						<td th:text="${account.empName}"></td>
-					</tr>
-				</tbody>
-			</table>
 			<div class="action-area">
-				<form th:action="@{/accounts/export/download}" method="post">
-
+				<form th:action="@{/deleted-accounts/export/download}" method="post">
 					<div th:each="id : ${ids}">
 						<input type="hidden" name="ids" th:value="${id}">
 					</div>
 
 					<button type="submit" class="btn btn-primary btn-wide">エクスポート</button>
-
-					<a th:href="@{/accounts}" class="btn btn-secondary btn-wide">戻る</a>
-
+					<a th:href="@{/deleted-accounts}" class="btn btn-secondary btn-wide">戻る</a>
 				</form>
 			</div>
 			<p class="export-note">※詳細情報がエクスポートされます。</p>
 		</div>
 	</div>
 </body>
-
 </html>

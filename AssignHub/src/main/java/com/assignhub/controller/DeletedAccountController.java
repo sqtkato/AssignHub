@@ -20,7 +20,7 @@ import com.assignhub.entity.DeletedAccount;
 import com.assignhub.service.DeletedAccountService;
 
 @Controller
-@RequestMapping("/deleted-accouts")
+@RequestMapping("/deleted-accounts")
 public class DeletedAccountController {
 	private final DeletedAccountService deletedAccountService;
 
@@ -122,7 +122,7 @@ public class DeletedAccountController {
     }
 	
 //	エクスポート画面へ遷移	
-	@GetMapping("/export")
+	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
 		//引数内書き換え
 		model.addAttribute("count", deletedAccountService.getExportData(ids));
@@ -131,7 +131,7 @@ public class DeletedAccountController {
 	}
 	
 //エクスポートのダウンロード処理
-	@GetMapping("/export/download")
+	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
 			Model model) {
 		List<DeletedAccount> delAccount = deletedAccountService.getExportData(ids);

@@ -18,6 +18,6 @@ public class RootController {
      */
     @GetMapping("/")
     public String root() {
-        return "redirect:/deleted-accouts";
+        return "redirect:/deleted-accounts";
     }
 }
