@@ -14,112 +14,112 @@
 		<table>
 			<tr>
 				<th>作成日時</th>
-				<td></td>
+				<td th:text="${emp.updatedAt}"></td>
 			</tr>
 			<tr>
 				<th>更新日時</th>
-				<td></td>
+				<td th:text="${emp.createdAt}"></td>
 			</tr>
 			<tr>
 				<th>社員ID</th>
-				<td></td>
+				<td th:text="${emp.empId}"></td>
 			</tr>
 			<tr>
 				<th>社員姓</th>
-				<td></td>
+				<td th:text="${emp.lastName}"></td>
 			</tr>
 			<tr>
 				<th>社員名</th>
-				<td></td>
+				<td th:text="${emp.firstName}"></td>
 			</tr>
 			<tr>
 				<th>社員姓カナ</th>
-				<td></td>
+				<td th:text="${emp.lastNameKana}"></td>
 			</tr>
 			<tr>
 				<th>社員名カナ</th>
-				<td></td>
+				<td th:text="${emp.firstNameKana}"></td>
 			</tr>
 			<tr>
 				<th>生年月日</th>
-				<td></td>
+				<td th:text="${emp.BirthDate}"></td>
 			</tr>
 			<tr>
 				<th>入社年月</th>
-				<td></td>
+				<td th:text="${emp.hireDate}"></td>
 			</tr>
 			<tr>
 				<th>勤続年数</th>
-				<td></td>
+				<td th:text="${emp.yearsOfService}"></td>
 			</tr>
 			<tr>
 				<th>郵便番号</th>
-				<td></td>
+				<td th:text="${emp.zipCode}"></td>
 			</tr>
 			<tr>
 				<th>住所1</th>
-				<td></td>
+				<td th:text="${emp.address1}"></td>
 			</tr>
 			<tr>
 				<th>住所2</th>
-				<td></td>
+				<td th:text="${emp.address2}"></td>
 			</tr>
 			<tr>
 				<th>電話番号</th>
-				<td></td>
+				<td th:text="${emp.empTel}"></td>
 			</tr>
 			<tr>
 				<th>メールアドレス</th>
-				<td></td>
+				<td th:text="${emp.email}"></td>
 			</tr>
 			<tr>
 				<th>エンジニアタイプ</th>
-				<td></td>
+				<td th:text="${emp.engineerType}"></td>
 			</tr>
 			<tr>
 				<th>所属企業</th>
-				<td></td>
+				<td th:text="${emp.companyName}"></td>
 			</tr>
 			<tr>
 				<th>所属部署</th>
-				<td></td>
+				<td th:text="${emp.department}"></td>
 			</tr>
 			<tr>
 				<th>役職</th>
-				<td></td>
+				<td th:text="${emp.jobTitle}"></td>
 			</tr>
 			<tr>
 				<th>ログインID</th>
-				<td></td>
+				<td th:text="${emp.loginId}"></td>
 			</tr>
 			<tr>
 				<th>アサイン先企業</th>
-				<td></td>
+				<td th:text="${emp.companyNameAssign}"></td>
 			</tr>
 			<tr>
 				<th>契約開始日</th>
-				<td></td>
+				<td th:text="${emp.contractStartDate}"></td>
 			</tr>
 			<tr>
 				<th>契約終了日</th>
-				<td></td>
+				<td th:text="${emp.contractEndDate}"></td>
 			</tr>
 			<tr>
 				<th>契約単価</th>
-				<td></td>
+				<td th:text="${emp.unitPrice}"></td>
 			</tr>
 		</table>
 		<form th:action="@{/employees/{id}/delete(id=${emp.empId})}" method="post" style="display:inline;">
-		    <button type="submit" onclick="return confirm('本当に削除しますか？');">削除</button>
+			<button type="submit" onclick="return confirm('本当に削除しますか？');">削除</button>
 		</form>
 
 		<form th:action="@{/employees/update}" method="post" style="display:inline;">
-		    <input type="hidden" name="empId" th:value="${emp.empId}">
-		    <button type="submit">更新</button>
+			<input type="hidden" name="empId" th:value="${emp.empId}">
+			<button type="submit">更新</button>
 		</form>
 
 		<a th:href="@{/employees}">戻る</a>
-		
+
 </body>
 
 </html>
