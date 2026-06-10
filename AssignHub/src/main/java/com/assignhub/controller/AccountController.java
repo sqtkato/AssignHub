@@ -152,7 +152,7 @@ public class AccountController {
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable("id") Integer id, Model model) {
 		if (!model.containsAttribute("accountForm")) {
-			Account acc = new Account();
+			Account acc = accountService. findById(id);;
 			AccountForm form = new AccountForm();
 			form.setAccountId(acc.getAccountId());
 			form.setLoginId(acc.getLoginId());
@@ -168,18 +168,11 @@ public class AccountController {
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result, RedirectAttributes attributes, Model model) {
 
-		//			if (accountService.isEmailDuplicate(accountForm.getEmailAddress(), id)) {
-		//				result.rejectValue("emailAddress", "error.rookyForm", "このメールアドレスはすでに他の社員に使用されています");
-		//			}
-		//			if (result.hasErrors()) {
-		//				model.addAttribute("rookies", accountService.findAll(null, "rooky_id", "asc"));
-		//				return "edit";}
 
 		Account acc = new Account();
 		acc.setAccountId(id);
 		copyFormToEntity(accountForm, acc);
-		accountService.save(acc);
-		attributes.addFlashAttribute("toastMessage", "社員情報を更新しました");
+		accountService.update(acc);
 		return "redirect:/accounts";
 	}
 	

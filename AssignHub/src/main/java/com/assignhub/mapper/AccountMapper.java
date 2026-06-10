@@ -53,4 +53,6 @@ public interface AccountMapper {
 	Account findByLoginId(String loginId);
 
 	void update(Account account);
+
+	
 }
