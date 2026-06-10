@@ -87,12 +87,17 @@
 		  AND delete_flg = 0
 	</select>
 	
+	<select id="findById" resultMap="accountResultMap">
+		SELECT * FROM m_account 
+        WHERE account_id = #{id}
+	</select>
+	
 	<update id="update">
 		UPDATE m_account
 		SET account_Id = #{accountId},
 		login_id =#{loginId},
 	    permission= #{permission},
-		passwordHash = #{passwordHash},
+		password_Hash = #{passwordHash},
 		updated_at = NOW()
 		WHERE account_id =#{accountId}
 	</update>

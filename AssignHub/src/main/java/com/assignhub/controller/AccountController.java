@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -150,7 +152,7 @@ public class AccountController {
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable("id") Integer id, Model model) {
 		if (!model.containsAttribute("accountForm")) {
-			Account acc = new Account();
+			Account acc = accountService. findById(id);;
 			AccountForm form = new AccountForm();
 			form.setAccountId(acc.getAccountId());
 			form.setLoginId(acc.getLoginId());
@@ -176,8 +178,7 @@ public class AccountController {
 		Account acc = new Account();
 		acc.setAccountId(id);
 		copyFormToEntity(accountForm, acc);
-		accountService.save(acc);
-		attributes.addFlashAttribute("toastMessage", "社員情報を更新しました");
+		accountService.update(acc);
 		return "redirect:/accounts";
 	}
 	

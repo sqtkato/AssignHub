@@ -37,7 +37,7 @@ public class AccountService {
 	
 	public void save(Account account) {
 		accountMapper.save(account);
-		accountMapper.update(account);
+		
 	}
 
 	// 追加：ログインIDの重複チェック
@@ -56,8 +56,18 @@ public class AccountService {
 	}
 
 
+//	public void update(Integer id) {
+//		 accountMapper.update(id);}
+	
 	public Account findById(Integer id) {
 		return accountMapper.findById(id);
 	}
+
+	public void update(Account account) {
+		accountMapper.update(account);
+		
+	}
+	
+
 	}
 	
