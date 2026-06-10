@@ -1,16 +1,12 @@
 package com.assignhub.controller;
 
-<<<<<<< HEAD
-import java.util.List;
 
-=======
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
->>>>>>> branch '侃々諤々' of https://github.com/sqtkato/AssignHub.git
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -185,37 +181,32 @@ public class DeletedAccountController {
 			return "deletedAccount/bulkDeleted";
 			}
 	
-//	エクスポート画面へ遷移
-	@PostMapping
-	public String exportConfirm() {
-		return "deletedAccount/export";
-	}
-	
+//	エクスポート画面へ遷移	
 	@GetMapping("/export")
-	public String showExport(@RequestParam(name = "keyword", required = false) String keyword, 
-			@RequestParam(name = "deptId", required = false) Integer deptId, Model model) {
+	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
 		//引数内書き換え
-		model.addAttribute("count", DeletedAccountService.findAll(keyword, deptId, "rooky_id", "asc").size());
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("deptId", deptId);
+		model.addAttribute("count", deletedAccountService.getExportData(ids));
+		
 		return "deletedAccount/export";
 	}
 	
 //　エクスポートのダウンロード処理
 	@GetMapping("/export/download")
-	public ResponseEntity<byte[]> downloadCsv(
-			@RequestParam(name = "keyword", required = false) String keyword, 
-			@RequestParam(name = "deptId", required = false) Integer deptId) {
-		List<DeletedAccount> delAccount = deletedAccountService.findAll(keyword,deptId, "rooky_id", "asc");
+	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
+			Model model) {
+		List<DeletedAccount> delAccount = deletedAccountService.getExportData(ids);
 		//引数名書き換え
-		StringBuilder csvBuilder = new StringBuilder("ID,社員名,部署ID,電話番号,メールアドレス\n");
+		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,削除フラグ,作成日時,更新日時,社員名\n");
 		//括弧内書き換え
 		for (DeletedAccount delAcc : delAccount) {
-			csvBuilder.append(delAcc.getRookyId()).append(",")
-					.append(delAcc.getRookyName()).append(",")
-					.append(delAcc.getDeptId()).append(",")
-					.append(delAcc.getTelNumber() != null ? rook.getTelNumber() : "").append(",")
-					.append(delAcc.getEmailAddress()).append("\n");
+			csvBuilder.append(delAcc.getAccountId()).append(",")
+					.append(delAcc.getLoginId()).append(",")
+					.append(delAcc.getPasswordHash()).append(",")
+					.append(delAcc.getPermission()).append(",")
+					.append(delAcc.getDeleteFlg()).append(",")
+					.append(delAcc.getCreatedAt()).append(",")
+					.append(delAcc.getUpdatedAt()).append(",")
+					.append(delAcc.getEmpName()).append("\n");
 		}
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
@@ -229,5 +220,6 @@ public class DeletedAccountController {
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
+
 
 }
