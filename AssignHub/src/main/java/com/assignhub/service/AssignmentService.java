@@ -163,7 +163,7 @@ public class AssignmentService {
                     continue;
                 }
                 String[] cols = line.split(",", -1);
-                // 項目数不足（No.3）
+                // 項目数不足
                 if (cols.length < CSV_COLUMN_COUNT) {
                     result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています"));
                     result.errorCount++;
@@ -174,7 +174,7 @@ public class AssignmentService {
                 Assignment asm = new Assignment();
                 LocalDate start = null;
                 LocalDate end = null;
-                // [0] アサインID（空=新規 / 値あり=更新。数値であること）
+                
                 String sId = cols[0].trim();
                 if (!sId.isEmpty()) {
                     Integer id = parseInteger(sId);
@@ -185,24 +185,24 @@ public class AssignmentService {
                         asm.setAssignmentId(id);
                     }
                 }
-                // [2] 社員名 必須（No.3）
+                
                 if (cols[2].trim().isEmpty()) {
                     result.errors.add(new CsvRowError(rowNum, "社員名", "社員名は必須です"));
                     hasError = true;
                 }
-                // [1] 社員ID 形式（No.8）＋存在（No.9）
+                
                 String sEmpId = cols[1].trim();
                 Integer empId = parseInteger(sEmpId);
                 if (empId == null || sEmpId.length() > 5) {
-                    result.errors.add(new CsvRowError(rowNum, "社員ID/企業ID", "社員ID／企業IDの形式が正しくありません"));
+                    result.errors.add(new CsvRowError(rowNum, "社員ID", "社員IDの形式が正しくありません"));
                     hasError = true;
                 } else if (assignmentMapper.existsEmployee(empId) == 0) {
-                    result.errors.add(new CsvRowError(rowNum, "社員ID/企業ID", "指定された社員ID／企業IDは存在しません"));
+                    result.errors.add(new CsvRowError(rowNum, "社員ID", "指定された社員IDは存在しません"));
                     hasError = true;
                 } else {
                     asm.setEmpId(empId);
                 }
-                // [3] 企業名 必須（No.4）＋企業名→ID（UNIQUE）
+                
                 String companyName = cols[3].trim();
                 if (companyName.isEmpty()) {
                     result.errors.add(new CsvRowError(rowNum, "企業名", "企業名は必須です"));
@@ -216,7 +216,7 @@ public class AssignmentService {
                         asm.setCompanyId(companyId);
                     }
                 }
-                // [6] 契約開始日 必須（No.5）＋形式（No.11）
+                
                 String sStart = cols[6].trim();
                 if (sStart.isEmpty()) {
                     result.errors.add(new CsvRowError(rowNum, "契約開始日", "契約開始日は必須です"));
@@ -230,7 +230,7 @@ public class AssignmentService {
                         asm.setContractStartDate(start);
                     }
                 }
-                // [7] 契約終了日 任意＋形式（No.11）
+                
                 String sEnd = cols[7].trim();
                 if (!sEnd.isEmpty() && !"ー".equals(sEnd) && !"-".equals(sEnd)) {
                     end = parseDate(sEnd);
@@ -241,12 +241,12 @@ public class AssignmentService {
                         asm.setContractEndDate(end);
                     }
                 }
-                // 開始＞終了（No.10）
+                
                 if (start != null && end != null && start.isAfter(end)) {
                     result.errors.add(new CsvRowError(rowNum, "契約終了日", "契約開始日より前の日付は入力できません"));
                     hasError = true;
                 }
-                // [8] 契約単価 必須（No.6）/半角数字（No.13）/桁数（No.13）/>0（No.12）
+                
                 String sPrice = cols[8].trim();
                 if (sPrice.isEmpty()) {
                     result.errors.add(new CsvRowError(rowNum, "契約単価", "契約単価は必須です"));
@@ -266,7 +266,7 @@ public class AssignmentService {
                         asm.setUnitPrice(price);
                     }
                 }
-                // [9] 役割 必須（No.7）＋役割名→ID
+                
                 String role = cols[9].trim();
                 if (role.isEmpty()) {
                     result.errors.add(new CsvRowError(rowNum, "役割", "役割は必須です"));
@@ -280,7 +280,7 @@ public class AssignmentService {
                         asm.setRoleId(roleId);
                     }
                 }
-                // CSV内重複（No.14）
+                
                 if (!hasError) {
                     String key = asm.getEmpId() + "|" + asm.getCompanyId() + "|"
                             + asm.getContractStartDate() + "|" + asm.getContractEndDate();
@@ -289,12 +289,12 @@ public class AssignmentService {
                         hasError = true;
                     }
                 }
-                // DB重複（No.15）
+                
                 if (!hasError && existsDuplicate(asm)) {
                     result.errors.add(new CsvRowError(rowNum, "-", "既に同じ内容が登録されています"));
                     hasError = true;
                 }
-                // 保存（ID無し→INSERT / ID有り→UPDATE）
+                
                 if (!hasError) {
                     try {
                         if (asm.getAssignmentId() == null || asm.getAssignmentId() == 0) {
@@ -312,12 +312,12 @@ public class AssignmentService {
                 }
                 rowNum++;
             }
-            // 500件上限（No.16）: 現在件数 + 新規INSERT分
+            
             if (result.errorCount == 0 && assignmentMapper.countActive() + insertPlan > 500) {
                 result.errors.add(new CsvRowError(0, "-", "登録後の件数が上限に達しています。アサインの登録上限は500件です"));
                 result.errorCount++;
             }
-            // エラーが1件でもあればロールバック（お手本と同方式）
+            // エラーが1件でもあればロールバック
             if (result.errorCount > 0) {
                 org.springframework.transaction.interceptor.TransactionAspectSupport.currentTransactionStatus()
                         .setRollbackOnly();
@@ -326,14 +326,14 @@ public class AssignmentService {
         }
         return result;
     }
-    /** 先頭のUTF-8 BOM（\uFEFF）を除去する。 */
+    
     private String stripBom(String s) {
         if (s != null && !s.isEmpty() && s.charAt(0) == '\uFEFF') {
             return s.substring(1);
         }
         return s;
     }
-    /** 数値文字列をIntegerに変換。失敗時null。 */
+    
     private Integer parseInteger(String s) {
         if (s == null || !s.matches("\\d+")) {
             return null;
@@ -344,13 +344,13 @@ public class AssignmentService {
             return null;
         }
     }
-    /** yyyy/MM/dd または yyyy-MM-dd をLocalDateに変換。失敗時null。 */
+    
     private LocalDate parseDate(String s) {
         for (String p : new String[]{"yyyy/MM/dd", "yyyy-MM-dd"}) {
             try {
                 return LocalDate.parse(s, DateTimeFormatter.ofPattern(p));
             } catch (Exception e) {
-                /* 次のフォーマットを試す */
+            
             }
         }
         return null;
