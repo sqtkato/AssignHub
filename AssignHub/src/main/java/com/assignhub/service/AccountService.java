@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ import com.assignhub.mapper.AccountMapper;
 public class AccountService {
 
 	private final AccountMapper accountMapper;
+	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	public AccountService(AccountMapper accountMapper) {
 		this.accountMapper = accountMapper;
@@ -38,11 +40,16 @@ public class AccountService {
 	public List<Account> findByIds(List<Integer> ids) {
 		return accountMapper.findByIds(ids);
 	}
-
+	
+	
 	public void save(Account account) {
-		accountMapper.save(account);
-	}
 
+	    account.setPasswordHash(
+	        passwordEncoder.encode(account.getPasswordHash())
+	    );
+
+	    accountMapper.save(account);
+	}
 	// 追加：ログインIDの重複チェック
 	public boolean existsByLoginId(String loginId) {
 		return accountMapper.existsByLoginId(loginId);

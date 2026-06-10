@@ -81,9 +81,13 @@
 		WHERE account_id = #{id}
 	</update>
 	<select id="findByLoginId" resultMap="accountResultMap">
-		SELECT *
-		FROM m_account
-		WHERE login_id = #{loginId}
-		  AND delete_flg = 0
-	</select>
+    SELECT
+        account_id,
+        login_id,
+        password_hash,
+        permission
+    FROM m_account
+    WHERE login_id = #{loginId}
+      AND delete_flg = 0
+</select>
 </mapper>
