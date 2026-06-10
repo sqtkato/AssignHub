@@ -72,6 +72,7 @@ public class AccountService {
 
 	public void update(Account account) {
 		accountMapper.update(account);
+	}
 		
 	// 指定された複数の社員IDのデータを一括で物理削除する。
 	@Transactional
