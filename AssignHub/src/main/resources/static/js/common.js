@@ -3,6 +3,7 @@
  */
 document.addEventListener("DOMContentLoaded", function() {
 
+
 	// ==========================================
 	// 1. Toast通知の表示制御
 	// ==========================================
@@ -79,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 	// ==========================================
     // ★【新しく追加】一括削除ボタンのクリック制御
+
     // ==========================================
     if (btnBulkDelete) {
         btnBulkDelete.addEventListener('click', function(e) {
@@ -111,6 +113,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
+
 	
 });
 

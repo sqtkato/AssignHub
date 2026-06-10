@@ -66,23 +66,29 @@ public class AccountController {
 
 	@GetMapping("/new")
 	public String newAccount(Model model) {
-		// 【重要】ここで「account」という名前で空のオブジェクトを渡す！
-		model.addAttribute("account", new Account());
-		return "account/new"; // ここがHTMLのファイル名と一致しているか
+
+		model.addAttribute("account", new AccountForm());
+		return "account/create"; 
 	}
 
 	@PostMapping("/create")
-	public String create(@ModelAttribute Account account, Model model) {
+	public String create(@Validated @ModelAttribute("account") AccountForm form,
+			BindingResult result, Model model) {
 
-		if (accountService.existsByLoginId(account.getLoginId())) {
-			model.addAttribute("loginIdError", "このログインIDは既に使用されています");
-			return "account/new";
+		if (result.hasErrors()) {
+			return "account/create";
 		}
 
+		if (accountService.existsByLoginId(form.getLoginId())) {
+			model.addAttribute("loginIdError", "このログインIDは既に使用されています");
+			return "account/create";
+		}
+
+		Account account = new Account();
+		copyFormToEntity(form, account);
 		accountService.save(account);
 
 		return "redirect:/accounts";
-
 	}
 
 	/**
@@ -95,6 +101,7 @@ public class AccountController {
 	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
+
 			Model model, RedirectAttributes attributes) {
 		// ★【最優先】まず最初にnullチェックを行う
 		if (ids == null || ids.isEmpty()) {
@@ -103,6 +110,7 @@ public class AccountController {
 		}
 		if (ids.size() == 0) {
 			return "account/index";
+
 		}
 		model.addAttribute("count", accountService.findByIds(ids).size());
 		List<Account> accounts = accountService.findByIds(ids);
@@ -136,7 +144,8 @@ public class AccountController {
 		System.arraycopy(bom, 0, result, 0, bom.length);
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment; filename=employees.csv");
+		headers.add("Content-Disposition", "attachment; filename=account.csv");
+
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
@@ -246,10 +255,6 @@ public class AccountController {
 		accountService.update(acc);
 		return "redirect:/accounts";
 	}
-	
-	
-
-	
 
 	private void copyFormToEntity(AccountForm f, Account e) {
 		e.setAccountId(f.getAccountId());
