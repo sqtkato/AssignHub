@@ -1,5 +1,11 @@
 package com.assignhub.controller;
 
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,20 +18,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Company;
+import com.assignhub.entity.DeletedAccount;
 import com.assignhub.form.CompanyForm;
+import com.assignhub.service.DeletedAccountService;
 
 @Controller
 @RequestMapping("/companies")
 public class DeletedAccountController {
-	private final DeletedAccountService deletedaccountService;
+	private final DeletedAccountService deletedAccountService;
 
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param companyService 企業サービス
 	 */
-	public DeletedAccountController(DeletedAccountService deletedaccountService) {
-		this.deletedaccountService = deletedaccountService;
+	public DeletedAccountController(DeletedAccountService deletedAccountService) {
+		this.deletedAccountService = deletedAccountService;
 	}
 
 	/**
@@ -41,7 +49,7 @@ public class DeletedAccountController {
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
 			@RequestParam(name = "sort", defaultValue = "company_id") String sort,
 			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-		model.addAttribute("companies", deletedaccountService.findAll(keyword, sort, order));
+		model.addAttribute("companies", deletedAccountService.findAll(keyword, sort, order));
 		model.addAttribute("keyward", keyword);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
@@ -96,44 +104,85 @@ public class DeletedAccountController {
 	
 	
 //一覧
-	public String index() {
-		return "deletedaccount/index";
+	@GetMapping
+	public String index(@RequestParam(name = "keyword", required = false) String keyword,
+			@RequestParam(name = "sort", defaultValue = "company_id") String sort,
+			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
+		model.addAttribute("companies", deletedAccountService.findAll(keyword, sort, order));
+		model.addAttribute("keyward", keyword);
+		model.addAttribute("currentSort", sort);
+		model.addAttribute("currentOrder", order);
+		return "deletedAccount/index";
 	}
 
-//	検索
-	public String serch() {
-		return "deletedaccount/serch";
-	}
 	
 //一つ復元
+	@GetMapping
 	public String recover() {
-		return "deletedaccount/recover";
+		return "deletedAccount/recover";
 	}
 
 //	一つ削除
+	@GetMapping
 	public String deleted() {
-		return "deletedaccount/deleted";
+		return "deletedAccount/deleted";
 	}
 
 //	一括復元
-	public String bulkrecover() {
-		return "deletedaccount/bulkrecover";
+	@GetMapping
+	public String bulkRecover() {
+		return "deletedAccount/bulkRecover";
 	}
 	
 //一括削除
-	public String buikdeleted() {
-		return "deletedaccount/bulkdeleted";
+	@GetMapping
+	public String bulkDeleted() {
+		return "deletedAccount/bulkDeleted";
 	}
 	
-//	エクスポート確認画面
-	public String exportconfirm() {
-		return "deletedaccount/exportconfirm";
+//	エクスポート画面へ遷移
+	@PostMapping
+	public String exportConfirm() {
+		return "deletedAccount/export";
 	}
 	
-//	エクスポート実行画面
-	public String exportcomplete() {
-		return "deletedaccount/exportcomplete";
+	@GetMapping("/export")
+	public String showExport(@RequestParam(name = "keyword", required = false) String keyword, 
+			@RequestParam(name = "deptId", required = false) Integer deptId, Model model) {
+		//引数内書き換え
+		model.addAttribute("count", DeletedAccountService.findAll(keyword, deptId, "rooky_id", "asc").size());
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("deptId", deptId);
+		return "deletedAccount/export";
 	}
 	
+//　エクスポートのダウンロード処理
+	@GetMapping("/export/download")
+	public ResponseEntity<byte[]> downloadCsv(
+			@RequestParam(name = "keyword", required = false) String keyword, 
+			@RequestParam(name = "deptId", required = false) Integer deptId) {
+		List<DeletedAccount> delAccount = deletedAccountService.findAll(keyword,deptId, "rooky_id", "asc");
+		//引数名書き換え
+		StringBuilder csvBuilder = new StringBuilder("ID,社員名,部署ID,電話番号,メールアドレス\n");
+		//括弧内書き換え
+		for (DeletedAccount delAcc : delAccount) {
+			csvBuilder.append(delAcc.getRookyId()).append(",")
+					.append(delAcc.getRookyName()).append(",")
+					.append(delAcc.getDeptId()).append(",")
+					.append(delAcc.getTelNumber() != null ? rook.getTelNumber() : "").append(",")
+					.append(delAcc.getEmailAddress()).append("\n");
+		}
+		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
+		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+		byte[] result = new byte[bom.length + csvBytes.length];
+		System.arraycopy(bom, 0, result, 0, bom.length);
+		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+
+		HttpHeaders headers = new HttpHeaders();
+		//filename変更必要
+		headers.add("Content-Disposition", "attachment; filename=deletedAccount.csv");
+		headers.add("Content-Type", "text/csv; charset=UTF-8");
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
+	}
 
 }
