@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -89,6 +90,22 @@ public class EmployeeController {
 		employeeService.save(employee);
 		attributes.addFlashAttribute("toastMessage", "社員情報を登録しました");
 		return "redirect:/employees";
+	}
+	
+	/**
+	 * 社員の社員詳細画面を表示する。
+	 *
+	 * @param id    社員一覧で詳細選択した社員ID
+	 * @param model 画面描画用のモデル
+	 * @return 社員情報詳細画面のテンプレートパス
+	 */
+	@GetMapping("detail/{id}")
+	public String detail(@PathVariable("id") Integer id, Model model) {
+	    // 1. 社員情報を取得（アサイン情報、部署情報も一緒にロード）
+	    Employee emp = employeeService.findById(id);
+	    model.addAttribute("employee", emp);
+	    
+	    return "employee/detail";
 	}
 	
 	/**
