@@ -14,6 +14,7 @@
 
 						<form th:action="@{/assignments/__${id}__/edit(id=${assignmentForm.assignmentId})}" th:object="${assignmentForm}" method="post">
 							<input type="hidden" th:field="*{assignmentId}">
+							<input type="hidden" name="fromPage" th:value="${fromPage}" />
 							
 							<div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}">
                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>

@@ -214,7 +214,9 @@ public class AssignmentController {
 	}
 	
 	@GetMapping("/{id}/edit")
-	public String edit(@PathVariable("id") Integer id, Model model) {
+	public String edit(@PathVariable("id") Integer id, 
+			@RequestParam(value="from", required=false) String from,
+			Model model) {
 		if (!model.containsAttribute("assignmentForm")) {
 		
 			Assignment emp = assignmentService.findById(id);
@@ -228,6 +230,7 @@ public class AssignmentController {
 			form.setRoleId(emp.getRoleId());
 			model.addAttribute("assignmentForm", form);
 		}
+		model.addAttribute("fromPage", from);
 		addComboBoxItems(model);
 	    return "assignment/edit";
 	}
@@ -236,7 +239,8 @@ public class AssignmentController {
 	@PostMapping("/{id}/edit")
 	public String update(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("assignmentForm") AssignmentForm form,
-			BindingResult result, RedirectAttributes attributes, Model model) {
+			BindingResult result, RedirectAttributes attributes,
+			@RequestParam(value="fromPage", required=false) String fromPage,Model model) {
 
 		
 		Assignment assignment = new Assignment();
@@ -266,6 +270,13 @@ public class AssignmentController {
 		copyFormToEntity(form, emp);
 		assignmentService.save(emp);
 		attributes.addFlashAttribute("toastMessage", "社員情報を更新しました");
+		
+		if ("detail".equals(fromPage)) {
+	        return "redirect:/assignments/" + form.getAssignmentId();
+	    } else if ("index".equals(fromPage)) {
+	        return "redirect:/assignments";
+	    }
+		
 		return "redirect:/assignments";
 	}
 
