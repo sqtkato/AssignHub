@@ -41,8 +41,8 @@
 					<tr th:each="account : ${accounts}">
 						<td th:text="${account.accountId}"></td>
 						<td th:text="${account.loginId}"></td>
+						<td th:text="${account.permission}"></td>						
 						<td th:text="${account.empName}"></td>
-						<td th:text="${account.permission}"></td>
 					</tr>
 				</tbody>
 			</table>
