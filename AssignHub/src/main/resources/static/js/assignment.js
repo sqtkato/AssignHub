@@ -61,3 +61,61 @@ document.getElementById('bulkDeleteOverlay').addEventListener('click', function(
 document.getElementById('noSelectionOverlay').addEventListener('click', function(e) {
     if (e.target === this) closeNoSelectionModal();
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.querySelector('.search-form');
+    const startDateInput = document.getElementById('txt_contract_start_date');
+    const endDateInput = document.getElementById('txt_contract_end_date');
+
+    if (!searchForm || !startDateInput || !endDateInput) return;
+
+    function showToastError(message) {
+        let toast = document.getElementById('toast');
+
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'toast';
+            toast.className = 'toast';
+            toast.appendChild(document.createElement('span'));
+            document.body.appendChild(toast);
+        }
+
+        const messageElement = toast.querySelector('span') || toast;
+        messageElement.textContent = message;
+        toast.classList.add('toast-error', 'show');
+
+        setTimeout(function() {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    function clearDateErrors() {
+        startDateInput.classList.remove('input-error');
+        endDateInput.classList.remove('input-error');
+    }
+
+    searchForm.addEventListener('submit', function(e) {
+        clearDateErrors();
+
+        if (!startDateInput.validity.valid) {
+            e.preventDefault();
+            startDateInput.classList.add('input-error');
+            showToastError('契約開始日は正しい日付を入力してください。');
+            return;
+        }
+
+        if (!endDateInput.validity.valid) {
+            e.preventDefault();
+            endDateInput.classList.add('input-error');
+            showToastError('契約終了日は正しい日付を入力してください。');
+            return;
+        }
+
+        if (startDateInput.value && endDateInput.value && startDateInput.value > endDateInput.value) {
+            e.preventDefault();
+            startDateInput.classList.add('input-error');
+            endDateInput.classList.add('input-error');
+            showToastError('契約開始日は契約終了日以前の日付を入力してください。');
+        }
+    });
+});
