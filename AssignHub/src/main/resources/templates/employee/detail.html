@@ -62,7 +62,7 @@
 			</tr>
 			<tr>
 				<th>住所2</th>
-				<td th:text="${emp.address2}"></td>
+				<td th:text="${emp.address2 ?: 'ー'}"></td>
 			</tr>
 			<tr>
 				<th>電話番号</th>
@@ -78,7 +78,7 @@
 			</tr>
 			<tr>
 				<th>所属企業</th>
-				<td th:text="${emp.companyName}"></td>
+				<td th:text="${emp.companyName ?: 'ー'}"></td>
 			</tr>
 			<tr>
 				<th>所属部署</th>
@@ -102,7 +102,7 @@
 			</tr>
 			<tr>
 				<th>契約終了日</th>
-				<td th:text="${emp.contractEndDate}"></td>
+				<td th:text="${emp.contractEndDate ?: 'ー'}"></td>
 			</tr>
 			<tr>
 				<th>契約単価</th>
