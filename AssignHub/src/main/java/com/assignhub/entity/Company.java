@@ -16,6 +16,32 @@ public class Company {
 
 	/** 企業名 */
 	private String companyName;
+	
+	private String compNameKana;
+	
+	private Integer foundedYear;
+	
+	private Integer employeeCount;
+	
+	private String compZipCode;
+	
+	private String compAddress1;
+	
+	private String compAddress2;
+	
+	private String compTel;
+	
+	private String fax;
+	
+	private String repFirstName;
+	
+	private String repFirstNameKana;
+	
+	private String repLastName;
+	
+	private String repLastNameKana;
+	
+	
 
 	/** 作成日時 */
 	private LocalDateTime createdAt;

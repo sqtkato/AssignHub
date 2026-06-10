@@ -6,6 +6,8 @@
 		type="com.assignhub.entity.Company">
 		<id property="companyId" column="company_id" />
 		<result property="companyName" column="company_name" />
+		<result property="compAddress1" column="company_address1" />
+		<result property="compTel" column="company_tel" />	
 		<result property="createdAt" column="created_at" />
 		<result property="updatedAt" column="updated_at" />
 	</resultMap>
@@ -27,14 +29,60 @@
 		WHERE
 		company_id = #{id}
 	</select>
+	<select id="existsByCompanyName" resultType="boolean">
+    SELECT COUNT(*) > 0
+    FROM m_company
+    WHERE company_name = #{companyName}
+    <if test="companyId != null">
+        AND company_id != #{companyId}
+    </if>
+</select>
 
-	<insert id="insert" useGeneratedKeys="true"
-		keyProperty="companyId">
-		INSERT INTO m_company (
-		company_name, created_at,
-		updated_at
-		) VALUES (
-		#{companyName}, NOW(), NOW()
-		)
-	</insert>
+
+<select id="existsByCompTel" resultType="boolean">
+    SELECT COUNT(*) > 0
+    FROM m_company
+    WHERE company_tel = #{compTel}
+    <if test="companyId != null">
+        AND company_id != #{companyId}
+    </if>
+</select>
+
+<select id="existsByFax" resultType="boolean">
+    SELECT COUNT(*) > 0
+    FROM m_company
+    WHERE company_fax = #{fax}
+    <if test="companyId != null">
+        AND company_id != #{companyId}
+    </if>
+</select>
+	<delete id="delete">
+		DELETE FROM m_company
+		WHERE company_id = #{id}
+	</delete>
+
+	<delete id="deleteBulk">
+		DELETE FROM m_company
+		WHERE company_id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="companyId">
+    INSERT INTO m_company (
+        company_name, company_name_kana,
+        company_zipcode, company_address1, company_address2,
+        company_tel, company_fax, founded_year, employee_count,
+        rep_firstname, rep_lastname, rep_firstname_kana, rep_lastname_kana,
+        delete_flg, created_at, updated_at)
+    VALUES (
+        #{companyName}, #{compNameKana},
+        #{compZipCode}, #{compAddress1}, #{compAddress2},
+        #{compTel}, #{fax}, #{foundedYear}, #{employeeCount},
+        #{repFirstName}, #{repLastName}, #{repFirstNameKana}, #{repLastNameKana},
+        0, NOW(), NOW()
+    )
+</insert>
 </mapper>

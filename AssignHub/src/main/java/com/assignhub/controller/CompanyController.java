@@ -1,11 +1,14 @@
 package com.assignhub.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,10 +50,12 @@ public class CompanyController {
 	 */
 	@GetMapping
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
+			@RequestParam(name = "tel", required = false) String tel,
 			@RequestParam(name = "sort", defaultValue = "company_id") String sort,
 			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
 		model.addAttribute("companies", companyService.findAll(keyword, sort, order));
-		model.addAttribute("keyward", keyword);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("phone", tel);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
 		return "company/index";
@@ -79,17 +84,100 @@ public class CompanyController {
 	 * @return 成功時は一覧画面へリダイレクト、失敗時は登録画面へ戻る
 	 */
 	@PostMapping
-	public String store(@Validated @ModelAttribute("companyForm") CompanyForm form, BindingResult result,
+	public String store(@Validated @ModelAttribute("companyForm") CompanyForm companyForm, BindingResult result,
 			RedirectAttributes attributes) {
+		if (companyService.isDuplicate(companyForm.getCompanyName(), null)) {
+			result.rejectValue("companyName", "error.companyForm", "この企業名は既に登録されています");
+		}
+		
+		//設立年度が来年度以上で入力された場合
+		if (companyForm.getFoundedYear() != null) {
+		    int currentYear = java.time.Year.now().getValue();
+		    if (companyForm.getFoundedYear() > currentYear) {
+		        result.rejectValue("foundedYear", "error", "設立年度は現在年度以前を入力してください");
+		    }
+		}
+		
+		//郵便番号の形式が不正の場合
+		if (companyForm.getCompZipCode() != null && !companyForm.getCompZipCode().isEmpty()) {
+		    if (!companyForm.getCompZipCode().matches("^[0-9]*$")) {
+		        result.rejectValue("compZipCode", "error", "郵便番号の形式が正しくありません ハイフンなしで入力してください");
+		//郵便番号が8桁以上入力された場合        
+		    } else if (companyForm.getCompZipCode().length() != 7) {
+		        result.rejectValue("compZipCode", "error", "郵便番号は7桁で入力してください");
+		    }
+		}
+		
+		//TELが重複している場合
+		if (companyService.isTelDuplicate(companyForm.getCompTel(), null)) {
+			result.rejectValue("compTel", "error.companyForm", "この電話番号は既に登録されています");
+		}
+		if (companyService.isFaxDuplicate(companyForm.getFax(), null)) {
+			result.rejectValue("fax", "error.companyForm", "このFAX電話は既に登録されています");
+		}
+		// TELの形式が不正の場合
+		if (companyForm.getCompTel() != null && !companyForm.getCompTel().isEmpty()) {
+		    if (!companyForm.getCompTel().matches("^[0-9]*$")) {
+		        result.rejectValue("compTel", "error", "電話番号の形式が正しくありません ハイフンなしで入力してください");
+		//TELが9桁以下または12桁以上入力の場合
+		    } else if (companyForm.getCompTel().length() < 10 || companyForm.getCompTel().length() > 11) {
+		        result.rejectValue("compTel", "error", "電話番号は10桁または11桁内で入力してください");
+		    }
+		}
 		if (result.hasErrors()) {
 			return "company/create";
 		}
 		Company company = new Company();
-		copyFormToEntity(form, company);
+		copyFormToEntity(companyForm, company);
 		companyService.save(company);
 		attributes.addFlashAttribute("toastMessage", "企業情報を登録しました");
 		return "redirect:/companies";
 	}
+	
+	/**
+	 * 企業情報を1件物理削除する。
+	 *
+	 * @param id         削除対象の社員ID
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @return 一覧画面へのリダイレクト
+	 */
+	@PostMapping("/{id}/delete")
+	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+		companyService.delete(id);
+		attributes.addFlashAttribute("toastMessage", "企業情報を削除しました");
+		return "redirect:/companies";
+	}
+	
+	/**
+	 * 選択された複数の社員情報を一括で物理削除する。
+	 *
+	 * @param ids        削除対象となる社員IDのリスト
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @return 一覧画面へのリダイレクト
+	 */
+	@PostMapping("/bulk-delete")
+	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
+			RedirectAttributes attributes) {
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
+			return "redirect:/companies";
+		}
+		companyService.deleteBulk(ids);
+		attributes.addFlashAttribute("toastMessage", ids.size() + "件の企業情報を削除しました");
+		return "redirect:/companies";
+	}
+	
+	/**
+	 * 社員データのインポート画面を表示する。
+	 *
+	 * @return インポート画面のテンプレートパス
+	 */
+	@GetMapping("/import")
+	public String showImport() {
+		return "company/import";
+	}
+	
+	
 
 	/**
 	 * フォームオブジェクトからエンティティオブジェクトへ値の詰め替えを行う。
@@ -98,6 +186,18 @@ public class CompanyController {
 	 * @param e 更新対象のエンティティ
 	 */
 	private void copyFormToEntity(CompanyForm f, Company e) {
-		e.setCompanyName(" ");
+		e.setCompanyName(f.getCompanyName());
+	    e.setCompNameKana(f.getCompNameKana());
+	    e.setCompZipCode(f.getCompZipCode());
+	    e.setCompAddress1(f.getCompAddress1());
+	    e.setCompAddress2(f.getCompAddress2());
+	    e.setCompTel(f.getCompTel());
+	    e.setFax(f.getFax());
+	    e.setFoundedYear(f.getFoundedYear());
+	    e.setEmployeeCount(f.getEmployeeCount());
+	    e.setRepFirstName(f.getRepFirstName());
+	    e.setRepLastName(f.getRepLastName());
+	    e.setRepFirstNameKana(f.getRepFirstNameKana());
+	    e.setRepLastNameKana(f.getRepLastNameKana());
 	}
 }

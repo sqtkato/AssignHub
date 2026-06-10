@@ -40,4 +40,46 @@ public interface CompanyMapper {
 	 * @param company 登録する企業エンティティ
 	 */
 	void insert(Company company);
+
+	boolean existsByCompanyName( @Param("companyName") String companyName, 
+		    @Param("companyId") Integer companyId);
+	
+	/**
+	 * 指定されたTELの登録件数を取得する（指定IDを除外）。
+	 *
+	 * @param TEL  重複チェックするTEL
+	 * @param excludecompanyId チェックから除外する自身の企業ID
+	 * @return 一致するTELの件数
+	 */
+	boolean existsByCompTel( @Param("compTel") String compTel, 
+		    @Param("companyId") Integer companyId);
+	
+	/**
+	 * 指定されたFAXの登録件数を取得する（指定IDを除外）。
+	 *
+	 * @param FAX 重複チェックするFAX
+	 * @param excludecompanyId チェックから除外する自身の企業ID
+	 * @return 一致するFAXの件数
+	 */boolean existsByFax( @Param("fax") String fax, 
+			    @Param("companyId") Integer companyId);
+
+/**
+ * 企業情報を物理削除する。
+ *
+ * @param id 社員ID
+ */
+void delete(Integer id);
+
+/**
+ * 複数の社員を一括で物理削除する。
+ *
+ * @param ids 削除対象IDリスト
+ */
+void deleteBulk(@Param("ids") List<Integer> ids);
+
+
+
+
+
+
 }
