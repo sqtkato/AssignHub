@@ -91,7 +91,9 @@ public class AccountController {
 		Account account = new Account();
 		copyFormToEntity(form, account);
 		accountService.save(account);
+
 		return "redirect:/accounts";
+
 	}
 
 	/**
@@ -294,9 +296,6 @@ public class AccountController {
 		attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を削除しました");
 		return "redirect:/accounts";
 	}
-
-
-
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable("id") Integer id, HttpSession session, Model model) {
 		if (!model.containsAttribute("accountForm")) {
@@ -344,4 +343,3 @@ public class AccountController {
 		e.setPermission(f.getPermission());
 	}
 }
-

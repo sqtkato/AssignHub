@@ -5,6 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>アカウント情報インポート</title>
+
 	<!-- CSSを外部ファイルに分離（import.css）-->
 	<link rel="stylesheet" th:href="@{/css/import.css}">
 </head>
@@ -27,21 +28,21 @@
 				<div class="file-inner">
 					<input type="file" name="file" accept=".csv">
 				</div>
-
+				
 				<div style="text-align: right; margin-top: 20px;">
 					<a th:href="@{/accounts/import/template}" class="template-link">
 						📥 CSVテンプレートをダウンロード
 					</a>
-				</div>
+			</div>
 			</div>
 
 			<div class="btn-area">
 				<button type="submit" class="import-btn import-btn-do">インポート</button>
 				<a th:href="@{/accounts}" class="import-btn import-btn-back" style="text-decoration:none; display:inline-block;">戻る</a>
 			</div>
-
-			<!-- エラーメッセージ：ボタンの下に表示（設計書通り）-->
+				<!-- エラーメッセージ：ボタンの下に表示（設計書通り）-->
 			<p th:if="${fileError}" th:text="${fileError}" class="file-error"></p>
+			
 		</form>
 
 		<hr class="import-divider">
@@ -50,16 +51,16 @@
 			<h3>
 				処理結果
 				<span th:if="${globalError}" th:text="${globalError}"
-					style="color:red; font-size:16px; font-weight:bold; margin-left:15px;"></span>
+					style="color:red; font-size:14px; font-weight:normal; margin-left:15px;"></span>
 			</h3>
 			<div class="result-cards">
 				<div class="result-card card-success">
 					<div class="label">正常取り込み</div>
-					<div class="num" th:text="${(successCount != null ? successCount : 0)} + '件'">0件</div>
+					<div class="num" th:text="${successCount} + '件'">0件</div>
 				</div>
 				<div class="result-card card-error">
 					<div class="label">エラー</div>
-					<div class="num" th:text="${(errorCount != null ? errorCount : 0)} + '件'">0件</div>
+					<div class="num" th:text="${errorCount} + '件'">0件</div>
 				</div>
 			</div>
 
