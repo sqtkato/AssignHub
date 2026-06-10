@@ -36,4 +36,8 @@ public class Account {
 	/** 社員名　（外部DBから取得）*/
 	private String empName;
 
-}
+	
+		
+	}
+
+

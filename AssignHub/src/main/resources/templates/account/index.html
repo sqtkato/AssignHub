@@ -48,7 +48,8 @@
 					</svg>
 					インポート
 				</a>
-				<button type="submit" formaction="/accounts/export" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除">
+				<button type="submit" formaction="/accounts/export" class="toolbar-btn toolbar-btn-danger"
+					title="チェックした項目を削除">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -57,8 +58,8 @@
 					</svg>
 					エクスポート
 				</button>
-				<button type="button" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
-					onclick="openBulkDeleteModal()">
+				<button type="submit" formaction="/accounts/bulk-delete" class="toolbar-btn toolbar-btn-danger"
+					title="チェックした項目を削除" >
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<polyline points="3 6 5 6 21 6"></polyline>
@@ -84,36 +85,20 @@
 							<tr>
 								<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
 								<th>
-									<a class="sortable-header acc_id"
-										th:href="@{/accounts(keyword=${keyword}, sort='account_id', order=${currentSort == 'account_id' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-										アカウントID <span class="sort-icon"
-											th:classappend="${currentSort == 'account_id'} ? 'active'"
-											th:text="${currentSort == 'account_id' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
-									</a>
+									<a class="sortable-header acc_id"></a>
+									アカウントID
 								</th>
 								<th>
-									<a class="sortable-header acc_logId"
-										th:href="@{/accounts(keyword=${keyword}, sort='login_id', order=${currentSort == 'login_id' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-										ログインID <span class="sort-icon"
-											th:classappend="${currentSort == 'login_id'} ? 'active'"
-											th:text="${currentSort == 'login_id' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
-									</a>
+									<a class="sortable-header acc_logId"></a>
+									ログインID
 								</th>
 								<th>
-									<a class="sortable-header acc_per"
-										th:href="@{/accounts(keyword=${keyword}, sort='permission', order=${currentSort == 'permission' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-										権限 <span class="sort-icon"
-											th:classappend="${currentSort == 'permission'} ? 'active'"
-											th:text="${currentSort == 'permission' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
-									</a>
+									<a class="sortable-header acc_per"></a>
+									権限
 								</th>
 								<th>
-									<a class="sortable-header acc_name"
-										th:href="@{/accounts(keyword=${keyword}, sort='emp_name', order=${currentSort == 'emp_name' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-										社員名 <span class="sort-icon"
-											th:classappend="${currentSort == 'emp_name'} ? 'active'"
-											th:text="${currentSort == 'emp_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
-									</a>
+									<a class="sortable-header acc_name"></a>
+									社員名
 								</th>
 								<th class="col-action">操作</th>
 							</tr>
@@ -216,6 +201,7 @@
 		</div>
 		 
 		<script src="/js/account.js"></script>
+
 	</div>
 </body>
 

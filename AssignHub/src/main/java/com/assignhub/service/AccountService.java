@@ -2,6 +2,7 @@ package com.assignhub.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import com.assignhub.mapper.AccountMapper;
 public class AccountService {
 
 	private final AccountMapper accountMapper;
+	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	public AccountService(AccountMapper accountMapper) {
 		this.accountMapper = accountMapper;
@@ -20,10 +22,10 @@ public class AccountService {
 	/**
 	 * 検索条件およびソート条件に合致する企業情報を全件取得する。
 	 *
-	 * @param keyword 検索キーワード（企業名の部分一致）
+	 * @param keyword 検索キーワード（各カラム部分一致）
 	 * @param sort    ソート対象のカラム名
 	 * @param order   昇順（asc）または降順（desc）
-	 * @return 企業エンティティのリスト
+	 * @return エンティティのリスト
 	 */
 	public List<Account> findAll(String keyword, String sort, String order, Integer permission) {
 		return accountMapper.findAll(keyword, sort, order, permission);
@@ -34,14 +36,17 @@ public class AccountService {
 		return accountMapper.findByIds(ids);
 	}
 
+	
+	
+
 	public void save(Account account) {
 		if (account.getAccountId() == null) {
 			accountMapper.save(account); 
 		} else {
 			accountMapper.update(account);
 		}
-	}
 
+	}
 	// 追加：ログインIDの重複チェック
 	public boolean existsByLoginId(String loginId) {
 		return accountMapper.existsByLoginId(loginId);
@@ -60,4 +65,20 @@ public class AccountService {
 	public Account findById(Integer id) {
 		return accountMapper.findById(id);
 	}
+
+	//	public void update(Integer id) {
+//		 accountMapper.update(id);}
+	
+
+	public void update(Account account) {
+		accountMapper.update(account);
+		
+	// 指定された複数の社員IDのデータを一括で物理削除する。
+	@Transactional
+	public void deleteBulk(List<Integer> ids) {
+		if (ids != null && !ids.isEmpty()) {
+			accountMapper.deleteBulk(ids);
+		}
+	}
+
 }

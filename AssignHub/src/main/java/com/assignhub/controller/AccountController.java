@@ -101,11 +101,16 @@ public class AccountController {
 	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
-			Model model) {
 
-		if (ids == null) {
-			model.addAttribute("message", "対象が選択されていません");
-			return "redirect:/accounts";
+			Model model, RedirectAttributes attributes) {
+		// ★【最優先】まず最初にnullチェックを行う
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
+			return "redirect:/accounts"; // 元の一覧画面に戻す
+		}
+		if (ids.size() == 0) {
+			return "account/index";
+
 		}
 		model.addAttribute("count", accountService.findByIds(ids).size());
 		List<Account> accounts = accountService.findByIds(ids);
@@ -124,6 +129,7 @@ public class AccountController {
 	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
+
 		List<Account> accounts = accountService.findByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名\n");
 		for (Account acc : accounts) {
@@ -139,8 +145,55 @@ public class AccountController {
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Disposition", "attachment; filename=account.csv");
+
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
+	}
+
+	/**
+	 * アカウント情報インポート画面を表示する。
+	 */
+	@GetMapping("/import")
+	public String importPage() {
+		return "account/import";
+	}
+
+	/**
+	 * CSVファイルをアップロードしてアカウント情報を一括登録・更新する。
+	 */
+	@PostMapping("/import")
+	public String doImport(@RequestParam("file") MultipartFile file, Model model) {
+		model.addAttribute("done", true);
+
+		if (file == null || file.isEmpty()) {
+			model.addAttribute("fileError", "ファイルを選択してください");
+			return "account/import";
+		}
+
+		try {
+			int total = accountService.countDataRows(file);
+
+			if (total > 500) {
+				model.addAttribute("globalError", "登録件数が上限（500件）に達しています");
+				model.addAttribute("successCount", 0);
+				model.addAttribute("errorCount", total);
+				return "account/import";
+			}
+
+			List<ImportError> errors = accountService.validate(file);
+
+			if (!errors.isEmpty()) {
+				model.addAttribute("successCount", 0);
+				model.addAttribute("errorCount", errors.size());
+				model.addAttribute("errors", errors);
+			} else {
+				model.addAttribute("successCount", total);
+				model.addAttribute("errorCount", 0);
+			}
+		} catch (Exception e) {
+			model.addAttribute("fileError", "ファイルの読み込みに失敗しました");
+		}
+		return "account/import";
 	}
 
 	/**
@@ -155,10 +208,31 @@ public class AccountController {
 		return "redirect:/accounts";
 	}
 
+	/**
+	 * 選択された複数の社員情報を一括で物理削除する。
+	 *
+	 * @param ids        削除対象となるアカウントIDのリスト
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @return 一覧画面へのリダイレクト
+	 */
+	@PostMapping("/bulk-delete")
+	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
+			RedirectAttributes attributes) {
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "削除する対象が選択されていません");
+			return "redirect:/accounts";
+		}
+		accountService.deleteBulk(ids);
+		attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を削除しました");
+		return "redirect:/accounts";
+	}
+
+}
+
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable("id") Integer id, Model model) {
 		if (!model.containsAttribute("accountForm")) {
-			Account acc = new Account();
+			Account acc = accountService. findById(id);;
 			AccountForm form = new AccountForm();
 			form.setAccountId(acc.getAccountId());
 			form.setLoginId(acc.getLoginId());
@@ -174,18 +248,11 @@ public class AccountController {
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result, RedirectAttributes attributes, Model model) {
 
-		//			if (accountService.isEmailDuplicate(accountForm.getEmailAddress(), id)) {
-		//				result.rejectValue("emailAddress", "error.rookyForm", "このメールアドレスはすでに他の社員に使用されています");
-		//			}
-		//			if (result.hasErrors()) {
-		//				model.addAttribute("rookies", accountService.findAll(null, "rooky_id", "asc"));
-		//				return "edit";}
 
 		Account acc = new Account();
 		acc.setAccountId(id);
 		copyFormToEntity(accountForm, acc);
-		accountService.save(acc);
-		attributes.addFlashAttribute("toastMessage", "社員情報を更新しました");
+		accountService.update(acc);
 		return "redirect:/accounts";
 	}
 
@@ -196,3 +263,4 @@ public class AccountController {
 		e.setPermission(f.getPermission());
 	}
 }
+

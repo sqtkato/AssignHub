@@ -53,4 +53,11 @@ public interface AccountMapper {
 	Account findByLoginId(String loginId);
 
 	void update(Account account);
+
+	
+	/**
+	 * アカウント情報を一括で削除する。
+	 */
+	void deleteBulk(@Param("ids") List<Integer> ids);
+	
 }
