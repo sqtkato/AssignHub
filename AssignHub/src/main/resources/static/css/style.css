@@ -837,3 +837,8 @@ a:hover {
 .result-error-row td {
 	color: #c00;
 }
+
+
+.select-error {
+      color: #dc3545;
+  }
