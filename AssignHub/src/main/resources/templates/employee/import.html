@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	>
 
 <head>
 	<title>社員情報インポート</title>
@@ -21,7 +22,7 @@
 					<input type="file" name="file" accept=".csv">
 				</div>
 				<div>
-					<a>CSVテンプレートをダウンロード</a>
+					<a th:href="@{/employees/import/template}" class="template-link">CSVテンプレートをダウンロード</a>
 				</div>
 				<div>
 					<button>インポート</button>
