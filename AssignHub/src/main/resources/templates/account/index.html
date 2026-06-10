@@ -21,7 +21,7 @@
 					<div class="search-item">
 						<label>権限</label>
 						<select name="permission" class="form-control">
-							<option value="" th:selected="${permission == null}">未選択</option>
+							<option value="" th:selected="${permission == null}" class="">未選択</option>
 							<option value="0" th:selected="${permission != null and permission == 0}">一般</option>
 							<option value="1" th:selected="${permission != null and permission == 1}">管理</option>
 						</select>
@@ -48,7 +48,7 @@
 					</svg>
 					インポート
 				</a>
-				<button type="submit" formaction="/accounts/export" class="toolbar-btn toolbar-btn-danger"
+				<button type="submit" formaction="/accounts/export" class="toolbar-btn"
 					title="チェックした項目を削除">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
@@ -109,7 +109,7 @@
 										class="row-checkbox"></td>
 								<td th:text="${acc.accountId}" class="acc_id"></td>
 								<td th:text="${acc.loginId}" class="acc_logId"></td>
-								<td th:text="${acc.permission == '1' ? '管理' : '一般'}" class="acc_per"></td>
+								<td th:text="${acc.permission == 1 ? '管理' : '一般'}" class="acc_per"></td>
 								<td th:text="${acc.empName}"></td>
 								<td class="col-action">
 									<a th:href="@{/accounts/{id}/edit(id=${acc.accountId})}" class="btn-icon-svg"

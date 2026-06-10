@@ -1,12 +1,18 @@
 package com.assignhub.service;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.assignhub.entity.Account;
+import com.assignhub.form.ImportError;
 import com.assignhub.mapper.AccountMapper;
 
 @Service
@@ -38,10 +44,27 @@ public class AccountService {
 		return accountMapper.findByIds(ids);
 	}
 
+    public Account findByLoginId(String loginId) {
+        return accountMapper.findByLoginId(loginId);
+    }
 	
-	
+    public Account login(String loginId, String password) {
+
+        // ① loginIdでユーザー取得
+        Account account = accountMapper.findByLoginId(loginId);
+        // ② ユーザー存在チェック
+        if (account == null) {
+            return null;
+        }
+        // ③ パスワードチェック（ハッシュ照合）
+        if (passwordEncoder.matches(password, account.getPasswordHash())) {
+            return account;
+        }
+        return null;
+    }
 
 	public void save(Account account) {
+		account.setPasswordHash(passwordEncoder.encode(account.getPasswordHash()));
 		if (account.getAccountId() == null) {
 			accountMapper.save(account); 
 		} else {
@@ -49,6 +72,12 @@ public class AccountService {
 		}
 
 	}
+	
+	public boolean existsByLoginIdUpdate(String loginId, Integer currentAccountId) {
+		
+		return accountMapper.existsByLoginIdUpdate(loginId, currentAccountId);
+	}
+	
 	// 追加：ログインIDの重複チェック
 	public boolean existsByLoginId(String loginId) {
 		return accountMapper.existsByLoginId(loginId);
@@ -76,15 +105,14 @@ public class AccountService {
 				String[] cols = line.split(",", -1);
 
 				// No.6 项目数不足（4列必要）
-				if (cols.length < 4) {
+				if (cols.length < 3) {
 					errors.add(new ImportError(label, "全体", "項目数が不足しています"));
 					continue;
 				}
-
 				String accountIdStr = cols[0].trim();   // 第1列：账户ID
 				String loginId       = cols[1].trim();   // 第2列：登录ID
 				String password      = cols[2].trim();   // 第3列：密码
-				String permission    = cols[3].trim();   // 第4列：权限
+				String permission    = "0";   // 第4列：权限
 
 				// No.7 账户ID填了但DB不存在
 				if (!accountIdStr.isEmpty()) {
@@ -124,10 +152,6 @@ public class AccountService {
 					}
 				}
 
-				// ===== 権限（空欄OK、空欄なら0扱い。0/1以外はエラー）=====
-				if (!permission.isEmpty() && !permission.equals("0") && !permission.equals("1")) {
-					errors.add(new ImportError(label, "権限", "権限は0(一般)または1(管理)で入力してください"));
-				}
 			}
 		}
 		return errors;
@@ -156,7 +180,7 @@ public class AccountService {
 				String accountIdStr = cols[0].trim();
 				String loginId       = cols[1].trim();
 				String rawPassword   = cols[2].trim();
-				String permission    = cols[3].trim();
+				String permission    = "0";
 
 				try {
 					// 密码 BCrypt 加密
@@ -166,7 +190,7 @@ public class AccountService {
 					account.setLoginId(loginId);
 					account.setPasswordHash(hashed);
 					// 权限：空欄なら "0"(一般)、それ以外は入力値（0 または 1）
-					account.setPermission(permission.isEmpty() ? "0" : permission);
+					account.setPermission(permission.isEmpty() ? 0 : Integer.parseInt(permission));
 
 					if (accountIdStr.isEmpty()) {
 						// 账户ID空 → 新增
@@ -217,13 +241,6 @@ public class AccountService {
 		return accountMapper.findById(id);
 	}
 
-	//	public void update(Integer id) {
-//		 accountMapper.update(id);}
-	
-
-	public void update(Account account) {
-		accountMapper.update(account);
-		
 	// 指定された複数の社員IDのデータを一括で物理削除する。
 	@Transactional
 	public void deleteBulk(List<Integer> ids) {

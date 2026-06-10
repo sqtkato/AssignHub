@@ -9,6 +9,8 @@
 		<result property="permission" column="permission" />
 		<result property="empName" column="emp_name" />
 		<result property="passwordHash" column="password_hash" />
+		<result property="createdAt" column="created_at" />
+		<result property="updatedAt" column="updated_at" />
 	</resultMap>
 
 	<select id="findAll" resultMap="accountResultMap">
@@ -100,6 +102,13 @@
 		FROM m_account
 		WHERE login_id = #{loginId}
 		AND delete_flg = 0
+	</select>
+
+	<select id="existsByLoginIdUpdate" resultType="boolean">
+		SELECT IF(COUNT(*) > 0, true, false)
+		FROM m_account
+		WHERE login_id = #{loginId}
+		AND account_id != #{currentAccountId}
 	</select>
 
 	<!-- ===== インポート機能用に追加 ===== -->

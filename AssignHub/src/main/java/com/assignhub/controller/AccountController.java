@@ -12,14 +12,19 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
+import com.assignhub.form.ImportError;
 import com.assignhub.service.AccountService;
+
+import jakarta.servlet.http.HttpSession;
 
 /**
  * 企業管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
@@ -55,29 +60,31 @@ public class AccountController {
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
 			@RequestParam(name = "sort", defaultValue = "login_id") String sort,
 			@RequestParam(name = "order", defaultValue = "asc") String order, Model model,
-			@RequestParam(name = "permission", required = false) Integer permission) {
+			@RequestParam(name = "permission", required = false) Integer permission,HttpSession session) {
 		model.addAttribute("accounts", accountService.findAll(keyword, sort, order, permission));
 		model.addAttribute("keyward", keyword);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
+        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
+    
 		return "account/index";
 	}
-
+	
 	@GetMapping("/new")
-	public String newAccount(Model model) {
-
+	public String newAccount(Model model, HttpSession session) {
+        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
 		model.addAttribute("account", new AccountForm());
 		return "account/create"; 
 	}
 
 	@PostMapping("/create")
 	public String create(@Validated @ModelAttribute("account") AccountForm form,
-			BindingResult result, Model model) {
-
+			BindingResult result, Model model, HttpSession session) {
+        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
 		if (result.hasErrors()) {
 			return "account/create";
 		}
-		if (accountService.existsByLoginId(account.getLoginId())) {
+		if (accountService.existsByLoginId(form.getLoginId())) {
 			model.addAttribute("loginIdError", "このログインIDは既に使用されています");
 			return "account/create";
 		}
@@ -97,8 +104,9 @@ public class AccountController {
 	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
-
-			Model model, RedirectAttributes attributes) {
+			Model model, HttpSession session, RedirectAttributes attributes) {
+		
+        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
 		// ★【最優先】まず最初にnullチェックを行う
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
@@ -122,7 +130,7 @@ public class AccountController {
 	 * @param deptId  絞り込み部署ID
 	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
-	@GetMapping("/export/download")
+	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Account> accounts = accountService.findByIds(ids);
@@ -139,7 +147,7 @@ public class AccountController {
 		System.arraycopy(bom, 0, result, 0, bom.length);
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment; filename=employees.csv");
+		headers.add("Content-Disposition", "attachment; filename=account.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
@@ -150,7 +158,8 @@ public class AccountController {
 	 * アカウント情報インポート画面を表示する。
 	 */
 	@GetMapping("/import")
-	public String importPage() {
+	public String importPage(HttpSession session,Model model) {
+        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
 		return "account/import";
 	}
 
@@ -239,8 +248,8 @@ public class AccountController {
 	 */
 	@GetMapping("/import/template")
 	public ResponseEntity<byte[]> downloadTemplate() {
-		String csv = "アカウントID,ログインID,パスワード,権限\n"
-				   + ",user001,pass1234,0\n";
+		String csv = "アカウントID,ログインID,パスワード\n"
+				   + ",user001,pass1234\n";
 
 		byte[] csvBytes = csv.getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
@@ -273,6 +282,7 @@ public class AccountController {
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクト
 	 */
+	}
 	@PostMapping("/bulk-delete")
 	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			RedirectAttributes attributes) {
@@ -285,12 +295,13 @@ public class AccountController {
 		return "redirect:/accounts";
 	}
 
-}
+
 
 	@GetMapping("/{id}/edit")
-	public String edit(@PathVariable("id") Integer id, Model model) {
+	public String edit(@PathVariable("id") Integer id, HttpSession session, Model model) {
 		if (!model.containsAttribute("accountForm")) {
-			Account acc = accountService. findById(id);;
+	        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
+			Account acc = accountService.findById(id);
 			AccountForm form = new AccountForm();
 			form.setAccountId(acc.getAccountId());
 			form.setLoginId(acc.getLoginId());
@@ -306,11 +317,23 @@ public class AccountController {
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result, RedirectAttributes attributes, Model model) {
 
-
+		if (result.hasErrors()) {
+			return "account/edit";
+		}
+		
+		if (accountService.existsByLoginIdUpdate(accountForm.getLoginId(), id)) {
+			model.addAttribute("loginId", "このログインIDは既に使用されています");
+			return "account/edit";
+		}
+	
 		Account acc = new Account();
-		acc.setAccountId(id);
-		copyFormToEntity(accountForm, acc);
-		accountService.update(acc);
+		// :bulb: 画面から届いたデータを、DBに送るオブジェクトにしっかりセットする！
+	    acc.setLoginId(accountForm.getLoginId());
+	    acc.setPermission(accountForm.getPermission());
+	    // パスワードの入力がある場合のみハッシュ化してセット（空なら変更しない等の制御は必要に応じて）
+	    acc.setPasswordHash(accountForm.getPasswordHash());
+	    acc.setAccountId(id);
+		accountService.save(acc);
 		return "redirect:/accounts";
 	}
 
