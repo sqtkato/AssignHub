@@ -134,13 +134,13 @@ public class DeletedAccountController {
 	}
 	
 //	エクスポート画面へ遷移
-	@GetMapping
+	@PostMapping
 	public String exportConfirm() {
 		return "deletedAccount/export";
 	}
 	
 //　エクスポートのダウンロード処理
-	@GetMapping
+	@PostMapping
 	public String exportComplete() {
 		return "deletedAccount/export";
 	}
