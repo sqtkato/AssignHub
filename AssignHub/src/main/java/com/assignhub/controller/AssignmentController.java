@@ -271,6 +271,7 @@ public class AssignmentController {
 		
 		if (result.hasErrors()) {
 			model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
+			model.addAttribute("fromPage", fromPage);
 			addComboBoxItems(model);
 			return "assignment/edit";
 		}
