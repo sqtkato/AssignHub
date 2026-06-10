@@ -22,7 +22,7 @@ public class Account {
 	private String passwordHash;
 	
 	/** 権限 */
-	private String permission;
+	private Integer permission;
 	
 	/** 削除フラグ */
 	private String deleteFlg;

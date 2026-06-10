@@ -17,7 +17,6 @@ public class AccountService {
 		this.accountMapper = accountMapper;
 	}
 
-
 	/**
 	 * 検索条件およびソート条件に合致する企業情報を全件取得する。
 	 *
@@ -31,20 +30,23 @@ public class AccountService {
 
 	}
 
-	public List<Account> findByIds(List<Integer> ids){
+	public List<Account> findByIds(List<Integer> ids) {
 		return accountMapper.findByIds(ids);
 	}
-	
+
 	public void save(Account account) {
-		accountMapper.save(account);
-		accountMapper.update(account);
+		if (account.getAccountId() == null) {
+			accountMapper.save(account); 
+		} else {
+			accountMapper.update(account);
+		}
 	}
 
 	// 追加：ログインIDの重複チェック
 	public boolean existsByLoginId(String loginId) {
 		return accountMapper.existsByLoginId(loginId);
 	}
-	
+
 	/**
 	 * アカウントを一件論理削除。
 	 *
@@ -55,9 +57,7 @@ public class AccountService {
 		accountMapper.delete(id);
 	}
 
-
 	public Account findById(Integer id) {
 		return accountMapper.findById(id);
 	}
-	}
-	
+}

@@ -92,7 +92,7 @@
 		SET account_Id = #{accountId},
 		login_id =#{loginId},
 	    permission= #{permission},
-		passwordHash = #{passwordHash},
+		password_Hash = #{passwordHash},
 		updated_at = NOW()
 		WHERE account_id =#{accountId}
 	</update>
