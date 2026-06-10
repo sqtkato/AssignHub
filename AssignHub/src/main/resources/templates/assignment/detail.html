@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>アサイン履歴情報詳細</title>
+</head>
+
+<body>
+	<!-- メイン -->
+	<div layout:fragment="content">
+
+		<div>
+			<class="page-title-area">
+				<h2>アサイン履歴情報詳細</h2>
+		</div>
+
+		<div class="card">
+			<table class="table">
+				<tr>
+
+				<tr>
+					<th>作成日時</th>
+					<td th:text="${assignment.createdAt}">
+				</tr>
+
+				<tr>
+					<th>更新日時</th>
+					<td th:text="${assignment.updatedAt}">
+				</tr>
+
+				<tr>
+					<th>社員名</th>
+					<td th:text="${assignment.empName}">
+				</tr>
+
+				<tr>
+					<th>社員名カナ</th>
+					<td th:text="${assignment.empNameKana}">
+				</tr>
+
+				<tr>
+					<th>アサイン先企業</th>
+					<td th:text="${assignment.assignCompanyName}">
+				</tr>
+
+				<tr>
+					<th>エンジニアタイプ</th>
+					<td th:text="${assignment.engineerType}">
+				</tr>
+
+				<tr>
+					<th>所属企業</th>
+					<td th:text="${assignment.companyName}">
+				</tr>
+
+				<tr>
+					<th>所属企業カナ</th>
+					<td th:text="${assignment.companyNameKana}">
+				</tr>
+
+				<tr>
+					<th>契約開始日</th>
+					<td th:text="${assignment.contractStartDate}">
+				</tr>
+				<tr>
+					<th>契約終了日</th>
+					<td th:text="${assignment.contractEndDate}">
+				</tr>
+
+				<tr>
+					<th>契約単価</th>
+					<td th:text="${#numbers.formatInteger(assignment.unitPrice, 3, 'COMMA')+ ' 円'}"></td>
+				</tr>
+				<tr>
+					<th>役割</th>
+					<td th:text="${assignment.role}">
+				</tr>
+			</table>
+			<div class="form-actions">
+				<button type="button" id="btn_assign_edit" class="btn btn-primary" title="変更"
+					th:onclick="|location.href='@{/assignments/{id}/edit(id=${assignment.assignmentId})}'|">
+					変更
+				</button>
+
+				<form th:action="@{/assignments/{id}/delete(id=${assignment.assignmentId})}" method="post">
+					<button type="submit" id="btn_delete_flg" class="btn btn-icon-delete" title="削除"
+						onclick="return confirm('本当に削除しますか？');">削除
+					</button>
+				</form>
+
+				<button type="button" id="btn_assign_back" th:onclick="|location.href='@{/assignments}'|" class="btn btn-secondary">戻る
+				</button>
+
+
+
+			</div>
+
+
+		</div>
+</body>
+
+</html>
