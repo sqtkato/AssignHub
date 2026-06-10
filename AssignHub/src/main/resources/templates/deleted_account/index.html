@@ -15,7 +15,7 @@
 		</div>
 
 		<div class="card acc">
-			<form th:action="@{/accounts}" method="get" class="search-form">
+			<form th:action="@{/deleted-accounts}" method="get" class="search-form">
 				<div class="form-group form-group-search">
 
 					<div class="search-item">
@@ -39,8 +39,8 @@
 
 		<form method="post" id="listForm">
 			<div class="table-toolbar">
-				<button type="submit" formaction="/accounts/bulk-delete" class="toolbar-btn toolbar-btn-danger"
-					title="チェックした項目を削除">
+				<button type="submit" formaction="/restore-bulk"
+					class="toolbar-btn toolbar-btn-danger" title="チェックした項目を復元">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<path
@@ -49,7 +49,7 @@
 					</svg>
 					一括復元
 				</button>
-				<button type="submit" formaction="/accounts/export" class="toolbar-btn toolbar-btn-danger"
+				<button type="submit" formaction="/deleted-accounts/export" class="toolbar-btn toolbar-btn-danger"
 					title="チェックした項目を削除">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
@@ -59,7 +59,7 @@
 					</svg>
 					エクスポート
 				</button>
-				<button type="submit" formaction="/accounts/bulk-delete" class="toolbar-btn toolbar-btn-danger"
+				<button type="submit" formaction="/deleted-accounts/delete-bulk" class="toolbar-btn toolbar-btn-danger"
 					title="チェックした項目を削除">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
@@ -106,8 +106,9 @@
 								<td th:text="${acc.permission == '1' ? '管理' : '一般'}" class="acc_per"></td>
 								<td th:text="${acc.empName}"></td>
 								<td class="col-action">
-									<a th:href="@{/accounts/{id}/edit(id=${acc.accountId})}" class="btn-icon-svg"
-										title="復元">
+									
+									<a th:href="@{deleted-accounts/{id}/restore(id=${acc.accountId})}"
+										class="btn-icon-svg" title="復元">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
 											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
 											<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -115,7 +116,7 @@
 										</svg>
 									</a>
 									<button type="button" th:attr="data-id=${acc.accountId}" class="btn-icon-svg delete"
-										title="削除" onclick="openDeleteModal(this.dataset.id)">
+										title="復元" onclick="openDeleteModal(this.dataset.id)">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
 											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
 											<polyline points="3 6 5 6 21 6"></polyline>
@@ -124,6 +125,25 @@
 											</path>
 										</svg>
 									</button>
+									<a th:href="@{deleted-accounts/{id}/delete(id=${acc.accountId})}"
+										class="btn-icon-svg" title="削除">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+											<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+										</svg>
+
+										<button type="button" th:attr="data-id=${acc.accountId}"
+											class="btn-icon-svg delete" title="削除"
+											onclick="openDeleteModal(this.dataset.id)">
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+												stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+												<polyline points="3 6 5 6 21 6"></polyline>
+												<path
+													d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+												</path>
+											</svg>
+									</a>
 								</td>
 							</tr>
 							<tr th:if="${#lists.isEmpty(accounts)}">
