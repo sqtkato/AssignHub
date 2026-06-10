@@ -35,19 +35,24 @@ public interface AccountMapper {
 	 */
 	List<Account> findByIds(@Param("ids") List<Integer> ids);
 
-	
-	
 	void save(Account account);
 
 	boolean existsByLoginId(@Param("loginId") String loginId);
 
 	/**
 	 * アカウントを一件論理削除。
-	 * 
+	 *
 	 * @param id 削除対象のアカウントID。
 	 */
 	void delete(Integer id);
-	
+
 	Account findByLoginId(String loginId);
-	
+
+	// ===== インポート機能用に追加 =====
+
+	/** アカウントIDで1件取得（存在チェック・更新前確認用）。 */
+	Account findById(@Param("accountId") Integer accountId);
+
+	/** アカウントを更新する（ログインID・パスワード・権限を上書き）。 */
+	void update(Account account);
 }

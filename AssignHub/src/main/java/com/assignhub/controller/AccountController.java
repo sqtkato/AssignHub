@@ -10,12 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
 import com.assignhub.form.ImportError;
@@ -33,24 +31,10 @@ public class AccountController {
 
 	private final AccountService accountService;
 
-	/**
-	 * コンストラクタによる依存性の注入。
-	 *
-	 * @param companyService 企業サービス
-	 */
 	public AccountController(AccountService accountService) {
 		this.accountService = accountService;
 	}
 
-	/**
-	 * アカウント一覧画面を表示する。検索・ソート条件に応じたデータを取得する。
-	 *
-	 * @param keyword 検索キーワード（任意）
-	 * @param sort ソート対象のカラム名（デフォルト: company_id）
-	 * @param order ソート順（デフォルト: asc）
-	 * @param model 画面描画用モデル
-	 * @return 一覧画面のテンプレートパス
-	 */
 	@GetMapping
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
 			@RequestParam(name = "sort", defaultValue = "login_id") String sort,
@@ -65,63 +49,58 @@ public class AccountController {
 
 	@GetMapping("/new")
 	public String newAccount(Model model) {
-		// 【重要】ここで「account」という名前で空のオブジェクトを渡す！
 		model.addAttribute("account", new Account());
-		return "account/new"; // ここがHTMLのファイル名と一致しているか
+		return "account/new";
 	}
 
 	@PostMapping("/create")
 	public String create(@ModelAttribute Account account, Model model) {
-
 		if (accountService.existsByLoginId(account.getLoginId())) {
 			model.addAttribute("loginIdError", "このログインIDは既に使用されています");
 			return "account/new";
 		}
-
 		accountService.save(account);
-
 		return "redirect:/accounts";
 	}
 
-    @PostMapping("/export")
-    public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
-            Model model) {
-    	if(ids.size()==0) {return "account/index";}
-        model.addAttribute("count", accountService.findByIds(ids).size());
-        List<Account> accounts = accountService.findByIds(ids);
-        model.addAttribute("accounts", accounts);
-        model.addAttribute("ids", ids);
-        return "account/export";
-    }
-    /**
-     * 検索条件に合致する社員データをCSV形式でダウンロードする。
-     *
-     * @param keyword 検索キーワード
-     * @param deptId  絞り込み部署ID
-     * @return ダウンロード用のCSVファイルバイナリデータ
-     */
-    @PostMapping("/export/download")
-    public ResponseEntity<byte[]> downloadCsv(
-    		@RequestParam(name = "ids", required = false) List<Integer> ids) {
-        List<Account> accounts = accountService.findByIds(ids);
-        StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名\n");
-        for (Account acc : accounts) {
-            csvBuilder.append(acc.getAccountId()).append(",")
-                    .append(acc.getLoginId()).append(",")
-                    .append(acc.getPermission()).append(",")
-                    .append(acc.getEmpName()).append("\n");
-        }
-        byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
-        byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
-        byte[] result = new byte[bom.length + csvBytes.length];
-        System.arraycopy(bom, 0, result, 0, bom.length);
-        System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=employees.csv");
-        headers.add("Content-Type", "text/csv; charset=UTF-8");
-        return new ResponseEntity<>(result, headers, HttpStatus.OK);
-    }
-    
+	/**
+	 * 社員データのエクスポート画面を表示する。
+	 */
+	@GetMapping("/export")
+	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
+			Model model) {
+		System.out.println(ids);
+		model.addAttribute("count", accountService.findByIds(ids).size());
+		model.addAttribute("ids", ids);
+		return "account/export";
+	}
+
+	/**
+	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
+	 */
+	@GetMapping("/export/download")
+	public ResponseEntity<byte[]> downloadCsv(
+			@RequestParam(name = "ids", required = false) List<Integer> ids) {
+		List<Account> accounts = accountService.findByIds(ids);
+		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名\n");
+		for (Account acc : accounts) {
+			csvBuilder.append(acc.getAccountId()).append(",")
+					.append(acc.getLoginId()).append(",")
+					.append(acc.getPermission()).append(",")
+					.append(acc.getEmpName()).append("\n");
+		}
+		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
+		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+		byte[] result = new byte[bom.length + csvBytes.length];
+		System.arraycopy(bom, 0, result, 0, bom.length);
+		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=employees.csv");
+		headers.add("Content-Type", "text/csv; charset=UTF-8");
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
+	}
+
+	// ===== ここから アカウント情報インポート機能 =====
 
 	/**
 	 * アカウント情報インポート画面を表示する。
@@ -138,28 +117,57 @@ public class AccountController {
 	public String doImport(@RequestParam("file") MultipartFile file, Model model) {
 		model.addAttribute("done", true);
 
+		// 没选文件
 		if (file == null || file.isEmpty()) {
 			model.addAttribute("fileError", "ファイルを選択してください");
+			return "account/import";
+		}
+
+		// No.2 非CSV文件
+		String filename = file.getOriginalFilename();
+		if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
+			model.addAttribute("fileError", "ファイル形式が正しくありません。.csvファイルを選択してください。");
+			return "account/import";
+		}
+
+		// No.3 超过5MB
+		if (file.getSize() > 5 * 1024 * 1024) {
+			model.addAttribute("fileError", "ファイルサイズは5MB以内にしてください。");
 			return "account/import";
 		}
 
 		try {
 			int total = accountService.countDataRows(file);
 
+			// No.5 超过500件
 			if (total > 500) {
-				model.addAttribute("globalError", "登録件数が上限（500件）に達しています");
+				model.addAttribute("globalError", "登録後の件数が上限に達しています。アカウント登録条件は500件です。");
 				model.addAttribute("successCount", 0);
 				model.addAttribute("errorCount", total);
 				return "account/import";
 			}
 
+			// ① 先校验（No.6〜13、No.7存在チェック、権限チェック）
 			List<ImportError> errors = accountService.validate(file);
 
 			if (!errors.isEmpty()) {
+				// 有错 → 全部取消，不写DB
 				model.addAttribute("successCount", 0);
 				model.addAttribute("errorCount", errors.size());
 				model.addAttribute("errors", errors);
+				return "account/import";
+			}
+
+			// ② 校验全通过 → 写入DB（INSERT/UPDATE）
+			List<ImportError> dbErrors = accountService.importData(file);
+
+			if (!dbErrors.isEmpty()) {
+				// No.14 写入有失败
+				model.addAttribute("successCount", total - dbErrors.size());
+				model.addAttribute("errorCount", dbErrors.size());
+				model.addAttribute("errors", dbErrors);
 			} else {
+				// 全部成功
 				model.addAttribute("successCount", total);
 				model.addAttribute("errorCount", 0);
 			}
@@ -168,18 +176,26 @@ public class AccountController {
 		}
 		return "account/import";
 	}
-	
-    /**
-	 * アカウントを一件論理削除
-	 * 
-	 * @param id 削除対象のアカウントID
-	 * @return 一覧画面へのリダイレクトパス
-	 */
-	@PostMapping("/{id}/delete")
-	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-		accountService.delete(id);
-		return "redirect:/accounts";
 
+	/**
+	 * CSVテンプレート（見本）をダウンロードする。
+	 */
+	@GetMapping("/import/template")
+	public ResponseEntity<byte[]> downloadTemplate() {
+		String csv = "アカウントID,ログインID,パスワード,権限\n"
+				   + ",user001,pass1234,0\n";
+
+		byte[] csvBytes = csv.getBytes(StandardCharsets.UTF_8);
+		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+		byte[] result = new byte[bom.length + csvBytes.length];
+		System.arraycopy(bom, 0, result, 0, bom.length);
+		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=account_template.csv");
+		headers.add("Content-Type", "text/csv; charset=UTF-8");
+
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
 }
