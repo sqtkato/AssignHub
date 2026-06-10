@@ -1,1 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assignhub.mapper.DeletedEnployeeMapper">
+
+	<resultMap id="deletedEmployeeResultMap" type="com.assignhub.entity.DeletedEmployee">
+        <id property="empId" column="account_id" />
+        <result property="lastName" column="last_name" />
+        <result property="firstName" column="first_name" />
+        <result property="lastNameKana" column="last_name_kana" />
+        <result property="firstNameKana" column="first_name_kana"/>
+        <result property="hireDate" column="hire_date" />
+        <result property="yearsOfService" column="years_of_service"/>
+        <result property="birthDate" column="birth_date" />
+        <result property="zipCode" column="zip_code" />
+        <result property="address1" column="address1" />
+        <result property="address2" column="address2" />
+        <result property="engineerType" column="engineer_type" />
+        <result property="accountId" column="account_id" />
+        <result property="companyId" column="company_id" />
+        <result property="department" column="department" />
+        <result property="jobTitle" column="job_title" />
+        <result property="empTel" column="emp_tel" />
+        <result property="email" column="email" />
+        <result property="deleteFlg" column="delete_flg" />
+        <result property="createdAt" column="created_at" />
+        <result property="updatedAt" column="updated_at" />
+    </resultMap>
+	<!-- 一覧表示 -->
+    <select id="deletedfindAll" resultMap="deletedAccountResultMap">
+        SELECT 
+            a.*, 
+            CONCAT(e.last_name, ' ', e.first_name) AS emp_name
+        FROM m_account a
+        LEFT JOIN m_employee e ON a.account_id = e.account_id
+        <where>
+            a.delete_flg = 1
+            
+            <if test="keyword != null and keyword != ''">
+                AND (
+                    e.last_name LIKE CONCAT('%', #{keyword}, '%')
+                    OR e.first_name LIKE CONCAT('%', #{keyword}, '%')
+                    OR a.login_id LIKE CONCAT('%', #{keyword}, '%')
+                    OR a.account_id LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </if>
+            
+            <if test="permission != null">
+                AND a.permission = #{permission}
+            </if>
+        </where>
+        
+        <if test="sort != null and sort != ''">
+            ORDER BY
+            <choose>
+                <when test="sort == 'accountId'">a.account_id</when>
+                <when test="sort == 'loginId'">a.login_id</when>
+                <when test="sort == 'permission'">a.permission</when>
+                <otherwise>a.account_id</otherwise>
+            </choose>
+            <choose>
+                <when test="order == 'desc' or order == 'DESC'">DESC</when>
+                <otherwise>ASC</otherwise>
+            </choose>
+        </if>
+        <if test="sort == null or sort == ''">
+            ORDER BY a.account_id ASC
+        </if>
+    </select>
+	<!-- エクスポート用 -->
+    <select id="deletedfindByIds" resultMap="deletedAccountResultMap">
+        SELECT 
+            a.*,
+            CONCAT(e.last_name, ' ', e.first_name) AS emp_name
+        FROM m_account a
+        LEFT JOIN m_employee e ON a.account_id = e.account_id
+        WHERE a.delete_flg = 1
+          AND a.account_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+	<!-- 復元 -->
+    <update id="restore">
+        UPDATE m_account
+        SET delete_flg = 0
+        WHERE account_id = #{id} AND delete_flg = 1
+    </update>
+	<!-- 一括復元 -->
+    <update id="restoreBulk">
+        UPDATE m_account
+        SET delete_flg = 0
+        WHERE account_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND delete_flg = 1
+    </update>
+	<!-- 削除 -->
+    <delete id="physicalDelete">
+        DELETE FROM m_account
+        WHERE account_id = #{id}
+    </delete>
+	<!-- 一括削除 -->
+    <delete id="physicalDeleteBulk">
+        DELETE FROM m_account
+        WHERE account_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <select id="countEmployeesByAccountId" resultType="int">
+        SELECT COUNT(*) 
+        FROM m_employee 
+        WHERE account_id = #{id}
+    </select>
+
+    <select id="countEmployeesByAccountIds" resultType="int">
+        SELECT COUNT(*) 
+        FROM m_employee 
+        WHERE account_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    
+    <select id="countAssignmentsByAccountId" resultType="int">
+        SELECT COUNT(a.assignment_id) 
+        FROM t_assignment a
+        INNER JOIN m_employee e ON a.emp_id = e.emp_id
+        WHERE e.account_id = #{id}
+    </select>
+
+    <select id="countAssignmentsByAccountIds" resultType="int">
+        SELECT COUNT(a.assignment_id) 
+        FROM t_assignment a
+        INNER JOIN m_employee e ON a.emp_id = e.emp_id
+        WHERE e.account_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+</mapper>      
