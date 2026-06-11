@@ -213,6 +213,28 @@ public class EmployeeController {
 	}
 	
 	/**
+	 * インポート用のCSVテンプレートをダウンロードする。
+	 *
+	 * @return ダウンロード用のCSVファイルバイナリデータ
+	 */
+	@GetMapping("/import/template")
+	public ResponseEntity<byte[]> downloadTemplate() {
+		String csvContent = "\"社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,\"\n"
+				+ "				+ \"生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,\"\n"
+				+ "				+ \"所属企業,所属部署,役職,電話番号,メールアドレス\n";
+		byte[] csvBytes = csvContent.getBytes(StandardCharsets.UTF_8);
+		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+		byte[] result = new byte[bom.length + csvBytes.length];
+		System.arraycopy(bom, 0, result, 0, bom.length);
+		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=employee_template.csv");
+		headers.add("Content-Type", "text/csv; charset=UTF-8");
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
+	}
+	
+	/**
 	 * 社員データのエクスポート画面を表示する。
 	 *
 	 * @param keyword     現在の検索キーワード（状態保持用）
