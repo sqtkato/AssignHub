@@ -53,19 +53,16 @@ public class EmployeeController {
 	 * @return 一覧画面のテンプレートパス
 	 */
 	@GetMapping
-	public String index(@RequestParam(name = "keyword_name", required = false) String keyword_name,
-			@RequestParam(name = "keyword_company_assign", required = false) String keyword_company_assign,
-			@RequestParam(name = "keyword_company", required = false) String keyword_company,
-			@RequestParam(name = "keyword_engineer_type", required = false) String keyword_engineer_type,
-			@RequestParam(name = "sort", defaultValue = "emp_id") String sort,
-			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-model.addAttribute("employees", employeeService.findAll(keyword_name, keyword_company_assign, keyword_company, keyword_engineer_type, sort, order));
-		model.addAttribute("keyword_name", keyword_name);
-		model.addAttribute("keyword_company_assign", keyword_company_assign);
-		model.addAttribute("keyword_company", keyword_company);
-		model.addAttribute("keyword_engineer_type", keyword_engineer_type);
-		model.addAttribute("currentSort", sort);
-		model.addAttribute("currentOrder", order);
+	public String index(@RequestParam(name = "txt_emp_name", required = false) String txt_emp_name,
+			@RequestParam(name = "txt_emp_assign_company", required = false) String txt_emp_assign_company,
+			@RequestParam(name = "cmb_emp_engineer_type", required = false) String cmb_emp_engineer_type,
+			@RequestParam(name = "txt_emp_company", required = false) String txt_emp_company,
+			Model model) {
+        model.addAttribute("employees", employeeService.findAll(txt_emp_name, txt_emp_assign_company, cmb_emp_engineer_type, txt_emp_company));
+        model.addAttribute("txt_emp_name", txt_emp_name);
+        model.addAttribute("txt_emp_assign_company", txt_emp_assign_company);
+		model.addAttribute("cmb_emp_engineer_type", cmb_emp_engineer_type);
+		model.addAttribute("txt_emp_company", txt_emp_company);
 		return "employee/index";
 	}
 
@@ -111,7 +108,7 @@ model.addAttribute("employees", employeeService.findAll(keyword_name, keyword_co
 	 * @param model 画面描画用のモデル
 	 * @return 社員情報詳細画面のテンプレートパス
 	 */
-	@GetMapping("detail/{id}")
+	@GetMapping("{id}/detail")
 	public String detail(@PathVariable("id") Integer id, Model model) {
 	    // 1. 社員情報を取得（アサイン情報、部署情報も一緒にロード）
 	    Employee emp = employeeService.findById(id);
@@ -173,6 +170,39 @@ model.addAttribute("employees", employeeService.findAll(keyword_name, keyword_co
 
 	
 	/**
+	 * 社員情報を1件論理削除する。
+	 *
+	 * @param id    社員一覧で詳細選択した社員ID
+	 * @param model 画面描画用のモデル
+	 * @return 一覧画面へのリダイレクト
+	 */
+	@PostMapping("/{id}/delete")
+	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+		employeeService.delete(id);
+		attributes.addFlashAttribute("toastMessage", "社員情報を削除しました");
+		return "redirect:/employees";
+	}
+	
+	/**
+	 * 選択された複数の社員情報を一括で物理削除する。
+	 *
+	 * @param ids   削除対象となる社員IDのリスト
+	 * @param attributes リダイレクト時に引き継ぐための属性
+	 * @return 一覧画面へのリダイレクト
+	 */
+	@PostMapping("/bulk-delete")
+	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
+			RedirectAttributes attributes) {
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "削除する対象が選択されていません");
+			return "redirect:/employees";
+		}
+		employeeService.deleteBulk(ids);
+		attributes.addFlashAttribute("toastMessage", ids.size() + "件の社員情報を削除しました");
+		return "redirect:/employees";
+	}
+	
+	/**
 	 * 社員データのインポート画面を表示する。
 	 *
 	 * @return インポート画面のテンプレートパス
@@ -191,7 +221,7 @@ model.addAttribute("employees", employeeService.findAll(keyword_name, keyword_co
 	 */
 	@GetMapping("/export")
 	public String showExport(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
-	    	model.addAttribute("employees", employeeService.findAll(keyword , null , null,null, "emp_id", "asc"));
+	    	model.addAttribute("employees", employeeService.findAll(keyword , null , null,null));
 	    model.addAttribute("count", employeeService.findAll(keyword , null , null,null, "emp_id", "asc").size());
 	    model.addAttribute("keyword", keyword);
 	    return "employee/export";
@@ -204,7 +234,7 @@ model.addAttribute("employees", employeeService.findAll(keyword_name, keyword_co
 	 */
 	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv() {
-		List<Employee> employees = employeeService.findAll(null , null , null,null, "emp_id", "asc");
+		List<Employee> employees = employeeService.findAll(null , null , null,null);
 		StringBuilder csvBuilder = new StringBuilder(
 				"社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,"
 				+ "生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,"
@@ -240,25 +270,6 @@ model.addAttribute("employees", employeeService.findAll(keyword_name, keyword_co
 		headers.add("Content-Disposition", "attachment; filename=employees.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
-	}
-
-	@PostMapping("/{id}/delete")
-	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-		employeeService.delete(id);
-		attributes.addFlashAttribute("toastMessage", "社員情報を削除しました");
-		return "redirect:/employees";
-	}
-	
-	@PostMapping("/bulk-delete")
-	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
-			RedirectAttributes attributes) {
-		if (ids == null || ids.isEmpty()) {
-			attributes.addFlashAttribute("toastError", "削除する対象が選択されていません");
-			return "redirect:/employees";
-		}
-		employeeService.deleteBulk(ids);
-		attributes.addFlashAttribute("toastMessage", ids.size() + "件の社員情報を削除しました");
-		return "redirect:/employees";
 	}
 
 	/**
