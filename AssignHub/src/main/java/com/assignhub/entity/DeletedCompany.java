@@ -1,31 +1,34 @@
-package com.assignhub.entity;
-
 import java.time.LocalDateTime;
 
 import lombok.Data;
 
+/**
+ * 顧客・パートナー企業情報を保持するエンティティクラス。
+ * @version 1.00 2026/06/01
+ * @author SQT）チームC
+ */
 @Data
 public class DeletedCompany {
 	/** 企業ID（主キー） */
-	private Integer companyId;
+	private Integer compId;
 
 	/** 企業名 */
-	private String companyName;
+	private String compName;
 	
 	/** 企業名カナ */
-	private String companyNameKana;
+	private String compNameKana;
 	
 	/** 郵便番号 */
-	private String companyZipCode;
+	private String compZipCode;
 	
 	/** 住所1 */
-	private String companyAddress1;
+	private String compAddress1;
 	
 	/** 住所2 */
-	private String companyAddress2;
+	private String compAddress2;
 	
 	/** TEL */
-	private String companyTel;
+	private String compTel;
 	
 	/** FAX */
 	private String fax;
@@ -34,7 +37,7 @@ public class DeletedCompany {
 	private Integer foundedYear;
 	
 	/** 社員数 */
-	private Integer employeeCount;
+	private Integer empCount;
 	
 	/** 代表者姓 */
 	private String repLastName;
@@ -55,6 +58,6 @@ public class DeletedCompany {
 	private LocalDateTime updatedAt;
 	
 	/** 削除フラグ*/
-	private Integer deleteFlg;
-
+	private Integer deleteFlag;
+	
 }

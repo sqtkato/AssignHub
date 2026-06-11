@@ -12,7 +12,7 @@
         <result property="createdAt" column="created_at" />
         <result property="updatedAt" column="updated_at" />
         <association property="deletedEmployee"
-			javaType="com.example.entity.DeletedAccount">
+			javaType="com.assignhub.entity.DeletedAccount">
 			<id property="empId" column="m_employee_id"/>
 			<result property="empName" column="emp_name" />
 		</association>
