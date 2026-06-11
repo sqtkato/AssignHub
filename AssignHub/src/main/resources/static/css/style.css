@@ -22,19 +22,6 @@ a:hover {
 }
 
 /* =========================================
-   Layout （メインコンテンツ　ヘッダー)
-========================================= */
-
-.page-title-area{
-border-bottom: #004494 2px solid;	
-margin-bottom: 20px;
-}
-
-h2{
-	margin-bottom: 0;	
-}
-
-/* =========================================
    Layout (サイドバーとメインコンテンツ)
 ========================================= */
 .sidebar {
@@ -90,7 +77,7 @@ h2{
 .table {
 	width: 100%;
 	border-collapse: collapse;
-/*	margin-top: 10px;	スクロールきもいことなるので排除中	*/
+/*	margin-top: 10px;*/
 }
 
 .table th,
@@ -106,7 +93,7 @@ h2{
 }
 
 .table-dark th {
-	background-color: #343a40;
+	background-color: #2c3e50;
 	color: white;
 	border-bottom: none;
 }
@@ -154,8 +141,7 @@ h2{
 }
 
 .btn-secondary {
-	font-size: 24px;
-	background-color: #e5e7eb;
+	background-color: #6c757d;
 	color: white;
 }
 
@@ -290,12 +276,7 @@ h2{
 .toast.show {
 	visibility: visible;
 	opacity: 1;
-	bottom: 50px;
-}
-
-/* ★【追加】Java側でエラーが発生した（toastErrorがある）場合の赤色設定 */
-.toast-error {
-	background-color: #dc3545;
+	top: 50px;
 }
 
 /* =========================================
@@ -483,85 +464,30 @@ h2{
 }
 
 /* =========================================
-   アカウント一覧表示
-========================================= */
-/* アカウントID (10%) */
-.table th.acc_id,
-.table td.acc_id {
-	width: 12%;
-}
-
-/* ログインID (25%) ※もし30文字近くなってもここで自動改行されます */
-.table th.acc_logId,
-.table td.acc_logId {
-	width: 28%;
-}
-
-/* 権限 (15%) */
-.table th.acc_per,
-.table td.acc_per {
-	width: 9%;
-}
-
-/* 社員名 (35%) ※文字数が増えやすいので広めに確保 */
-.table th.emp_name,
-.table td.emp_name {
-	width: 35%;
-}
-
-/* 操作ボタン (15%) ※編集・削除ボタンが横並びで収まる幅 */
-.table th.col-action,
-.table td.col-action {
-	width: 15%;
-	text-align: center;
-}
-
-
-/* =========================================
-   検索バーの50%:50%横並び調整
-========================================= */
-/* 検索フォーム全体の枠 */
-.acc .search-form {
-	display: flex;
-	align-items: flex-end; /* ボタンを下揃えにする */
-	gap: 15px;             /* フォームと検索ボタンの間のすき間 */
-	width: 100%;
-}
-
-/* 2つの検索条件を包むグループ */
-.acc .search-form .form-group-search {
-	display: flex;
-	flex: 1;               /* 検索ボタン以外の残りの幅をすべて使う */
-	gap: 20px;             /* キーワード検索と権限の間のすき間 */
-	margin-bottom: 0;      /* 横並びにするため下マージンをリセット */
-}
-
-/* 「キーワード検索」と「権限」それぞれのブロック（ここを50%ずつにする） */
-.search-form .form-group-search .search-item {
-	flex: 1;               /* 均等（50%ずつ）に引き伸ばす */
-	display: flex;
-	flex-direction: column; /* ラベルと入力を上下に並べる */
-}
-
-/* 検索ボタンが上に浮かないように高さをフォームに合わせる */
-.search-form .btn {
-	height: 38px;          /* inputやselectの高さ（パディング込み）に合わせる */
-	box-sizing: border-box;
-}
-
-/* =========================================
    テーブルスクロール
 ========================================= */
 
-.table-scroll{
-	max-height: 340px; 
-	overflow-y: auto;
+.table-scroll {
+	max-height: 400px; 
+	overflow-y: auto;         
 }
 .table thead th {
-  position: sticky;
-  top: 0;
-  z-index: 10;
+	position: sticky;
+	top: 0;
+	z-index: 10;
 }
-.export-table{
-	margin-bottom: 30px;
+
+/*ログインボタン*/
+.btn-logout {
+    display: block;
+    margin: 0 auto;
+}
+
+.btn-logout {
+    display: block;
+    margin: 0 auto;
+}
+
+.submenu li a {
+    padding-left: 40px;
 }

@@ -9,7 +9,6 @@ import java.util.List;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import com.assignhub.entity.Account;
@@ -74,7 +73,7 @@ public class AccountService {
 	        passwordEncoder.encode(account.getPasswordHash())
 	    );
 
-		accountMapper.save(account);
+		
 		
 	}
 	
