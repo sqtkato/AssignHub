@@ -1,7 +1,9 @@
 package com.assignhub.form;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -53,7 +55,7 @@ public class EmployeeForm {
 	private String hireDate;
 	
 	/**勤続年数任意、最大200文字） */
-	@Size(max = 3, message = "勤続年数は3桁以内で入力してください")
+	@Max(value = 3, message = "勤続年数は3桁以内で入力してください")
 	private Integer yearsOfService;
 	
 	/**郵便番号任意、最大200文字） */
@@ -88,13 +90,13 @@ public class EmployeeForm {
 	
 	/**エンジニアタイプ */
 	@NotBlank(message = "エンジニアタイプは必須です")
-	 private String EnginnerType;
+	 private String EngineerType;
 
 	/**所属企業 */
 	@NotBlank(message = "所属企業は必須です")
 	 private String CompanyName;
 	/**ログインID */
-	@NotBlank(message = "ログインIDは必須です")
+	@NotNull(message = "ログインIDは必須です")
 	 private Integer AccountId;
 	
 	/**所属部署任意、最大200文字） */
