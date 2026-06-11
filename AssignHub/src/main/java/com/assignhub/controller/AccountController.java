@@ -26,6 +26,8 @@ import com.assignhub.form.AccountForm;
 import com.assignhub.form.ImportError;
 import com.assignhub.service.AccountService;
 
+import jakarta.servlet.http.HttpSession;
+
 /**
  * 企業管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
  *
