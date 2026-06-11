@@ -48,7 +48,7 @@ public interface DeletedAccountMapper {
 	
 	/**
 	 * 単一物理削除（対象データをデータベースから完全に消去する）
-	 * * @param id アカウントID
+	 * * @param id アカウントI
 	 * @return 影響を受けた行数（成功時は1、失敗時は0）
 	 */
 	int physicalDelete(@Param("id") Integer id);
