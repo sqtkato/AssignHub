@@ -110,10 +110,9 @@
 	<!-- ===== インポート機能用に追加 ===== -->
 
 	<!-- アカウントIDで1件取得（存在チェック用）-->
-		WHERE account_id = #{accountId}
 	<select id="findById" resultMap="accountResultMap">
 		SELECT * FROM m_account 
-        WHERE account_id = #{id}
+        WHERE account_id = #{accountId}
 	</select>
 	
 	<update id="update">
