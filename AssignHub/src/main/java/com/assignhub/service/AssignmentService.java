@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  * このクラスは、AssignmentMapperを介してデータベース操作を行い、アサイン情報の一覧取得、新規登録などの機能を提供します。
  * 
  * @author Team Excel
- * @version 1.00 2024/06/04
+ * @version 1.00 2026/06/10
  */
 @Slf4j
 @Service
@@ -89,7 +89,7 @@ public class AssignmentService {
 		assignmentMapper.deleteBulk(ids);
 	}
 
-	/*インポート時の各行のエラー内容を保持するクラス。*/
+
 	public static class CsvRowError {
 		public int rowNum;
 		public String field;
@@ -102,34 +102,27 @@ public class AssignmentService {
 		}
 	}
 
-	/*インポート処理の全体結果を保持するクラス。*/
+
 	public static class ImportResult {
 		public int successCount = 0;
 		public int errorCount = 0;
 		public List<CsvRowError> errors = new ArrayList<>();
 	}
 
-	//	 契約単価の最大桁数 
 	private static final int UNIT_PRICE_MAX_DIGITS = 10;
-	//	 CSV列数（アサインID,社員ID,社員名,企業名,作成日時,更新日時,開始日,終了日,単価,役割） 
 	private static final int CSV_COLUMN_COUNT = 10;
 
-	/**
-	 * アップロードされたCSVを解析し、バリデーションおよび一括登録・更新を行う。
-	 * 1件でもエラーがあれば全体をロールバックする（all-or-nothing）。
-	 */
 	@Transactional(rollbackFor = Exception.class)
 	public ImportResult importCsv(MultipartFile file) throws Exception {
 		ImportResult result = new ImportResult();
-		// ファイルサイズ
 		if (file.getSize() > 5L * 1024 * 1024) {
 			result.errors.add(new CsvRowError(0, "全体", "ファイルサイズは5MB以内にしてください"));
 			result.errorCount++;
 			return result;
 		}
+		
 		Set<String> seenInCsv = new HashSet<>();
 		int insertPlan = 0;
-
 		CharsetDecoder decoder = StandardCharsets.UTF_8
 				.newDecoder()
 				.onMalformedInput(CodingErrorAction.REPORT)
@@ -140,6 +133,7 @@ public class AssignmentService {
 			String line;
 			int rowNum = 1;
 			boolean isFirstLine = true;
+			
 			while ((line = br.readLine()) != null) {
 				if (isFirstLine) {
 					line = stripBom(line);
@@ -152,7 +146,6 @@ public class AssignmentService {
 					continue;
 				}
 				String[] cols = line.split(",", -1);
-				// 項目数不足
 				if (cols.length < CSV_COLUMN_COUNT) {
 					result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています"));
 					result.errorCount++;
@@ -163,7 +156,6 @@ public class AssignmentService {
 				Assignment asm = new Assignment();
 				LocalDate start = null;
 				LocalDate end = null;
-
 				String sId = cols[0].trim();
 				if (!sId.isEmpty()) {
 					Integer id = parseInteger(sId);
@@ -174,12 +166,10 @@ public class AssignmentService {
 						asm.setAssignmentId(id);
 					}
 				}
-
 				if (cols[2].trim().isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "社員名", "社員名は必須です"));
 					hasError = true;
 				}
-
 				String sEmpId = cols[1].trim();
 				Integer empId = parseInteger(sEmpId);
 				if (empId == null || sEmpId.length() > 5) {
@@ -191,7 +181,6 @@ public class AssignmentService {
 				} else {
 					asm.setEmpId(empId);
 				}
-
 				String companyName = cols[3].trim();
 				if (companyName.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "企業名", "企業名は必須です"));
@@ -205,7 +194,6 @@ public class AssignmentService {
 						asm.setCompanyId(companyId);
 					}
 				}
-
 				String sStart = cols[6].trim();
 				if (sStart.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "契約開始日", "契約開始日は必須です"));
@@ -219,7 +207,6 @@ public class AssignmentService {
 						asm.setContractStartDate(start);
 					}
 				}
-
 				String sEnd = cols[7].trim();
 				if (!sEnd.isEmpty() && !"ー".equals(sEnd) && !"-".equals(sEnd)) {
 					end = parseDate(sEnd);
@@ -230,12 +217,10 @@ public class AssignmentService {
 						asm.setContractEndDate(end);
 					}
 				}
-
 				if (start != null && end != null && start.isAfter(end)) {
 					result.errors.add(new CsvRowError(rowNum, "契約終了日", "契約開始日より前の日付は入力できません"));
 					hasError = true;
 				}
-
 				String sPrice = cols[8].trim();
 				if (sPrice.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "契約単価", "契約単価は必須です"));
@@ -255,7 +240,6 @@ public class AssignmentService {
 						asm.setUnitPrice(price);
 					}
 				}
-
 				String role = cols[9].trim();
 				if (role.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "役割", "役割は必須です"));
@@ -269,7 +253,6 @@ public class AssignmentService {
 						asm.setRoleId(roleId);
 					}
 				}
-
 				if (!hasError) {
 					String key = asm.getEmpId() + "|" + asm.getCompanyId() + "|"
 							+ asm.getContractStartDate() + "|" + asm.getContractEndDate();
@@ -278,12 +261,10 @@ public class AssignmentService {
 						hasError = true;
 					}
 				}
-
 				if (!hasError && existsDuplicate(asm)) {
 					result.errors.add(new CsvRowError(rowNum, "-", "既に同じ内容が登録されています"));
 					hasError = true;
 				}
-
 				if (!hasError) {
 					try {
 						if (asm.getAssignmentId() == null || asm.getAssignmentId() == 0) {
@@ -301,12 +282,10 @@ public class AssignmentService {
 				}
 				rowNum++;
 			}
-
 			if (result.errorCount == 0 && assignmentMapper.countActive() + insertPlan > 500) {
 				result.errors.add(new CsvRowError(0, "-", "登録後の件数が上限に達しています。アサインの登録上限は500件です"));
 				result.errorCount++;
 			}
-			// エラーが1件でもあればロールバック
 			if (result.errorCount > 0) {
 				org.springframework.transaction.interceptor.TransactionAspectSupport.currentTransactionStatus()
 						.setRollbackOnly();
@@ -315,14 +294,14 @@ public class AssignmentService {
 		}
 		return result;
 	}
-
+	
 	private String stripBom(String s) {
 		if (s != null && !s.isEmpty() && s.charAt(0) == '\uFEFF') {
 			return s.substring(1);
 		}
 		return s;
 	}
-
+	
 	private Integer parseInteger(String s) {
 		if (s == null || !s.matches("\\d+")) {
 			return null;
@@ -333,7 +312,7 @@ public class AssignmentService {
 			return null;
 		}
 	}
-
+	
 	private LocalDate parseDate(String s) {
 		for (String p : new String[] { "yyyy/MM/dd", "yyyy-MM-dd" }) {
 			try {
