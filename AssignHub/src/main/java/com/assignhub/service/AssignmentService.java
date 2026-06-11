@@ -117,10 +117,6 @@ public class AssignmentService {
 	/**
 	 * アップロードされたCSVを解析し、バリデーションおよび一括登録・更新を行う。
 	 * 1件でもエラーがあれば全体をロールバックする（all-or-nothing）。
-	 *
-	 * CSV列: [0]アサインID [1]社員ID [2]社員名 [3]アサイン先企業名 [4]作成日時 [5]更新日時
-	 *        [6]契約開始日 [7]契約終了日 [8]契約単価 [9]役割
-	 * ※[4][5]はインポートでは使用せず、DB側でNOW()を設定する。
 	 */
 	@Transactional(rollbackFor = Exception.class)
 	public ImportResult importCsv(MultipartFile file) throws Exception {
