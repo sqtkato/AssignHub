@@ -137,14 +137,14 @@ public class DeletedCompanyController {
 		}
 
 		List<DeletedCompany> delCompanies = deletedCompanyService.deletedfindByIds(ids);
-		StringBuilder csvBuilder = new StringBuilder("企業ID,企業名,電話番号,住所,削除フラグ,作成日時,更新日時\n");
+		StringBuilder csvBuilder = new StringBuilder("作成日時,更新日時,企業ID,企業名,企業名カナ,設立年度,社員数,郵便番号,住所1,住所2,TEL,FAX,代表者 姓,代表者 名,代表者 姓：カナ,代表者 名：カナ\n");
 
 		for (DeletedCompany comp : delCompanies) {
 			csvBuilder.append(comp.getCompId()).append(",")
 					.append(comp.getCompName() != null ? comp.getCompName() : "").append(",")
 					.append(comp.getCompTel() != null ? comp.getCompTel() : "").append(",")
 					.append(comp.getCompAddress1() != null ? comp.getCompAddress1() : "").append(",")
-					.append(comp.getDeleteFlag()).append(",")
+					.append(comp.getDeleteFlg()).append(",")
 					.append(comp.getCreatedAt() != null ? comp.getCreatedAt() : "").append(",")
 					.append(comp.getUpdatedAt() != null ? comp.getUpdatedAt() : "").append("\n");
 		}

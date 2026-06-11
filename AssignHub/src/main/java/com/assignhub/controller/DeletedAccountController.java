@@ -133,7 +133,7 @@ public class DeletedAccountController {
 	
 //エクスポートのダウンロード処理
 	@GetMapping("/export/download")
-	public Object downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
+	public String downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
 			RedirectAttributes attributes) { 
 	
 		if (ids == null || ids.isEmpty()) {
