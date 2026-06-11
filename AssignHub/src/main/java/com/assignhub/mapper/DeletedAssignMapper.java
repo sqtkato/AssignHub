@@ -24,7 +24,7 @@ public interface DeletedAssignMapper {
             @Param("txtContractStartDate") String txtContractStartDate,
             @Param("txtContractEndDate") String txtContractEndDate);
 	
-List<DeletedAssign> findallByIds(@Param("ids") List<Integer> ids);
+List<DeletedAssign> findAllByIds(@Param("ids") List<Integer> ids);
 	
 	/**
 	 * 単一復元（対象データの delete_flg を 0 に更新する）
