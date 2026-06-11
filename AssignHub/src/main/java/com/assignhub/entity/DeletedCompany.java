@@ -1,3 +1,4 @@
+package com.assignhub.entity;
 import java.time.LocalDateTime;
 
 import lombok.Data;

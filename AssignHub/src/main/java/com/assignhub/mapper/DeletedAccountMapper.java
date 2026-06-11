@@ -80,5 +80,4 @@ public interface DeletedAccountMapper {
 	 */
 	int countAssignmentsByAccountIds(@Param("ids") List<Integer> ids);
 
-
 }
