@@ -44,9 +44,9 @@
 				<p class="export-note">※出力される項目：アサインID,社員ID,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割</p>
 			</div>
 		</div>
-		<div class="action-area">
-			<a th:href="@{/assignments/export/download(ids=${ids})}" class="btn btn-primary btn-wide">エクスポート</a>
-			<a th:href="@{/assignments}" class="btn btn-secondary btn-wide">戻る</a>
+		<div class="action-area export_action-area">
+			<a th:href="@{/assignments/export/download(ids=${ids})}" class="btn btn-primary btn-wide btn_assign_export">エクスポート</a>
+			<a th:href="@{/assignments}" class="btn btn-secondary btn-wide btn_assign_back">戻る</a>
 		</div>
 	</div>
 </body>
