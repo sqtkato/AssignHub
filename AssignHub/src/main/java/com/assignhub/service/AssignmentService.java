@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.assignhub.entity.Assignment;
-import com.assignhub.entity.SelectOption;
 import com.assignhub.mapper.AssignmentMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,346 +33,339 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class AssignmentService {
 	private final AssignmentMapper assignmentMapper;
-	
+
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param assignmentMapper アサイン情報に対するマッパー
 	 */
-    public AssignmentService(AssignmentMapper assignmentMapper) {
-        this.assignmentMapper = assignmentMapper;
-    }
+	public AssignmentService(AssignmentMapper assignmentMapper) {
+		this.assignmentMapper = assignmentMapper;
+	}
 
-    /**
+	/**
 	 * アサイン情報の一覧を取得する。
 	 *
 	 * @param txtEmpName 社員名の検索キーワード（nullまたは空文字の場合は全件取得）
 	 * @param txtCompanyName 企業名の検索キーワード（nullまたは空文字の場合は全件取得）
 	 * @return アサイン情報のリスト
 	 */
-    public List<Assignment> findAll(String txtEmpName, String txtAssignName, String txtCompanyName, String txtContractStartDate, String txtContractEndDate) {
-        return assignmentMapper.findAll(txtEmpName, txtAssignName, txtCompanyName, txtContractStartDate, txtContractEndDate);
-    }
+	public List<Assignment> findAll(String txtEmpName, String txtAssignName, String txtCompanyName,
+			String txtContractStartDate, String txtContractEndDate) {
+		return assignmentMapper.findAll(txtEmpName, txtAssignName, txtCompanyName, txtContractStartDate,
+				txtContractEndDate);
+	}
 
-    public List<SelectOption> findEmployeeOptions() {
-        return assignmentMapper.findEmployeeOptions();
-    }
-
-    public List<SelectOption> findCompanyOptions() {
-        return assignmentMapper.findCompanyOptions();
-    }
-
-    public List<SelectOption> findRoleOptions() {
-        return assignmentMapper.findRoleOptions();
-    }
-    
-    /**
+	/**
 	 * アサイン情報をIDで取得する。
 	 *
 	 * @param id アサイン情報のID
 	 * @return IDに対応するアサイン情報、存在しない場合はnull
 	 */
-    public Assignment findById(Integer id) {
-        return assignmentMapper.findById(id);
-    }
-    
-    /**
+	public Assignment findById(Integer id) {
+		return assignmentMapper.findById(id);
+	}
+
+	/**
 	 * アサイン情報を保存する。
 	 * IDが存在しない場合（nullまたは0）は新規登録（INSERT）、存在する場合は更新（UPDATE）を行う。
 	 *
 	 * @param assignment 登録または更新するアサインエンティティ
 	 */
-    @Transactional
-    public void save(Assignment assignment) {
-    	if (assignment.getAssignmentId() == null || assignment.getAssignmentId() == 0) {
-    		assignmentMapper.insert(assignment);
+	@Transactional
+	public void save(Assignment assignment) {
+		if (assignment.getAssignmentId() == null || assignment.getAssignmentId() == 0) {
+			assignmentMapper.insert(assignment);
 		} else {
 			assignmentMapper.update(assignment);
 		}
-    }
-    
-    public void deleteById(Integer id) {
+	}
+
+	public void deleteById(Integer id) {
 		assignmentMapper.delete(id);
 	}
-    
-    public void deleteBulk(List<Integer> ids) {
-    	assignmentMapper.deleteBulk(ids);
-    }
-    
-    /** インポート時の各行のエラー内容を保持するクラス。 */
-    public static class CsvRowError {
-        public int rowNum;
-        public String field;
-        public String message;
-        public CsvRowError(int rowNum, String field, String message) {
-            this.rowNum = rowNum;
-            this.field = field;
-            this.message = message;
-        }
-    }
-    /** インポート処理の全体結果を保持するクラス。 */
-    public static class ImportResult {
-        public int successCount = 0;
-        public int errorCount = 0;
-        public List<CsvRowError> errors = new ArrayList<>();
-    }
-    /** 契約単価の最大桁数 */
-    private static final int UNIT_PRICE_MAX_DIGITS = 10;
-    /** CSV列数（アサインID,社員ID,社員名,企業名,作成日時,更新日時,開始日,終了日,単価,役割） */
-    private static final int CSV_COLUMN_COUNT = 10;
-    /**
-     * アップロードされたCSVを解析し、バリデーションおよび一括登録・更新を行う。
-     * 1件でもエラーがあれば全体をロールバックする（all-or-nothing）。
-     *
-     * CSV列: [0]アサインID [1]社員ID [2]社員名 [3]アサイン先企業名 [4]作成日時 [5]更新日時
-     *        [6]契約開始日 [7]契約終了日 [8]契約単価 [9]役割
-     * ※[4][5]はインポートでは使用せず、DB側でNOW()を設定する。
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public ImportResult importCsv(MultipartFile file) throws Exception {
-        ImportResult result = new ImportResult();
-        // ファイルサイズ
-        if (file.getSize() > 5L * 1024 * 1024) {
-            result.errors.add(new CsvRowError(0, "全体", "ファイルサイズは5MB以内にしてください"));
-            result.errorCount++;
-            return result;
-        }
-        Set<String> seenInCsv = new HashSet<>();
-        int insertPlan = 0;
-        
-        CharsetDecoder decoder = StandardCharsets.UTF_8
-                .newDecoder()
-                .onMalformedInput(CodingErrorAction.REPORT)
-                .onUnmappableCharacter(CodingErrorAction.REPORT);
-        
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(file.getInputStream(), decoder)))  {
-            String line;
-            int rowNum = 1;
-            boolean isFirstLine = true;
-            while ((line = br.readLine()) != null) {
-                if (isFirstLine) {
-                    line = stripBom(line);
-                    isFirstLine = false;
-                    rowNum++;
-                    continue;
-                }
-                if (line.trim().isEmpty()) {
-                    rowNum++;
-                    continue;
-                }
-                String[] cols = line.split(",", -1);
-                // 項目数不足
-                if (cols.length < CSV_COLUMN_COUNT) {
-                    result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています"));
-                    result.errorCount++;
-                    rowNum++;
-                    continue;
-                }
-                boolean hasError = false;
-                Assignment asm = new Assignment();
-                LocalDate start = null;
-                LocalDate end = null;
-                
-                String sId = cols[0].trim();
-                if (!sId.isEmpty()) {
-                    Integer id = parseInteger(sId);
-                    if (id == null) {
-                        result.errors.add(new CsvRowError(rowNum, "アサインID", "数値以外の文字が含まれています"));
-                        hasError = true;
-                    } else {
-                        asm.setAssignmentId(id);
-                    }
-                }
-                
-                if (cols[2].trim().isEmpty()) {
-                    result.errors.add(new CsvRowError(rowNum, "社員名", "社員名は必須です"));
-                    hasError = true;
-                }
-                
-                String sEmpId = cols[1].trim();
-                Integer empId = parseInteger(sEmpId);
-                if (empId == null || sEmpId.length() > 5) {
-                    result.errors.add(new CsvRowError(rowNum, "社員ID", "社員IDの形式が正しくありません"));
-                    hasError = true;
-                } else if (assignmentMapper.existsEmployee(empId) == 0) {
-                    result.errors.add(new CsvRowError(rowNum, "社員ID", "指定された社員IDは存在しません"));
-                    hasError = true;
-                } else {
-                    asm.setEmpId(empId);
-                }
-                
-                String companyName = cols[3].trim();
-                if (companyName.isEmpty()) {
-                    result.errors.add(new CsvRowError(rowNum, "企業名", "企業名は必須です"));
-                    hasError = true;
-                } else {
-                    Integer companyId = assignmentMapper.findCompanyIdByName(companyName);
-                    if (companyId == null) {
-                        result.errors.add(new CsvRowError(rowNum, "企業名", "指定された企業は存在しません"));
-                        hasError = true;
-                    } else {
-                        asm.setCompanyId(companyId);
-                    }
-                }
-                
-                String sStart = cols[6].trim();
-                if (sStart.isEmpty()) {
-                    result.errors.add(new CsvRowError(rowNum, "契約開始日", "契約開始日は必須です"));
-                    hasError = true;
-                } else {
-                    start = parseDate(sStart);
-                    if (start == null) {
-                        result.errors.add(new CsvRowError(rowNum, "契約開始日/契約終了日", "日付の形式が正しくありません"));
-                        hasError = true;
-                    } else {
-                        asm.setContractStartDate(start);
-                    }
-                }
-                
-                String sEnd = cols[7].trim();
-                if (!sEnd.isEmpty() && !"ー".equals(sEnd) && !"-".equals(sEnd)) {
-                    end = parseDate(sEnd);
-                    if (end == null) {
-                        result.errors.add(new CsvRowError(rowNum, "契約開始日/契約終了日", "日付の形式が正しくありません"));
-                        hasError = true;
-                    } else {
-                        asm.setContractEndDate(end);
-                    }
-                }
-                
-                if (start != null && end != null && start.isAfter(end)) {
-                    result.errors.add(new CsvRowError(rowNum, "契約終了日", "契約開始日より前の日付は入力できません"));
-                    hasError = true;
-                }
-                
-                String sPrice = cols[8].trim();
-                if (sPrice.isEmpty()) {
-                    result.errors.add(new CsvRowError(rowNum, "契約単価", "契約単価は必須です"));
-                    hasError = true;
-                } else if (!sPrice.matches("\\d+")) {
-                    result.errors.add(new CsvRowError(rowNum, "契約単価", "半角数字のみで入力してください"));
-                    hasError = true;
-                } else if (sPrice.length() > UNIT_PRICE_MAX_DIGITS) {
-                    result.errors.add(new CsvRowError(rowNum, "契約単価", "契約単価は10文字以内で入力してください"));
-                    hasError = true;
-                } else {
-                    BigDecimal price = new BigDecimal(sPrice);
-                    if (price.compareTo(BigDecimal.ZERO) <= 0) {
-                        result.errors.add(new CsvRowError(rowNum, "契約単価", "この値は入力できません"));
-                        hasError = true;
-                    } else {
-                        asm.setUnitPrice(price);
-                    }
-                }
-                
-                String role = cols[9].trim();
-                if (role.isEmpty()) {
-                    result.errors.add(new CsvRowError(rowNum, "役割", "役割は必須です"));
-                    hasError = true;
-                } else {
-                    Integer roleId = assignmentMapper.findRoleIdByName(role);
-                    if (roleId == null) {
-                        result.errors.add(new CsvRowError(rowNum, "役割", "指定された役割は存在しません"));
-                        hasError = true;
-                    } else {
-                        asm.setRoleId(roleId);
-                    }
-                }
-                
-                if (!hasError) {
-                    String key = asm.getEmpId() + "|" + asm.getCompanyId() + "|"
-                            + asm.getContractStartDate() + "|" + asm.getContractEndDate();
-                    if (!seenInCsv.add(key)) {
-                        result.errors.add(new CsvRowError(rowNum, "-", "CSV内で重複するアサイン履歴があります"));
-                        hasError = true;
-                    }
-                }
-                
-                if (!hasError && existsDuplicate(asm)) {
-                    result.errors.add(new CsvRowError(rowNum, "-", "既に同じ内容が登録されています"));
-                    hasError = true;
-                }
-                
-                if (!hasError) {
-                    try {
-                        if (asm.getAssignmentId() == null || asm.getAssignmentId() == 0) {
-                            insertPlan++;
-                        }
-                        save(asm);
-                        result.successCount++;
-                    } catch (Exception e) {
-                        log.error("CSVインポート中エラー（{}行目）: データの保存に失敗しました。", rowNum, e);
-                        result.errors.add(new CsvRowError(rowNum, "DB登録", "保存に失敗しました"));
-                        result.errorCount++;
-                    }
-                } else {
-                    result.errorCount++;
-                }
-                rowNum++;
-            }
-            
-            if (result.errorCount == 0 && assignmentMapper.countActive() + insertPlan > 500) {
-                result.errors.add(new CsvRowError(0, "-", "登録後の件数が上限に達しています。アサインの登録上限は500件です"));
-                result.errorCount++;
-            }
-            // エラーが1件でもあればロールバック
-            if (result.errorCount > 0) {
-                org.springframework.transaction.interceptor.TransactionAspectSupport.currentTransactionStatus()
-                        .setRollbackOnly();
-                result.successCount = 0;
-            }
-        }
-        return result;
-    }
-    
-    private String stripBom(String s) {
-        if (s != null && !s.isEmpty() && s.charAt(0) == '\uFEFF') {
-            return s.substring(1);
-        }
-        return s;
-    }
-    
-    private Integer parseInteger(String s) {
-        if (s == null || !s.matches("\\d+")) {
-            return null;
-        }
-        try {
-            return Integer.valueOf(s);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
-    
-    private LocalDate parseDate(String s) {
-        for (String p : new String[]{"yyyy/MM/dd", "yyyy-MM-dd"}) {
-            try {
-                return LocalDate.parse(s, DateTimeFormatter.ofPattern(p));
-            } catch (Exception e) {
-            
-            }
-        }
-        return null;
-    }
-    
-    /**
-     * アサイン情報の重複をチェックする。
-     * @param assignment チェック対象のアサインエンティティ
-     * @return
-     */
-	public boolean existsDuplicate(Assignment assignment) {
-    	Assignment duplicate = assignmentMapper.findDuplicate(
-            assignment.getAssignmentId(),
-            assignment.getEmpId(),
-            assignment.getCompanyId(),
-            assignment.getContractStartDate(),
-            assignment.getContractEndDate()
-    	);
 
-    	return duplicate != null;
+	public void deleteBulk(List<Integer> ids) {
+		assignmentMapper.deleteBulk(ids);
+	}
+
+	/*インポート時の各行のエラー内容を保持するクラス。*/
+	public static class CsvRowError {
+		public int rowNum;
+		public String field;
+		public String message;
+
+		public CsvRowError(int rowNum, String field, String message) {
+			this.rowNum = rowNum;
+			this.field = field;
+			this.message = message;
+		}
+	}
+
+	/*インポート処理の全体結果を保持するクラス。*/
+	public static class ImportResult {
+		public int successCount = 0;
+		public int errorCount = 0;
+		public List<CsvRowError> errors = new ArrayList<>();
+	}
+
+	//	 契約単価の最大桁数 
+	private static final int UNIT_PRICE_MAX_DIGITS = 10;
+	//	 CSV列数（アサインID,社員ID,社員名,企業名,作成日時,更新日時,開始日,終了日,単価,役割） 
+	private static final int CSV_COLUMN_COUNT = 10;
+
+	/**
+	 * アップロードされたCSVを解析し、バリデーションおよび一括登録・更新を行う。
+	 * 1件でもエラーがあれば全体をロールバックする（all-or-nothing）。
+	 *
+	 * CSV列: [0]アサインID [1]社員ID [2]社員名 [3]アサイン先企業名 [4]作成日時 [5]更新日時
+	 *        [6]契約開始日 [7]契約終了日 [8]契約単価 [9]役割
+	 * ※[4][5]はインポートでは使用せず、DB側でNOW()を設定する。
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public ImportResult importCsv(MultipartFile file) throws Exception {
+		ImportResult result = new ImportResult();
+		// ファイルサイズ
+		if (file.getSize() > 5L * 1024 * 1024) {
+			result.errors.add(new CsvRowError(0, "全体", "ファイルサイズは5MB以内にしてください"));
+			result.errorCount++;
+			return result;
+		}
+		Set<String> seenInCsv = new HashSet<>();
+		int insertPlan = 0;
+
+		CharsetDecoder decoder = StandardCharsets.UTF_8
+				.newDecoder()
+				.onMalformedInput(CodingErrorAction.REPORT)
+				.onUnmappableCharacter(CodingErrorAction.REPORT);
+
+		try (BufferedReader br = new BufferedReader(
+				new InputStreamReader(file.getInputStream(), decoder))) {
+			String line;
+			int rowNum = 1;
+			boolean isFirstLine = true;
+			while ((line = br.readLine()) != null) {
+				if (isFirstLine) {
+					line = stripBom(line);
+					isFirstLine = false;
+					rowNum++;
+					continue;
+				}
+				if (line.trim().isEmpty()) {
+					rowNum++;
+					continue;
+				}
+				String[] cols = line.split(",", -1);
+				// 項目数不足
+				if (cols.length < CSV_COLUMN_COUNT) {
+					result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています"));
+					result.errorCount++;
+					rowNum++;
+					continue;
+				}
+				boolean hasError = false;
+				Assignment asm = new Assignment();
+				LocalDate start = null;
+				LocalDate end = null;
+
+				String sId = cols[0].trim();
+				if (!sId.isEmpty()) {
+					Integer id = parseInteger(sId);
+					if (id == null) {
+						result.errors.add(new CsvRowError(rowNum, "アサインID", "数値以外の文字が含まれています"));
+						hasError = true;
+					} else {
+						asm.setAssignmentId(id);
+					}
+				}
+
+				if (cols[2].trim().isEmpty()) {
+					result.errors.add(new CsvRowError(rowNum, "社員名", "社員名は必須です"));
+					hasError = true;
+				}
+
+				String sEmpId = cols[1].trim();
+				Integer empId = parseInteger(sEmpId);
+				if (empId == null || sEmpId.length() > 5) {
+					result.errors.add(new CsvRowError(rowNum, "社員ID", "社員IDの形式が正しくありません"));
+					hasError = true;
+				} else if (assignmentMapper.existsEmployee(empId) == 0) {
+					result.errors.add(new CsvRowError(rowNum, "社員ID", "指定された社員IDは存在しません"));
+					hasError = true;
+				} else {
+					asm.setEmpId(empId);
+				}
+
+				String companyName = cols[3].trim();
+				if (companyName.isEmpty()) {
+					result.errors.add(new CsvRowError(rowNum, "企業名", "企業名は必須です"));
+					hasError = true;
+				} else {
+					Integer companyId = assignmentMapper.findCompanyIdByName(companyName);
+					if (companyId == null) {
+						result.errors.add(new CsvRowError(rowNum, "企業名", "指定された企業は存在しません"));
+						hasError = true;
+					} else {
+						asm.setCompanyId(companyId);
+					}
+				}
+
+				String sStart = cols[6].trim();
+				if (sStart.isEmpty()) {
+					result.errors.add(new CsvRowError(rowNum, "契約開始日", "契約開始日は必須です"));
+					hasError = true;
+				} else {
+					start = parseDate(sStart);
+					if (start == null) {
+						result.errors.add(new CsvRowError(rowNum, "契約開始日/契約終了日", "日付の形式が正しくありません"));
+						hasError = true;
+					} else {
+						asm.setContractStartDate(start);
+					}
+				}
+
+				String sEnd = cols[7].trim();
+				if (!sEnd.isEmpty() && !"ー".equals(sEnd) && !"-".equals(sEnd)) {
+					end = parseDate(sEnd);
+					if (end == null) {
+						result.errors.add(new CsvRowError(rowNum, "契約開始日/契約終了日", "日付の形式が正しくありません"));
+						hasError = true;
+					} else {
+						asm.setContractEndDate(end);
+					}
+				}
+
+				if (start != null && end != null && start.isAfter(end)) {
+					result.errors.add(new CsvRowError(rowNum, "契約終了日", "契約開始日より前の日付は入力できません"));
+					hasError = true;
+				}
+
+				String sPrice = cols[8].trim();
+				if (sPrice.isEmpty()) {
+					result.errors.add(new CsvRowError(rowNum, "契約単価", "契約単価は必須です"));
+					hasError = true;
+				} else if (!sPrice.matches("\\d+")) {
+					result.errors.add(new CsvRowError(rowNum, "契約単価", "半角数字のみで入力してください"));
+					hasError = true;
+				} else if (sPrice.length() > UNIT_PRICE_MAX_DIGITS) {
+					result.errors.add(new CsvRowError(rowNum, "契約単価", "契約単価は10文字以内で入力してください"));
+					hasError = true;
+				} else {
+					BigDecimal price = new BigDecimal(sPrice);
+					if (price.compareTo(BigDecimal.ZERO) <= 0) {
+						result.errors.add(new CsvRowError(rowNum, "契約単価", "この値は入力できません"));
+						hasError = true;
+					} else {
+						asm.setUnitPrice(price);
+					}
+				}
+
+				String role = cols[9].trim();
+				if (role.isEmpty()) {
+					result.errors.add(new CsvRowError(rowNum, "役割", "役割は必須です"));
+					hasError = true;
+				} else {
+					Integer roleId = assignmentMapper.findRoleIdByName(role);
+					if (roleId == null) {
+						result.errors.add(new CsvRowError(rowNum, "役割", "指定された役割は存在しません"));
+						hasError = true;
+					} else {
+						asm.setRoleId(roleId);
+					}
+				}
+
+				if (!hasError) {
+					String key = asm.getEmpId() + "|" + asm.getCompanyId() + "|"
+							+ asm.getContractStartDate() + "|" + asm.getContractEndDate();
+					if (!seenInCsv.add(key)) {
+						result.errors.add(new CsvRowError(rowNum, "-", "CSV内で重複するアサイン履歴があります"));
+						hasError = true;
+					}
+				}
+
+				if (!hasError && existsDuplicate(asm)) {
+					result.errors.add(new CsvRowError(rowNum, "-", "既に同じ内容が登録されています"));
+					hasError = true;
+				}
+
+				if (!hasError) {
+					try {
+						if (asm.getAssignmentId() == null || asm.getAssignmentId() == 0) {
+							insertPlan++;
+						}
+						save(asm);
+						result.successCount++;
+					} catch (Exception e) {
+						log.error("CSVインポート中エラー（{}行目）: データの保存に失敗しました。", rowNum, e);
+						result.errors.add(new CsvRowError(rowNum, "DB登録", "保存に失敗しました"));
+						result.errorCount++;
+					}
+				} else {
+					result.errorCount++;
+				}
+				rowNum++;
+			}
+
+			if (result.errorCount == 0 && assignmentMapper.countActive() + insertPlan > 500) {
+				result.errors.add(new CsvRowError(0, "-", "登録後の件数が上限に達しています。アサインの登録上限は500件です"));
+				result.errorCount++;
+			}
+			// エラーが1件でもあればロールバック
+			if (result.errorCount > 0) {
+				org.springframework.transaction.interceptor.TransactionAspectSupport.currentTransactionStatus()
+						.setRollbackOnly();
+				result.successCount = 0;
+			}
+		}
+		return result;
+	}
+
+	private String stripBom(String s) {
+		if (s != null && !s.isEmpty() && s.charAt(0) == '\uFEFF') {
+			return s.substring(1);
+		}
+		return s;
+	}
+
+	private Integer parseInteger(String s) {
+		if (s == null || !s.matches("\\d+")) {
+			return null;
+		}
+		try {
+			return Integer.valueOf(s);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+
+	private LocalDate parseDate(String s) {
+		for (String p : new String[] { "yyyy/MM/dd", "yyyy-MM-dd" }) {
+			try {
+				return LocalDate.parse(s, DateTimeFormatter.ofPattern(p));
+			} catch (Exception e) {
+
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * アサイン情報の重複をチェックする。
+	 * @param assignment チェック対象のアサインエンティティ
+	 * @return
+	 */
+	public boolean existsDuplicate(Assignment assignment) {
+		Assignment duplicate = assignmentMapper.findDuplicate(
+				assignment.getAssignmentId(),
+				assignment.getEmpId(),
+				assignment.getCompanyId(),
+				assignment.getContractStartDate(),
+				assignment.getContractEndDate());
+
+		return duplicate != null;
 	}
 
 	public boolean isMaxCount() {
-	    return assignmentMapper.countActive() >= 500;
+		return assignmentMapper.countActive() >= 500;
 	}
 }
