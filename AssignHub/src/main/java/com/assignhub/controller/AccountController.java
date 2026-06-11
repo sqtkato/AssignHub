@@ -3,6 +3,8 @@ package com.assignhub.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,24 +45,27 @@ public class AccountController {
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
 			@RequestParam(name = "sort", defaultValue = "login_id") String sort,
 			@RequestParam(name = "order", defaultValue = "asc") String order, Model model,
-			@RequestParam(name = "permission", required = false) Integer permission) {
+			@RequestParam(name = "permission", required = false) Integer permission,HttpSession session) {
 		model.addAttribute("accounts", accountService.findAll(keyword, sort, order, permission));
 		model.addAttribute("keyward", keyword);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
+        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
+    
 		return "account/index";
 	}
-
+	
 	@GetMapping("/new")
-	public String newAccount(Model model) {
+	public String newAccount(Model model, HttpSession session) {
+        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
 		model.addAttribute("account", new AccountForm());
 		return "account/create";
 	}
 
 	@PostMapping("/create")
 	public String create(@Validated @ModelAttribute("account") AccountForm form,
-			BindingResult result, Model model) {
-
+			BindingResult result, Model model, HttpSession session) {
+        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
 		if (result.hasErrors()) {
 			return "account/create";
 		}
@@ -71,12 +76,16 @@ public class AccountController {
 		Account account = new Account();
 		copyFormToEntity(form, account);
 		accountService.save(account);
+
 		return "redirect:/accounts";
+
 	}
 
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
-			Model model, RedirectAttributes attributes) {
+			Model model, HttpSession session, RedirectAttributes attributes) {
+		
+        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
 			return "redirect:/accounts";
@@ -88,7 +97,14 @@ public class AccountController {
 		return "account/export";
 	}
 
-	@GetMapping("/export/download")
+	/**
+	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
+	 *
+	 * @param keyword 検索キーワード
+	 * @param deptId  絞り込み部署ID
+	 * @return ダウンロード用のCSVファイルバイナリデータ
+	 */
+	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Account> accounts = accountService.findByIds(ids);
@@ -105,13 +121,15 @@ public class AccountController {
 		System.arraycopy(bom, 0, result, 0, bom.length);
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment; filename=employees.csv");
+		headers.add("Content-Disposition", "attachment; filename=account.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
 	@GetMapping("/import")
-	public String showImport() {
+
+	public String importPage(HttpSession session,Model model) {
+        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
 		return "account/import";
 	}
 
@@ -157,8 +175,10 @@ public class AccountController {
 
 	@GetMapping("/import/template")
 	public ResponseEntity<byte[]> downloadTemplate() {
-		String csvContent = "アカウントID(新規は空欄),ログインID,パスワード\n";
-		byte[] csvBytes = csvContent.getBytes(StandardCharsets.UTF_8);
+		String csv = "アカウントID,ログインID,パスワード\n"
+				   + ",user001,pass1234\n";
+
+		byte[] csvBytes = csv.getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
 		byte[] result = new byte[bom.length + csvBytes.length];
 		System.arraycopy(bom, 0, result, 0, bom.length);
@@ -174,6 +194,15 @@ public class AccountController {
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		accountService.delete(id);
 		return "redirect:/accounts";
+
+	
+	/**
+	 * 選択された複数の社員情報を一括で物理削除する。
+	 *
+	 * @param ids        削除対象となるアカウントIDのリスト
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @return 一覧画面へのリダイレクト
+	 */
 	}
 
 	@PostMapping("/bulk-delete")
@@ -189,8 +218,11 @@ public class AccountController {
 	}
 
 	@GetMapping("/{id}/edit")
-	public String edit(@PathVariable("id") Integer id, Model model) {
+	public String edit(@PathVariable("id") Integer id, HttpSession session, Model model) {
 		if (!model.containsAttribute("accountForm")) {
+
+	        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
+
 			Account acc = accountService.findById(id);
 			AccountForm form = new AccountForm();
 			form.setAccountId(acc.getAccountId());
@@ -207,10 +239,25 @@ public class AccountController {
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result, RedirectAttributes attributes, Model model) {
 
+
+		if (result.hasErrors()) {
+			return "account/edit";
+		}
+		
+		if (accountService.existsByLoginIdUpdate(accountForm.getLoginId(), id)) {
+			model.addAttribute("loginId", "このログインIDは既に使用されています");
+			return "account/edit";
+		}
+	
+
 		Account acc = new Account();
-		acc.setAccountId(id);
-		copyFormToEntity(accountForm, acc);
-		accountService.update(acc);
+		// :bulb: 画面から届いたデータを、DBに送るオブジェクトにしっかりセットする！
+	    acc.setLoginId(accountForm.getLoginId());
+	    acc.setPermission(accountForm.getPermission());
+	    // パスワードの入力がある場合のみハッシュ化してセット（空なら変更しない等の制御は必要に応じて）
+	    acc.setPasswordHash(accountForm.getPasswordHash());
+	    acc.setAccountId(id);
+		accountService.save(acc);
 		return "redirect:/accounts";
 	}
 
@@ -220,4 +267,6 @@ public class AccountController {
 		e.setPasswordHash(f.getPasswordHash());
 		e.setPermission(f.getPermission());
 	}
+
 }
+

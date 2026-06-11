@@ -1,8 +1,5 @@
 package com.assignhub.controller;
 
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.assignhub.entity.Account;
 import com.assignhub.form.LoginForm;
 import com.assignhub.service.LoginService;
+
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -34,7 +34,7 @@ public class LoginController {
     }
 
     
-    @PostMapping("/login")
+    @PostMapping("/accounts/login")
     public String login(@Valid @ModelAttribute("loginForm") LoginForm loginForm, 
                         BindingResult bindingResult,   
                         HttpSession session,            
@@ -54,10 +54,10 @@ public class LoginController {
         }
 
         
-        session.setAttribute("loginAccount", account);
+        session.setAttribute("loginId", account.getLoginId());
 
 
-        return "redirect:/employees";
+        return "redirect:/accounts";
     }
 
 
