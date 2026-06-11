@@ -22,7 +22,6 @@ public class DeletedCompanyForm {
 	private String companyNameKana;
 	
 	@NotBlank(message = "郵便番号は必須です")
-	@Size(max = 7, message = "郵便番号は7桁以内で入力してください")
 	private String companyZipCode;
 	
 	@NotBlank(message = "住所１は必須です")
@@ -33,7 +32,6 @@ public class DeletedCompanyForm {
 	private String companyAddress2;
 	
 	@NotBlank(message = "電話番号は必須です")
-	@Size(min =10,max = 11, message = "電話番号は10桁または11桁内で入力してください")
 	private String companyTel;
 	
 	@Size(max = 20, message = "FAX番号は20文字以内で入力してください")

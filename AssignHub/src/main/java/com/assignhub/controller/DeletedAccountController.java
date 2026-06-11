@@ -26,14 +26,12 @@ public class DeletedAccountController {
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
-	 * @param companyService 企業サービス
+	 * @param DeletedAccountService 企業サービス
 	 */
 	public DeletedAccountController(DeletedAccountService deletedAccountService) {
 		this.deletedAccountService = deletedAccountService;
 	}
-	
-	
-	
+
 	@GetMapping
     public String index(
             @RequestParam(name = "keyword", required = false) String keyword,
@@ -122,8 +120,12 @@ public class DeletedAccountController {
 	
 //	エクスポート画面へ遷移	
 	@GetMapping("/export")
-	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
-		//引数内書き換え
+	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model, RedirectAttributes attributes) {		
+		// チェックがなければ一覧へ戻す
+	    if (ids == null || ids.isEmpty()) {
+	        attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません。");
+	        return "redirect:/deleted-accounts";
+	    }		
 		model.addAttribute("count", deletedAccountService.deletedfindByIds(ids));
 		
 		return "deleted_account/export";
@@ -131,22 +133,41 @@ public class DeletedAccountController {
 	
 //エクスポートのダウンロード処理
 	@GetMapping("/export/download")
-	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
-			Model model) {
+	public Object downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
+			RedirectAttributes attributes) { 
+	
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません。");
+			return "redirect:/deleted-accounts";
+		}
+	
 		List<DeletedAccount> delAccount = deletedAccountService.deletedfindByIds(ids);
-		//引数名書き換え
+		
+		if (delAccount == null) {
+			delAccount = new java.util.ArrayList<>();
+		}
+		
+		if (delAccount.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "該当する削除アカウントデータが見つかりませんでした。");
+			return "redirect:/deleted-accounts";
+		}
+	
 		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,削除フラグ,作成日時,更新日時,社員名\n");
-		//括弧内書き換え
 		for (DeletedAccount delAcc : delAccount) {
+			String employeeName = "";
+			if (delAcc.getDeletedEmployee() != null) {
+				employeeName = delAcc.getDeletedEmployee().getLastName() + " " + delAcc.getDeletedEmployee().getFirstName();
+			}
 			csvBuilder.append(delAcc.getAccountId()).append(",")
 					.append(delAcc.getLoginId()).append(",")
-					.append(delAcc.getPasswordHash()).append(",")
-					.append(delAcc.getPermission()).append(",")
-					.append(delAcc.getDeleteFlg()).append(",")
-					.append(delAcc.getCreatedAt()).append(",")
-					.append(delAcc.getUpdatedAt()).append(",")
-					.append(delAcc.getEmpName()).append("\n");
+					.append(delAcc.getPasswordHash() != null ? delAcc.getPasswordHash() : "").append(",")
+					.append(delAcc.getPermission() != null ? delAcc.getPermission() : "").append(",")
+					.append(delAcc.getDeleteFlg() != null ? delAcc.getDeleteFlg() : "").append(",")
+					.append(delAcc.getCreatedAt() != null ? delAcc.getCreatedAt() : "").append(",")
+					.append(delAcc.getUpdatedAt() != null ? delAcc.getUpdatedAt() : "").append(",")
+					.append(employeeName).append("\n");
 		}
+		
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
 		byte[] result = new byte[bom.length + csvBytes.length];
@@ -154,9 +175,9 @@ public class DeletedAccountController {
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 
 		HttpHeaders headers = new HttpHeaders();
-		//filename変更必要
 		headers.add("Content-Disposition", "attachment; filename=deletedAccount.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
+		
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 

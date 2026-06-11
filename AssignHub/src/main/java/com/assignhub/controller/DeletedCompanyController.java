@@ -140,11 +140,11 @@ public class DeletedCompanyController {
 		StringBuilder csvBuilder = new StringBuilder("企業ID,企業名,電話番号,住所,削除フラグ,作成日時,更新日時\n");
 
 		for (DeletedCompany comp : delCompanies) {
-			csvBuilder.append(comp.getCompanyId()).append(",")
-					.append(comp.getCompanyName() != null ? comp.getCompanyName() : "").append(",")
-					.append(comp.getCompanyTel() != null ? comp.getCompanyTel() : "").append(",")
-					.append(comp.getCompanyAddress1() != null ? comp.getCompanyAddress1() : "").append(",")
-					.append(comp.getDeleteFlg()).append(",")
+			csvBuilder.append(comp.getCompId()).append(",")
+					.append(comp.getCompName() != null ? comp.getCompName() : "").append(",")
+					.append(comp.getCompTel() != null ? comp.getCompTel() : "").append(",")
+					.append(comp.getCompAddress1() != null ? comp.getCompAddress1() : "").append(",")
+					.append(comp.getDeleteFlag()).append(",")
 					.append(comp.getCreatedAt() != null ? comp.getCreatedAt() : "").append(",")
 					.append(comp.getUpdatedAt() != null ? comp.getUpdatedAt() : "").append("\n");
 		}

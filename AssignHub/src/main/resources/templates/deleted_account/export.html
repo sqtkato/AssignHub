@@ -43,21 +43,18 @@
 							<td th:text="${account.accountId}"></td>
 							<td th:text="${account.loginId}"></td>
 							<td th:text="${account.permission == 1 ? '管理' : '一般'}"></td>						
-							<td th:text="${account.empName}"></td>
+							<td th:text="${account.deletedEmployee != null ? account.deletedEmployee.lastName + ' ' + account.deletedEmployee.firstName : ''}"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 
 			<div class="action-area">
-				<form th:action="@{/deleted-accounts/export/download}" method="post">
-					<div th:each="id : ${ids}">
-						<input type="hidden" name="ids" th:value="${id}">
-					</div>
-
-					<button type="submit" class="btn btn-primary btn-wide">エクスポート</button>
-					<a th:href="@{/deleted-accounts}" class="btn btn-secondary btn-wide">戻る</a>
-				</form>
+    			<form th:action="@{/deleted-accounts/export/download}" method="get">
+       				 <input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">
+        					<button type="submit" class="btn btn-primary btn-wide">エクスポート</button>
+        				<a th:href="@{/deleted-accounts}" class="btn btn-secondary btn-wide">戻る</a>
+    			</form>
 			</div>
 			<p class="export-note">※詳細情報がエクスポートされます。</p>
 		</div>
