@@ -69,6 +69,10 @@ public class AccountService {
 		return accountMapper.existsByLoginId(loginId);
 	}
 
+	public boolean existsByLoginIdUpdate(String loginId, Integer accountId) {
+		return accountMapper.existsByLoginIdUpdate(loginId, accountId);
+	}
+
 	public static class CsvRowError {
 		public int rowNum;
 		public String field;
@@ -214,4 +218,5 @@ public class AccountService {
 		}
 		return count;
 	}
+	
 }
