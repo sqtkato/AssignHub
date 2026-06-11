@@ -14,7 +14,7 @@ public class Assignment {
     /** 社員ID（外部キー） */
     private Integer empId;
 
-    /** 会社ID（外部キー） */
+    /** 企業ID（外部キー） */
     private Integer companyId;
 
     /** 契約開始日 */
@@ -31,29 +31,11 @@ public class Assignment {
 
     /** 削除フラグ */
     private Boolean deleteFlg;
-    
-    /** 社員名（表示用） */
-    private String empName;
 
-    private String empNameKana;
-    
-	/** 企業名（表示用） */
-    private String companyName;
-
-    private String companyNameKana;
-
-    private String assignCompanyName;
-
-    private String engineerType;
-    
-    /** 役割名（表示用） */
-    private String roleName;
-    
     /** 作成日時 */
     private LocalDateTime createdAt;
 
     /** 更新日時 */
     private LocalDateTime updatedAt;
 
-    private String role;
 }

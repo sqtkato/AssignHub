@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Assignment;
 import com.assignhub.form.AssignmentForm;
+import com.assignhub.form.SearchForm;
 import com.assignhub.service.AssignmentService;
 
 /**
@@ -52,80 +53,32 @@ public class AssignmentController {
 	 * @return アサイン情報の一覧画面のテンプレートパス
 	 */
 	@GetMapping
-	public String index(
-	        @RequestParam(name = "txt_emp_name", required = false) String txtEmpName,
-	        @RequestParam(name = "txt_assign_name", required = false) String txtAssignName,
-	        @RequestParam(name = "txt_company_name", required = false) String txtCompanyName,
-	        @RequestParam(name = "txt_contract_start_date", required = false) String txtContractStartDate,
-	        @RequestParam(name = "txt_contract_end_date", required = false) String txtContractEndDate,
+	public String index(@Validated @ModelAttribute("searchForm") SearchForm searchForm,
+			BindingResult result,
 	        Model model) {
+	    
+		LocalDate startDate = searchForm.getTxtContractStartDate();
+	    LocalDate endDate = searchForm.getTxtContractEndDate();
 
-	    LocalDate startDate = null;
-	    LocalDate endDate = null;
-	    
-	    if (txtEmpName != null && txtEmpName.length() > 100) {
-	        model.addAttribute("toastError", "社員名は100文字以内で入力してください。");
-	        return returnIndex(model, txtEmpName, txtAssignName, txtCompanyName,
-	                txtContractStartDate, txtContractEndDate);
-	    }
-	    
-	    if (txtAssignName != null && txtAssignName.length() > 50) {
-	        model.addAttribute("toastError", "アサイン先企業名は50文字以内で入力してください。");
-	        return returnIndex(model, txtEmpName, txtAssignName, txtCompanyName,
-	                txtContractStartDate, txtContractEndDate);
-	    }
-	    
-	    if (txtCompanyName != null && txtCompanyName.length() > 50) {
-	        model.addAttribute("toastError", "所属企業は50文字以内で入力してください。");
-	        return returnIndex(model, txtEmpName, txtAssignName, txtCompanyName,
-	                txtContractStartDate, txtContractEndDate);
-	    }
-	    
-	    try {
-	        if (txtContractStartDate != null && !txtContractStartDate.isBlank()) {
-	            startDate = LocalDate.parse(txtContractStartDate);
-	        }
-	    } catch (Exception e) {
-	        model.addAttribute("toastError", "契約開始日は正しい日付を入力してください。");
-	        return returnIndex(model, txtEmpName, txtAssignName, txtCompanyName,
-	                txtContractStartDate, txtContractEndDate);
-	    }
-	    
-	    try {
-	        if (txtContractEndDate != null && !txtContractEndDate.isBlank()) {
-	            endDate = LocalDate.parse(txtContractEndDate);
-	        }
-	    } catch (Exception e) {
-	        model.addAttribute("toastError", "契約終了日は正しい日付を入力してください。");
-	        return returnIndex(model, txtEmpName, txtAssignName, txtCompanyName,
-	                txtContractStartDate, txtContractEndDate);
-	    }
-	    
-	    if (startDate != null && endDate != null
-	            && startDate.isAfter(endDate)) {
-
-	        model.addAttribute(
-	                "toastError",
-	                "契約開始日は契約終了日以前の日付を入力してください。");
-
-	        return returnIndex(model, txtEmpName, txtAssignName, txtCompanyName,
-	                txtContractStartDate, txtContractEndDate);
+	    String toastError = null;
+	    if (result.hasErrors()) {
+	        toastError = "契約期間は正しい日付を入力してください。";
+	    } else if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
+	        toastError = "契約開始日は契約終了日以前の日付を入力してください。";
 	    }
 
-		List<Assignment> assignments = assignmentService.findAll(
-	                    txtEmpName,
-	                    txtAssignName,
-	                    txtCompanyName,
-	                    txtContractStartDate,
-	                    txtContractEndDate);
+	    if (toastError != null) {
+	        model.addAttribute("toastError", toastError);
+	        model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
+	        return "assignment/index";
+	    }
 
-	    model.addAttribute("assignments", assignments);
-	    model.addAttribute("txt_emp_name", txtEmpName);
-	    model.addAttribute("txt_assign_name", txtAssignName);
-	    model.addAttribute("txt_company_name", txtCompanyName);
-	    model.addAttribute("txt_contract_start_date", txtContractStartDate);
-	    model.addAttribute("txt_contract_end_date", txtContractEndDate);
-
+	    model.addAttribute("assignments", assignmentService.findAll(
+	            searchForm.getTxtEmpName(), 
+	            searchForm.getTxtAssignName(), 
+	            searchForm.getTxtCompanyName(),
+	            startDate == null ? null : startDate.toString(), 
+	            endDate == null ? null : endDate.toString()));
 	    return "assignment/index";
 	}
 	
@@ -431,26 +384,5 @@ public class AssignmentController {
 	    e.setContractEndDate(f.getContractEndDate());
 	    e.setUnitPrice(f.getUnitPrice());
 	    e.setRoleId(f.getRoleId());
-	}
-
-	private String returnIndex(
-	        Model model,
-	        String txtEmpName,
-	        String txtAssignName,
-	        String txtCompanyName,
-	        String txtContractStartDate,
-	        String txtContractEndDate) {
-
-	    model.addAttribute("txt_emp_name", txtEmpName);
-	    model.addAttribute("txt_assign_name", txtAssignName);
-	    model.addAttribute("txt_company_name", txtCompanyName);
-	    model.addAttribute("txt_contract_start_date", txtContractStartDate);
-	    model.addAttribute("txt_contract_end_date", txtContractEndDate);
-
-	    model.addAttribute(
-	            "assignments",
-	            assignmentService.findAll(null, null, null, null, null));
-
-	    return "assignment/index";
 	}
 }

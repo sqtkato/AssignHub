@@ -43,7 +43,8 @@
         	a.created_at,
         	a.updated_at,
         	CONCAT(e.last_name, e.first_name) AS emp_name,
-        	c.company_name,
+        	c.company_name AS assign_company_name,
+        	ec.company_name,
         	r.role
     	FROM t_assignment a
     	INNER JOIN m_employee e
@@ -54,29 +55,26 @@
         	ON e.company_id = ec.company_id
     	INNER JOIN m_role r
         	ON a.role_id = r.role_id
-
     	<where>
         	a.delete_flg = 0
-
+        	AND e.delete_flg = 0
+            AND c.delete_flg = 0
+            AND ec.delete_flg = 0
         	<if test="txtEmpName != null and txtEmpName != ''">
             	AND CONCAT(e.last_name, e.first_name)
                 LIKE CONCAT('%', #{txtEmpName}, '%')
         	</if>
-
         	<if test="txtAssignName != null and txtAssignName != ''">
             	AND c.company_name
                 LIKE CONCAT('%', #{txtAssignName}, '%')
         	</if>
-        	
         	<if test="txtCompanyName != null and txtCompanyName != ''">
         		AND ec.company_name
                 LIKE CONCAT('%', #{txtCompanyName}, '%')
         	</if>
-        	
         	<if test="txtContractStartDate != null and txtContractStartDate != ''">
     			AND a.contract_start_date &gt;= #{txtContractStartDate}
 			</if>
-
 			<if test="txtContractEndDate != null and txtContractEndDate != ''">
     			AND (
         			a.contract_end_date &lt;= #{txtContractEndDate}
@@ -84,33 +82,8 @@
     		    )
 			</if>
     	</where>
-
     	ORDER BY a.assignment_id
 	</select>
-
-    <select id="findEmployeeOptions" resultType="com.assignhub.entity.SelectOption">
-        SELECT
-            emp_id AS id,
-            CONCAT(last_name, first_name) AS name
-        FROM m_employee
-        ORDER BY emp_id
-    </select>
-
-    <select id="findCompanyOptions" resultType="com.assignhub.entity.SelectOption">
-        SELECT
-            company_id AS id,
-            company_name AS name
-        FROM m_company
-        ORDER BY company_id
-    </select>
-
-    <select id="findRoleOptions" resultType="com.assignhub.entity.SelectOption">
-        SELECT
-            role_id AS id,
-            role AS name
-        FROM m_role
-        ORDER BY role_id
-    </select>
 
     <select id="findById" resultMap="assignmentResultMap">
     	SELECT
@@ -141,13 +114,15 @@
     	INNER JOIN m_role r
         	ON a.role_id = r.role_id
     	WHERE a.assignment_id = #{id}
-      	AND a.delete_flg = 0
+      		AND a.delete_flg = 0
+      		AND e.delete_flg = 0
+            AND c.delete_flg = 0
+            AND ec.delete_flg = 0
 	</select>
 
     <insert id="insert"
         useGeneratedKeys="true"
         keyProperty="assignmentId">
-
         INSERT INTO t_assignment (
             emp_id,
             company_id,
@@ -191,7 +166,7 @@
         	updated_at = NOW()
     	WHERE assignment_id = #{id}
       	AND delete_flg = 0
-</update>
+	</update>
     
     <update id="deleteBulk">
     UPDATE t_assignment
@@ -202,6 +177,7 @@
     	<foreach collection="ids" item="id" open="(" separator="," close=")">
         	#{id}
     	</foreach>
+    	AND delete_flg = 0
 	</update>
 
     <select id="findDuplicate" resultMap="assignmentResultMap">
@@ -225,31 +201,9 @@
                 contract_end_date = #{contractEndDate}
                 OR (contract_end_date IS NULL AND #{contractEndDate} IS NULL)
             )
-
         <if test="assignmentId != null">
             AND assignment_id != #{assignmentId}
         </if>
-        
-    </select>
-    
-    <select id="existsEmployee" resultType="int">
-        SELECT COUNT(*)
-        FROM m_employee
-        WHERE emp_id = #{empId}
-          AND delete_flg = 0
-    </select>
-    
-    <select id="findCompanyIdByName" resultType="java.lang.Integer">
-        SELECT company_id
-        FROM m_company
-        WHERE company_name = #{companyName}
-          AND delete_flg = 0
-    </select>
-    
-    <select id="findRoleIdByName" resultType="java.lang.Integer">
-        SELECT role_id
-        FROM m_role
-        WHERE role = #{role}
     </select>
     
     <select id="countActive" resultType="int">
