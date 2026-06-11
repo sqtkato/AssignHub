@@ -155,8 +155,8 @@ public class DeletedAccountController {
 		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,削除フラグ,作成日時,更新日時,社員名\n");
 		for (DeletedAccount delAcc : delAccount) {
 			String employeeName = "";
-			if (delAcc.getDeletedEmployee() != null) {
-				employeeName = delAcc.getDeletedEmployee().getLastName() + " " + delAcc.getDeletedEmployee().getFirstName();
+			if (delAcc.getEmployee() != null) {
+				employeeName = delAcc.getEmployee().getLastName() + " " + delAcc.getEmployee().getFirstName();
 			}
 			csvBuilder.append(delAcc.getAccountId()).append(",")
 					.append(delAcc.getLoginId()).append(",")

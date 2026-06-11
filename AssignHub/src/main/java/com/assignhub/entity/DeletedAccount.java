@@ -27,6 +27,6 @@ public class DeletedAccount {
 	private LocalDateTime updatedAt;
 	
 	/** 社員情報（外部DBから取得)*/
-	private DeletedEmployee deletedEmployee;
+	private Employee Employee;
 
 }

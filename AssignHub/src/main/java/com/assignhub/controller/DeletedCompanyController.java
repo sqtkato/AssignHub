@@ -113,7 +113,7 @@ public class DeletedCompanyController {
 	// エクスポート処理
 	// ==========================================
 
-	@PostMapping("/export")
+	@GetMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model,
 			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
@@ -130,7 +130,7 @@ public class DeletedCompanyController {
 		return "deleted_company/export";
 	}
 
-	@PostMapping("/export/download")
+	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		if (ids == null || ids.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
