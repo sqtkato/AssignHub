@@ -111,5 +111,5 @@ public interface AssignmentMapper {
     	@Param("contractEndDate") LocalDate contractEndDate
 	);
 
-	int countActive();
+	int countAll();
 }

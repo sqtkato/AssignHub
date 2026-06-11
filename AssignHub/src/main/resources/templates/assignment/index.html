@@ -19,42 +19,42 @@
 					<div class="form-group form-group-search">
 						<div class="form-group">
 							<label>社員名</label>
-							<input type="text" th:field="txtEmpName" id="txt_emp_name" name="txt_emp_name" maxlength="100"
-								class="form-control" th:value="${txt_emp_name}" placeholder="例：山田">
+							<input type="text" th:field="*{empName}" maxlength="100"
+								class="form-control" th:value="${searchForm.empName}" placeholder="例：山田">
 						</div>
 						<div class="form-group">
 							<label>アサイン先企業</label>
-							<input type="text" th:field="txtAssignName" id="txt_assign_name" name="txt_assign_name" maxlength="50"
-								class="form-control" th:value="${txt_assign_name}" placeholder="例：株式会社ABC">
+							<input type="text" th:field="*{assignName}" maxlength="50"
+								class="form-control" th:value="${searchForm.assignName}" placeholder="例：株式会社ABC">
 						</div>
 					</div>
 					<div class="form-group form-group-search">
 						<div class="form-group">
 							<label>契約期間</label>
 							<div class="date-range">
-								<input type="date" th:field="*{txtContractStartDate}" id="txt_contract_start_date" name="txt_contract_start_date"
-									class="form-control" th:value="${txt_contract_start_date}">
+								<input type="date" th:field="*{contractStartDate}"
+									class="form-control" th:value="${searchForm.contractStartDate}">
 								<span class="date-range-sep">～</span>
-								<input type="date" th:field="*{txtContractEndDate}" id="txt_contract_end_date" name="txt_contract_end_date"
-									class="form-control" th:value="${txt_contract_end_date}">
+								<input type="date" th:field="*{contractEndDate}"
+									class="form-control" th:value="${searchForm.contractEndDate}">
 							</div>
 						</div>
 						<div class="form-group">
 							<label>所属企業</label>
-							<input type="text" th:field="txtCompanyName" id="txt_company_name" name="txt_company_name" maxlength="50"
-								class="form-control" th:value="${txt_company_name}" placeholder="例：株式会社ABC">
+							<input type="text" th:field="*{companyName}" maxlength="50"
+								class="form-control" th:value="${searchForm.companyName}" placeholder="例：株式会社ABC">
 						</div>
 					</div>
 				</div>
 				<div class="search-button-area">
-					<button type="submit" id="btn_assign_search" class="btn btn-secondary">検索</button>
+					<button type="submit" class="btn btn-secondary">検索</button>
 				</div>
 			</form>
 		</div>
 
 		<form th:action="@{/assignments/bulk-delete}" method="post" id="listForm">
 			<div class="table-toolbar">
-				<button type="button" id="btn_assign_import" class="toolbar-btn toolbar-btn-secondary"
+				<button type="button" class="toolbar-btn toolbar-btn-secondary"
 					th:onclick="|location.href='@{/assignments/import}'|">
 					インポート
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -64,7 +64,7 @@
 						<line x1="12" y1="15" x2="12" y2="3"></line>
 					</svg>
 				</button>
-				<button type="submit" id="btn_assign_export" th:formaction="@{/assignments/export}"
+				<button type="submit" th:formaction="@{/assignments/export}"
 					class="toolbar-btn toolbar-btn-secondary">
 					エクスポート
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -74,7 +74,7 @@
 						<line x1="12" y1="3" x2="12" y2="15"></line>
 					</svg>
 				</button>
-				<button type="button" id="btn_assign_bulkDelete" class="toolbar-btn toolbar-btn-danger"
+				<button type="button" class="toolbar-btn toolbar-btn-danger"
 					onclick="openBulkDeleteModal()">
 					一括削除
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -83,7 +83,7 @@
 						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
 					</svg>
 				</button>
-				<button type="button" id="btn_assign_create" class="toolbar-btn toolbar-btn-primary"
+				<button type="button" class="toolbar-btn toolbar-btn-primary"
 					th:onclick="|location.href='@{/assignments/new}'|">
 					新規登録
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -99,7 +99,7 @@
 					<thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
 						<tr>
 							<th class="col-checkbox">
-								<input type="checkbox" id="chk_assign_selectAll" class="select-all">
+								<input type="checkbox" class="select-all">
 							</th>
 							<th>ID</th>
 							<th>社員名</th>

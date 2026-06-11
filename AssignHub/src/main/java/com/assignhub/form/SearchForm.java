@@ -9,14 +9,14 @@ import lombok.Data;
 @Data
 public class SearchForm {
 	
-	private String txtEmpName;
-    private String txtAssignName;
-    private String txtCompanyName;
+	private String empName;
+    private String assignName;
+    private String companyName;
     
 	/** 契約期間（チェック対象） */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate txtContractStartDate;
+    private LocalDate contractStartDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate txtContractEndDate;
+    private LocalDate contractEndDate;
 }

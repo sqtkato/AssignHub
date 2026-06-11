@@ -312,7 +312,7 @@ public class AssignmentService {
 				rowNum++;
 			}
 
-			if (result.errorCount == 0 && assignmentMapper.countActive() + insertPlan > 500) {
+			if (result.errorCount == 0 && assignmentMapper.countAll() + insertPlan > 500) {
 				result.errors.add(new CsvRowError(0, "-", "登録後の件数が上限に達しています。アサインの登録上限は500件です"));
 				result.errorCount++;
 			}
@@ -371,6 +371,6 @@ public class AssignmentService {
 	}
 
 	public boolean isMaxCount() {
-		return assignmentMapper.countActive() >= 500;
+		return assignmentMapper.countAll() >= 500;
 	}
 }

@@ -57,8 +57,8 @@ public class AssignmentController {
 			BindingResult result,
 	        Model model) {
 	    
-		LocalDate startDate = searchForm.getTxtContractStartDate();
-	    LocalDate endDate = searchForm.getTxtContractEndDate();
+		LocalDate startDate = searchForm.getContractStartDate();
+	    LocalDate endDate = searchForm.getContractEndDate();
 
 	    String toastError = null;
 	    if (result.hasErrors()) {
@@ -74,9 +74,9 @@ public class AssignmentController {
 	    }
 
 	    model.addAttribute("assignments", assignmentService.findAll(
-	            searchForm.getTxtEmpName(), 
-	            searchForm.getTxtAssignName(), 
-	            searchForm.getTxtCompanyName(),
+	            searchForm.getEmpName(), 
+	            searchForm.getAssignName(), 
+	            searchForm.getCompanyName(),
 	            startDate == null ? null : startDate.toString(), 
 	            endDate == null ? null : endDate.toString()));
 	    return "assignment/index";
@@ -309,7 +309,7 @@ public class AssignmentController {
 	 */
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-	    assignmentService.deleteById(id);
+	    assignmentService.delete(id);
 	    attributes.addFlashAttribute("toastMessage", "アサイン履歴情報を削除しました");
 	    return "redirect:/assignments";
 	}

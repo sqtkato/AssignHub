@@ -206,7 +206,7 @@
         </if>
     </select>
     
-    <select id="countActive" resultType="int">
+    <select id="countAll" resultType="int">
     	SELECT COUNT(*)
     	FROM t_assignment
     	WHERE delete_flg = 0
