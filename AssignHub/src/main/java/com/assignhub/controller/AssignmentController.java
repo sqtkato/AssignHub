@@ -101,7 +101,6 @@ public class AssignmentController {
 	                txtContractStartDate, txtContractEndDate);
 	    }
 	    
-	    
 	    if (startDate != null && endDate != null
 	            && startDate.isAfter(endDate)) {
 
@@ -145,10 +144,9 @@ public class AssignmentController {
 		if (assignmentService.isMaxCount()) {
 			attributes.addFlashAttribute(
 					"toastError",
-					"登録可能なアサイン情報は最大500件までです。");
+					"登録可能なアサイン履歴情報は最大500件までです。");
 			return "redirect:/assignments";
 		}
-		addComboBoxItems(model);
 		return "assignment/create";
 	}
 	
@@ -168,17 +166,11 @@ public class AssignmentController {
         Model model,
         RedirectAttributes attributes) {
 
-		
 		Assignment assignment = new Assignment();
 		copyFormToEntity(form, assignment);
 		
-		/**
-		 * 契約開始日と契約終了日の順序をチェックする
-		 * 契約終了日が入力されている場合、契約開始日より前の日付は入力できないようにする
-		 */
 		if (assignment.getContractEndDate() != null
         	&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
-			addComboBoxItems(model);
 			result.rejectValue(
 					"contractEndDate",
 					"date.order",
@@ -187,15 +179,10 @@ public class AssignmentController {
 		}
 		
 		if (result.hasErrors()) {
-			addComboBoxItems(model);
 			return "assignment/create";
 		}
 		
-		/**
-		 * アサイン情報の重複をチェックする
-		 */
 		if (assignmentService.existsDuplicate(assignment)) {
-			addComboBoxItems(model);
 			result.reject(
 					"duplicate",
 					"既に同じ内容が登録されています。");
@@ -203,7 +190,7 @@ public class AssignmentController {
     	}
 		
 		assignmentService.save(assignment);
-		attributes.addFlashAttribute("toastMessage", "アサイン情報を登録しました");
+		attributes.addFlashAttribute("toastMessage", "アサイン履歴情報を登録しました");
 		return "redirect:/assignments";
 	}
 	
@@ -241,7 +228,6 @@ public class AssignmentController {
 		}
 
 		model.addAttribute("fromPage", from);
-		addComboBoxItems(model);
 	    return "assignment/edit";
 	}
 	
@@ -252,27 +238,20 @@ public class AssignmentController {
 			BindingResult result, RedirectAttributes attributes,
 			@RequestParam(value="fromPage", required=false) String fromPage,Model model) {
 
-		
 		Assignment assignment = new Assignment();
 		copyFormToEntity(form, assignment);
-		/**
-		 * 契約開始日と契約終了日の順序をチェックする
-		 * 契約終了日が入力されている場合、契約開始日より前の日付は入力できないようにする
-		 */
+
 		if (assignment.getContractEndDate() != null
         	&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
-			addComboBoxItems(model);
 			result.rejectValue(
 					"contractEndDate",
 					"date.order",
 					"契約開始日より前の日付は入力できません。");
-
 		}
 		
 		if (result.hasErrors()) {
 			model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
 			model.addAttribute("fromPage", fromPage);
-			addComboBoxItems(model);
 			return "assignment/edit";
 		}
 
@@ -285,12 +264,9 @@ public class AssignmentController {
 	    } else if ("index".equals(fromPage)) {
 	        return "redirect:/assignments";
 	    }
-		
 		return "redirect:/assignments";
 	}
 
-	
-	
 	@GetMapping("/import")
 	public String showImport() {
 		return "assignment/import";
@@ -322,7 +298,7 @@ public class AssignmentController {
                         "以下の行でエラーが発生したため、取り込みをキャンセルしました。内容を修正して再アップロードしてください");
             } else {
                 model.addAttribute("toastMessage",
-                        "アサイン情報を" + result.successCount + "件取り込みました");
+                        "アサイン履歴情報を" + result.successCount + "件取り込みました");
             }
             return "assignment/import";
         } catch (MalformedInputException e) {
@@ -372,7 +348,7 @@ public class AssignmentController {
 	    }
 
 	    assignmentService.deleteBulk(ids);
-	    attributes.addFlashAttribute("toastMessage", "選択したアサイン情報を削除しました");
+	    attributes.addFlashAttribute("toastMessage", "選択したアサイン履歴情報を削除しました");
 	    return "redirect:/assignments";
 	}
 	
@@ -386,7 +362,7 @@ public class AssignmentController {
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 	    assignmentService.deleteById(id);
-	    attributes.addFlashAttribute("toastMessage", "アサイン情報を削除しました");
+	    attributes.addFlashAttribute("toastMessage", "アサイン履歴情報を削除しました");
 	    return "redirect:/assignments";
 	}
 	
@@ -415,7 +391,6 @@ public class AssignmentController {
 		model.addAttribute("count", assignments.size());
 		model.addAttribute("ids", ids);
 		return "assignment/export";
-
 	    }
 
 	@GetMapping("/export/download")
@@ -463,12 +438,6 @@ public class AssignmentController {
 	    e.setRoleId(f.getRoleId());
 	}
 
-	private void addComboBoxItems(Model model) {
-	    model.addAttribute("employeeOptions", assignmentService.findEmployeeOptions());
-	    model.addAttribute("companyOptions", assignmentService.findCompanyOptions());
-	    model.addAttribute("roleOptions", assignmentService.findRoleOptions());
-	}
-	
 	private String returnIndex(
 	        Model model,
 	        String txtEmpName,
