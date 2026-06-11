@@ -16,22 +16,22 @@
 			<form th:action="@{/employees}" method="get" class="search-form">
 				<div class="form-group form-group-search">
 					<label>社員名</label>
-					<input type="text" name="keyword_name" class="form-control" th:value="${keyword_name}" placeholder="例：山田 太郎">
+					<input type="text" name="txt_emp_name" class="form-control" th:value="${txt_emp_name}" placeholder="例：山田 太郎">
 				</div>
 			    <div class="form-group form-group-search">
 					<label>アサイン先企業</label>
-					<input type="text" name="keyword_company_assign" class="form-control" th:value="${keyword_company_assign}" placeholder="例：山田 太郎">
+					<input type="text" name="txt_emp_assign_company" class="form-control" th:value="${txt_emp_assign_company}" placeholder="例：山田 太郎">
 				</div>
 				<div class="form-group form-group-search">
 					<label>所属企業</label>
-					<input type="text" name="keyword_company" class="form-control" th:value="${keyword_company}" placeholder="例：山田 太郎">
+					<input type="text" name="txt_emp_company" class="form-control" th:value="${txt_emp_company}" placeholder="例：山田 太郎">
 				</div>
 				<div class="form-group form-group-search">
 					<label>エンジニアタイプ</label>
-					<select id="keyword_engineer_type" name="keyword_engineer_type" class="form-control">
+					<select id="cmb_emp_engineer_type" name="cmb_emp_engineer_type" class="form-control">
 					<option value>未選択</option>
-					<option value="プロパー" th:selected="${keyword_engineer_type == 'プロパー'}">プロパー</option>
-					<option value="パートナー" th:selected="${keyword_engineer_type == 'パートナー'}">パートナー</option>
+					<option value="プロパー" th:selected="${cmb_emp_engineer_type == 'プロパー'}">プロパー</option>
+					<option value="パートナー" th:selected="${cmb_emp_engineer_type == 'パートナー'}">パートナー</option>
 					</select>
 				</div>
 			    <button type="submit" class="btn btn-secondary">検索</button>
@@ -132,13 +132,26 @@
 							<td th:text="${emp.companyName ?: 'ー'}"></td>
 							<td class="col-action">
 								<a th:href="@{/employees/{id}/detail(id=${emp.empId})}" class="btn-icon-svg" title="詳細">
-									<span>ℹ️</span>		
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="none"
+									    stroke="#5A6A85" width="18" height="18"stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+									    <line x1="12" y1="8" x2="12" y2="13"></line>
+									    <circle cx="12" cy="17" r="0.5" fill="#5A6A85"></circle>
+								    </svg>	
 								</a>
 								<a th:href="@{/employees/{id}/edit(id=${emp.empId})}" class="btn-icon-svg" title="編集">
-								    <span>📝</span>		
+									<svg xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"
+										stroke="currentColor"stroke-linecap="round"stroke-linejoin="round">
+										<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+										<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+									</svg>		
 							    </a>
 								<button type="submit" th:formaction="@{/employees/{id}/delete(id=${emp.empId})}" class="btn-icon-svg delete" title="削除" onclick="return confirm('本当に削除しますか？');">
-								    <span>🗑️</span>			
+									<svg xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"fill="none"
+										stroke="currentColor"stroke-linecap="round"stroke-linejoin="round">
+										<polyline points="3 6 5 6 21 6"></polyline>
+										<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+									</svg>			
 								</button>
 							</td>
 						</tr>
