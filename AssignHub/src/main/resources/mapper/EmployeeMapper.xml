@@ -39,12 +39,15 @@
            c2.company_name AS emp_assign_company
     FROM m_employee e
     LEFT JOIN m_company c
-    ON e.company_id = c.company_id
+		ON
+		e.company_id = c.company_id
     LEFT JOIN t_assignment a
-    ON a.emp_id = e.emp_id
+		ON a.emp_id =
+		e.emp_id
     AND a.contract_end_date is null
     LEFT JOIN m_company c2
-    ON a.company_id = c2.company_id
+		ON
+		a.company_id = c2.company_id
    
     <where>
      e.delete_flg = 0
@@ -111,4 +114,41 @@
 	</update>
 	
 	
+
+	<update id="update">
+		UPDATE m_employee
+
+		SET last_name = #{lastName},
+		first_name = #{firstName},
+		last_name_kana = #{lastNameKana},
+		first_name_kana = #{firstNameKana},
+		hire_date = #{hireDate},
+		years_of_servise = #{yearsOfService},
+		birth_date = #{birthDate},
+		zip_code = #{zipCode},
+		address1 = #{address1},
+		address2 = #{address2},
+		engineer_type = #{engineerType},
+		account_id = #{accountId},
+		company_id = #{companyId},
+		department = #{department},
+		job_title = #{jobTitle},
+		emp_tel = #{empTel},
+		email = #{email}
+
+		<where>
+			emp_id = #{empId}
+		</where>
+		
+	</update>
+	
+	
+	<select id="countByEmail" resultType="int">
+		SELECT COUNT(*) FROM m_employee
+		WHERE email = #{email}
+		<if test="excludeEmpId != null">
+			AND emp_id != #{excludeEmpId}
+		</if>
+	</select>
+
 </mapper>
