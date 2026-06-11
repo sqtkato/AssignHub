@@ -18,8 +18,8 @@
 		<result property="engineerType" column="engineer_type" />
 		<result property="accountId" column="account_id" />
 		<result property="companyId" column="company_id" />
-		<result property="companyName" column="company_name_belong" />
-		<result property="companyNameAssign" column="company_name_assign" />
+		<result property="companyName" column="emp_company" />
+		<result property="companyNameAssign" column="emp_assign_company" />
 		<result property="department" column="department" />
 		<result property="jobTitle" column="job_title" />
 		<result property="empTel" column="emp_tel" />
@@ -34,9 +34,9 @@
 	</resultMap>
 
 	<select id="findAll" resultMap="employeeResultMap">
-  SELECT e.*,
-           c.company_name AS company_name_belong,
-           c2.company_name AS company_name_assign
+    SELECT e.*,
+           c.company_name AS emp_company,
+           c2.company_name AS emp_assign_company
     FROM m_employee e
     LEFT JOIN m_company c
     ON e.company_id = c.company_id
@@ -48,35 +48,22 @@
    
     <where>
      e.delete_flg = 0
-        <if test="keyword_name != null and keyword_name != ''">
+        <if test=" txt_emp_name != null and txt_emp_name != ''">
             AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%', #{keyword_name}, '%')
         </if>
 
-        <if test="keyword_company_assign != null and keyword_company_assign != ''">
+        <if test=" txt_emp_assign_company != null and  txt_emp_assign_company != ''">
             AND c2.company_name LIKE CONCAT('%', #{keyword_company_assign}, '%')
         </if>
 
-        <if test="keyword_company != null and keyword_company != ''">
+        <if test=" cmb_emp_engineer_type != null and  cmb_emp_engineer_type != ''">
             AND c.company_name LIKE CONCAT('%', #{keyword_company}, '%')
         </if>
 
-        <if test="keyword_engineer_type != null and keyword_engineer_type != ''">
+        <if test=" txt_emp_company != null and  txt_emp_company != ''">
             AND e.engineer_type LIKE CONCAT('%', #{keyword_engineer_type}, '%')
         </if>
     </where>
-
-<choose>
-    <when test="sort == 'emp_name'">
-        ORDER BY CONCAT(e.last_name, e.first_name) ${order}
-    </when>
-    
-    <when test="sort != null and sort != ''">
-        ORDER BY ${sort} ${order}
-    </when>
-    
-    <otherwise>
-        ORDER BY e.emp_id ASC  </otherwise>
-</choose>
 
    </select>
 
