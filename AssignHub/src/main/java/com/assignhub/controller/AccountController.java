@@ -23,7 +23,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
-import com.assignhub.form.ImportError;
 import com.assignhub.service.AccountService;
 
 import jakarta.servlet.http.HttpSession;
@@ -68,7 +67,7 @@ public class AccountController {
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
         model.addAttribute("currentLoginId",session.getAttribute("loginId"));
-    
+
 		return "account/index";
 	}
 	
@@ -76,7 +75,7 @@ public class AccountController {
 	public String newAccount(Model model, HttpSession session) {
         model.addAttribute("currentLoginId",session.getAttribute("loginId"));
 		model.addAttribute("account", new AccountForm());
-		return "account/create"; 
+		return "account/create";
 	}
 
 	@PostMapping("/create")
@@ -156,8 +155,6 @@ public class AccountController {
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
-	// ===== ここから アカウント情報インポート機能 =====
-
 	/**
 	 * アカウント情報インポート画面を表示する。
 	 */
@@ -172,83 +169,53 @@ public class AccountController {
 	 */
 	@PostMapping("/import")
 	public String doImport(@RequestParam("file") MultipartFile file, Model model) {
-		model.addAttribute("done", true);
-
-		// 没选文件
 		if (file == null || file.isEmpty()) {
 			model.addAttribute("fileError", "ファイルを選択してください");
 			return "account/import";
 		}
 
-		// No.2 非CSV文件
 		String filename = file.getOriginalFilename();
 		if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
 			model.addAttribute("fileError", "ファイル形式が正しくありません。.csvファイルを選択してください。");
 			return "account/import";
 		}
 
-		// No.3 超过5MB
 		if (file.getSize() > 5 * 1024 * 1024) {
 			model.addAttribute("fileError", "ファイルサイズは5MB以内にしてください。");
 			return "account/import";
 		}
 
-		// No.4 文字コードチェック（UTF-8で読めるか試す）
-				try {
-					java.nio.charset.CharsetDecoder decoder =
-							java.nio.charset.StandardCharsets.UTF_8.newDecoder();
-					decoder.onMalformedInput(java.nio.charset.CodingErrorAction.REPORT);
-					decoder.onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT);
-					decoder.decode(java.nio.ByteBuffer.wrap(file.getBytes()));
-				} catch (Exception e) {
-					// UTF-8として読めない → 文字コードが違う
-					model.addAttribute("fileError", "UTF-8のCSVファイルを選択してください。");
-					return "account/import";
-				}
-		
+		try {
+			java.nio.charset.CharsetDecoder decoder =
+					java.nio.charset.StandardCharsets.UTF_8.newDecoder();
+			decoder.onMalformedInput(java.nio.charset.CodingErrorAction.REPORT);
+			decoder.onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT);
+			decoder.decode(java.nio.ByteBuffer.wrap(file.getBytes()));
+		} catch (Exception e) {
+			// UTF-8として読めない → 文字コードが違う
+			model.addAttribute("fileError", "UTF-8のCSVファイルを選択してください。");
+			return "account/import";
+		}
+
 		try {
 			int total = accountService.countDataRows(file);
 
-			// No.5 超过500件
 			if (total > 500) {
 				model.addAttribute("globalError", "登録後の件数が上限に達しています。アカウント登録条件は500件です。");
-				model.addAttribute("successCount", 0);
-				model.addAttribute("errorCount", total);
 				return "account/import";
 			}
 
-			// ① 先校验（No.6〜13、No.7存在チェック、権限チェック）
-			List<ImportError> errors = accountService.validate(file);
-
-			if (!errors.isEmpty()) {
-				// 有错 → 全部取消，不写DB
-				model.addAttribute("successCount", 0);
-				model.addAttribute("errorCount", errors.size());
-				model.addAttribute("errors", errors);
-				return "account/import";
-			}
-
-			// ② 校验全通过 → 写入DB（INSERT/UPDATE）
-			List<ImportError> dbErrors = accountService.importData(file);
-
-			if (!dbErrors.isEmpty()) {
-				// No.14 写入有失败
-				model.addAttribute("successCount", total - dbErrors.size());
-				model.addAttribute("errorCount", dbErrors.size());
-				model.addAttribute("errors", dbErrors);
-			} else {
-				// 全部成功
-				model.addAttribute("successCount", total);
-				model.addAttribute("errorCount", 0);
-			}
+			AccountService.ImportResult result = accountService.importCsv(file);
+			model.addAttribute("importResult", result);
+			return "account/import";
 		} catch (Exception e) {
 			model.addAttribute("fileError", "ファイルの読み込みに失敗しました");
+			return "account/import";
 		}
-		return "account/import";
 	}
 
 	/**
-	 * CSVテンプレート（見本）をダウンロードする。
+	 * CSVテンプレートをダウンロードする。
 	 */
 	@GetMapping("/import/template")
 	public ResponseEntity<byte[]> downloadTemplate() {
@@ -270,7 +237,7 @@ public class AccountController {
 
 	/**
 	 * アカウントを一件論理削除
-	 * 
+	 *
 	 * @param id 削除対象のアカウントID
 	 * @return 一覧画面へのリダイレクトパス
 	 */
@@ -278,7 +245,8 @@ public class AccountController {
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		accountService.delete(id);
 		return "redirect:/accounts";
-	
+	}
+
 	/**
 	 * 選択された複数の社員情報を一括で物理削除する。
 	 *
@@ -286,8 +254,6 @@ public class AccountController {
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクト
 	 */
-	}
-
 	@PostMapping("/bulk-delete")
 	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			RedirectAttributes attributes) {
@@ -330,10 +296,8 @@ public class AccountController {
 		}
 	
 		Account acc = new Account();
-		// :bulb: 画面から届いたデータを、DBに送るオブジェクトにしっかりセットする！
 	    acc.setLoginId(accountForm.getLoginId());
 	    acc.setPermission(accountForm.getPermission());
-	    // パスワードの入力がある場合のみハッシュ化してセット（空なら変更しない等の制御は必要に応じて）
 	    acc.setPasswordHash(accountForm.getPasswordHash());
 	    acc.setAccountId(id);
 		accountService.save(acc);

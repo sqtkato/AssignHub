@@ -20,7 +20,8 @@
 					<label for="loginId">変更後のログインID <span class="badge-required">必須</span></label>
 					<input type="text" th:field="*{loginId}" class="form-control"
 						th:classappend="${#fields.hasErrors('loginId')} ? 'input-error'">
-					<div class="error-message" th:text="${loginId}"></div>
+					<div class="error-message" th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></div>
+					<div class="error-message" th:if="${loginId}" th:text="${loginId}"></div>
 				</div>
 
 				<div class="form-group">
@@ -49,4 +50,4 @@
 	</div>
 </body>
 
-<htmlaa>
+</html>
