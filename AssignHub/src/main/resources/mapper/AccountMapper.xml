@@ -15,7 +15,8 @@
 
 	<select id="findAll" resultMap="accountResultMap">
 		SELECT a.*, concat(e.last_name , " " , e.first_name)as emp_name
-		FROM m_account a
+		FROM
+		m_account a
 		left JOIN m_employee e ON
 		a.account_id = e.emp_id
 
@@ -25,12 +26,14 @@
 			<if test="keyword != null and keyword != ''">
 				AND (
 				e.first_name LIKE CONCAT('%', #{keyword}, '%')
-				OR e.last_name LIKE CONCAT('%', #{keyword}, '%')
+				OR e.last_name
+				LIKE CONCAT('%', #{keyword}, '%')
 				OR a.login_id LIKE
-				CONCAT('%', #{keyword}, '%')
+				CONCAT('%',
+				#{keyword}, '%')
 				OR a.account_id LIKE CONCAT('%',
 				#{keyword}, '%')
-					<!-- ★他に検索対象にしたいカラムがあれば、ここに OR で追加していきます -->
+				<!-- ★他に検索対象にしたいカラムがあれば、ここに OR で追加していきます -->
 				)
 			</if>
 
@@ -41,31 +44,29 @@
 		</where>
 		ORDER BY a.account_id ASC
 	</select>
-	
+
 
 	<!-- 追加：ログインIDの重複チェック -->
 	<select id="existsByLoginId" resultType="boolean">
 		SELECT COUNT(*) > 0
-		FROM m_account
+		FROM
+		m_account
 		WHERE login_id = #{loginId}
 	</select>
-<select id="findByIds" resultMap="accountResultMap">
-    SELECT a.account_id,
-           a.login_id,
-           a.permission,
-           concat(e.last_name, ' ', e.first_name) as emp_name
-    FROM m_account a
-    LEFT JOIN m_employee e
-        ON a.account_id = e.emp_id
-    WHERE a.account_id IN
-    <foreach collection="ids"
-             item="id"
-             open="("
-             separator=","
-             close=")">
-        #{id}
-    </foreach>
-</select>
+	<select id="findByIds" resultMap="accountResultMap">
+		SELECT a.account_id,
+		a.login_id,
+		a.permission,
+		concat(e.last_name, ' ', e.first_name) as emp_name
+		FROM m_account a
+		LEFT JOIN m_employee e
+		ON a.account_id = e.emp_id
+		WHERE a.account_id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
 
 
 
@@ -76,7 +77,7 @@
 		VALUES (#{loginId},
 		#{passwordHash}, #{permission}, 0)
 	</insert>
-	
+
 	<update id="delete">
 		UPDATE m_account
 		SET delete_flg = 1
@@ -101,25 +102,27 @@
 	</select>
 
 	<select id="existsByLoginIdUpdate" resultType="boolean">
-		SELECT IF(COUNT(*) > 0, true, false)
+		SELECT IF(COUNT(*)
+		> 0, true, false)
 		FROM m_account
 		WHERE login_id = #{loginId}
-		AND account_id != #{currentAccountId}
+		AND
+		account_id != #{currentAccountId}
 	</select>
 
 	<!-- ===== インポート機能用に追加 ===== -->
 
-	<!-- アカウントIDで1件取得（存在チェック用）-->
+	<!-- アカウントIDで1件取得（存在チェック用） -->
 	<select id="findById" resultMap="accountResultMap">
-		SELECT * FROM m_account 
-        WHERE account_id = #{accountId}
+		SELECT * FROM m_account
+		WHERE account_id = #{accountId}
 	</select>
-	
+
 	<update id="update">
 		UPDATE m_account
 		SET account_Id = #{accountId},
 		login_id =#{loginId},
-	    permission= #{permission},
+		permission= #{permission},
 		password_Hash = #{passwordHash},
 		updated_at = NOW()
 		WHERE account_id =#{accountId}
