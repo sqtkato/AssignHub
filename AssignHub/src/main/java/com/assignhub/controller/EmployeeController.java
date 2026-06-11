@@ -1,16 +1,11 @@
 package com.assignhub.controller;
 
-<<<<<<< HEAD
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-=======
-import java.util.List;
-
->>>>>>> stash
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -136,7 +131,6 @@ public class EmployeeController {
 		return "employee/import";
 	}
 	
-<<<<<<< HEAD
 	/**
 	 * 社員データのエクスポート画面を表示する。
 	 *
@@ -198,7 +192,7 @@ public class EmployeeController {
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
-=======
+	
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		employeeService.delete(id);
@@ -217,9 +211,6 @@ public class EmployeeController {
 		attributes.addFlashAttribute("toastMessage", ids.size() + "件の社員情報を削除しました");
 		return "redirect:/employees";
 	}
-	
-	
->>>>>>> stash
 
 	/**
 	 * フォームオブジェクトからエンティティオブジェクトへ値の詰め替えを行う。
