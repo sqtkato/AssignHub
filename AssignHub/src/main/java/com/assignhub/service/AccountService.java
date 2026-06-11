@@ -72,8 +72,11 @@ public class AccountService {
 		account.setPasswordHash(
 				passwordEncoder.encode(account.getPasswordHash()));
 
-		accountMapper.save(account);
-
+<<<<<<< HEAD
+=======
+		
+		
+>>>>>>> branch 'ポケットモンスター' of https://github.com/sqtkato/AssignHub.git
 	}
 
 	public boolean existsByLoginIdUpdate(String loginId, Integer currentAccountId) {
