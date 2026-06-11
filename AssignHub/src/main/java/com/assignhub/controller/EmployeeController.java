@@ -59,7 +59,7 @@ public class EmployeeController {
 			@RequestParam(name = "keyword_engineer_type", required = false) String keyword_engineer_type,
 			@RequestParam(name = "sort", defaultValue = "emp_id") String sort,
 			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-		model.addAttribute("employees", employeeService.findAll(keyword_name, keyword_company_assign, keyword_company, keyword_engineer_type, sort, order));
+model.addAttribute("employees", employeeService.findAll(keyword_name, keyword_company_assign, keyword_company, keyword_engineer_type, sort, order));
 		model.addAttribute("keyword_name", keyword_name);
 		model.addAttribute("keyword_company_assign", keyword_company_assign);
 		model.addAttribute("keyword_company", keyword_company);
@@ -83,7 +83,6 @@ public class EmployeeController {
 		return "employee/create";
 	}
 
-	
 	/**
 	 * 入力された社員情報をデータベースに登録する。
 	 *
@@ -116,7 +115,7 @@ public class EmployeeController {
 	public String detail(@PathVariable("id") Integer id, Model model) {
 	    // 1. 社員情報を取得（アサイン情報、部署情報も一緒にロード）
 	    Employee emp = employeeService.findById(id);
-	    model.addAttribute("employee", emp);
+	    model.addAttribute("emp", emp);
 	    
 	    return "employee/detail";
 	}
@@ -140,14 +139,12 @@ public class EmployeeController {
 	 */
 	@GetMapping("/export")
 	public String showExport(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
-	    
-		model.addAttribute("employees", employeeService.findAll(keyword, "emp_id", "asc"));
-	    model.addAttribute("count", employeeService.findAll(null, "emp_id", "asc").size());
+	    	model.addAttribute("employees", employeeService.findAll(keyword , null , null,null, "emp_id", "asc"));
+	    model.addAttribute("count", employeeService.findAll(keyword , null , null,null, "emp_id", "asc").size());
 	    model.addAttribute("keyword", keyword);
 	    return "employee/export";
 	}
-
-	
+		
 	/**
 	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
 	 *
@@ -155,7 +152,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv() {
-		List<Employee> employees = employeeService.findAll(null ,"emp_id", "asc");
+		List<Employee> employees = employeeService.findAll(null , null , null,null, "emp_id", "asc");
 		StringBuilder csvBuilder = new StringBuilder(
 				"社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,"
 				+ "生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,"
@@ -192,7 +189,7 @@ public class EmployeeController {
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		employeeService.delete(id);
