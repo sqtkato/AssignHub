@@ -312,19 +312,14 @@ public class AssignmentController {
             return "assignment/import";
         }
         try {
-            AssignmentService.ImportResult result = assignmentService.importCsv(file);
-            // import.html が個別属性を参照するため分解して渡す
-            model.addAttribute("successCount", result.successCount);
-            model.addAttribute("errorCount", result.errorCount);
-            model.addAttribute("importErrors", result.errors);
-            if (result.errorCount > 0) {
-                model.addAttribute("toastError",
-                        "以下の行でエラーが発生したため、取り込みをキャンセルしました。内容を修正して再アップロードしてください");
-            } else {
-                model.addAttribute("toastMessage",
-                        "アサイン情報を" + result.successCount + "件取り込みました");
-            }
-            return "assignment/import";
+        	AssignmentService.ImportResult result = assignmentService.importCsv(file);
+        	model.addAttribute("importResult", result);
+        	if (result.errorCount > 0) {
+        	    model.addAttribute("toastError", "一部の行でエラーが発生しました");
+        	} else {
+        	    model.addAttribute("toastMessage", result.successCount + "件のインポート処理が完了しました");
+        	}
+        	return "assignment/import";
         } catch (MalformedInputException e) {
             model.addAttribute("toastError", "CSVファイルはUTF-8形式でアップロードしてください");
             return "assignment/import";
