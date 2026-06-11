@@ -14,82 +14,84 @@ public interface DeletedAssignMapper {
 	 *
 	 * @param txtEmpName 社員名の検索キーワード
 	 * 
-     * @param txtCompanyName 企業名の検索キーワード
-     * @return アサイン情報のリスト
+	 * @param txtCompanyName 企業名の検索キーワード
+	 * @return アサイン情報のリスト
 	 */
-	List<DeletedAssign>findAll(
-			@Param("txtEmpName") String txtEmpName, 
-            @Param("txtAssignName") String txtAssignName,
-            @Param("txtCompanyName") String txtCompanyName,
-            @Param("txtContractStartDate") String txtContractStartDate,
-            @Param("txtContractEndDate") String txtContractEndDate);
-	
-List<DeletedAssign> findAllByIds(@Param("ids") List<Integer> ids);
-	
+	List<DeletedAssign> findAll(
+			@Param("txtEmpName") String txtEmpName,
+			@Param("txtAssignName") String txtAssignName,
+			@Param("txtCompanyName") String txtCompanyName,
+			@Param("txtContractStartDate") String txtContractStartDate,
+			@Param("txtContractEndDate") String txtContractEndDate);
+
+	List<DeletedAssign> findAllByIds(@Param("ids") List<Integer> ids);
+
 	/**
 	 * 単一復元（対象データの delete_flg を 0 に更新する）
 	 * * @param id アサインID
 	 * @return 影響を受けた行数（成功時は1、排他エラー時は0）
 	 */
 	int restore(@Param("id") Integer id);
-	
+
 	/**
 	 * 一括復元（選択された複数データの delete_flg を 0 に更新する）
 	 * * @param ids アサインIDのリスト
 	 * @return 影響を受けた行数（実際に更新された件数）
 	 */
 	int restoreBulk(@Param("ids") List<Integer> ids);
-	
+
 	/**
 	 * 単一物理削除（対象データをデータベースから完全に消去する）
 	 * * @param id アサインID
 	 * @return 影響を受けた行数（成功時は1、失敗時は0）
 	 */
 	int physicalDelete(@Param("id") Integer id);
-	
+
 	/**
 	 * 一括物理削除（選択された複数データをデータベースから完全に消去する）
 	 * * @param ids アサインIDのリスト
 	 * @return 影響を受けた行数（実際に削除された件数）
 	 */
 	int physicalDeleteBulk(@Param("ids") List<Integer> ids);
-	
+
 	/**
 	 * 指定されたアサインIDに紐づく企業数(派遣先)をカウントする（単一復元の生存チェック用）。
 	 */
 	int countcompanysdispatchsByAssignId(@Param("id") Integer id);
+
 	/**
 	 * 指定されたアサインIDのいずれかに紐づく企業数(派遣先)をカウントする（一括復元の生存条件チェック用）。
 	 */
 	int countcompanysdispatchsByAssignIds(@Param("ids") List<Integer> ids);
+
 	/**
 	 * 指定されたアサインIDに紐づく企業数(パートナー所属）をカウントする（単一復元の生存条件チェック用）。
 	 */
 	int countcompanyspartnerByAssignId(@Param("id") Integer id);
+
 	/**
 	 * 指定されたアサインIDのいずれかに紐づく企業数(パートナー所属）をカウントする（一括復元の生存条件チェック用）。
 	 */
 	int countcompanyspartnerByAssignIds(@Param("ids") List<Integer> ids);
+
 	/**
 	 * 指定されたアサインIDに紐づく社員情報(プロパー)をカウントする（単一復元の生存条件チェック用）。
 	 */
 	int countEmployeesproperByAssignId(@Param("ids") Integer id);
+
 	/**
 	 * 指定されたアサインIDのいずれかに紐づく社員情報(プロパー)をカウントする（一括復元の生存条件チェック用）。
 	 */
 	int countEmployeesproperByAssignIds(@Param("ids") List<Integer> ids);
+
 	/**
 	 * 指定されたアサインIDに紐づく社員情報(パートナー)をカウントする（単一復元の生存条件チェック用）。
 	 */
 	int countEmployeespartnerByAssignId(@Param("id") Integer id);
-	
+
 	/**
 	 * 指定されたアサインIDのいずれかに紐づく社員情報(パートナー)をカウントする（一括復元の生存条件チェック用）。
 	 */
 	int countEmployeespartnersByAssignIds(@Param("ids") List<Integer> ids);
 
-
 }
-
-
-
