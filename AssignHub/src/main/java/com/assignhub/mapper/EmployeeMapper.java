@@ -47,4 +47,15 @@ public interface EmployeeMapper {
 	
 	
 	void deleteBulk(@Param("ids") List<Integer> ids);
+
+	void update(Employee employee);
+	
+	/**
+	 * 指定されたメールアドレスの登録件数を取得する（指定IDを除外）。
+	 *
+	 * @param email        重複チェックするメールアドレス
+	 * @param excludeEmpId チェックから除外する自身の社員ID
+	 * @return 一致するメールアドレスの件数
+	 */
+	int countByEmail(@Param("email") String email, @Param("excludeEmpId") Integer excludeEmpId);
 }
