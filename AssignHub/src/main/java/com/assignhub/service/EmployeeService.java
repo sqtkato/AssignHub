@@ -73,6 +73,15 @@ public class EmployeeService {
 	 */
 	@Transactional(rollbackFor = Exception.class)
 	public void save(Employee employee) {
-		employeeMapper.insert(employee);
+		if (employee.getEmpId() == null || employee.getEmpId() == 0) {
+			employeeMapper.insert(employee);
+		} else {
+			employeeMapper.update(employee);
+		}
+	}
+	
+	public boolean isEmailDuplicate(String email, Integer excludeEmpId) {
+		int count = employeeMapper.countByEmail(email, excludeEmpId);
+		return count > 0;
 	}
 }
