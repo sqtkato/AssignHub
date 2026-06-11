@@ -1,112 +1,63 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
 
 <head>
-    <title>アサイン履歴情報登録入力</title>
+	<title>アサイン履歴情報登録入力</title>
 </head>
 
 <body>
-<div layout:fragment="content">
-
-    <div class="page-title-area">
-        <h2>アサイン履歴情報の新規登録</h2>
-    </div>
-
-    <div class="card form-card">
-        <form th:action="@{/assignments}" th:object="${assignmentForm}" method="post">
-
-            <div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}">
-                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
-            </div>
-
-            <div class="form-group">
-                <label>社員名 <span class="badge-required">必須</span></label>
-                <select th:field="*{empId}" class="form-control"
-					th:classappend="${#fields.hasErrors('empId')} ? ' input-error select-error' : ''">
-                    <option th:value="${null}">未選択</option>
-                    <option th:each="item : ${employeeOptions}"
-                            th:value="${item.id}"
-                            th:text="${item.name}">
-                    </option>
-                </select>
-                <div class="error-message"
-                     th:if="${#fields.hasErrors('empId')}"
-                     th:errors="*{empId}">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>企業名 <span class="badge-required">必須</span></label>
-                <select th:field="*{companyId}" class="form-control"
-				th:classappend="${#fields.hasErrors('companyId')} ? ' input-error select-error' : ''">
-                    <option th:value="${null}">未選択</option>
-                    <option th:each="item : ${companyOptions}"
-                            th:value="${item.id}"
-                            th:text="${item.name}">
-                    </option>
-                </select>
-                <div class="error-message"
-                     th:if="${#fields.hasErrors('companyId')}"
-                     th:errors="*{companyId}">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>契約開始日 <span class="badge-required">必須</span></label>
-                <input type="date" th:field="*{contractStartDate}" class="form-control">
-                <div class="error-message"
-                     th:if="${#fields.hasErrors('contractStartDate')}"
-                     th:errors="*{contractStartDate}">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>契約終了日</label>
-                <input type="date" th:field="*{contractEndDate}" class="form-control">
-                <div class="error-message"
-                     th:if="${#fields.hasErrors('contractEndDate')}"
-                     th:errors="*{contractEndDate}">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>契約単価 <span class="badge-required">必須</span></label>
-                <input type="text"
-                       th:field="*{unitPrice}"
-                       class="form-control"
-                       placeholder="例：100000">
-                <div class="error-message"
-                     th:if="${#fields.hasErrors('unitPrice')}"
-                     th:errors="*{unitPrice}">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>役割 <span class="badge-required">必須</span></label>
-                <select th:field="*{roleId}" class="form-control"
-				th:classappend="${#fields.hasErrors('roleId')} ? ' input-error select-error' : ''">
-                    <option th:value="${null}">未選択</option>
-                    <option th:each="item : ${roleOptions}"
-                            th:value="${item.id}"
-                            th:text="${item.name}">
-                    </option>
-                </select>
-                <div class="error-message"
-                     th:if="${#fields.hasErrors('roleId')}"
-                     th:errors="*{roleId}">
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">登録</button>
-                <a th:href="@{/assignments}" class="btn btn-secondary">戻る</a>
-            </div>
-
-        </form>
-    </div>
-
-</div>
+	<div layout:fragment="content">
+		<div class="page-title-area">
+			<h2>アサイン履歴情報の新規登録</h2>
+		</div>
+		<div class="card form-card">
+			<form th:action="@{/assignments}" th:object="${assignmentForm}" method="post">
+				<div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}">
+					<p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+				</div>
+				<div class="form-group">
+					<label>社員名 <span class="badge-required">必須</span></label>
+					<div class="error-message" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>企業名 <span class="badge-required">必須</span></label>
+					<div class="error-message" th:if="${#fields.hasErrors('companyId')}" th:errors="*{companyId}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>契約開始日 <span class="badge-required">必須</span></label>
+					<input type="date" th:field="*{contractStartDate}" class="form-control">
+					<div class="error-message" th:if="${#fields.hasErrors('contractStartDate')}"
+						th:errors="*{contractStartDate}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>契約終了日</label>
+					<input type="date" th:field="*{contractEndDate}" class="form-control">
+					<div class="error-message" th:if="${#fields.hasErrors('contractEndDate')}"
+						th:errors="*{contractEndDate}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>契約単価 <span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{unitPrice}" class="form-control" placeholder="例：100000">
+					<div class="error-message" th:if="${#fields.hasErrors('unitPrice')}" th:errors="*{unitPrice}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>役割 <span class="badge-required">必須</span></label>
+					<div class="error-message" th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}">
+					</div>
+				</div>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">登録</button>
+					<a th:href="@{/assignments}" class="btn btn-secondary">戻る</a>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
+
 </html>
