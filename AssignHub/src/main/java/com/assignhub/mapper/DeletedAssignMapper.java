@@ -55,36 +55,36 @@ List<DeletedAssign> findallByIds(@Param("ids") List<Integer> ids);
 	int physicalDeleteBulk(@Param("ids") List<Integer> ids);
 	
 	/**
-	 * 指定されたアサインIDに紐づく企業数(派遣先)をカウントする（単一復元の不在条件チェック用）。
+	 * 指定されたアサインIDに紐づく企業数(派遣先)をカウントする（単一復元の生存チェック用）。
 	 */
 	int countcompanysdispatchsByAssignId(@Param("id") Integer id);
 	/**
-	 * 指定されたアサインIDのいずれかに紐づく企業数(派遣先)をカウントする（一括復元の不在条件チェック用）。
+	 * 指定されたアサインIDのいずれかに紐づく企業数(派遣先)をカウントする（一括復元の生存条件チェック用）。
 	 */
 	int countcompanysdispatchsByAssignIds(@Param("ids") List<Integer> ids);
 	/**
-	 * 指定されたアサインIDに紐づく企業数(パートナー所属）をカウントする（単一復元の不在条件チェック用）。
+	 * 指定されたアサインIDに紐づく企業数(パートナー所属）をカウントする（単一復元の生存条件チェック用）。
 	 */
 	int countcompanyspartnerByAssignId(@Param("id") Integer id);
 	/**
-	 * 指定されたアサインIDのいずれかに紐づく企業数(パートナー所属）をカウントする（一括復元の不在条件チェック用）。
+	 * 指定されたアサインIDのいずれかに紐づく企業数(パートナー所属）をカウントする（一括復元の生存条件チェック用）。
 	 */
 	int countcompanyspartnerByAssignIds(@Param("ids") List<Integer> ids);
 	/**
-	 * 指定されたアサインIDに紐づく社員情報(プロパー)をカウントする（単一復元の不在条件チェック用）。
+	 * 指定されたアサインIDに紐づく社員情報(プロパー)をカウントする（単一復元の生存条件チェック用）。
 	 */
 	int countEmployeesproperByAssignId(@Param("ids") Integer id);
 	/**
-	 * 指定されたアサインIDのいずれかに紐づく社員情報(プロパー)をカウントする（一括復元の不在条件チェック用）。
+	 * 指定されたアサインIDのいずれかに紐づく社員情報(プロパー)をカウントする（一括復元の生存条件チェック用）。
 	 */
 	int countEmployeesproperByAssignIds(@Param("ids") List<Integer> ids);
 	/**
-	 * 指定されたアサインIDに紐づく社員情報(パートナー)をカウントする（単一復元の不在条件チェック用）。
+	 * 指定されたアサインIDに紐づく社員情報(パートナー)をカウントする（単一復元の生存条件チェック用）。
 	 */
 	int countEmployeespartnerByAssignId(@Param("id") Integer id);
 	
 	/**
-	 * 指定されたアサインIDのいずれかに紐づく社員情報(パートナー)をカウントする（一括復元の不在条件チェック用）。
+	 * 指定されたアサインIDのいずれかに紐づく社員情報(パートナー)をカウントする（一括復元の生存条件チェック用）。
 	 */
 	int countEmployeespartnersByAssignIds(@Param("ids") List<Integer> ids);
 
