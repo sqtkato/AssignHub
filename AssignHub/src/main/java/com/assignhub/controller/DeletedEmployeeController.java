@@ -32,7 +32,6 @@ public class DeletedEmployeeController {
 		this.deletedEmployeeService = deletedEmployeeService;
 	}
 	
-	// FIXME keyword.*は仮の名前(画面定義書準拠)
 	/**
 	 * 論理削除済み社員一覧画面を表示する。
 	 *
@@ -78,7 +77,7 @@ public class DeletedEmployeeController {
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクト
 	 */
-	@PostMapping("/restore-bulk")
+	@PostMapping("/bulk-restore")
     public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
         if (ids == null || ids.isEmpty()) {
             attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
@@ -110,7 +109,7 @@ public class DeletedEmployeeController {
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクト
 	 */
-	@PostMapping("/delete-bulk")
+	@PostMapping("/bulk-delete")
     public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
         if (ids == null || ids.isEmpty()) {
             attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
