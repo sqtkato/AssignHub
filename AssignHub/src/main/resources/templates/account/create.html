@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>アカウント情報の新規登録</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="page-title-area">
+        <h2>アカウント情報の新規登録</h2>
+    </div>
+	
+    <div class="card form-card">
+        <form th:action="@{/accounts/create}" method="post" th:object="${account}">
+
+			<div class="form-group">
+			    <label>ログインID <span class="badge-required">必須</span></label>
+			    <input type="text" th:field="*{loginId}" id="loginId" class="form-control"
+			        th:classappend="${#fields.hasErrors('loginId')} ? 'input-error'">
+			    <div th:if="${#fields.hasErrors('loginId')}">
+			        <div class="error-message" th:each="err : ${#fields.errors('loginId')}" th:text="${err}"></div>
+			    </div>
+			    <div class="error-message" th:if="${loginIdError}" th:text="${loginIdError}"></div>
+			</div>
+
+			<div class="form-group">
+			    <label>パスワード <span class="badge-required">必須</span></label>
+			    <input type="password" th:field="*{passwordHash}" id="passwordHash" class="form-control"
+			        th:classappend="${#fields.hasErrors('passwordHash')} ? 'input-error'">
+			    <div th:if="${#fields.hasErrors('passwordHash')}">
+			        <div class="error-message" th:each="err : ${#fields.errors('passwordHash')}" th:text="${err}"></div>
+			    </div>
+			</div>
+            <div class="form-group">
+                <label>権限付与</label>
+                <select th:field="*{permission}" class="form-control">
+                    <option value="0">一般</option>
+                    <option value="1">管理</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">登録</button>
+                <a th:href="@{/accounts}" class="btn btn-secondary">戻る</a>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

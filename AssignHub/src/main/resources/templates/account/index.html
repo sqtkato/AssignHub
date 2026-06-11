@@ -5,6 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
+	<link rel="stylesheet" href="/css/popup.css">
 </head>
 
 <body>
@@ -20,7 +21,7 @@
 					<div class="search-item">
 						<label>権限</label>
 						<select name="permission" class="form-control">
-							<option value="" th:selected="${permission == null}">未選択</option>
+							<option value="" th:selected="${permission == null}" class="">未選択</option>
 							<option value="0" th:selected="${permission != null and permission == 0}">一般</option>
 							<option value="1" th:selected="${permission != null and permission == 1}">管理</option>
 						</select>
@@ -47,7 +48,9 @@
 					</svg>
 					インポート
 				</a>
-				<button type="submit" formaction="/accounts/export" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除">
+
+				<button type="submit" formaction="/accounts/export" class="toolbar-btn"
+					title="チェックした項目を削除">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -83,36 +86,20 @@
 							<tr>
 								<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
 								<th>
-									<a class="sortable-header acc_id"
-										th:href="@{/accounts(keyword=${keyword}, sort='account_id', order=${currentSort == 'account_id' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-										アカウントID <span class="sort-icon"
-											th:classappend="${currentSort == 'account_id'} ? 'active'"
-											th:text="${currentSort == 'account_id' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
-									</a>
+									<a class="sortable-header acc_id"></a>
+									アカウントID
 								</th>
 								<th>
-									<a class="sortable-header acc_logId"
-										th:href="@{/accounts(keyword=${keyword}, sort='login_id', order=${currentSort == 'login_id' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-										ログインID <span class="sort-icon"
-											th:classappend="${currentSort == 'login_id'} ? 'active'"
-											th:text="${currentSort == 'login_id' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
-									</a>
+									<a class="sortable-header acc_logId"></a>
+									ログインID
 								</th>
 								<th>
-									<a class="sortable-header acc_per"
-										th:href="@{/accounts(keyword=${keyword}, sort='permission', order=${currentSort == 'permission' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-										権限 <span class="sort-icon"
-											th:classappend="${currentSort == 'permission'} ? 'active'"
-											th:text="${currentSort == 'permission' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
-									</a>
+									<a class="sortable-header acc_per"></a>
+									権限
 								</th>
 								<th>
-									<a class="sortable-header acc_name"
-										th:href="@{/accounts(keyword=${keyword}, sort='emp_name', order=${currentSort == 'emp_name' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-										社員名 <span class="sort-icon"
-											th:classappend="${currentSort == 'emp_name'} ? 'active'"
-											th:text="${currentSort == 'emp_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
-									</a>
+									<a class="sortable-header acc_name"></a>
+									社員名
 								</th>
 								<th class="col-action">操作</th>
 							</tr>
@@ -123,7 +110,7 @@
 										class="row-checkbox"></td>
 								<td th:text="${acc.accountId}" class="acc_id"></td>
 								<td th:text="${acc.loginId}" class="acc_logId"></td>
-								<td th:text="${acc.permission == '1' ? '管理' : '一般'}" class="acc_per"></td>
+								<td th:text="${acc.permission == 1 ? '管理' : '一般'}" class="acc_per"></td>
 								<td th:text="${acc.empName}"></td>
 								<td class="col-action">
 									<a th:href="@{/accounts/{id}/edit(id=${acc.accountId})}" class="btn-icon-svg"
@@ -158,72 +145,57 @@
 		</form>
 
 		<!-- 削除確認モーダル -->
-		<div id="deleteOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; align-items:center; justify-content:center;">
-			<div style="background:#fff; border-radius:12px; padding:2rem; width:340px; text-align:center; border:1px solid #ddd;">
-				<div style="width:48px; height:48px; border-radius:50%; background:#fef2f2; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+		<div id="deleteOverlay" class="modal-overlay">
+		    <div class="modal-box">
+		        <div class="modal-icon modal-icon-danger">
 					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<polyline points="3 6 5 6 21 6"></polyline>
 						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
 					</svg>
 				</div>
-				<p style="font-size:16px; font-weight:500; margin:0 0 8px;">アカウントを削除しますか？</p>
-				<p style="font-size:13px; color:#666; margin:0 0 1.5rem;">この操作は取り消せません。</p>
-				<div style="display:flex; gap:10px; justify-content:center;">
-					<button type="button" onclick="closeDeleteModal()"
-						style="padding:8px 24px; font-size:14px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer;">
-						キャンセル
-					</button>
+		        <p class="modal-title">アカウントを削除しますか？</p>
+		        <p class="modal-subtitle">この操作は取り消せません。</p>
+		        <div class="modal-actions">
+		            <button type="button" onclick="closeDeleteModal()" class="modal-btn modal-btn-cancel">キャンセル</button>
 					<form id="deleteForm" method="post">
-						<button type="submit"
-							style="padding:8px 24px; font-size:14px; border-radius:6px; border:none; background:#dc3545; color:#fff; cursor:pointer;">
-							削除する
-						</button>
+		                <button type="submit" class="modal-btn modal-btn-danger">削除する</button>
 					</form>
 				</div>
 			</div>
 		</div>
 
 		<!-- 一括削除確認モーダル -->
-		<div id="bulkDeleteOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; align-items:center; justify-content:center;">
-			<div style="background:#fff; border-radius:12px; padding:2rem; width:340px; text-align:center; border:1px solid #ddd;">
-				<div style="width:48px; height:48px; border-radius:50%; background:#fef2f2; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+		<div id="bulkDeleteOverlay" class="modal-overlay">
+		    <div class="modal-box">
+		        <div class="modal-icon modal-icon-danger">
 					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<polyline points="3 6 5 6 21 6"></polyline>
 						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
 					</svg>
 				</div>
-				<p style="font-size:16px; font-weight:500; margin:0 0 8px;">選択したアカウントを削除しますか？</p>
-				<p style="font-size:13px; color:#666; margin:0 0 1.5rem;">この操作は取り消せません。</p>
-				<div style="display:flex; gap:10px; justify-content:center;">
-					<button type="button" onclick="closeBulkDeleteModal()"
-						style="padding:8px 24px; font-size:14px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer;">
-						キャンセル
-					</button>
-					<button type="button" onclick="submitBulkDelete()"
-						style="padding:8px 24px; font-size:14px; border-radius:6px; border:none; background:#dc3545; color:#fff; cursor:pointer;">
-						削除する
-					</button>
+		        <p class="modal-title">選択したアカウントを削除しますか？</p>
+		        <p class="modal-subtitle">この操作は取り消せません。</p>
+		        <div class="modal-actions">
+		            <button type="button" onclick="closeBulkDeleteModal()" class="modal-btn modal-btn-cancel">キャンセル</button>
+		            <button type="button" onclick="submitBulkDelete()" class="modal-btn modal-btn-danger">削除する</button>
 				</div>
 			</div>
 		</div>
 
 		<!-- 未選択エラーモーダル -->
-		<div id="noSelectionOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; align-items:center; justify-content:center;">
-			<div style="background:#fff; border-radius:12px; padding:2rem; width:340px; text-align:center; border:1px solid #ddd;">
-				<div style="width:48px; height:48px; border-radius:50%; background:#fff3cd; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+		<div id="noSelectionOverlay" class="modal-overlay">
+		    <div class="modal-box">
+		        <div class="modal-icon modal-icon-warning">
 					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
 						<line x1="12" y1="9" x2="12" y2="13"></line>
 						<line x1="12" y1="17" x2="12.01" y2="17"></line>
 					</svg>
 				</div>
-				<p style="font-size:16px; font-weight:500; margin:0 0 8px;">アカウントが選択されていません</p>
-				<p style="font-size:13px; color:#666; margin:0 0 1.5rem;">削除するアカウントをチェックしてください。</p>
-				<div style="display:flex; justify-content:center;">
-					<button type="button" onclick="closeNoSelectionModal()"
-						style="padding:8px 24px; font-size:14px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer;">
-						OK
-					</button>
+		        <p class="modal-title">アカウントが選択されていません</p>
+		        <p class="modal-subtitle">削除するアカウントをチェックしてください。</p>
+		        <div class="modal-actions">
+		            <button type="button" onclick="closeNoSelectionModal()" class="modal-btn modal-btn-cancel">OK</button>
 				</div>
 			</div>
 		</div>

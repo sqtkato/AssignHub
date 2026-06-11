@@ -1,0 +1,153 @@
+.import-desc {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 25px;
+    line-height: 1.8;
+}
+
+.upload-box {
+    background: #d4f0f5;
+    border: 2px dashed #4a90a4;
+    border-radius: 4px;
+    padding: 35px 40px;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.upload-box .big {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.upload-box .small {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.file-inner {
+    background: #fff;
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 18px 20px;
+    display: inline-block;
+    min-width: 60%;
+    text-align: left;
+}
+
+.file-inner input[type="file"] {
+    font-size: 14px;
+}
+
+.template-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #1f3a5f;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+.btn-area {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.import-btn {
+    padding: 12px 45px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin: 0 20px;
+    border-radius: 3px;
+}
+
+.import-btn-do {
+    background: #1f3a5f;
+    color: #fff;
+}
+
+.import-btn-back {
+    background: #bbb;
+    color: #333;
+}
+
+.file-error {
+    color: red;
+    font-weight: bold;
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.import-divider {
+    border: none;
+    border-top: 1px solid #333;
+    margin-bottom: 30px;
+}
+
+.result h3 {
+    font-size: 22px;
+    margin-bottom: 25px;
+}
+
+.result-cards {
+    display: flex;
+    gap: 30px;
+}
+
+.result-card {
+    flex: 1;
+    padding: 30px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.result-card .label {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.result-card .num {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.card-success {
+    background: #d8f5dd;
+    color: #2a7d3f;
+}
+
+.card-error {
+    background: #f7dada;
+    color: #b03030;
+}
+
+.err-msg {
+    color: red;
+    font-weight: bold;
+    font-size: 17px;
+    margin: 25px 0 15px;
+    line-height: 1.8;
+}
+
+.err-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.err-table th {
+    background: #1f3a5f;
+    color: #fff;
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.err-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    color: #b03030;
+    font-size: 15px;
+}

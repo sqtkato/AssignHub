@@ -77,4 +77,39 @@ document.addEventListener("DOMContentLoaded", function() {
             updateBulkActionButton();
         });
     }
+       	// ==========================================
+    // ★【新しく追加】一括削除ボタンのクリック制御
+
+    // ==========================================
+    if (btnBulkDelete) {
+        btnBulkDelete.addEventListener('click', function(e) {
+            // 現在チェックされている数をカウント
+            const checkedCount = document.querySelectorAll('.row-checkbox:checked').length;
+            // 💡【重要】ボタンを押した「その瞬間」に、画面上のトースト要素をリアルタイムに取得し直す
+                let toastElement = document.getElementById("toast");
+
+            // ① 何も選択されていない場合
+            if (checkedCount === 0) {
+                e.preventDefault(); // サーバーへの送信（フォーム送信）を絶対に阻止する
+                
+                // JavaScript側で直接トーストを表示させる
+                if (toastElement) {
+                    toastElement.className = "toast toast-error"; // エラーの赤色にする
+                    toastElement.querySelector('span').textContent = "削除対象が選択されていません";
+                    toastElement.classList.add("show");
+                    
+                    setTimeout(function() {
+                        toastElement.classList.remove("show");
+                    }, 3000);
+                }
+                return;
+            }
+
+            // ② 1つ以上選択されている場合のみ、ポップアップを出す
+            const isConfirmed = confirm(`選択した ${checkedCount} 件の項目を一括削除しますか？`);
+            if (!isConfirmed) {
+                e.preventDefault(); // キャンセルされたら送信を阻止する
+            }
+        });
+    }
 });
