@@ -18,7 +18,7 @@ public class DeletedAccountService {
     /**
      * 論理削除済みのアカウント情報を全件取得する（一覧表示・検索用）。
      */
-    public List<DeletedAccount> getDeletedAccounts(String keyword, String sort, String order, Integer permission) {
+    public List<DeletedAccount> deletedfindAll(String keyword, String sort, String order, Integer permission) {
         return deletedAccountMapper.deletedfindAll(keyword, sort, order, permission);
     }
 
@@ -28,7 +28,7 @@ public class DeletedAccountService {
      * @param ids 画面のチェックボックスで選択されたアカウントIDのリスト
      * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
      */
-    public List<DeletedAccount> getExportData(List<Integer> ids) {
+    public List<DeletedAccount> deletedfindByIds(List<Integer> ids) {
         if (ids != null && ids.isEmpty()) {
         	return deletedAccountMapper.deletedfindByIds(ids);
         }
@@ -39,7 +39,7 @@ public class DeletedAccountService {
      * 単一データをゴミ箱から復元する。
      */
     @Transactional
-    public void restoreAccount(Integer id) {
+    public void restore(Integer id) {
         deletedAccountMapper.restore(id);
     }
 
@@ -48,8 +48,8 @@ public class DeletedAccountService {
      * * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
      */
     @Transactional
-    public void restoreAccountsBulk(List<Integer> ids) {
-        if (ids != null && ids.isEmpty()) {        
+    public void restoreBulk(List<Integer> ids) {
+        if (ids != null && !ids.isEmpty()) {        
         	deletedAccountMapper.restoreBulk(ids);
         }
     }
@@ -58,7 +58,7 @@ public class DeletedAccountService {
      * 単一データをデータベースから完全に削除する。
      */
     @Transactional
-    public void physicalDeleteAccount(Integer id) {
+    public void physicalDelete(Integer id) {
         deletedAccountMapper.physicalDelete(id);
     }
 
@@ -66,7 +66,7 @@ public class DeletedAccountService {
      * 選択された複数のデータをデータベースから完全に一括削除する。
      */
     @Transactional
-    public void physicalDeleteAccountsBulk(List<Integer> ids) {
+    public void physicalDeleteBulk(List<Integer> ids) {
         if (ids != null && !ids.isEmpty()) {
             deletedAccountMapper.physicalDeleteBulk(ids);
         }
@@ -77,22 +77,22 @@ public class DeletedAccountService {
     // =======================================================
 
     /** 単一アカウントに紐づく社員情報が存在するか判定 */
-    public boolean hasAttachedEmployees(Integer id) {
+    public boolean countEmployeesByAccountId(Integer id) {
         return deletedAccountMapper.countEmployeesByAccountId(id) > 0;
     }
 
     /** 複数アカウントの中に、紐づく社員情報が存在するものが含まれているか判定 */
-    public boolean hasAttachedEmployeesBulk(List<Integer> ids) {
+    public boolean countEmployeesByAccountIds(List<Integer> ids) {
         return deletedAccountMapper.countEmployeesByAccountIds(ids) > 0;
     }
 
     /** 単一アカウントに紐づくアサイン履歴が存在するか判定 */
-    public boolean hasAttachedAssignments(Integer id) {
+    public boolean countAssignmentsByAccountId(Integer id) {
         return deletedAccountMapper.countAssignmentsByAccountId(id) > 0;
     }
 
     /** 複数アカウントの中に、紐づくアサイン履歴が存在するものが含まれているか判定 */
-    public boolean hasAttachedAssignmentsBulk(List<Integer> ids) {
+    public boolean countAssignmentsByAccountIds(List<Integer> ids) {
         return deletedAccountMapper.countAssignmentsByAccountIds(ids) > 0;
     }
 }

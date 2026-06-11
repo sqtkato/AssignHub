@@ -1,6 +1,5 @@
 package com.assignhub.controller;
 
-
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class DeletedAccountController {
             @RequestParam(name = "permission", required = false) Integer permission, // permissionを追加
             Model model) {
         
-        model.addAttribute("accounts", deletedAccountService.getDeletedAccounts(keyword, sort, order, permission));
+        model.addAttribute("accounts", deletedAccountService.deletedfindAll(keyword, sort, order, permission));
         model.addAttribute("keyword", keyword); 
         model.addAttribute("permission", permission);
         model.addAttribute("currentSort", sort);
@@ -59,7 +58,7 @@ public class DeletedAccountController {
     /* 単一復元 */
     @PostMapping("/{id}/restore") 
     public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-        deletedAccountService.restoreAccount(id);
+        deletedAccountService.restore(id);
         attributes.addFlashAttribute("toastMessage", "アカウント情報を復元しました");
         return "redirect:/deleted-accounts"; 
     }
@@ -71,7 +70,7 @@ public class DeletedAccountController {
             attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
             return "redirect:/deleted-accounts";
         }
-        deletedAccountService.restoreAccountsBulk(ids);
+        deletedAccountService.restoreBulk(ids);
         attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を復元しました");
         return "redirect:/deleted-accounts";
     }
@@ -84,16 +83,16 @@ public class DeletedAccountController {
     @PostMapping("/{id}/delete")
     public String deleted(@PathVariable("id") Integer id, RedirectAttributes attributes) {
         // Serviceの判定メソッドを使って不在条件をチェック
-        if (deletedAccountService.hasAttachedEmployees(id)) {
+        if (deletedAccountService.countEmployeesByAccountId(id)) {
             attributes.addFlashAttribute("toastError", "紐づく社員情報が存在するため、物理削除できません。先に社員情報を物理削除してください。");
             return "redirect:/deleted-accounts";
         }
-        if (deletedAccountService.hasAttachedAssignments(id)) {
+        if (deletedAccountService.countAssignmentsByAccountId(id)) {
             attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するため、物理削除できません。先にアサイン履歴情報を物理削除してください。");
             return "redirect:/deleted-accounts";
         }
         
-        deletedAccountService.physicalDeleteAccount(id);
+        deletedAccountService.physicalDelete(id);
         attributes.addFlashAttribute("toastMessage", "アカウント情報を完全に削除しました");
         return "redirect:/deleted-accounts";
     }
@@ -107,34 +106,34 @@ public class DeletedAccountController {
         }
         
         // Serviceの判定メソッドを使って一括不在条件をチェック
-        if (deletedAccountService.hasAttachedEmployeesBulk(ids)) {
+        if (deletedAccountService.countEmployeesByAccountIds(ids)) {
             attributes.addFlashAttribute("toastError", "紐づく社員情報が存在するアカウントが含まれているため、物理削除できません。");
             return "redirect:/deleted-accounts";
         }
-        if (deletedAccountService.hasAttachedAssignmentsBulk(ids)) {
+        if (deletedAccountService.countAssignmentsByAccountIds(ids)) {
             attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するアカウントが含まれているため、物理削除できません。");
             return "redirect:/deleted-accounts";
         }
         
-        deletedAccountService.physicalDeleteAccountsBulk(ids);
+        deletedAccountService.physicalDeleteBulk(ids);
         attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を完全に削除しました");
         return "redirect:/deleted-accounts";
     }
 	
 //	エクスポート画面へ遷移	
-	@PostMapping("/export")
+	@GetMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
 		//引数内書き換え
-		model.addAttribute("count", deletedAccountService.getExportData(ids));
+		model.addAttribute("count", deletedAccountService.deletedfindByIds(ids));
 		
 		return "deleted_account/export";
 	}
 	
 //エクスポートのダウンロード処理
-	@PostMapping("/export/download")
+	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
 			Model model) {
-		List<DeletedAccount> delAccount = deletedAccountService.getExportData(ids);
+		List<DeletedAccount> delAccount = deletedAccountService.deletedfindByIds(ids);
 		//引数名書き換え
 		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,削除フラグ,作成日時,更新日時,社員名\n");
 		//括弧内書き換え

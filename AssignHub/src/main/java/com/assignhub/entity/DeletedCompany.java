@@ -55,6 +55,6 @@ public class DeletedCompany {
 	private LocalDateTime updatedAt;
 	
 	/** 削除フラグ*/
-	private Integer delete_flag;
+	private Integer deleteFlg;
 
 }

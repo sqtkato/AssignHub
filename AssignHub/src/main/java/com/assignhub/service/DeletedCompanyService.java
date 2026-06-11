@@ -17,14 +17,14 @@ public class DeletedCompanyService {
     /**
      * 論理削除済みの企業情報を全件取得する（一覧表示・検索用）。
      */
-    public List<DeletedCompany> getDeletedCompanies(String keyword, String tel,String sort, String order) {
+    public List<DeletedCompany> deletedfindAll(String keyword, String tel,String sort, String order) {
         return deletedCompanyMapper.deletedfindAll(keyword, tel,sort, order);
     }
 
     /**
      * 選択された企業情報を取得する（CSVエクスポート用）。
      */
-    public List<DeletedCompany> getExportData(List<Integer> ids) {
+    public List<DeletedCompany> deletedfindByIds(List<Integer> ids) {
         if (ids != null && !ids.isEmpty()) {
             return deletedCompanyMapper.deletedfindByIds(ids);
         }
@@ -35,7 +35,7 @@ public class DeletedCompanyService {
      * 単一復元処理。
      */
     @Transactional
-    public void restoreCompany(Integer id) {
+    public void restore(Integer id) {
         deletedCompanyMapper.restore(id);
     }
 
@@ -43,7 +43,7 @@ public class DeletedCompanyService {
      * 一括復元処理。
      */
     @Transactional
-    public void restoreCompaniesBulk(List<Integer> ids) {
+    public void restoreBulk(List<Integer> ids) {
         if (ids != null && !ids.isEmpty()) {
             deletedCompanyMapper.restoreBulk(ids);
         }
@@ -53,7 +53,7 @@ public class DeletedCompanyService {
      * 単一物理削除処理。
      */
     @Transactional
-    public void physicalDeleteCompany(Integer id) {
+    public void physicalDelete(Integer id) {
         deletedCompanyMapper.physicalDelete(id);
     }
 
@@ -61,7 +61,7 @@ public class DeletedCompanyService {
      * 一括物理削除処理。
      */
     @Transactional
-    public void physicalDeleteCompaniesBulk(List<Integer> ids) {
+    public void physicalDeleteBulk(List<Integer> ids) {
         if (ids != null && !ids.isEmpty()) {
             deletedCompanyMapper.physicalDeleteBulk(ids);
         }
@@ -73,25 +73,25 @@ public class DeletedCompanyService {
 
     /** * 単一企業に紐づく社員情報（派遣先 または パートナー所属元）が存在するか判定 
      */
-    public boolean hasAttachedEmployees(Integer id) {
+    public boolean countEmployeesByCompanyId(Integer id) {
         return deletedCompanyMapper.countEmployeesByCompanyId(id) > 0;
     }
 
     /** * 複数企業の中に、紐づく社員情報が存在するものが含まれているか判定 
      */
-    public boolean hasAttachedEmployeesBulk(List<Integer> ids) {
+    public boolean countEmployeesByCompanyIds(List<Integer> ids) {
         return deletedCompanyMapper.countEmployeesByCompanyIds(ids) > 0;
     }
 
     /** * 単一企業に紐づくアサイン履歴（現場）が存在するか判定 
      */
-    public boolean hasAttachedAssignments(Integer id) {
+    public boolean countAssignmentsByCompanyId(Integer id) {
         return deletedCompanyMapper.countAssignmentsByCompanyId(id) > 0;
     }
 
     /** * 複数企業の中に、紐づくアサイン履歴が存在するものが含まれているか判定 
      */
-    public boolean hasAttachedAssignmentsBulk(List<Integer> ids) {
+    public boolean countAssignmentsByCompanyIds(List<Integer> ids) {
         return deletedCompanyMapper.countAssignmentsByCompanyIds(ids) > 0;
     }
 
