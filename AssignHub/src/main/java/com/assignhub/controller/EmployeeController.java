@@ -120,6 +120,58 @@ model.addAttribute("employees", employeeService.findAll(keyword_name, keyword_co
 	    return "employee/detail";
 	}
 	
+	@GetMapping("/{id}/edit")
+	public String edit(@PathVariable("id") Integer id, Model model) {
+		if (!model.containsAttribute("employeeForm")) {
+			Employee emp = employeeService.findById(id);
+			EmployeeForm form = new EmployeeForm();
+			form.setLastName(emp.getLastName());
+			form.setFirstName(emp.getFirstName());
+			form.setLastNameKana(emp.getLastNameKana());
+			form.setFirstNameKana(emp.getFirstNameKana());
+			form.setBirthDate(emp.getBirthDate());
+			form.setHireDate(emp.getHireDate());
+			form.setYearsOfService(emp.getYearsOfService());
+			form.setZipCode(emp.getZipCode());
+			form.setAddress1(emp.getAddress1());
+			form.setAddress2(emp.getAddress2());
+			form.setEmpTel(emp.getEmpTel());
+			form.setEmail(emp.getEmail());
+			form.setEnginnerType(emp.getEngineerType());
+			form.setCompanyName(emp.getCompanyName());
+			form.setAccountId(emp.getAccountId());
+			form.setDepartment(emp.getDepartment());
+			form.setJobTitle(emp.getJobTitle());
+			model.addAttribute("employeeForm", form);
+		}
+//		model.addAttribute("company", companyService.findAll(null, "emp_company_name", "asc"));
+		return "employee/edit";
+	}
+	
+	
+	@PostMapping("/{id}/edit")
+	public String update(@PathVariable("id") Integer id,
+			@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
+			BindingResult result, RedirectAttributes attributes, Model model) {
+
+		if (employeeService.isEmailDuplicate(employeeForm.getEmail(), id)) {
+			result.rejectValue("email", "error.employeeForm", "このメールアドレスはすでに他の社員に使用されています");
+		}
+
+		if (result.hasErrors()) {
+			model.addAttribute("departments", companyService.findAll(null, "dept_id", "asc"));
+			return "employee/edit";
+		}
+
+		Employee emp = new Employee();
+		emp.setEmpId(id);
+		copyFormToEntity(employeeForm, emp);
+		employeeService.save(emp);
+		attributes.addFlashAttribute("toastMessage", "社員情報を更新しました");
+		return "redirect:/employees";
+	}
+
+	
 	/**
 	 * 社員データのインポート画面を表示する。
 	 *
