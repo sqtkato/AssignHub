@@ -11,6 +11,11 @@
         <result property="deleteFlg" column="delete_flg" />
         <result property="createdAt" column="created_at" />
         <result property="updatedAt" column="updated_at" />
+        <association property="deletedEmployee"
+			javaType="com.example.entity.DeletedAccount">
+			<id property="empId" column="m_employee_id"/>
+			<result property="empName" column="emp_name" />
+		</association>
     </resultMap>
 	<!-- 一覧表示 -->
     <select id="deletedfindAll" resultMap="deletedAccountResultMap">

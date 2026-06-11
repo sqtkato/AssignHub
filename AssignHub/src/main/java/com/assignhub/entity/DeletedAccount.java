@@ -26,7 +26,7 @@ public class DeletedAccount {
 	/** 更新日時 */
 	private LocalDateTime updatedAt;
 	
-	/** 社員名（外部DBから取得）*/
-	private String empName;
+	/** 社員情報（外部DBから取得)*/
+	private DeletedEmployee deletedEmployee;
 
 }
