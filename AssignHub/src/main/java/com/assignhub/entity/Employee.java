@@ -14,7 +14,7 @@ import lombok.Data;
 public class Employee {
 	/** 社員ID（主キー） */
 	private Integer empId;
-
+	
 	/** 社員名 */
 	private String empName;
 
@@ -26,4 +26,7 @@ public class Employee {
 
 	/** 更新日時 */
 	private LocalDateTime updatedAt;
+	
+	/** エンジニアタイプ */
+	private String engineerType;
 }
