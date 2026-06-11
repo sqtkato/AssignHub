@@ -18,23 +18,14 @@
 					<label>社員名</label>
 					<input type="text" name="keyword_name" class="form-control" th:value="${keyword_name}" placeholder="例：山田 太郎">
 				</div>
-				<button type="submit" class="btn btn-secondary">検索</button>
-			</form>
-			<form th:action="@{/employees}" method="get" class="search-form">
-				<div class="form-group form-group-search">
+			    <div class="form-group form-group-search">
 					<label>アサイン先企業</label>
 					<input type="text" name="keyword_company_assign" class="form-control" th:value="${keyword_company_assign}" placeholder="例：山田 太郎">
 				</div>
-				<button type="submit" class="btn btn-secondary">検索</button>
-			</form>
-			<form th:action="@{/employees}" method="get" class="search-form">
 				<div class="form-group form-group-search">
 					<label>所属企業</label>
 					<input type="text" name="keyword_company" class="form-control" th:value="${keyword_company}" placeholder="例：山田 太郎">
 				</div>
-				<button type="submit" class="btn btn-secondary">検索</button>
-			</form>
-			<form th:action="@{/employees}" method="get" class="search-form">
 				<div class="form-group form-group-search">
 					<label>エンジニアタイプ</label>
 					<select id="keyword_engineer_type" name="keyword_engineer_type" class="form-control">
@@ -43,13 +34,13 @@
 					<option value="パートナー" th:selected="${keyword_engineer_type == 'パートナー'}">パートナー</option>
 					</select>
 				</div>
-				<button type="submit" class="btn btn-secondary">検索</button>
-			</form>
+			    <button type="submit" class="btn btn-secondary">検索</button>
+		    </form>
 		</div>
 
 		<form th:action="@{/employees/bulk-delete}" method="post" id="listForm">
 			<div class="table-toolbar">
-					<a th:href="@{/rookies/import}" class="toolbar-btn" title="CSVファイルから一括登録">
+					<a th:href="@{/employees/import}" class="toolbar-btn" title="CSVファイルから一括登録">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 							stroke-linecap="round" stroke-linejoin="round">
 							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -77,14 +68,14 @@
 						</svg>
 						一括削除
 					</button>
-				<a th:href="@{/employees/create}" class="toolbar-btn toolbar-btn-primary" title="新しい社員を登録">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-						stroke-linecap="round" stroke-linejoin="round">
-						<line x1="12" y1="5" x2="12" y2="19"></line>
-						<line x1="5" y1="12" x2="19" y2="12"></line>
-					</svg>
-					新規登録
-				</a>
+				    <a th:href="@{/employees/new}" class="toolbar-btn toolbar-btn-primary" title="新しい社員を登録">
+					    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						    stroke-linecap="round" stroke-linejoin="round">
+						    <line x1="12" y1="5" x2="12" y2="19"></line>
+						    <line x1="5" y1="12" x2="19" y2="12"></line>
+					    </svg>
+					    新規登録
+				    </a>
 			</div>
 
 			<div class="card">
@@ -95,43 +86,37 @@
 							<th>
 								<a class="sortable-header"
 									th:href="@{/employees(keyword=${keyword}, sort='emp_id', order=${currentSort == 'emp_id' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-									ID <span class="sort-icon" th:classappend="${currentSort == 'emp_id'} ? 'active'"
-										th:text="${currentSort == 'emp_id' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+									ID 
 								</a>
 							</th>
 							<th>
 								<a class="sortable-header"
 									th:href="@{/employees(keyword=${keyword}, sort='emp_name', order=${currentSort == 'emp_name' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-									社員名 <span class="sort-icon" th:classappend="${currentSort == 'emp_name'} ? 'active'"
-										th:text="${currentSort == 'emp_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+									社員名 
 								</a>
 							</th>
 							<th>
 								<a class="sortable-header"
 									th:href="@{/employees(keyword=${keyword}, sort='company_name_assign', order=${currentSort == 'company_name_assign' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-									アサイン先企業 <span class="sort-icon" th:classappend="${currentSort == 'company_name_assign'} ? 'active'"
-										th:text="${currentSort == 'company_name_assign' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+									アサイン先企業 
 								</a>
 							</th>
 							<th>
 								<a class="sortable-header"
 									th:href="@{/employees(keyword=${keyword}, sort='engineer_type', order=${currentSort == 'engineer_type' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-									エンジニアタイプ <span class="sort-icon" th:classappend="${currentSort == 'engineer_type'} ? 'active'"
-										th:text="${currentSort == 'engineer_type' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+									エンジニアタイプ 
 								</a>
 							</th>
 							<th>
 								<a class="sortable-header"
 									th:href="@{/employees(keyword=${keyword}, sort='company_name_belong', order=${currentSort == 'company_name_belong' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-									所属先企業 <span class="sort-icon" th:classappend="${currentSort == 'company_name_belong'} ? 'active'"
-										th:text="${currentSort == 'company_name_belong' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+									所属先企業 
 								</a>
 							</th>
 							<th>
 								<a class="sortable-header"
 									th:href="@{/employees(keyword=${keyword}, sort='', order=${currentSort == '' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-									操作 <span class="sort-icon" th:classappend="${currentSort == 'emp_name'} ? 'active'"
-										th:text="${currentSort == 'emp_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
+									操作 
 								</a>
 							</th>
 						</tr>
@@ -146,27 +131,16 @@
 							<td th:text="${emp.engineerType}"></td>
 							<td th:text="${emp.companyName ?: 'ー'}"></td>
 							<td class="col-action">
-								    
-								
-									<button type="submit" th:formaction="@{/employees/{id}/detale(id=${emp.empId})}"
-											class="btn-icon-svg delete" title="詳細">
+								<a th:href="@{/employees/{id}/detail(id=${emp.empId})}" class="btn-icon-svg" title="詳細">
 									<span>ℹ️</span>		
-									</button>
-									
-									<button type="submit" th:formaction="@{/employees/{id}/edit(id=${emp.empId})}"
-											class="btn-icon-svg delete" title="編集">
-									<span>📝</span>		
-									</button>
-																								
-									<button type="submit" th:formaction="@{/employees/{id}/delete(id=${emp.empId})}"
-											class="btn-icon-svg delete" title="削除" onclick="return confirm('本当に削除しますか？');">
+								</a>
+								<a th:href="@{/employees/{id}/edit(id=${emp.empId})}" class="btn-icon-svg" title="編集">
+								    <span>📝</span>		
+							    </a>
+								<button type="submit" th:formaction="@{/employees/{id}/delete(id=${emp.empId})}" class="btn-icon-svg delete" title="削除" onclick="return confirm('本当に削除しますか？');">
 								    <span>🗑️</span>			
-									</button>
-									
-									
-								    
+								</button>
 							</td>
-							
 						</tr>
 						<tr th:if="${#lists.isEmpty(employees)}">
 							<td colspan="6" class="text-center">該当するデータがありません。</td>
