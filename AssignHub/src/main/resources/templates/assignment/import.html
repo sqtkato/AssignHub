@@ -1,71 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
-
 <head>
 	<title>アサイン履歴情報インポート</title>
 </head>
-
 <body>
 	<div layout:fragment="content">
-
 		<div class="page-title-area">
 			<h2>アサイン履歴情報インポート</h2>
 		</div>
-
 		<div class="card">
 			<p class="import-lead">CSVファイルを選択してアサイン履歴情報を一括登録・更新します。</p>
 			<p class="import-note">※既存のアサインIDと一致する場合は上書き更新、空欄の場合は新規登録されます。</p>
-
 			<form th:action="@{/assignments/import}" method="post" enctype="multipart/form-data" id="importForm">
-
 				<div class="import-dropzone">
 					<p class="import-dropzone-title">アサイン履歴情報CSVを選択してください</p>
 					<p class="import-dropzone-format">対応形式: .csv (UTF-8) / BOMあり推奨、最大5MB</p>
-
 					<div class="import-filebox">
-						<input type="file" id="input_assign_file_upload" name="input_assign_file_upload"
-							accept=".csv" required>
+						<input type="file" id="input_assign_file_upload" name="input_assign_file_upload" accept=".csv" required>
 						<div>
 							<span class="import-file-msg">ファイルを選択してください</span>
 						</div>
 					</div>
 				</div>
-
 				<div class="import-template-link">
 					<a id="lnk_csv_download" th:href="@{/assignments/import/template}">CSVテンプレートダウンロード</a>
 				</div>
-
 				<div class="import-actions">
 					<button type="submit" id="btn_assign_import" class="btn-import">インポート</button>
-					<button type="button" id="btn_assign_back" class="btn-back"
-						th:onclick="|location.href='@{/assignments}'|">戻る</button>
+					<button type="button" id="btn_assign_back" class="btn-back" th:onclick="|location.href='@{/assignments}'|">戻る</button>
 				</div>
 			</form>
 		</div>
-
-		<div class="card" th:if="${errorCount != null}">
+		<div class="card" th:if="${importResult != null}">
 			<div class="result-title-row">
 				<h3>処理結果</h3>
 			</div>
-
 			<div class="result-boxes">
 				<div class="result-box result-box-success">
 					<div class="result-box-label">正常取り込み</div>
-					<div id="txt_assign_success" class="result-box-value" th:text="${successCount} + '件'">0件</div>
+					<div id="txt_assign_success" class="result-box-value" th:text="${importResult.successCount} + '件'">0件</div>
 				</div>
 				<div class="result-box result-box-error">
 					<div class="result-box-label">エラー</div>
-					<div id="txt_assign_faild" class="result-box-value" th:text="${errorCount} + '件'">0件</div>
+					<div id="txt_assign_faild" class="result-box-value" th:text="${importResult.errorCount} + '件'">0件</div>
 				</div>
 			</div>
-
-			<div th:if="${errorCount > 0}">
+			<div th:if="${importResult.errorCount > 0}">
 				<p class="result-error-msg">
 					以下の行でエラーが発生したため、取り込みをキャンセルしました。<br>
 					内容を修正して再アップロードしてください。
 				</p>
-
 				<table class="table">
 					<thead class="table-dark">
 						<tr>
@@ -75,7 +60,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="err : ${importErrors}" class="result-error-row">
+						<tr th:each="err : ${importResult.errors}" class="result-error-row">
 							<td th:text="${err.rowNum} + '行目'"></td>
 							<td th:text="${err.field}"></td>
 							<td th:text="${err.message}"></td>
@@ -84,8 +69,6 @@
 				</table>
 			</div>
 		</div>
-
 	</div>
 </body>
-
 </html>
