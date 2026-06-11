@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
+import com.assignhub.form.ImportError;
 import com.assignhub.service.AccountService;
 
 /**
@@ -37,10 +38,24 @@ public class AccountController {
 
 	private final AccountService accountService;
 
+	/**
+	 * コンストラクタによる依存性の注入。
+	 *
+	 * @param companyService 企業サービス
+	 */
 	public AccountController(AccountService accountService) {
 		this.accountService = accountService;
 	}
 
+	/**
+	 * アカウント一覧画面を表示する。検索・ソート条件に応じたデータを取得する。
+	 *
+	 * @param keyword 検索キーワード（任意）
+	 * @param sort ソート対象のカラム名（デフォルト: company_id）
+	 * @param order ソート順（デフォルト: asc）
+	 * @param model 画面描画用モデル
+	 * @return 一覧画面のテンプレートパス
+	 */
 	@GetMapping
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
 			@RequestParam(name = "sort", defaultValue = "login_id") String sort,
@@ -51,7 +66,7 @@ public class AccountController {
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
         model.addAttribute("currentLoginId",session.getAttribute("loginId"));
-    
+
 		return "account/index";
 	}
 	
@@ -81,14 +96,27 @@ public class AccountController {
 
 	}
 
+	/**
+	 * 社員データのエクスポート画面を表示する。
+	 *
+	 * @param keyword     現在の検索キーワード（状態保持用）
+	 * @param deptId 現在の絞り込み部署ID
+	 * @param model  画面描画用のモデル
+	 * @return エクスポート画面のテンプレートパス
+	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			Model model, HttpSession session, RedirectAttributes attributes) {
 		
         model.addAttribute("currentLoginId",session.getAttribute("loginId"));
+		// ★【最優先】まず最初にnullチェックを行う
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
-			return "redirect:/accounts";
+			return "redirect:/accounts"; // 元の一覧画面に戻す
+		}
+		if (ids.size() == 0) {
+			return "account/index";
+
 		}
 		model.addAttribute("count", accountService.findByIds(ids).size());
 		List<Account> accounts = accountService.findByIds(ids);
@@ -126,53 +154,100 @@ public class AccountController {
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
-	@GetMapping("/import")
+	// ===== ここから アカウント情報インポート機能 =====
 
+	/**
+	 * アカウント情報インポート画面を表示する。
+	 */
+	@GetMapping("/import")
 	public String importPage(HttpSession session,Model model) {
         model.addAttribute("currentLoginId",session.getAttribute("loginId"));
 		return "account/import";
 	}
 
+	/**
+	 * CSVファイルをアップロードしてアカウント情報を一括登録・更新する。
+	 */
 	@PostMapping("/import")
-	public String importCsv(@RequestParam("file") MultipartFile file, Model model) {
-		String filename = (file != null) ? file.getOriginalFilename() : null;
-		if (file == null || file.isEmpty()
-				|| filename == null || !filename.toLowerCase().endsWith(".csv")) {
+	public String doImport(@RequestParam("file") MultipartFile file, Model model) {
+		model.addAttribute("done", true);
+
+		// 没选文件
+		if (file == null || file.isEmpty()) {
+			model.addAttribute("fileError", "ファイルを選択してください");
+			return "account/import";
+		}
+
+		// No.2 非CSV文件
+		String filename = file.getOriginalFilename();
+		if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
 			model.addAttribute("fileError", "ファイル形式が正しくありません。.csvファイルを選択してください。");
 			return "account/import";
 		}
 
+		// No.3 超过5MB
 		if (file.getSize() > 5 * 1024 * 1024) {
 			model.addAttribute("fileError", "ファイルサイズは5MB以内にしてください。");
 			return "account/import";
 		}
 
-		try {
-			java.nio.charset.CharsetDecoder decoder = java.nio.charset.StandardCharsets.UTF_8.newDecoder();
-			decoder.onMalformedInput(java.nio.charset.CodingErrorAction.REPORT);
-			decoder.onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT);
-			decoder.decode(java.nio.ByteBuffer.wrap(file.getBytes()));
-		} catch (Exception e) {
-			model.addAttribute("fileError", "UTF-8のCSVファイルを選択してください。");
-			return "account/import";
-		}
-
+		// No.4 文字コードチェック（UTF-8で読めるか試す）
+				try {
+					java.nio.charset.CharsetDecoder decoder =
+							java.nio.charset.StandardCharsets.UTF_8.newDecoder();
+					decoder.onMalformedInput(java.nio.charset.CodingErrorAction.REPORT);
+					decoder.onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT);
+					decoder.decode(java.nio.ByteBuffer.wrap(file.getBytes()));
+				} catch (Exception e) {
+					// UTF-8として読めない → 文字コードが違う
+					model.addAttribute("fileError", "UTF-8のCSVファイルを選択してください。");
+					return "account/import";
+				}
+		
 		try {
 			int total = accountService.countDataRows(file);
+
+			// No.5 超过500件
 			if (total > 500) {
 				model.addAttribute("globalError", "登録後の件数が上限に達しています。アカウント登録条件は500件です。");
+				model.addAttribute("successCount", 0);
+				model.addAttribute("errorCount", total);
 				return "account/import";
 			}
 
-			AccountService.ImportResult result = accountService.importCsv(file);
-			model.addAttribute("importResult", result);
-			return "account/import";
+			// ① 先校验（No.6〜13、No.7存在チェック、権限チェック）
+			List<ImportError> errors = accountService.validate(file);
+
+			if (!errors.isEmpty()) {
+				// 有错 → 全部取消，不写DB
+				model.addAttribute("successCount", 0);
+				model.addAttribute("errorCount", errors.size());
+				model.addAttribute("errors", errors);
+				return "account/import";
+			}
+
+			// ② 校验全通过 → 写入DB（INSERT/UPDATE）
+			List<ImportError> dbErrors = accountService.importData(file);
+
+			if (!dbErrors.isEmpty()) {
+				// No.14 写入有失败
+				model.addAttribute("successCount", total - dbErrors.size());
+				model.addAttribute("errorCount", dbErrors.size());
+				model.addAttribute("errors", dbErrors);
+			} else {
+				// 全部成功
+				model.addAttribute("successCount", total);
+				model.addAttribute("errorCount", 0);
+			}
 		} catch (Exception e) {
 			model.addAttribute("fileError", "ファイルの読み込みに失敗しました");
-			return "account/import";
 		}
+		return "account/import";
 	}
 
+	/**
+	 * CSVテンプレート（見本）をダウンロードする。
+	 */
 	@GetMapping("/import/template")
 	public ResponseEntity<byte[]> downloadTemplate() {
 		String csv = "アカウントID,ログインID,パスワード\n"
@@ -187,14 +262,20 @@ public class AccountController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Disposition", "attachment; filename=account_template.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
+
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
+	/**
+	 * アカウントを一件論理削除
+	 *
+	 * @param id 削除対象のアカウントID
+	 * @return 一覧画面へのリダイレクトパス
+	 */
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		accountService.delete(id);
 		return "redirect:/accounts";
-
 	
 	/**
 	 * 選択された複数の社員情報を一括で物理削除する。
@@ -220,9 +301,7 @@ public class AccountController {
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable("id") Integer id, HttpSession session, Model model) {
 		if (!model.containsAttribute("accountForm")) {
-
 	        model.addAttribute("currentLoginId",session.getAttribute("loginId"));
-
 			Account acc = accountService.findById(id);
 			AccountForm form = new AccountForm();
 			form.setAccountId(acc.getAccountId());
@@ -239,7 +318,6 @@ public class AccountController {
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result, RedirectAttributes attributes, Model model) {
 
-
 		if (result.hasErrors()) {
 			return "account/edit";
 		}
@@ -249,7 +327,6 @@ public class AccountController {
 			return "account/edit";
 		}
 	
-
 		Account acc = new Account();
 		// :bulb: 画面から届いたデータを、DBに送るオブジェクトにしっかりセットする！
 	    acc.setLoginId(accountForm.getLoginId());
@@ -267,6 +344,4 @@ public class AccountController {
 		e.setPasswordHash(f.getPasswordHash());
 		e.setPermission(f.getPermission());
 	}
-
 }
-
