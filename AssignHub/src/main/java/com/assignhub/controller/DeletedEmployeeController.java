@@ -1,7 +1,11 @@
 package com.assignhub.controller;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.assignhub.entity.Employee;
 import com.assignhub.service.DeletedEmployeeService;
 
 /**
@@ -151,8 +156,45 @@ public class DeletedEmployeeController {
 		return "employee/export";
 	}
 
-	// TODO エクスポートのダウンロードメソッド追加が必要
-	
+	/**
+	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
+	 *
+	 * @param txt_emp_name_keyword 現在の検索キーワード（社員名）（状態保持用）
+	 * @param txt_emp_assign_company_keyword 現在の検索キーワード（アサイン先企業名）（状態保持用）
+	 * @param txt_emp_company_keyword 現在の検索キーワード（所属企業名）（状態保持用）
+	 * @param cmb_engtineer_type_keyword 現在の検索キーワード（エンジニアタイプ）（状態保持用）
+	 * @return ダウンロード用のCSVファイルバイナリデータ
+	 */
+	@GetMapping("/export/download")
+	public ResponseEntity<byte[]> downloadCsv(
+			@RequestParam(name = "txt_emp_name_keyword", required = false) String txt_emp_name_keyword,
+			@RequestParam(name = "txt_emp_assign_company_keyword", required = false) Integer txt_emp_assign_company_keyword,
+			@RequestParam(name = "txt_emp_company_keyword", required = false) Integer txt_emp_company_keyword,
+			@RequestParam(name = "cmb_engtineer_type_keyword", required = false) Integer cmb_engtineer_type_keyword
+			) {
+		List<Employee> employees = deletedEmployeeService.findAll(txt_emp_name_keyword, txt_emp_assign_company_keyword, txt_emp_company_keyword, cmb_engtineer_type_keyword);
+		//FIXME 以下の行はコピペ後未修正
+		StringBuilder csvBuilder = new StringBuilder("社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年,郵便番号,住所,メールアドレス\n");
+		for (Employee emp : employees) {
+			csvBuilder.append(emp.getEmpId()).append(",")
+					.append(emp.getEmpName()).append(",")
+					.append(emp.getDeptId()).append(",")
+					.append(emp.getHireYear()).append(",")
+					.append(emp.getPostalCode() != null ? emp.getPostalCode() : "").append(",")
+					.append(emp.getAddress() != null ? emp.getAddress() : "").append(",")
+					.append(emp.getEmail()).append("\n");
+		}
+		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
+		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+		byte[] result = new byte[bom.length + csvBytes.length];
+		System.arraycopy(bom, 0, result, 0, bom.length);
+		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=employees.csv");
+		headers.add("Content-Type", "text/csv; charset=UTF-8");
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
+	}
 	
 	
 	
