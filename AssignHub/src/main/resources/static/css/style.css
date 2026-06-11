@@ -626,7 +626,15 @@ a:hover {
 	color: #999;
 	text-align: center;
 }
-
+.export_action-area{
+	text-align: center;
+}
+.btn_assign_export{
+	width: 150px;
+}
+.btn_assign_back{
+	width: 150px;
+}
 /* =========================================
    (import用スタイル)
 ========================================= */
