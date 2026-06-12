@@ -342,8 +342,8 @@ public class AssignmentController {
 		for (Assignment asn : assignments) {
 			csvBuilder.append(asn.getAssignmentId()).append(",")
 					.append(asn.getEmpId()).append(",")
-					.append(asn.getEmpName()).append(",")
-					.append(asn.getCompanyName()).append(",")
+					.append(asn.getEmployee()).append(",")
+					.append(asn.getCompany()).append(",")
 					.append(asn.getCreatedAt()).append(",")
 					.append(asn.getUpdatedAt()).append(",")
 					.append(asn.getContractStartDate()).append(",")
