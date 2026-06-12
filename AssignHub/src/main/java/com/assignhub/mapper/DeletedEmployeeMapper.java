@@ -2,10 +2,12 @@ package com.assignhub.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.assignhub.entity.Employee;
 
+@Mapper
 public interface DeletedEmployeeMapper {
 	/**
 	 * 論理削除済みのアカウント情報を全件取得する（一覧表示・検索用）。
