@@ -27,13 +27,13 @@
 						</select>
 					</div>
 					<div class="search-item">
-						<label>キーワード検索</label>
-						<input type="text" name="keyword" class="form-control" th:value="${keyword}"
+						<label>社員名検索</label>
+						<input type="text" name="keywordEmpName" class="form-control" th:value="${empName}"
 							placeholder="例：山田 太郎">
 					</div>
 
 				</div>
-				<button type="submit" class="btn btn-secondary">🔍</button>
+				<button type="submit" class="btn btn-secondary">検索</button>
 			</form>
 		</div>
 
@@ -111,7 +111,7 @@
 								<td th:text="${acc.accountId}" class="acc_id"></td>
 								<td th:text="${acc.loginId}" class="acc_logId"></td>
 								<td th:text="${acc.permission == 1 ? '管理' : '一般'}" class="acc_per"></td>
-								<td th:text="${acc.empName}"></td>
+								<td th:text="${acc.employee != null ? acc.employee.lastName + ' ' + acc.employee.firstName : ''}">社員名</td>
 								<td class="col-action">
 									<a th:href="@{/accounts/{id}/edit(id=${acc.accountId})}" class="btn-icon-svg"
 										title="編集">

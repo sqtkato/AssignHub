@@ -23,7 +23,7 @@ public interface AccountMapper {
 	 * @param order   ソート順（asc または desc）
 	 * @return アカウントエンティティのリスト
 	 */
-	List<Account> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order, @Param("permission") Integer permission);
+	List<Account> findAll(@Param("keyword") String keyword, @Param("permission") Integer permission);
 
 	/**
 	 * チェックボックスにチェックをつけたアカウント情報を全件取得する。
@@ -39,9 +39,9 @@ public interface AccountMapper {
 	
 	void save(Account account);
 
-	boolean existsByLoginId(@Param("loginId") String loginId);
+	boolean isLoginIdDuplicate(@Param("loginId") String loginId);
 
-	boolean existsByLoginIdUpdate(@Param("loginId") String loginId, @Param("currentAccountId") int currentAccountId);
+	boolean isLoginIdDuplicateUpdate(@Param("loginId") String loginId, @Param("currentAccountId") int currentAccountId);
 	
 	/**
 	 * アカウントを一件論理削除。

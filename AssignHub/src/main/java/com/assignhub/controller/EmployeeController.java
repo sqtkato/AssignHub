@@ -98,7 +98,7 @@ public class EmployeeController {
 	 * @param e 更新対象のエンティティ
 	 */
 	private void copyFormToEntity(EmployeeForm f, Employee e) {
-		e.setEmpName(f.getEmpName());
-		e.setHireYear(20);
+//		e.setEmpName(f.getEmpName());
+//		e.setHireYear(20);
 	}
 }
