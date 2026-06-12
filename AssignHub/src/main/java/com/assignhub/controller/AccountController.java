@@ -3,8 +3,6 @@ package com.assignhub.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +23,7 @@ import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
 import com.assignhub.service.AccountService;
 import com.assignhub.service.EmployeeService;
+
 import jakarta.servlet.http.HttpSession;
 
 /**
@@ -60,10 +59,8 @@ public class AccountController {
 	@GetMapping
 	public String index(@RequestParam(name = "keywordEmpName", required = false) String empName,
 			Model model,
-			@RequestParam(name = "permission", required = false) Integer permission, HttpSession session) {
+			@RequestParam(name = "permission", required = false) Integer permission) {
 		model.addAttribute("accounts", accountService.findAll(empName, permission));
-		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
-
 		return "account/index";
 	}
 
@@ -96,8 +93,7 @@ public class AccountController {
 	 */
 	@PostMapping("/create")
 	public String store(@Validated @ModelAttribute("account") AccountForm form,
-			BindingResult result, Model model, HttpSession session) {
-		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
+			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "account/create";
 		}
@@ -120,9 +116,8 @@ public class AccountController {
 	 * @return アカウント情報編集画面のテンプレートパス
 	 */
 	@GetMapping("/{id}/edit")
-	public String edit(@PathVariable("id") Integer id, HttpSession session, Model model) {
+	public String edit(@PathVariable("id") Integer id, Model model) {
 		if (!model.containsAttribute("accountForm")) {
-			model.addAttribute("currentLoginId", session.getAttribute("loginId"));
 			Account acc = accountService.findById(id);
 			AccountForm form = new AccountForm();
 			form.setAccountId(acc.getAccountId());
@@ -202,13 +197,12 @@ public class AccountController {
 	 * アカウント情報インポート画面を表示する。
 	 */
 	@GetMapping("/import")
-	public String showImport(HttpSession session, Model model, RedirectAttributes attributes) {
+	public String showImport(Model model, RedirectAttributes attributes) {
 		int currentCount = accountService.findAll("", null).size();
 		if (currentCount >= 500) {
 			attributes.addFlashAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
 			return "redirect:/accounts";
 		}
-		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
 		return "account/import";
 	}
 
@@ -296,9 +290,8 @@ public class AccountController {
 	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
-			Model model, HttpSession session, RedirectAttributes attributes) {
+			Model model, RedirectAttributes attributes) {
 
-		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
 		// ★【最優先】まず最初にnullチェックを行う
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
