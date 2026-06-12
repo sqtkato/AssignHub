@@ -134,7 +134,7 @@ public class EmployeeController {
 			form.setAddress2(emp.getAddress2());
 			form.setEmpTel(emp.getEmpTel());
 			form.setEmail(emp.getEmail());
-			form.setEnginnerType(emp.getEngineerType());
+			form.setEngineerType(emp.getEngineerType());
 			form.setCompanyName(emp.getCompanyName());
 			form.setAccountId(emp.getAccountId());
 			form.setDepartment(emp.getDepartment());
@@ -156,7 +156,7 @@ public class EmployeeController {
 		}
 
 		if (result.hasErrors()) {
-			model.addAttribute("departments", companyService.findAll(null, "dept_id", "asc"));
+//			model.addAttribute("departments", companyService.findAll(null, "dept_id", "asc"));
 			return "employee/edit";
 		}
 
@@ -244,7 +244,7 @@ public class EmployeeController {
 	@GetMapping("/export")
 	public String showExport(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
 	    	model.addAttribute("employees", employeeService.findAll(keyword , null , null,null));
-	    model.addAttribute("count", employeeService.findAll(keyword , null , null,null, "emp_id", "asc").size());
+	    model.addAttribute("count", employeeService.findAll(null,null , null,null).size());
 	    model.addAttribute("keyword", keyword);
 	    return "employee/export";
 	}
@@ -301,7 +301,23 @@ public class EmployeeController {
 	 * @param e 更新対象のエンティティ
 	 */
 	private void copyFormToEntity(EmployeeForm f, Employee e) {
-		e.setEmpName(f.getEmpName());
-		e.setHireYear(20);
+		
+		e.setLastName(f.getLastName());
+		e.setFirstName(f.getFirstName());
+		e.setLastNameKana(f.getLastNameKana());
+		e.setFirstNameKana(f.getFirstNameKana());
+		e.setBirthDate(f.getBirthDate());
+		e.setHireDate(f.getHireDate());
+		e.setYearsOfService(f.getYearsOfService());
+		e.setZipCode(f.getZipCode());
+		e.setAddress1(f.getAddress1());
+		e.setAddress2(f.getAddress2());
+		e.setEmpTel(f.getEmpTel());
+		e.setEmail(f.getEmail());
+		e.setEngineerType(f.getEngineerType());
+		e.setCompanyName(f.getCompanyName());
+		e.setAccountId(f.getAccountId());
+		e.setDepartment(f.getDepartment());
+		e.setJobTitle(f.getJobTitle());
 	}
 }
