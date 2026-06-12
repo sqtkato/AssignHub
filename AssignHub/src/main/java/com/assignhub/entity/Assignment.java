@@ -38,24 +38,12 @@ public class Assignment {
     /** 更新日時 */
     private LocalDateTime updatedAt;
     
-    /** 社員名（表示用） */
-    private String empName;
-
-    /** 社員名カナ（表示用） */
-    private String empNameKana;
-
-    /** 所属企業名（表示用） */
-    private String companyName;
-
-    /** 所属企業名カナ（表示用） */
-    private String companyNameKana;
-
-    /** アサイン先企業名（表示用） */
-    private String assignCompanyName;
-
-    /** エンジニアタイプ（表示用） */
-    private String engineerType;
-
-    /** 役割名（表示用） */
-    private String role;
+    /** 結合先の社員情報 */
+	private Employee employee;
+	
+	/** 結合先のアサイン先企業情報 */
+	private Company company;
+	
+	/** 結合先の役割情報 */
+	private Role role;
 }

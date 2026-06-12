@@ -4,212 +4,230 @@
 
 <mapper namespace="com.assignhub.mapper.AssignmentMapper">
 
-    <resultMap id="assignmentResultMap"
-        type="com.assignhub.entity.Assignment">
+	<resultMap id="assignmentResultMap"
+		type="com.assignhub.entity.Assignment">
 
-        <id property="assignmentId" column="assignment_id"/>
+		<id property="assignmentId" column="assignment_id" />
 
-        <result property="empId" column="emp_id"/>
-        <result property="companyId" column="company_id"/>
-        <result property="contractStartDate" column="contract_start_date"/>
-        <result property="contractEndDate" column="contract_end_date"/>
-        <result property="unitPrice" column="unit_price"/>
-        <result property="roleId" column="role_id"/>
-        <result property="deleteFlg" column="delete_flg"/>
-        <result property="createdAt" column="created_at"/>
-        <result property="updatedAt" column="updated_at"/>
+		<result property="empId" column="emp_id" />
+		<result property="companyId" column="company_id" />
+		<result property="contractStartDate"
+			column="contract_start_date" />
+		<result property="contractEndDate" column="contract_end_date" />
+		<result property="unitPrice" column="unit_price" />
+		<result property="roleId" column="role_id" />
+		<result property="deleteFlg" column="delete_flg" />
+		<result property="createdAt" column="created_at" />
+		<result property="updatedAt" column="updated_at" />
 
 
-        <result property="empName" column="emp_name"/>
-        <result property="empNameKana" column="emp_name_kana"/>
-        <result property="companyName" column="company_name"/>
-        <result property="companyNameKana" column="company_name_kana"/>
-        <result property="assignCompanyName" column="assign_company_name"/>
-        <result property="engineerType" column="engineer_type"/>
-        <result property="role" column="role"/>
-        
-    </resultMap>
+		<association property="employee"
+			javaType="com.assignhub.entity.Employee">
+			<id property="empId" column="emp_id" />
+			<result property="empName" column="emp_name" />
+			<result property="empNameKana" column="emp_name_kana" />
+			<result property="engineerType" column="engineer_type" />
+			<association property="company"
+				javaType="com.assignhub.entity.Company">
+				<id property="companyId" column="ec_company_id" />
+				<result property="companyName" column="emp_company_name" />
+				<result property="companyNameKana"
+					column="emp_company_name_kana" />
+			</association>
+		</association>
 
-    <select id="findAll" resultMap="assignmentResultMap">
-    	SELECT
-        	a.assignment_id,
-        	a.emp_id,
-        	a.company_id,
-        	a.contract_start_date,
-        	a.contract_end_date,
-        	a.unit_price,
-        	a.role_id,
-        	a.delete_flg,
-        	a.created_at,
-        	a.updated_at,
-        	CONCAT(e.last_name, e.first_name) AS emp_name,
-        	c.company_name AS assign_company_name,
-        	ec.company_name,
-        	r.role
-    	FROM t_assignment a
-    	INNER JOIN m_employee e
-        	ON a.emp_id = e.emp_id
-    	INNER JOIN m_company c
-        	ON a.company_id = c.company_id
-        INNER JOIN m_company ec
-        	ON e.company_id = ec.company_id
-    	INNER JOIN m_role r
-        	ON a.role_id = r.role_id
-    	<where>
-        	a.delete_flg = 0
-        	AND e.delete_flg = 0
-            AND c.delete_flg = 0
-            AND ec.delete_flg = 0
-        	<if test="txtEmpName != null and txtEmpName != ''">
-            	AND CONCAT(e.last_name, e.first_name)
-                LIKE CONCAT('%', #{txtEmpName}, '%')
-        	</if>
-        	<if test="txtAssignName != null and txtAssignName != ''">
-            	AND c.company_name
-                LIKE CONCAT('%', #{txtAssignName}, '%')
-        	</if>
-        	<if test="txtCompanyName != null and txtCompanyName != ''">
-        		AND ec.company_name
-                LIKE CONCAT('%', #{txtCompanyName}, '%')
-        	</if>
-        	<if test="txtContractStartDate != null and txtContractStartDate != ''">
-    			AND a.contract_start_date &gt;= #{txtContractStartDate}
+		<association property="company"
+			javaType="com.assignhub.entity.Company">
+			<id property="companyId" column="company_id" />
+			<result property="companyName" column="assign_company_name" />
+		</association>
+
+		<association property="role"
+			javaType="com.assignhub.entity.Role">
+			<id property="roleId" column="role_id" />
+			<result property="role" column="role" />
+		</association>
+	</resultMap>
+
+	<select id="findAll" resultMap="assignmentResultMap">
+		SELECT
+		a.assignment_id,
+		a.emp_id,
+		a.company_id,
+		a.contract_start_date,
+		a.contract_end_date,
+		a.unit_price,
+		a.role_id,
+		a.delete_flg,
+		a.created_at,
+		a.updated_at,
+		CONCAT(e.last_name, e.first_name) AS emp_name,
+		e.engineer_type,
+		c.company_name AS assign_company_name,
+		ec.company_id AS ec_company_id,
+		ec.company_name AS emp_company_name,
+		r.role
+		FROM t_assignment a
+		INNER JOIN m_employee e ON a.emp_id = e.emp_id
+		INNER JOIN m_company c ON a.company_id = c.company_id
+		INNER JOIN m_company ec ON e.company_id = ec.company_id
+		INNER JOIN m_role r ON a.role_id = r.role_id
+		<where>
+			a.delete_flg = 0
+			AND e.delete_flg = 0
+			AND c.delete_flg = 0
+			AND ec.delete_flg = 0
+			<if test="txtEmpName != null and txtEmpName != ''">
+				AND CONCAT(e.last_name, e.first_name)
+				LIKE CONCAT('%', #{txtEmpName}, '%')
+			</if>
+			<if test="txtAssignName != null and txtAssignName != ''">
+				AND c.company_name
+				LIKE CONCAT('%', #{txtAssignName}, '%')
+			</if>
+			<if test="txtCompanyName != null and txtCompanyName != ''">
+				AND ec.company_name
+				LIKE CONCAT('%', #{txtCompanyName}, '%')
+			</if>
+			<if
+				test="txtContractStartDate != null and txtContractStartDate != ''">
+				AND a.contract_start_date &gt;= #{txtContractStartDate}
 			</if>
 			<if test="txtContractEndDate != null and txtContractEndDate != ''">
-    			AND (
-        			a.contract_end_date &lt;= #{txtContractEndDate}
-        			OR a.contract_end_date IS NULL
-    		    )
+				AND (
+				a.contract_end_date &lt;= #{txtContractEndDate}
+				OR a.contract_end_date IS NULL
+				)
 			</if>
-    	</where>
-    	ORDER BY a.assignment_id
+		</where>
+		ORDER BY a.assignment_id
 	</select>
 
-    <select id="findById" resultMap="assignmentResultMap">
-    	SELECT
-        	a.assignment_id,
-        	a.emp_id,
-        	a.company_id,
-        	a.contract_start_date,
-        	a.contract_end_date,
-        	a.unit_price,
-        	a.role_id,
-        	a.delete_flg,
-        	a.created_at,
-        	a.updated_at,
-        	CONCAT(e.last_name, e.first_name) AS emp_name,
-        	CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana,
-        	e.engineer_type,
-        	c.company_name AS assign_company_name,
-        	ec.company_name,
-        	ec.company_name_kana,
-        	r.role
-    	FROM t_assignment a
-    	INNER JOIN m_employee e
-        	ON a.emp_id = e.emp_id
-    	INNER JOIN m_company c
-        	ON a.company_id = c.company_id
-    	INNER JOIN m_company ec
-        	ON e.company_id = ec.company_id
-    	INNER JOIN m_role r
-        	ON a.role_id = r.role_id
-    	WHERE a.assignment_id = #{id}
-      		AND a.delete_flg = 0
-      		AND e.delete_flg = 0
-            AND c.delete_flg = 0
-            AND ec.delete_flg = 0
+	<select id="findById" resultMap="assignmentResultMap">
+		SELECT
+		a.assignment_id,
+		a.emp_id,
+		a.company_id,
+		a.contract_start_date,
+		a.contract_end_date,
+		a.unit_price,
+		a.role_id,
+		a.delete_flg,
+		a.created_at,
+		a.updated_at,
+		CONCAT(e.last_name, e.first_name) AS emp_name,
+		CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana,
+		e.engineer_type,
+		c.company_name AS assign_company_name,
+		ec.company_name,
+		ec.company_name_kana,
+		r.role
+		FROM t_assignment a
+		INNER JOIN m_employee e
+		ON a.emp_id = e.emp_id
+		INNER JOIN m_company c
+		ON a.company_id = c.company_id
+		INNER JOIN m_company ec
+		ON e.company_id = ec.company_id
+		INNER JOIN m_role r
+		ON a.role_id = r.role_id
+		WHERE a.assignment_id = #{id}
+		AND a.delete_flg = 0
+		AND e.delete_flg = 0
+		AND c.delete_flg = 0
+		AND ec.delete_flg = 0
 	</select>
 
-    <insert id="insert"
-        useGeneratedKeys="true"
-        keyProperty="assignmentId">
-        INSERT INTO t_assignment (
-            emp_id,
-            company_id,
-            contract_start_date,
-            contract_end_date,
-            unit_price,
-            role_id,
-            delete_flg,
-            created_at,
-            updated_at
-        ) VALUES (
-            #{empId},
-            #{companyId},
-            #{contractStartDate},
-            #{contractEndDate},
-            #{unitPrice},
-            #{roleId},
-            0,
-            NOW(),
-            NOW()
-        )
-    </insert>
-    
-    <update id="update">
-    UPDATE t_assignment
-    	SET
-        	emp_id = #{empId},
-        	company_id = #{companyId},
-        	contract_start_date = #{contractStartDate},
-        	contract_end_date = #{contractEndDate},
-        	unit_price = #{unitPrice},
-        	role_id = #{roleId},
-        	updated_at = NOW()
-    	WHERE assignment_id = #{assignmentId}
-      	AND delete_flg = 0
+	<insert id="insert" useGeneratedKeys="true"
+		keyProperty="assignmentId">
+		INSERT INTO t_assignment (
+		emp_id,
+		company_id,
+		contract_start_date,
+		contract_end_date,
+		unit_price,
+		role_id,
+		delete_flg,
+		created_at,
+		updated_at
+		) VALUES (
+		#{empId},
+		#{companyId},
+		#{contractStartDate},
+		#{contractEndDate},
+		#{unitPrice},
+		#{roleId},
+		0,
+		NOW(),
+		NOW()
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE t_assignment
+		SET
+		emp_id = #{empId},
+		company_id = #{companyId},
+		contract_start_date = #{contractStartDate},
+		contract_end_date = #{contractEndDate},
+		unit_price = #{unitPrice},
+		role_id = #{roleId},
+		updated_at = NOW()
+		WHERE assignment_id = #{assignmentId}
+		AND delete_flg = 0
 	</update>
 
-    <update id="delete">
-    	UPDATE t_assignment
-    	SET delete_flg = 1,
-        	updated_at = NOW()
-    	WHERE assignment_id = #{id}
-      	AND delete_flg = 0
-	</update>
-    
-    <update id="deleteBulk">
-    UPDATE t_assignment
-    	SET
-        	delete_flg = 1,
-        	updated_at = NOW()
-    WHERE assignment_id IN
-    	<foreach collection="ids" item="id" open="(" separator="," close=")">
-        	#{id}
-    	</foreach>
-    	AND delete_flg = 0
+	<update id="delete">
+		UPDATE t_assignment
+		SET delete_flg = 1,
+		updated_at = NOW()
+		WHERE assignment_id = #{id}
+		AND delete_flg = 0
 	</update>
 
-    <select id="findDuplicate" resultMap="assignmentResultMap">
-        SELECT
-            assignment_id,
-            emp_id,
-            company_id,
-            contract_start_date,
-            contract_end_date,
-            unit_price,
-            role_id,
-            delete_flg,
-            created_at,
-            updated_at
-        FROM t_assignment
-        WHERE delete_flg = 0
-        AND emp_id = #{empId}
-        AND company_id = #{companyId}
-        AND contract_start_date = #{contractStartDate}
-        AND (
-                contract_end_date = #{contractEndDate}
-                OR (contract_end_date IS NULL AND #{contractEndDate} IS NULL)
-            )
-        <if test="assignmentId != null">
-            AND assignment_id != #{assignmentId}
-        </if>
-    </select>
-    
-    <select id="countAll" resultType="int">
-    	SELECT COUNT(*)
-    	FROM t_assignment
-    	WHERE delete_flg = 0
+	<update id="deleteBulk">
+		UPDATE t_assignment
+		SET
+		delete_flg = 1,
+		updated_at = NOW()
+		WHERE assignment_id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+		AND delete_flg = 0
+	</update>
+
+	<select id="findDuplicate" resultMap="assignmentResultMap">
+		SELECT
+		assignment_id,
+		emp_id,
+		company_id,
+		contract_start_date,
+		contract_end_date,
+		unit_price,
+		role_id,
+		delete_flg,
+		created_at,
+		updated_at
+		FROM t_assignment
+		WHERE delete_flg = 0
+		AND emp_id = #{empId}
+		AND company_id = #{companyId}
+		AND contract_start_date = #{contractStartDate}
+		AND (
+		contract_end_date = #{contractEndDate}
+		OR (contract_end_date IS NULL AND #{contractEndDate} IS NULL)
+		)
+		<if test="assignmentId != null">
+			AND assignment_id != #{assignmentId}
+		</if>
+	</select>
+
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*)
+		FROM t_assignment
+		WHERE delete_flg = 0
 	</select>
 
 </mapper>
