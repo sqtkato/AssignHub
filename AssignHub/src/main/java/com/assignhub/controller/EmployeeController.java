@@ -53,16 +53,16 @@ public class EmployeeController {
 	 * @return 一覧画面のテンプレートパス
 	 */
 	@GetMapping
-	public String index(@RequestParam(name = "txt_emp_name", required = false) String txt_emp_name,
-			@RequestParam(name = "txt_emp_assign_company", required = false) String txt_emp_assign_company,
-			@RequestParam(name = "cmb_emp_engineer_type", required = false) String cmb_emp_engineer_type,
-			@RequestParam(name = "txt_emp_company", required = false) String txt_emp_company,
+	public String index(@RequestParam(name = "empName", required = false) String empName,
+			@RequestParam(name = "empAssignCompany", required = false) String empAssignCompany,
+			@RequestParam(name = "empEngineerType", required = false) String empEngineerType,
+			@RequestParam(name = "empCompany", required = false) String empCompany,
 			Model model) {
-        model.addAttribute("employees", employeeService.findAll(txt_emp_name, txt_emp_assign_company, cmb_emp_engineer_type, txt_emp_company));
-        model.addAttribute("txt_emp_name", txt_emp_name);
-        model.addAttribute("txt_emp_assign_company", txt_emp_assign_company);
-		model.addAttribute("cmb_emp_engineer_type", cmb_emp_engineer_type);
-		model.addAttribute("txt_emp_company", txt_emp_company);
+        model.addAttribute("employees", employeeService.findAll(empName, empAssignCompany, empEngineerType, empCompany));
+        model.addAttribute("empName", empName);
+        model.addAttribute("empAssignCompany", empAssignCompany);
+		model.addAttribute("empEngineerType", empEngineerType);
+		model.addAttribute("empCompany", empCompany);
 		return "employee/index";
 	}
 
