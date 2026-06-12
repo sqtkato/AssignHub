@@ -1,5 +1,6 @@
 package com.assignhub.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import lombok.Data;
@@ -28,13 +29,13 @@ public class Employee {
 	private String firstNameKana;
 	
 	/** 入社年月日 */
-	private String hireDate;
+	private LocalDate hireDate;
 	
 	/** 勤続年数 */
 	private Integer yearsOfService;
 	
 	/** 生年月日 */
-	private String BirthDate;
+	private LocalDate BirthDate;
 	
 	/** 郵便番号 */
 	private String zipCode;
