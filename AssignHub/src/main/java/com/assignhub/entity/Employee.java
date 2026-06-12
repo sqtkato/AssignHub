@@ -1,5 +1,6 @@
 package com.assignhub.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import lombok.Data;
@@ -8,6 +9,12 @@ import lombok.Data;
 public class Employee {
 	/** 社員ID（主キー） */
 	private Integer empId;
+	
+	/** アカウントID（外部キー） */
+	private Integer accountId;
+	
+	/** 企業ID （外部キー）*/
+	private Integer companyId;
 
 	/** 社員姓 */
 	private String lastName;
@@ -22,13 +29,13 @@ public class Employee {
 	private String firstNameKana;
 	
 	/** 入社年月日 */
-	private String hireDate;
+	private LocalDate hireDate;
 	
 	/** 勤続年数 */
 	private Integer yearsOfService;
 	
 	/** 生年月日 */
-	private String BirthDate;
+	private LocalDate BirthDate;
 	
 	/** 郵便番号 */
 	private String zipCode;
@@ -41,18 +48,6 @@ public class Employee {
 	
 	/** エンジニアタイプ */
 	private String engineerType;
-	
-	/** アカウントID */
-	private Integer accountId;
-	
-	/** 企業ID */
-	private Integer companyId;
-	
-	/** 所属先企業 */
-	private String companyName;
-	
-	/** アサイン先企業 */
-	private String companyNameAssign;
 	
 	/** 所属部署 */
 	private String department;
@@ -74,5 +69,14 @@ public class Employee {
 
 	/** 更新日時 */
 	private LocalDateTime updatedAt;
+	
+	/** アサイン情報 （外部DBからの取得）*/
+	private Assignment Assignment;
+	
+	/** アカウント情報 （外部DBからの取得）*/
+	private Account Account;
+	
+	/** 企業情報 （外部DBからの取得）*/
+	private Company Company;
 
 }
