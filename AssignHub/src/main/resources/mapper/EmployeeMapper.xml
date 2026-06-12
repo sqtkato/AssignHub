@@ -12,14 +12,13 @@
 	</resultMap>
 
 	<select id="findAll" resultMap="employeeResultMap">
-		SELECT *
-		FROM m_employee
-		<if test="keyword != null and keyword != ''">
-			<where>
-				emp_name LIKE CONCAT('%', #{keyword}, '%')
-			</where>
-		</if>
-		ORDER BY ${sort} ${order}
+		SELECT * FROM m_employee
+		<where>
+		<if test="empName != null and empName != ''"> AND emp_name LIKE CONCAT('%', #{empName}, '%')</if>
+		<if test="empAssignCompany != null and empAssignCompany != ''"> AND emp_assign_company = #{empAssignCompany}</if>      
+		<if test="empEngineerType != null and empEngineerType != ''"> AND emp_engineer_type = #{empEngineerType}</if>	       
+		<if test="empCompany != null and empCompany != ''"> AND emp_company = #{empCompany}</if>
+		</where>
 	</select>
 
 	<select id="findById" resultMap="employeeResultMap">
