@@ -142,13 +142,13 @@
 	<select id="countAccountsByEmpolyeeId" resultType="int">
 		SELECT
 		COUNT(*)
-		FROM m_employee
+		FROM m_account
 		WHERE account_id = #{id}
 	</select>
 
 	<select id="countAccountsByEmpolyeeIds" resultType="int">
 		SELECT COUNT(*)
-		FROM m_employee
+		FROM m_account
 		WHERE account_id IN
 		<foreach item="id" collection="ids" open="(" separator=","
 			close=")">

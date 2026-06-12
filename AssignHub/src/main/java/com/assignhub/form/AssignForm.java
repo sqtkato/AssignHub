@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Data
-public class DeletedAssignForm {
+public class AssignForm {
 
 	/** アサインID */
 	private Integer assignmentId;

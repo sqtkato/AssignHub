@@ -3,15 +3,11 @@ import java.time.LocalDateTime;
 
 import lombok.Data;
 
-/**
- * 顧客・パートナー企業情報を保持するエンティティクラス。
- * @version 1.00 2026/06/01
- * @author SQT）チームC
- */
 @Data
 public class Company {
 	/** 企業ID（主キー） */
 	private Integer companyId;
+
 	/** 企業名 */
 	private String companyName;
 	
@@ -31,7 +27,7 @@ public class Company {
 	private String companyTel;
 	
 	/** FAX */
-	private String fax;
+	private String comanyFax;
 	
 	/** 設立年度 */
 	private Integer foundedYear;
@@ -50,8 +46,10 @@ public class Company {
 	
 	/** 代表者名カナ */
 	private String repFirstNameKana;
+
 	/** 作成日時 */
 	private LocalDateTime createdAt;
+
 	/** 更新日時 */
 	private LocalDateTime updatedAt;
 	

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class DeletedAccountForm {
+public class AccountForm {
 	@NotBlank(message = "ログインIDは必須です")
     @Size(min = 5, max = 12, message = "ログインIDは5文字以上12文字以内で入力してください")
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "ログインIDは半角英数字のみで入力してください")
