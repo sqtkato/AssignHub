@@ -26,23 +26,18 @@ public class DeletedCompanyController {
 	public DeletedCompanyController(DeletedCompanyService deletedCompanyService) {
 		this.deletedCompanyService = deletedCompanyService;
 	}
-
+	
 	@GetMapping
 	public String index(
-			@RequestParam(name = "keyword", required = false) String keyword,
-			@RequestParam(name = "tel", required = false) String tel,
-			@RequestParam(name = "sort", defaultValue = "company_id") String sort,
-			@RequestParam(name = "order", defaultValue = "asc") String order,
-			Model model) {
-
-		model.addAttribute("companies", deletedCompanyService.deletedfindAll(keyword, tel, sort, order));
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("tel", tel);
+			@RequestParam(name = "compName", required = false) String compName,
+			@RequestParam(name = "compTel", required = false) String compTel, 
+			@RequestParam(name = "sort", defaultValue = "company_id") String sort, 
+	        @RequestParam(name = "order", defaultValue = "asc") String order,
+			Model model) { 
+		model.addAttribute("companies", deletedCompanyService.deletedfindAll(compName,compTel,sort,order));model.addAttribute("compName", compName);model.addAttribute("compTel", compTel);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
-
-		return "deleted_company/index";
-	}
+	return "deleted-company/index";}
 
 	// ==========================================
 	// 復元処理
@@ -121,10 +116,10 @@ public class DeletedCompanyController {
 			return "redirect:/deleted-companies";
 		}
 
-		List<DeletedCompany> targetCompanies = deletedCompanyService.deletedfindByIds(ids);
+		List<DeletedCompany> Companies = deletedCompanyService.deletedfindByIds(ids);
 
-		model.addAttribute("count", targetCompanies.size());
-		model.addAttribute("companies", targetCompanies);
+		model.addAttribute("count", Companies.size());
+		model.addAttribute("companies", Companies);
 		model.addAttribute("ids", ids);
 
 		return "deleted_company/export";
@@ -132,21 +127,28 @@ public class DeletedCompanyController {
 
 	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids) {
-		if (ids == null || ids.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
 
 		List<DeletedCompany> delCompanies = deletedCompanyService.deletedfindByIds(ids);
-		StringBuilder csvBuilder = new StringBuilder("作成日時,更新日時,企業ID,企業名,企業名カナ,設立年度,社員数,郵便番号,住所1,住所2,TEL,FAX,代表者 姓,代表者 名,代表者 姓：カナ,代表者 名：カナ\n");
+		StringBuilder csvBuilder = new StringBuilder(
+				"作成日時,更新日時,企業ID,企業名,企業名カナ,設立年度,社員数,郵便番号,住所1,住所2,TEL,FAX,代表者 姓,代表者 名,代表者 姓：カナ,代表者 名：カナ\n");
 
 		for (DeletedCompany comp : delCompanies) {
-			csvBuilder.append(comp.getCompId()).append(",")
-					.append(comp.getCompName() != null ? comp.getCompName() : "").append(",")
-					.append(comp.getCompTel() != null ? comp.getCompTel() : "").append(",")
-					.append(comp.getCompAddress1() != null ? comp.getCompAddress1() : "").append(",")
-					.append(comp.getDeleteFlg()).append(",")
-					.append(comp.getCreatedAt() != null ? comp.getCreatedAt() : "").append(",")
-					.append(comp.getUpdatedAt() != null ? comp.getUpdatedAt() : "").append("\n");
+			csvBuilder.append(comp.getCreatedAt() != null ? comp.getCreatedAt() : "").append(",")
+					.append(comp.getUpdatedAt() != null ? comp.getUpdatedAt() : "").append(",")
+					.append(comp.getCompId()).append(",")
+					.append(comp.getCompName()).append(",")
+					.append(comp.getCompNameKana()).append(",")
+					.append(comp.getFoundedYear() != null ? comp.getFoundedYear() : "").append(",")
+					.append(comp.getEmpCount() != null ? comp.getEmpCount() : "").append(",")
+					.append(comp.getCompZipCode() != null ? comp.getCompZipCode() : "").append(",")
+					.append(comp.getCompAddress1()).append(",")
+					.append(comp.getCompAddress2() != null ? comp.getCompAddress2() : "").append(",")
+					.append(comp.getCompTel()).append(",")
+					.append(comp.getFax() != null ? comp.getFax() : "").append(",")
+					.append(comp.getRepLastName() != null ? comp.getRepLastName() : "").append(",")
+					.append(comp.getRepFirstName() != null ? comp.getRepFirstName() : "").append(",")
+					.append(comp.getRepLastNameKana() != null ? comp.getRepLastNameKana() : "").append(",")
+					.append(comp.getRepFirstNameKana() != null ? comp.getRepFirstNameKana() : "").append("\n");
 		}
 
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);

@@ -2,133 +2,120 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.assignhub.mapper.DeletedCompanyMapper">
 
-    <resultMap id="deletedCompanyResultMap" type="com.assignhub.entity.DeletedCompany">
-        <id property="companyId" column="company_id" />
-        <result property="companyName" column="company_name" />
-        <result property="companyNameKana" column="company_name_kana" />
-        <result property="companyZipCode" column="company_zip_code" />
-        <result property="companyAddress1" column="company_address_1" />
-        <result property="companyAddress2" column="company_address_2" />
-        <result property="companyTel" column="company_tel" />
-        <result property="fax" column="fax" />
-        <result property="foundedYear" column="founded_year" />
-        <result property="employeeCount" column="employee_count" />
-        <result property="repLastName" column="rep_last_name" />
-        <result property="repLastNameKana" column="rep_last_name_kana" />
-        <result property="repFirstName" column="rep_first_name" />
-        <result property="repFirstNameKana" column="rep_first_name_kana" />
-        <result property="createdAt" column="created_at" />
-        <result property="updatedAt" column="updated_at" />
-        <result property="deleteFlg" column="delete_flg" />
-    </resultMap>
+	<resultMap id="deletedCompanyResultMap"
+		type="com.assignhub.entity.DeletedCompany">
+		<id property="compId" column="company_id" />
+		<result property="compName" column="company_name" />
+		<result property="compNameKana" column="company_name_kana" />
+		<result property="compZipCode" column="company_zipcode" />
+		<result property="compAddress1" column="company_address1" />
+		<result property="compAddress2" column="company_address2" />
+		<result property="compTel" column="company_tel" />
+		<result property="fax" column="company_fax" />
+		<result property="foundedYear" column="founded_year" />
+		<result property="employeeCount" column="employee_count" />
+		<result property="repLastName" column="rep_lastname" />
+		<result property="repLastNameKana" column="rep_lastname_kana" />
+		<result property="repFirstName" column="rep_firstname" />
+		<result property="repFirstNameKana"
+			column="rep_firstname_kana" />
+		<result property="createdAt" column="created_at" />
+		<result property="updatedAt" column="updated_at" />
+		<result property="deleteFlg" column="delete_flg" />
+	</resultMap>
 
-    <select id="deletedfindAll" resultMap="deletedCompanyResultMap">
-        SELECT *
-        FROM m_company
-        <where>
-            delete_flg = 1
-            
-            <if test="keyword != null and keyword != ''">
-                AND (
-                    company_name LIKE CONCAT('%', #{keyword}, '%')
-                    OR company_name_kana LIKE CONCAT('%', #{keyword}, '%')
-                    OR rep_last_name LIKE CONCAT('%', #{keyword}, '%')
-                    OR rep_first_name LIKE CONCAT('%', #{keyword}, '%')
-                    OR company_id LIKE CONCAT('%', #{keyword}, '%')
-                )
-            </if>
-            
-            </where>
-        
-        <if test="sort != null and sort != ''">
-            ORDER BY
-            <choose>
-                <when test="sort == 'companyId'">company_id</when>
-                <when test="sort == 'companyName'">company_name</when>
-                <when test="sort == 'employeeCount'">employee_count</when>
-                <otherwise>company_id</otherwise>
-            </choose>
-            <choose>
-                <when test="order == 'desc' or order == 'DESC'">DESC</when>
-                <otherwise>ASC</otherwise>
-            </choose>
-        </if>
-        <if test="sort == null or sort == ''">
-            ORDER BY company_id ASC
-        </if>
-    </select>
+	<select id="deletedfindAll" resultMap="deletedCompanyResultMap">
+		SELECT *FROM m_company
+			<where>
+			  delete_flg = 1                             
+			<if test="compName != null and compName != ''">
+			 AND company_name LIKE CONCAT('%', #{compName}, '%')	                               
+			</if>		                               
+			<if test="compTel != null and compTel != ''">
+			 AND company_tel LIKE CONCAT('%', #{compTel}, '%')	                               
+			</if>			                               
+		</where>
+		 ORDER BY company_id ASC	               
+	</select>
 
-    <select id="deletedfindByIds" resultMap="deletedCompanyResultMap">
-        SELECT *
-        FROM m_company
-        WHERE delete_flg = 1
-          AND company_id IN
-        <foreach item="id" collection="ids" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </select>
+	<select id="deletedfindByIds"
+		resultMap="deletedCompanyResultMap">
+		SELECT *
+		FROM m_company
+		WHERE delete_flg = 1
+		AND company_id IN
+		<foreach item="id" collection="ids" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
 
-    <update id="restore">
-        UPDATE m_company
-        SET delete_flg = 0
-        WHERE company_id = #{id} AND delete_flg = 1
-    </update>
+	<update id="restore">
+		UPDATE m_company
+		SET delete_flg = 0
+		WHERE company_id = #{id} AND delete_flg = 1
+	</update>
 
-    <update id="restoreBulk">
-        UPDATE m_company
-        SET delete_flg = 0
-        WHERE company_id IN
-        <foreach item="id" collection="ids" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-        AND delete_flg = 1
-    </update>
+	<update id="restoreBulk">
+		UPDATE m_company
+		SET delete_flg = 0
+		WHERE company_id IN
+		<foreach item="id" collection="ids" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+		AND delete_flg = 1
+	</update>
 
-    <delete id="physicalDelete">
-        DELETE FROM m_company
-        WHERE company_id = #{id}
-    </delete>
+	<delete id="physicalDelete">
+		DELETE FROM m_company
+		WHERE company_id = #{id}
+	</delete>
 
-    <delete id="physicalDeleteBulk">
-        DELETE FROM m_company
-        WHERE company_id IN
-        <foreach item="id" collection="ids" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
+	<delete id="physicalDeleteBulk">
+		DELETE FROM m_company
+		WHERE company_id IN
+		<foreach item="id" collection="ids" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
 
-    <select id="countEmployeesByCompanyId" resultType="int">
-        SELECT COUNT(*) 
-        FROM m_employee 
-        WHERE dispatch_company_id = #{id} OR partner_company_id = #{id}
-    </select>
+	<select id="countEmployeesByCompanyId" resultType="int">
+		SELECT COUNT(*)
+		FROM m_employee
+		WHERE dispatch_company_id = #{id} OR partner_company_id = #{id}
+	</select>
 
-    <select id="countEmployeesByCompanyIds" resultType="int">
-        SELECT COUNT(*) 
-        FROM m_employee 
-        WHERE dispatch_company_id IN
-        <foreach item="id" collection="ids" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-           OR partner_company_id IN
-        <foreach item="id" collection="ids" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </select>
-    
-    <select id="countAssignmentsByCompanyId" resultType="int">
-        SELECT COUNT(*) 
-        FROM t_assignment 
-        WHERE client_company_id = #{id}
-    </select>
+	<select id="countEmployeesByCompanyIds" resultType="int">
+		SELECT COUNT(*)
+		FROM m_employee
+		WHERE dispatch_company_id IN
+		<foreach item="id" collection="ids" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+		OR partner_company_id IN
+		<foreach item="id" collection="ids" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
 
-    <select id="countAssignmentsByCompanyIds" resultType="int">
-        SELECT COUNT(*) 
-        FROM t_assignment 
-        WHERE client_company_id IN
-        <foreach item="id" collection="ids" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </select>
+	<select id="countAssignmentsByCompanyId" resultType="int">
+		SELECT COUNT(*)
+		FROM t_assignment
+		WHERE client_company_id = #{id}
+	</select>
+
+	<select id="countAssignmentsByCompanyIds" resultType="int">
+		SELECT COUNT(*)
+		FROM t_assignment
+		WHERE client_company_id IN
+		<foreach item="id" collection="ids" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
 
 </mapper>

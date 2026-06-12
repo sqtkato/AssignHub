@@ -17,8 +17,8 @@ public class DeletedCompanyService {
     /**
      * 論理削除済みの企業情報を全件取得する（一覧表示・検索用）。
      */
-    public List<DeletedCompany> deletedfindAll(String keyword, String tel,String sort, String order) {
-        return deletedCompanyMapper.deletedfindAll(keyword, tel,sort, order);
+    public List<DeletedCompany> deletedfindAll(String compName, String comptel,String sort, String order) {
+        return deletedCompanyMapper.deletedfindAll(compName, comptel,sort, order);
     }
 
     /**

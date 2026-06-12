@@ -15,7 +15,7 @@ public class DeletedCompanyForm {
 	/** 企業名（必須、最大50文字） */
 	@NotBlank(message = "企業名は必須です")
 	@Size(max = 50, message = "企業名は50文字以内で入力してください")
-	private String companyName;
+	private String compName;
 	
 	@NotBlank(message = "企業名カナは必須です")
 	@Size(max = 100, message = "企業名カナは100文字以内で入力してください")
@@ -26,13 +26,13 @@ public class DeletedCompanyForm {
 	
 	@NotBlank(message = "住所１は必須です")
 	@Size(max = 100, message = "住所１は100文字以内で入力してください")
-	private String companyAddress1;
+	private String compAddress1;
 	
 	@Size(max = 100, message = "住所２は100文字以内で入力してください")
 	private String companyAddress2;
 	
 	@NotBlank(message = "電話番号は必須です")
-	private String companyTel;
+	private String compTel;
 	
 	@Size(max = 20, message = "FAX番号は20文字以内で入力してください")
 	private String fax;
