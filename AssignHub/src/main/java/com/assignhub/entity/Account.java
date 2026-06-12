@@ -10,7 +10,6 @@ import lombok.Data;
  * @author SQT）チームC
  */
 @Data
-
 public class Account {
 	
 	/** アカウントID（主キー） */
@@ -19,6 +18,7 @@ public class Account {
 	/** ログインID */
 	private String loginId;
 	
+	/** パスワード */
 	private String passwordHash;
 	
 	/** 権限 */
@@ -33,11 +33,9 @@ public class Account {
 	/** 更新日時 */
 	private LocalDateTime updatedAt;
 	
-	/** 社員名　（外部DBから取得）*/
-	private String empName;
+	/** 社員情報（外部DBから取得）*/
+	private Employee Employee;
 
-	
-		
 	}
 
 

@@ -43,7 +43,7 @@
 							<td th:text="${account.accountId}" class="acc_id"></td>
 							<td th:text="${account.loginId}" class="acc_logId"></td>
 							<td th:text="${account.permission == 1 ? '管理' : '一般'}" class="acc_per"></td>
-							<td th:text="${account.empName}" class="acc_name"></td>
+							<td th:text="${account.employee != null ? account.employee.lastName + ' ' + account.employee.firstName : '-'}" class="acc_name">社員名</td>
 						</tr>
 					</tbody>
 				</table>
