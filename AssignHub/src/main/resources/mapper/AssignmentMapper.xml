@@ -72,41 +72,35 @@
 		FROM
 		t_assignment a
 		INNER JOIN m_employee e ON a.emp_id = e.emp_id
-		INNER
-		JOIN
-		m_company c ON a.company_id = c.company_id
-		INNER JOIN m_company ec
-		ON
-		e.company_id = ec.company_id
-		INNER JOIN m_role r ON a.role_id =
-		r.role_id
+		INNER JOIN m_company c ON a.company_id = c.company_id
+		INNER JOIN m_company ec ON e.company_id = ec.company_id
+		INNER JOIN m_role r ON a.role_id = r.role_id
 		<where>
 			a.delete_flg = 0
 			AND e.delete_flg = 0
 			AND c.delete_flg = 0
-			AND
-			ec.delete_flg = 0
-			<if test="txtEmpName != null and txtEmpName != ''">
+			AND ec.delete_flg = 0
+			<if test="empName != null and empName != ''">
 				AND CONCAT(e.last_name, e.first_name)
 				LIKE CONCAT('%',
-				#{txtEmpName}, '%')
+				#{empName}, '%')
 			</if>
-			<if test="txtAssignName != null and txtAssignName != ''">
+			<if test="assignName != null and assignName != ''">
 				AND c.company_name
-				LIKE CONCAT('%', #{txtAssignName}, '%')
+				LIKE CONCAT('%', #{assignName}, '%')
 			</if>
-			<if test="txtCompanyName != null and txtCompanyName != ''">
+			<if test="companyName != null and companyName != ''">
 				AND ec.company_name
-				LIKE CONCAT('%', #{txtCompanyName},
+				LIKE CONCAT('%', #{companyName},
 				'%')
 			</if>
 			<if
-				test="txtContractStartDate != null and txtContractStartDate != ''">
-				AND a.contract_start_date &gt;= #{txtContractStartDate}
+				test="contractStartDate != null and contractStartDate != ''">
+				AND a.contract_start_date &gt;= #{contractStartDate}
 			</if>
-			<if test="txtContractEndDate != null and txtContractEndDate != ''">
+			<if test="contractEndDate != null and contractEndDate != ''">
 				AND (
-				a.contract_end_date &lt;= #{txtContractEndDate}
+				a.contract_end_date &lt;= #{contractEndDate}
 				OR
 				a.contract_end_date IS NULL
 				)

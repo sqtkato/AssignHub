@@ -51,10 +51,10 @@ public class AssignmentService {
 	 * @param txtCompanyName 企業名の検索キーワード（nullまたは空文字の場合は全件取得）
 	 * @return アサイン情報のリスト
 	 */
-	public List<Assignment> findAll(String txtEmpName, String txtAssignName, String txtCompanyName,
-			String txtContractStartDate, String txtContractEndDate) {
-		return assignmentMapper.findAll(txtEmpName, txtAssignName, txtCompanyName, txtContractStartDate,
-				txtContractEndDate);
+	public List<Assignment> findAll(String empName, String assignName, String companyName,
+			String contractStartDate, String contractEndDate) {
+		return assignmentMapper.findAll(empName, assignName, companyName, contractStartDate,
+				contractEndDate);
 	}
 
 	/**

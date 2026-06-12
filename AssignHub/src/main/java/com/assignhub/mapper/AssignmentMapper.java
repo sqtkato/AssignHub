@@ -19,17 +19,20 @@ import com.assignhub.entity.Assignment;
 public interface AssignmentMapper {
 	
 	/**
-	 * 全てのアサイン情報を取得する。
-	 *
-	 * @param txtEmpName 社員名の検索キーワード
-	 * @param txtCompanyName 企業名の検索キーワード
-	 * @return アサイン情報のリスト
+	 * アサイン情報を検索条件に基づいて取得する。
+	 * 
+	 * @param empName 社員名（部分一致）
+	 * @param assignName アサイン名（部分一致）
+	 * @param companyName 企業名（部分一致）
+	 * @param contractStartDate 契約開始日（yyyy-MM-dd形式、指定された日付以降のデータを取得）
+	 * @param contractEndDate 契約終了日（yyyy-MM-dd形式、指定された日付以前のデータを取得）
+	 * @return アサイン情報エンティティのリスト
 	 */
-	List<Assignment> findAll(@Param("txtEmpName") String txtEmpName, 
-			@Param("txtAssignName") String txtAssignName,
-			@Param("txtCompanyName") String txtCompanyName,
-			@Param("txtContractStartDate") String txtContractStartDate,
-			@Param("txtContractEndDate") String txtContractEndDate);
+	List<Assignment> findAll(@Param("empName") String empName, 
+			@Param("assignName") String assignName,
+			@Param("companyName") String companyName,
+			@Param("contractStartDate") String contractStartDate,
+			@Param("contractEndDate") String contractEndDate);
 	
 	/**
 	 * IDを指定してアサイン情報を1件取得する。
