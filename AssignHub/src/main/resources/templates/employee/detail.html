@@ -78,7 +78,7 @@
 			</tr>
 			<tr>
 				<th>所属企業</th>
-				<td th:text="${employee.companyName ?: 'ー'}"></td>
+				<td th:text="${employee.assignment?.company?.companyName} ?: 'ー'"></td>
 			</tr>
 			<tr>
 				<th>役職</th>
@@ -86,24 +86,23 @@
 			</tr>
 			<tr>
 				<th>ログインID</th>
-				<td th:text="${employee.loginId}"></td>
 			</tr>
 			<tr>
 				<th>アサイン先企業</th>
-				<td th:text="${employee.companyNameAssign}"></td>
+				<td th:text="${employee.assignment != null && employee.assignment.company != null} ? ${employee.assignment.company.companyName} : 'ー'"></td>
 			</tr>
 			<tr>
 
 				<th>契約開始日</th>
-				<td th:text="${employee.contractStartDate ?: 'ー'}"></td>
+				<td th:text="${employee.assignment != null ? employee.assignment.contractStartDate : 'ー'}"></td>
 			</tr>
 			<tr>
 				<th>契約終了日</th>
-				<td th:text="${employee.contractEndDate ?: 'ー'}"></td>
+				<td th:text="${employee.assignment != null ? employee.assignment.contractEndDate : 'ー'}"></td>
 			</tr>
 			<tr>
 				<th>契約単価</th>
-				<td th:text="${employee.unitPrice}"></td>
+				<td th:text="${employee.assignment != null ? employee.assignment.unitPrice : 'ー'}"></td>
 			</tr>
 		</table>
 		

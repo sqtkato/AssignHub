@@ -127,9 +127,10 @@
 									class="row-checkbox"></td>
 							<td th:text="${emp.empId}"></td>
 							<td th:text="${emp.lastName} + ' ' + ${emp.firstName}"></td>
-							<td th:text="${emp.companyNameAssign}"></td>
+							<td th:text="${emp.assignment?.company?.companyName} ?: 'ー'"></td>
 							<td th:text="${emp.engineerType}"></td>
-							<td th:text="${emp.companyName ?: 'ー'}"></td>
+							<td th:text="${emp.company?.companyName} ?: 'ー'"></td>
+			
 							<td class="col-action">
 								<a th:href="@{/employees/{id}/detail(id=${emp.empId})}" class="btn-icon-svg" title="詳細">
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="none"
