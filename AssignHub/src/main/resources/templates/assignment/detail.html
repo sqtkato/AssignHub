@@ -9,119 +9,118 @@
 </head>
 
 <body>
-	<!-- メイン -->
 	<div layout:fragment="content">
 
 		<div>
-			<class="page-title-area">
+			<div class="page-title-area">
 				<h2>アサイン履歴情報詳細</h2>
-		</div>
-
-		<div class="card">
-			<table class = "table detail-table">
-				<tr>
-
-				<tr>
-					<th>作成日時</th>
-					<td th:text="${assignment.createdAt}"></td>
-				</tr>
-
-				<tr>
-					<th>更新日時</th>
-					<td th:text="${assignment.updatedAt}"></td>
-				</tr>
-
-				<tr>
-					<th>社員名</th>
-					<td th:text="${assignment.empName}"></td>
-				</tr>
-
-				<tr>
-					<th>社員名カナ</th>
-					<td th:text="${assignment.empNameKana}"></td>
-				</tr>
-
-				<tr>
-					<th>アサイン先企業</th>
-					<td th:text="${assignment.assignCompanyName}"></td>
-				</tr>
-
-				<tr>
-					<th>エンジニアタイプ</th>
-					<td th:text="${assignment.engineerType}"></td>
-				</tr>
-
-				<tr>
-					<th>所属企業</th>
-					<td th:text="${assignment.companyName}"></td>
-				</tr>
-
-				<tr>
-					<th>所属企業カナ</th>
-					<td th:text="${assignment.companyNameKana}"></td>
-				</tr>
-
-				<tr>
-					<th>契約開始日</th>
-					<td th:text="${assignment.contractStartDate}"></td>
-				</tr>
-				<tr>
-					<th>契約終了日</th>
-					<td th:text="${assignment.contractEndDate}"></td>
-				</tr>
-
-				<tr>
-					<th>契約単価</th>
-					<td th:text="${#numbers.formatInteger(assignment.unitPrice, 3, 'COMMA')+ ' 円'}"></td>
-				</tr>
-				<tr>
-					<th>役割</th>
-					<td th:text="${assignment.role}"></td>
-				</tr>
-			</table>
-			<div class="form-actions detail-actions">
-				<button type="button" id="btn_assign_edit" class="btn btn-primary"
-					th:onclick="|location.href='@{/assignments/{id}/edit(id=${assignment.assignmentId}, from='detail')}'|">
-					変更
-				</button>
-
-				<form th:action="@{/assignments/{id}/delete(id=${assignment.assignmentId})}" method="post">
-					<button type="button" id="btn_delete_flg" class="btn modal-btn-danger"
-						th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
-					</button>
-				</form>
-
-				<button type="button" id="btn_assign_back" th:onclick="|location.href='@{/assignments}'|"
-					class="btn btn-secondary">戻る
-				</button>
-
 			</div>
 
+			<div class="card">
+				<table class="table detail-table">
 
-		</div>
+					<tr>
+						<th>作成日時</th>
+						<td th:text="${#temporals.format(assignment.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					</tr>
 
-		<!-- 削除確認モーダル -->
-		<div id="deleteOverlay" class="modal-overlay">
-			<div class="modal-box">
-				<div class="modal-icon modal-icon-danger">
-					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-						stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<polyline points="3 6 5 6 21 6"></polyline>
-						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-					</svg>
-				</div>
-				<p class="modal-title">アサイン履歴を削除しますか？</p>
-				<p class="modal-subtitle">この操作は取り消せません。</p>
-				<div class="modal-actions">
-					<button type="button" onclick="closeDeleteModal()" class="modal-btn modal-btn-cancel">キャンセル</button>
-					<form id="deleteForm" method="post">
-						<button type="submit" class="modal-btn modal-btn-danger">削除する</button>
+					<tr>
+						<th>更新日時</th>
+						<td th:text="${#temporals.format(assignment.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					</tr>
+
+					<tr>
+						<th>社員名</th>
+						<td th:text="${assignment.employee.empName}"></td>
+					</tr>
+
+					<tr>
+						<th>社員名カナ</th>
+						<td th:text="${assignment.employee.empNameKana}"></td>
+					</tr>
+
+					<tr>
+						<th>アサイン先企業</th>
+						<td th:text="${assignment.company.companyName}"></td>
+					</tr>
+
+					<tr>
+						<th>エンジニアタイプ</th>
+						<td th:text="${assignment.employee.engineerType}"></td>
+					</tr>
+
+					<tr>
+						<th>所属企業</th>
+						<td th:text="${assignment.employee.company.companyName}"></td>
+					</tr>
+
+					<tr>
+						<th>所属企業カナ</th>
+						<td th:text="${assignment.employee.company.companyNameKana}"></td>
+					</tr>
+
+					<tr>
+						<th>契約開始日</th>
+						<td th:text="${assignment.contractStartDate}"></td>
+					</tr>
+					<tr>
+					    <th>契約終了日</th>
+					    <td th:text="${assignment.contractEndDate != null ? assignment.contractEndDate : 'ー'}"></td>
+					</tr>
+
+					<tr>
+						<th>契約単価</th>
+						<td th:text="${#numbers.formatInteger(assignment.unitPrice, 3, 'COMMA')+ ' 円'}"></td>
+					</tr>
+					<tr>
+						<th>役割</th>
+						<td th:text="${assignment.role.role}"></td>
+					</tr>
+				</table>
+				<div class="form-actions detail-actions">
+					<a th:href="@{/assignments/{id}/edit(id=${assignment.assignmentId}, from='detail')}"
+						class="btn btn-primary">変更
+					</a>
+
+
+					<form th:action="@{/assignments/{id}/delete(id=${assignment.assignmentId})}" method="post">
+						<button type="button" class="btn modal-btn-danger"
+							th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
+						</button>
 					</form>
+
+					<a th:href="@{/assignments}" class="btn btn-secondary">戻る
+					</a>
+
+				</div>
+
+
+			</div>
+
+			<!-- 削除確認モーダル -->
+			<div id="deleteOverlay" class="modal-overlay">
+				<div class="modal-box">
+					<div class="modal-icon modal-icon-danger">
+						<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+							stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<polyline points="3 6 5 6 21 6"></polyline>
+							<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+							</path>
+						</svg>
+					</div>
+					<p class="modal-title">アサイン履歴を削除しますか？</p>
+					<p class="modal-subtitle">この操作は取り消せません。</p>
+					<div class="modal-actions">
+						<button type="button" onclick="closeDeleteModal()"
+							class="modal-btn modal-btn-cancel">キャンセル</button>
+						<form id="deleteForm" method="post">
+							<button type="submit" class="modal-btn modal-btn-danger">削除する</button>
+						</form>
+					</div>
 				</div>
 			</div>
+			<script th:src="@{/js/assignment.js}"></script>
 		</div>
-		<script th:src="@{/js/assignment.js}"></script>
-	</div>
 </body>
 
 </html>
