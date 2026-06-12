@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-
 /**
  * 企業登録・編集画面の入力値を受け取るフォームクラス。
  * 画面からの入力チェック（バリデーション）を担う。
