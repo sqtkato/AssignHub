@@ -257,5 +257,24 @@
 		t_assignment
 		WHERE delete_flg = 0
 	</select>
+	
+	<select id="existsEmployee" resultType="int">
+		SELECT COUNT(*) FROM m_employee
+		WHERE emp_id = #{empId}
+		AND delete_flg = 0
+	</select>
+
+	<select id="findCompanyIdByName" resultType="java.lang.Integer">
+		SELECT company_id FROM m_company
+		WHERE company_name = #{companyName}
+		AND delete_flg = 0
+	</select>
+
+	<select id="findRoleIdByName" resultType="java.lang.Integer">
+		SELECT role_id FROM m_role
+		WHERE role = #{role}
+	</select>
+	
+	
 
 </mapper>
