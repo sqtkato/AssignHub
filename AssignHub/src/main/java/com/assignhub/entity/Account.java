@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class DeletedAccount {
+public class Account {
 	/** アカウントID（主キー） */
 	private Integer accountId;
 
