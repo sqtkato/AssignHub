@@ -90,7 +90,7 @@ public class AccountController {
 	 *
 	 * @param form 入力されたアカウント情報フォーム
 	 * @param result       バリデーション結果
-	 * @param attributes   リダイレクト時にメッセージを引き継ぐための属性
+	 * @param session   ログイン中のユーザー情報を取得するためのセッション
 	 * @param model        画面描画用のモデル
 	 * @return 成功時は一覧画面へのリダイレクト、失敗時は登録画面のテンプレートパス
 	 */
@@ -159,6 +159,7 @@ public class AccountController {
 		}
 
 		Account acc = new Account();
+		acc.setAccountId(id);
 		copyFormToEntity(accountForm, acc);
 		accountService.save(acc);
 		return "redirect:/accounts";
