@@ -18,6 +18,8 @@ public class Employee {
 	/** 社員名 */
 	private String empName;
 	
+	private String empNameKana;
+	
 	
 	private String engineerType;
 
