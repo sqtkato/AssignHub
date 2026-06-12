@@ -1,153 +1,170 @@
-.import-desc {
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 25px;
-    line-height: 1.8;
+@charset "UTF-8";
+
+.instruction {
+	color: #555;
+	margin-bottom: 20px;
+	font-size: 0.95rem;
 }
 
-.upload-box {
-    background: #d4f0f5;
-    border: 2px dashed #4a90a4;
-    border-radius: 4px;
-    padding: 35px 40px;
-    text-align: center;
-    margin-bottom: 35px;
+.upload-zone {
+	border: 2px dashed #0078d4;
+	background-color: #f0f6ff;
+	border-radius: 8px;
+	padding: 40px 20px;
+	text-align: center;
+	margin-bottom: 20px;
 }
 
-.upload-box .big {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 12px;
+.upload-zone-text {
+	margin: 5px 0;
+	font-weight: bold;
 }
 
-.upload-box .small {
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 25px;
+.upload-zone-sub {
+	margin: 0;
+	color: #666;
+	font-size: 0.85rem;
 }
 
-.file-inner {
-    background: #fff;
-    border: 1px solid #999;
-    border-radius: 3px;
-    padding: 18px 20px;
-    display: inline-block;
-    min-width: 60%;
-    text-align: left;
-}
-
-.file-inner input[type="file"] {
-    font-size: 14px;
+.template-link-area {
+	text-align: right;
+	margin-bottom: 20px;
 }
 
 .template-link {
-    display: inline-block;
-    margin-top: 20px;
-    color: #1f3a5f;
-    font-size: 14px;
-    text-decoration: underline;
+	color: #0078d4;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 0.9rem;
 }
 
-.btn-area {
-    text-align: center;
-    margin-bottom: 20px;
+.template-link:hover {
+	text-decoration: underline;
 }
 
-.import-btn {
-    padding: 12px 45px;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    margin: 0 20px;
-    border-radius: 3px;
+.action-area {
+	text-align: center;
+	margin-bottom: 40px;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
 }
 
-.import-btn-do {
-    background: #1f3a5f;
-    color: #fff;
+.btn {
+	display: inline-block;
+	padding: 8px 16px;
+	font-size: 0.95rem;
+	border-radius: 4px;
+	text-decoration: none;
+	cursor: pointer;
+	border: none;
+	font-weight: bold;
 }
 
-.import-btn-back {
-    background: #bbb;
-    color: #333;
+.btn-primary {
+	background-color: #0078d4;
+	color: #ffffff;
 }
 
-.file-error {
-    color: red;
-    font-weight: bold;
-    font-size: 17px;
-    text-align: center;
-    margin-bottom: 25px;
+.btn-secondary {
+	background-color: #e5e7eb;
+	color: #374151;
 }
 
-.import-divider {
-    border: none;
-    border-top: 1px solid #333;
-    margin-bottom: 30px;
+.btn-wide {
+	padding: 12px 40px;
+	font-size: 1.05rem;
 }
 
-.result h3 {
-    font-size: 22px;
-    margin-bottom: 25px;
+.result-area {
+	border-top: 1px solid #e5e7eb;
+	padding-top: 30px;
 }
 
-.result-cards {
-    display: flex;
-    gap: 30px;
+.result-title {
+	margin-top: 0;
+	color: #0f2c4c;
 }
 
-.result-card {
-    flex: 1;
-    padding: 30px;
-    text-align: center;
-    border-radius: 4px;
+.summary-box {
+	display: flex;
+	gap: 20px;
+	margin-bottom: 20px;
 }
 
-.result-card .label {
-    font-size: 14px;
-    margin-bottom: 15px;
+.summary-item {
+	flex: 1;
+	padding: 15px;
+	border-radius: 6px;
+	text-align: center;
+	font-weight: bold;
 }
 
-.result-card .num {
-    font-size: 32px;
-    font-weight: bold;
+.summary-success {
+	background-color: #ecfdf5;
+	color: #065f46;
+	border: 1px solid #a7f3d0;
 }
 
-.card-success {
-    background: #d8f5dd;
-    color: #2a7d3f;
+.summary-error {
+	background-color: #fef2f2;
+	color: #991b1b;
+	border: 1px solid #fecaca;
 }
 
-.card-error {
-    background: #f7dada;
-    color: #b03030;
+.summary-value {
+	font-size: 1.5rem;
+	display: block;
+	margin-top: 5px;
 }
 
-.err-msg {
-    color: red;
-    font-weight: bold;
-    font-size: 17px;
-    margin: 25px 0 15px;
-    line-height: 1.8;
+.error-table-msg {
+	color: #dc2626;
+	font-weight: bold;
+	font-size: 0.95rem;
+	margin-bottom: 10px;
 }
 
-.err-table {
-    width: 100%;
-    border-collapse: collapse;
+.error-row {
+	color: #dc2626;
 }
 
-.err-table th {
-    background: #1f3a5f;
-    color: #fff;
-    padding: 12px;
-    text-align: left;
-    font-size: 16px;
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.95rem;
 }
 
-.err-table td {
-    padding: 12px;
-    border-bottom: 1px solid #ccc;
-    color: #b03030;
-    font-size: 15px;
+.table th,
+.table td {
+	padding: 12px 15px;
+	border-bottom: 1px solid #e0e0e0;
+	text-align: left;
+}
+
+.table-dark th {
+	background-color: #1a4273;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+.card {
+	background-color: #ffffff;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+.form-card-wide {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.form-control {
+	padding: 10px;
+	border: 1px solid #d1d5db;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 1rem;
 }
