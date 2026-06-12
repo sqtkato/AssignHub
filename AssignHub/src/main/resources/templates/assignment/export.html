@@ -36,8 +36,8 @@
 					<tbody>
 						<tr th:each="assign : ${assignments}" class="clickable-row">
 							<td th:text="${assign.assignmentId}"></td>
-							<td th:text="${assign.empName}"></td>
-							<td th:text="${assign.companyName}"></td>
+							<td th:text="${assign.employee.empName}"></td>
+							<td th:text="${assign.company.companyName}"></td>
 						</tr>
 					</tbody>
 				</table>
