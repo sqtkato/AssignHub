@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.assignhub.entity.DeletedAccount;
+import com.assignhub.entity.Account;
 import com.assignhub.service.DeletedAccountService;
 
 @Controller
@@ -133,27 +133,11 @@ public class DeletedAccountController {
 	
 //エクスポートのダウンロード処理
 	@GetMapping("/export/download")
-	public String downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
+	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
 			RedirectAttributes attributes) { 
-	
-		if (ids == null || ids.isEmpty()) {
-			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません。");
-			return "redirect:/deleted-accounts";
-		}
-	
-		List<DeletedAccount> delAccount = deletedAccountService.deletedfindByIds(ids);
-		
-		if (delAccount == null) {
-			delAccount = new java.util.ArrayList<>();
-		}
-		
-		if (delAccount.isEmpty()) {
-			attributes.addFlashAttribute("toastError", "該当する削除アカウントデータが見つかりませんでした。");
-			return "redirect:/deleted-accounts";
-		}
-	
+		List<Account> delAccounts = deletedAccountService.deletedfindByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,削除フラグ,作成日時,更新日時,社員名\n");
-		for (DeletedAccount delAcc : delAccount) {
+		for (Account delAcc : delAccounts) {
 			String employeeName = "";
 			if (delAcc.getEmployee() != null) {
 				employeeName = delAcc.getEmployee().getLastName() + " " + delAcc.getEmployee().getFirstName();
