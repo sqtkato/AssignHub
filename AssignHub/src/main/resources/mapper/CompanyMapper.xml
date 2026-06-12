@@ -6,19 +6,20 @@
 		type="com.assignhub.entity.Company">
 		<id property="companyId" column="company_id" />
 		<result property="companyName" column="company_name" />
+		<result property="companyAddress1" column="company_address1" />
+		<result property="companyTel" column="company_tel" />	
 		<result property="createdAt" column="created_at" />
 		<result property="updatedAt" column="updated_at" />
 	</resultMap>
 
-	<select id="findAll" resultMap="companyResultMap">
-		SELECT *
-		FROM m_company
-		<if test="keyword != null and keyword != ''">
-			<where>
-				company_name LIKE CONCAT('%', #{keyword}, '%')
-			</where>
+<select id="findAll" resultMap="companyResultMap">
+		SELECT *FROM m_company
+		<where>
+		<if test="companyName != null and companyName != ''">
+			company_name LIKE CONCAT('%', #{companyName}, '%')
 		</if>
-		ORDER BY ${sort} ${order}
+		</where>
+		ORDER BY company_id ASC
 	</select>
 
 	<select id="findById" resultMap="companyResultMap">

@@ -41,6 +41,8 @@ public class CompanyService {
 	public List<Company> findAll(String keyword, String sort, String order) {
 		return companyMapper.findAll(keyword, sort, order);
 	}
+	
+	
 
 	/**
 	 * 企業IDを指定して、企業情報を1件取得する。
