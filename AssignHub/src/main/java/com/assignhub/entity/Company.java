@@ -60,6 +60,6 @@ public class Company {
 	private LocalDateTime updatedAt;
 	
 	/** 削除フラグ*/
-	private Integer delete_flg;
+	private Integer deleteFlg;
 	
 }
