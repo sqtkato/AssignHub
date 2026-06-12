@@ -235,72 +235,75 @@
 
 	<!--生存条件 -->
 	<select id="countcompanysdispatchsByAssignId" resultType="int">
-		SELECT
-		COUNT(*)
-		FROM t_assignment
-		WHERE emp_id = #{id}
+		SELECT COUNT(*)
+		FROM t_assignment a
+		INNER JOIN m_employee e ON a.emp_id = e.emp_id
+		WHERE a.emp_id = #{id}
 	</select>
 
 	<select id="countcompanysdispatchsByAssignIds" resultType="int">
 		SELECT COUNT(*)
-		FROM t_assignment
-		WHERE emp_id IN
-		<foreach item="id" collection="ids" open="(" separator=","
-			close=")">
+		FROM t_assignment a
+		INNER JOIN m_employee e ON a.emp_id = e.emp_id
+		WHERE a.emp_id IN
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</select>
 
+
 	<select id="countcompanyspartnerByAssignId" resultType="int">
-		SELECT
-		COUNT(*)
-		FROM t_assignment
-		WHERE company_id = #{id}
+		SELECT COUNT(*)
+		FROM t_assignment a
+		INNER JOIN m_company c ON a.company_id = c.company_id
+		WHERE a.company_id = #{id}
 	</select>
 
 	<select id="countcompanyspartnerByAssignIds" resultType="int">
 		SELECT COUNT(*)
-		FROM t_assignment
-		WHERE company_id IN
-		<foreach item="id" collection="ids" open="(" separator=","
-			close=")">
+		FROM t_assignment a
+		INNER JOIN m_company c ON a.company_id = c.company_id
+		WHERE a.company_id IN
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</select>
 
-	<select id="countEmployeesproperByAssignId" resultType="int">
-		SELECT
-		COUNT(*)
-		FROM t_assignment
-		WHERE emp_id = #{id}
-	</select>
 
+	<select id="countEmployeesproperByAssignId" resultType="int">
+		SELECT COUNT(*)
+		FROM t_assignment a
+		INNER JOIN m_employee e ON a.emp_id = e.emp_id
+		WHERE a.emp_id = #{id}
+	</select>
 
 	<select id="countEmployeesproperByAssignIds" resultType="int">
 		SELECT COUNT(*)
-		FROM t_assignment
-		WHERE emp_id IN
-		<foreach item="id" collection="ids" open="(" separator=","
-			close=")">
+		FROM t_assignment a
+		INNER JOIN m_employee e ON a.emp_id = e.emp_id
+		WHERE a.emp_id IN
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</select>
 
+
 	<select id="countEmployeespartnerByAssignId" resultType="int">
-		SELECT
-		COUNT(*)
-		FROM t_assignment
-		WHERE company_id = #{id}
+		SELECT COUNT(*)
+		FROM t_assignment a
+		INNER JOIN m_employee e ON a.emp_id = e.emp_id
+		INNER JOIN m_company ec ON e.company_id = ec.company_id
+		WHERE ec.company_id = #{id}
 	</select>
 
 	<select id="countEmployeespartnersByAssignIds" resultType="int">
 		SELECT COUNT(*)
-		FROM t_assignment
-		WHERE company_id IN
-		<foreach item="id" collection="ids" open="(" separator=","
-			close=")">
+		FROM t_assignment a
+		INNER JOIN m_employee e ON a.emp_id = e.emp_id
+		INNER JOIN m_company ec ON e.company_id = ec.company_id
+		WHERE ec.company_id IN
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</select>
-
 </mapper>
