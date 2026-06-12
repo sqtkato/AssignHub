@@ -36,7 +36,7 @@ public class DeletedCompanyController {
 		model.addAttribute("compName", companyName);
 		model.addAttribute("compTel", companyTel);
 		
-	return "deleted-company/index";}
+	return "deleted_company/index";}
 
 	// ==========================================
 	// 復元処理
@@ -143,7 +143,7 @@ public class DeletedCompanyController {
 					.append(comp.getCompanyAddress1()).append(",")
 					.append(comp.getCompanyAddress2() != null ? comp.getCompanyAddress2() : "").append(",")
 					.append(comp.getCompanyTel()).append(",")
-					.append(comp.getFax() != null ? comp.getFax() : "").append(",")
+					//.append(comp.getFax() != null ? comp.getFax() : "").append(",")
 					.append(comp.getRepLastName() != null ? comp.getRepLastName() : "").append(",")
 					.append(comp.getRepFirstName() != null ? comp.getRepFirstName() : "").append(",")
 					.append(comp.getRepLastNameKana() != null ? comp.getRepLastNameKana() : "").append(",")
