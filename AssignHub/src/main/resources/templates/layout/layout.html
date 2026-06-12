@@ -10,22 +10,88 @@
 </head>
 
 <body>
+
+	<!-- サイドバー -->
 	<div class="sidebar">
 		<h1>AssignHub</h1>
 		<ul>
-			<li><a th:href="@{/employees}">👥 社員情報管理</a></li>
-			<li><a th:href="@{/companies}">🏢 企業情報管理</a></li>
+		    <li><a th:href="@{/employees}">👥社員情報</a></li>
+		    <li><a th:href="@{/companies}">🏢企業情報</a></li>
+		    <li><a th:href="@{/accounts}">🪪アカウント情報</a></li>
+		    <li><a th:href="@{/assign-history}">🏷️アサイン履歴情報</a></li>
+		    <li>
+		        <span style="display: block; padding: 12px 20px; color: #bdc3c7;">削除・復元一覧</span>
+		        <ul class="submenu">
+		            <li><a th:href="@{/deleted/employees}">社員情報</a></li>
+		            <li><a th:href="@{/deleted/companies}">企業情報</a></li>
+		            <li><a th:href="@{/deleted/accounts}">アカウント情報</a></li>
+		            <li><a th:href="@{/deleted/assign-history}">アサイン履歴情報</a></li>
+		        </ul>
+		    </li>
 		</ul>
+		<!-- 画像にある admin 表示 + ログアウト -->
+		<div class="sidebar-footer">
+
+			<!--			usernameの表示を行う場所。変更必要-->
+			<!--            <span th:text="${#authentication.name}">admin123</span>-->
+
+
+			<button type="button" class="btn-logout" onclick="openLogoutModal()">ログアウト</button>
+
+		</div>
 	</div>
 
+	<!-- メインコンテンツ -->
 	<div class="main-content">
-		<div layout:fragment="content"></div>
+		<div class="content-wrapper" layout:fragment="content"></div>
+	</div>
+
+	<div id="logoutOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; align-items:center; justify-content:center;">
+		<div style="background:#fff; border-radius:12px; padding:2rem; width:340px; text-align:center; border:1px solid #ddd;">
+			<div style="width:48px; height:48px; border-radius:50%; background:#fef2f2; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+					<polyline points="16 17 21 12 16 7"></polyline>
+					<line x1="21" y1="12" x2="9" y2="12"></line>
+				</svg>
+			</div>
+			<p style="font-size:16px; font-weight:500; margin:0 0 8px;">ログアウトしますか？</p>
+			<p style="font-size:13px; color:#666; margin:0 0 1.5rem;">ログアウトするとトップページに戻ります。</p>
+			<div style="display:flex; gap:10px; justify-content:center;">
+				<button type="button" onclick="closeLogoutModal()"
+					style="padding:8px 24px; font-size:14px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer;">
+					キャンセル
+				</button>
+				<form th:action="@{/logout}" method="post">
+					<button type="submit"
+						style="padding:8px 24px; font-size:14px; border-radius:6px; border:none; background:#dc3545; color:#fff; cursor:pointer;">
+						ログアウト
+					</button>
+				</form>
+			</div>
+		</div>
 	</div>
 
 	<div id="toast" class="toast" th:if="${toastMessage != null or toastError != null}"
 		th:classappend="${toastError != null} ? 'toast-error' : ''">
 		<span th:text="${toastMessage != null ? toastMessage : toastError}"></span>
 	</div>
+
+	<script>
+		function openLogoutModal() {
+			const overlay = document.getElementById('logoutOverlay');
+			overlay.style.display = 'flex';
+		}
+
+		function closeLogoutModal() {
+			document.getElementById('logoutOverlay').style.display = 'none';
+		}
+
+		document.getElementById('logoutOverlay').addEventListener('click', function(e) {
+			if (e.target === this) closeLogoutModal();
+		});
+	</script>
+
 </body>
 
 </html>
