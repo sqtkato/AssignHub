@@ -1,32 +1,24 @@
 package com.assignhub.form;
 
-import java.time.LocalDateTime;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 public class DeletedAccountForm {
-	/** アカウントID（主キー） */
-	private Integer accountId;
+	@NotBlank(message = "ログインIDは必須です")
+    @Size(min = 5, max = 12, message = "ログインIDは5文字以上12文字以内で入力してください")
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "ログインIDは半角英数字のみで入力してください")
+    private String loginId;
 
-	/** ログインID */
-	private String loginId;
-	
-	private String passwordHash;
-	
-	/** 権限 */
-	private String permission;
-	
-	/** 削除フラグ */
-	private String deleteFlg;
+    @NotBlank(message = "パスワードは必須です")
+    @Size(min = 8, max = 20, message = "パスワードは8文字以上20文字以内で入力してください")
+    @Pattern(regexp = "^[a-zA-Z0-9@_]+$", message = "パスワードは半角英数字または記号(\"@\",\"_\")のみで入力してください")
+    private String passwordHash;
 
-	/** 作成日時 */
-	private LocalDateTime createdAt;
-
-	/** 更新日時 */
-	private LocalDateTime updatedAt;
-	
-	/** 社員名（外部DBから取得）*/
-	private String empName;
+    private Integer permission;
+    
+    private Integer accountId;
 
 }

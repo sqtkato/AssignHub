@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.assignhub.mapper.DeletedCompanyMapper">
 
-	<resultMap id="deletedCompanyResultMap"
-		type="com.assignhub.entity.DeletedCompany">
+	<resultMap id="companyResultMap"
+		type="com.assignhub.entity.Company">
 		<id property="compId" column="company_id" />
 		<result property="compName" column="company_name" />
 		<result property="compNameKana" column="company_name_kana" />
@@ -24,7 +24,7 @@
 		<result property="deleteFlg" column="delete_flg" />
 	</resultMap>
 
-	<select id="deletedfindAll" resultMap="deletedCompanyResultMap">
+	<select id="findAll" resultMap="companyResultMap">
 		SELECT *FROM m_company
 			<where>
 			  delete_flg = 1                             
@@ -38,8 +38,8 @@
 		 ORDER BY company_id ASC	               
 	</select>
 
-	<select id="deletedfindByIds"
-		resultMap="deletedCompanyResultMap">
+	<select id="findByIds"
+		resultMap="companyResultMap">
 		SELECT *
 		FROM m_company
 		WHERE delete_flg = 1

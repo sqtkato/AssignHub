@@ -32,7 +32,7 @@ public class DeletedCompanyController {
 			@RequestParam(name = "compName", required = false) String compName,
 			@RequestParam(name = "compTel", required = false) String compTel, 
 			Model model) { 
-		model.addAttribute("companies", deletedCompanyService.deletedfindAll(compName,compTel));
+		model.addAttribute("companies", deletedCompanyService.findAll(compName,compTel));
 		model.addAttribute("compName", compName);
 		model.addAttribute("compTel", compTel);
 		
@@ -115,7 +115,7 @@ public class DeletedCompanyController {
 			return "redirect:/deleted-companies";
 		}
 
-		List<Company> Companies = deletedCompanyService.deletedfindByIds(ids);
+		List<Company> Companies = deletedCompanyService.findByIds(ids);
 
 		model.addAttribute("count", Companies.size());
 		model.addAttribute("companies", Companies);
@@ -127,7 +127,7 @@ public class DeletedCompanyController {
 	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids) {
 
-		List<Company> delCompanies = deletedCompanyService.deletedfindByIds(ids);
+		List<Company> delCompanies = deletedCompanyService.findByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder(
 				"作成日時,更新日時,企業ID,企業名,企業名カナ,設立年度,社員数,郵便番号,住所1,住所2,TEL,FAX,代表者 姓,代表者 名,代表者 姓：カナ,代表者 名：カナ\n");
 

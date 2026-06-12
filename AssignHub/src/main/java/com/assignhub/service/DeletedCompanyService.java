@@ -17,16 +17,16 @@ public class DeletedCompanyService {
     /**
      * 論理削除済みの企業情報を全件取得する（一覧表示・検索用）。
      */
-    public List<Company> deletedfindAll(String companyName, String companyTel) {
-        return deletedCompanyMapper.deletedfindAll(companyName, companyTel);
+    public List<Company> findAll(String companyName, String companyTel) {
+        return deletedCompanyMapper.findAll(companyName, companyTel);
     }
 
     /**
      * 選択された企業情報を取得する（CSVエクスポート用）。
      */
-    public List<Company> deletedfindByIds(List<Integer> ids) {
+    public List<Company> findByIds(List<Integer> ids) {
         if (ids != null && !ids.isEmpty()) {
-            return deletedCompanyMapper.deletedfindByIds(ids);
+            return deletedCompanyMapper.findByIds(ids);
         }
         return null;
     }

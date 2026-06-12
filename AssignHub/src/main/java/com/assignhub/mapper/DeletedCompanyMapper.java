@@ -13,11 +13,11 @@ public interface DeletedCompanyMapper {
      * 論理削除済みの企業情報を全件取得する。
      * 
      */
-    List<Company> deletedfindAll(
+    List<Company> findAll(
             @Param("companyName") String companyName, 
             @Param("companyTel") String companyTel);
     
-    List<Company> deletedfindByIds(@Param("ids") List<Integer> ids);
+    List<Company> findByIds(@Param("ids") List<Integer> ids);
     
     int restore(@Param("id") Integer id);
     
