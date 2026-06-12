@@ -2,59 +2,46 @@ package com.assignhub.form;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
 @Data
 public class DeletedAssignForm {
-	/** アサインID（主キー） */
+
+	/** アサインID */
 	private Integer assignmentId;
-	
-	/** 社員ID（外部キー） */
+
+	/** 社員名 */
+	@NotNull(message = "社員名を選択してください")
 	private Integer empId;
 
-	/** 会社ID（外部キー） */
+	/** 企業名 */
+	@NotNull(message = "企業名を選択してください")
 	private Integer companyId;
 
 	/** 契約開始日 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull(message = "契約開始日を選択してください")
 	private LocalDate contractStartDate;
 
 	/** 契約終了日 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate contractEndDate;
 
 	/** 契約単価 */
+	@NotNull(message = "契約単価は必須です")
+	@DecimalMin(value = "1", message = "この値は入力できません")
+	@Digits(integer = 10, fraction = 0, message = "10字以内で入力してください")
 	private BigDecimal unitPrice;
 
-	/** 役割ID（外部キー） */
+	/** 役割 */
+	@NotNull(message = "役割を選択してください")
 	private Integer roleId;
-
-	/** 削除フラグ */
-	private Boolean deleteFlg;
-
-	/** 社員名（表示用） */
-	private String empName;
-
-	private String empNameKana;
-
-	/** 企業名（表示用） */
-	private String companyName;
-
-	private String companyNameKana;
-
-	private String assignCompanyName;
-
-	private String engineerType;
-
-	/** 役割名（表示用） */
-	private String roleName;
-
-	/** 作成日時 */
-	private LocalDateTime createdAt;
-
-	/** 更新日時 */
-	private LocalDateTime updatedAt;
-
-	private String role;
 
 }
