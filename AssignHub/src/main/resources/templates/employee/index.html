@@ -16,22 +16,22 @@
 			<form th:action="@{/employees}" method="get" class="search-form">
 				<div class="form-group form-group-search">
 					<label>社員名</label>
-					<input type="text" name="txt_emp_name" class="form-control" th:value="${txt_emp_name}" placeholder="例：山田 太郎">
+					<input type="text" name="empName" class="form-control" th:value="${empName}" placeholder="例：山田 太郎">
 				</div>
 			    <div class="form-group form-group-search">
 					<label>アサイン先企業</label>
-					<input type="text" name="txt_emp_assign_company" class="form-control" th:value="${txt_emp_assign_company}" placeholder="例：山田 太郎">
+					<input type="text" name="empAssignCompany" class="form-control" th:value="${empAssignCompany}" placeholder="例：山田 太郎">
 				</div>
 				<div class="form-group form-group-search">
 					<label>所属企業</label>
-					<input type="text" name="txt_emp_company" class="form-control" th:value="${txt_emp_company}" placeholder="例：山田 太郎">
+					<input type="text" name="empCompany" class="form-control" th:value="${empCompany}" placeholder="例：山田 太郎">
 				</div>
 				<div class="form-group form-group-search">
 					<label>エンジニアタイプ</label>
-					<select name="cmb_emp_engineer_type" class="form-control">
+					<select name="empEngineerType" class="form-control">
 					    <option value>未選択</option>
-					    <option value="プロパー" th:selected="${cmb_emp_engineer_type == 'プロパー'}">プロパー</option>
-					    <option value="パートナー" th:selected="${cmb_emp_engineer_type == 'パートナー'}">パートナー</option>
+					    <option value="プロパー" th:selected="${empEngineerType == 'プロパー'}">プロパー</option>
+					    <option value="パートナー" th:selected="${empEngineerType == 'パートナー'}">パートナー</option>
 					</select>
 				</div>
 			    <button type="submit" class="btn btn-secondary">検索</button>

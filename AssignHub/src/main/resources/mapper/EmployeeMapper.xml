@@ -42,8 +42,7 @@
 		ON
 		e.company_id = c.company_id
     LEFT JOIN t_assignment a
-		ON a.emp_id =
-		e.emp_id
+		ON a.emp_id = e.emp_id
     AND a.contract_end_date is null
     LEFT JOIN m_company c2
 		ON
@@ -51,20 +50,20 @@
    
     <where>
      e.delete_flg = 0
-        <if test=" txt_emp_name != null and txt_emp_name != ''">
-            AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%', #{txt_emp_name}, '%')
+        <if test="empName != null and empName != ''">
+            AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%', #{empName}, '%')
         </if>
 
-        <if test=" txt_emp_assign_company != null and  txt_emp_assign_company != ''">
-            AND c2.company_name LIKE CONCAT('%', #{txt_emp_assign_company}, '%')
+        <if test="empAssignCompany != null and  empAssignCompany != ''">
+            AND c2.company_name LIKE CONCAT('%', #{empAssignCompany}, '%')
         </if>
 
-        <if test=" txt_emp_company != null and  txt_emp_company != ''">
-            AND c.company_name LIKE CONCAT('%', #{txt_emp_company}, '%')
+        <if test="empCompany != null and  empCompany != ''">
+            AND c.company_name LIKE CONCAT('%', #{empCompany}, '%')
         </if>
 
-        <if test="cmb_emp_engineer_type != null and  cmb_emp_engineer_type != ''">
-            AND e.engineer_type LIKE CONCAT('%', #{cmb_emp_engineer_type}, '%')
+        <if test="empEngineerType != null and empEngineerType != ''">
+            AND e.engineer_type LIKE CONCAT('%', #{empEngineerType}, '%')
         </if>
     </where>
 

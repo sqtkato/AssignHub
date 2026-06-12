@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.assignhub.entity.Account;
 import com.assignhub.entity.Company;
 import com.assignhub.entity.Employee;
 import com.assignhub.mapper.EmployeeMapper;
@@ -48,8 +49,8 @@ public class EmployeeService {
 	 * @param order   昇順（asc）または降順（desc）
 	 * @return 社員エンティティのリスト
 	 */
-	public List<Employee> findAll(String txt_emp_name, String txt_emp_assign_company, String cmb_emp_engineer_type, String txt_emp_company) {
-		return employeeMapper.findAll(txt_emp_name, txt_emp_assign_company, cmb_emp_engineer_type, txt_emp_company);
+	public List<Employee> findAll(String empName, String empAssignCompany, String empEngineerType, String empCompany) {
+		return employeeMapper.findAll(empName, empAssignCompany, empEngineerType, empCompany);
 	}
 
 	/**
