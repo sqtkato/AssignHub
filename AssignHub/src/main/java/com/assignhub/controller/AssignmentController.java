@@ -217,8 +217,6 @@ public class AssignmentController {
 		
 		if ("detail".equals(fromPage)) {
 	        return "redirect:/assignments/" + id;
-	    } else if ("index".equals(fromPage)) {
-	        return "redirect:/assignments";
 	    }
 		return "redirect:/assignments";
 	}
