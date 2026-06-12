@@ -31,7 +31,6 @@ public interface CompanyMapper {
 	 * @param companyId 取得対象の企業ID
 	 * @return 企業エンティティ（存在しない場合、または論理削除済みの場合はnull）
 	 */
-	Company findByCompanyId(@Param("id") Integer CompanyId);
 
 	/**
 	 * 企業情報を更新する。
@@ -39,15 +38,9 @@ public interface CompanyMapper {
 	 * @param department 部署エンティティ
 	 */
 	void update(Company company);
-	Company findByCompanyId(@Param("id") Integer CompanyId);
 	
-
-	/**
-	 * 企業情報を更新する。
-	 *
-	 * @param department 部署エンティティ
-	 */
-	void update(Company company);
+	
+	Company findById(@Param("id") Integer id);
 
 
 	/**

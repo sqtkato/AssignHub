@@ -48,8 +48,8 @@ public class CompanyService {
 	 * @param id 取得対象の企業ID
 	 * @return 該当する企業エンティティ（存在しない、または論理削除済みの場合はnull）
 	 */
-	public Company findByCompanyId(Integer companyId) {
-		return companyMapper.findByCompanyId(companyId);
+	public Company findById(Integer id) {
+		return companyMapper.findById(id);
 	}
 
 	

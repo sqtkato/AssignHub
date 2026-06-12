@@ -74,7 +74,17 @@ public class CompanyController {
 		}
 		return "company/create";
 	}
+	
+	@GetMapping("/{id}/detail")
+	public String detail(@PathVariable("id") Integer id,@RequestParam(value="from", required=false) String from,Model model){
+	
+	Company company = companyService.findById(id);
+	model.addAttribute("company",company);
+	model.addAttribute("fromPage", from);
 
+	return "company/detail";
+}
+	
 	/**
 	 * 入力された企業情報をデータベースに登録する。
 	 *
@@ -86,7 +96,7 @@ public class CompanyController {
 	@PostMapping
 	public String store(@Validated @ModelAttribute("companyForm") CompanyForm companyForm, BindingResult result,
 			RedirectAttributes attributes) {
-		if (companyService.isDuplicate(companyForm.getCompanyName(), null)) {
+		if (companyService.isCompanyNameDuplicate(companyForm.getCompanyName(), null)) {
 			result.rejectValue("companyName", "error.companyForm", "この企業名は既に登録されています");
 		}
 		
@@ -188,16 +198,17 @@ public class CompanyController {
 	 * @return 企業情報編集画面のテンプレートパス
 	 */
 	@GetMapping("/{id}/edit")
-	public String edit(@PathVariable("id") Integer companyId, Model model) {
+	public String edit(@PathVariable("id") Integer companyId,@RequestParam(value="from", required=false) String from, Model model) {
 		if (!model.containsAttribute("companyForm")) {
-			Company comp = companyService.findByCompanyId(companyId);
+			Company comp = companyService.findById(companyId);
 			CompanyForm form = new CompanyForm();
 			form.setCompanyId(comp.getCompanyId());
 			form.setCompanyName(comp.getCompanyName());
 			form.setFoundedYear(comp.getFoundedYear());
 			model.addAttribute("companyForm", form);
 		}
-		return "companies/edit";
+		model.addAttribute("fromPage",from);
+		return "company/edit";
 	}
 
 	/**
@@ -213,7 +224,7 @@ public class CompanyController {
 	@PostMapping("/{id}/edit")
 	public String update(@PathVariable("id") Integer companyId,
 			@Validated @ModelAttribute("companyForm") CompanyForm companyForm,
-			BindingResult result, RedirectAttributes attributes, Model model) {
+			BindingResult result, RedirectAttributes attributes, @RequestParam(value="fromPage", required=false) String fromPage,Model model) {
 
 		if (companyService.isCompanyNameDuplicate(companyForm.getCompanyName(), companyId)) {
 			result.rejectValue("companyName", "error.companyForm", "この企業名はすでに使用されています");
@@ -221,7 +232,11 @@ public class CompanyController {
 
 		if (result.hasErrors()) {
 			model.addAttribute("companies", companyService.findAll(null, "companyId", "asc"));
-			return "companies/edit";
+			model.addAttribute("fromPage",fromPage);
+			if ("detail".equals(fromPage)) {
+				return "redirect:/companies/" + companyForm.getCompanyId();
+				} 
+
 		}
 
 		Company comp = new Company();

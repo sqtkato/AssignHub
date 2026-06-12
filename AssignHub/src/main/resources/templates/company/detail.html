@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>企業情報詳細</title>
+</head>
+
+<body>
+	<!-- メイン -->
+	<div layout:fragment="content">
+
+		<div>
+			<class="page-title-area">
+				<h2>企業情報詳細</h2>
+		</div>
+
+		<div class="card">
+			<table class="table">
+				<tr>
+
+				<tr>
+					<th>作成日時</th>
+			
+					<td th:text="${#temporals.format(company.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				</tr>
+
+				<tr>
+					<th>更新日時</th>
+					<td th:text="${#temporals.format(company.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				</tr>
+
+				<tr>
+					<th>企業ID</th>
+					<td th:text="${company.companyId}"></td>
+				</tr>
+
+				<tr>
+					<th>企業名</th>
+					<td th:text="${company.companyName}"></td>
+				</tr>
+
+				<tr>
+					<th>企業名カナ</th>
+					<td th:text="${company.companyNameKana}"></td>
+				</tr>
+
+				<tr>
+					<th>設立年度</th>
+					<td th:text="${company.foundedYear ?: 'ー'}"></td>
+				</tr>
+
+				<tr>
+					<th>社員数</th>
+					<td th:text="${company.employeeCount ?: 'ー'}"></td>
+				</tr>
+
+				<tr>
+					<th>郵便番号</th>
+					<td th:text="${company. companyZipCode}"></td>
+				</tr>
+
+				<tr>
+					<th>住所１</th>
+					<td th:text="${company.companyAddress1}"></td>
+				</tr>
+				<tr>
+					<th>住所２</th>
+					<td th:text="${company.companyAddress2 ?: 'ー'}"></td>
+				</tr>
+
+				<tr>
+					<th>TEL</th>
+					<td th:text="${company.companyTel}"></td>
+				</tr>
+				<tr>
+					<th>FAX</th>
+					<td th:text="${company.fax ?: 'ー'}"></td>
+				</tr>
+				<tr>
+					<th>代表者 姓</th>
+					<td th:text="${company.repLastName ?: 'ー'}"></td>
+				</tr>
+				<tr>
+					<th>代表者 名</th>
+					<td th:text="${company.repFirstName ?: 'ー'}"></td>
+				</tr>
+				<tr>
+					<th>代表者 姓：カナ</th>
+					<td th:text="${company.repLastNameKana ?: 'ー'}"></td>
+				</tr>
+				<tr>
+					<th>代表者 名：カナ</th>
+					<td th:text="${company.repFirstNameKana ?: 'ー'}"></td>
+				</tr>
+			</table>
+
+
+				<div class="form-actions">
+					<a th:href="@{/companies/{id}/edit(id=${company.companyId}, from='detail')}"
+						class="btn btn-primary">変更</a>
+								
+				
+				<form th:action="@{/companies/{id}/delete(id=${company.companyId})}" method="post" style="display:inline;">
+					<button type="submit" class="btn btn-danger" onclick="return confirm('削除しますか？');">削除</button>
+
+				<a th:href="@{/companies}" class ="btn btn-secondary">戻る</a>
+				
+					</button>
+
+			</div>
+
+		</div>
+</body>
+
+</html>
