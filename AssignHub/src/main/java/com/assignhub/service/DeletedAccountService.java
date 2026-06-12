@@ -18,8 +18,8 @@ public class DeletedAccountService {
     /**
      * 論理削除済みのアカウント情報を全件取得する（一覧表示・検索用）。
      */
-    public List<Account> deletedfindAll(String keyword, String sort, String order, Integer permission) {
-        return deletedAccountMapper.deletedfindAll(keyword, sort, order, permission);
+    public List<Account> findAll(String keyword,Integer permission) {
+        return deletedAccountMapper.findAll(keyword,permission);
     }
 
     /**
@@ -28,9 +28,9 @@ public class DeletedAccountService {
      * @param ids 画面のチェックボックスで選択されたアカウントIDのリスト
      * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
      */
-    public List<Account> deletedfindByIds(List<Integer> ids) {
+    public List<Account> findByIds(List<Integer> ids) {
         if (ids != null && ids.isEmpty()) {
-        	return deletedAccountMapper.deletedfindByIds(ids);
+        	return deletedAccountMapper.findByIds(ids);
         }
         return null;
     }

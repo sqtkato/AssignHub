@@ -18,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.assignhub.entity.Account;
 import com.assignhub.service.DeletedAccountService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/deleted-accounts")
 public class DeletedAccountController {
@@ -33,21 +35,15 @@ public class DeletedAccountController {
 	}
 
 	@GetMapping
-    public String index(
-            @RequestParam(name = "keyword", required = false) String keyword,
-            @RequestParam(name = "sort", defaultValue = "account_id") String sort, // デフォルトをaccount_idに修正
-            @RequestParam(name = "order", defaultValue = "asc") String order,
-            @RequestParam(name = "permission", required = false) Integer permission, // permissionを追加
-            Model model) {
-        
-        model.addAttribute("accounts", deletedAccountService.deletedfindAll(keyword, sort, order, permission));
-        model.addAttribute("keyword", keyword); 
-        model.addAttribute("permission", permission);
-        model.addAttribute("currentSort", sort);
-        model.addAttribute("currentOrder", order);
-        
-        return "deleted_account/index";
-    }
+	public String index(@RequestParam(name = "keywordEmpName", required = false) String keywordEmpName,
+			Model model,
+			@RequestParam(name = "permission", required = false) Integer permission, HttpSession session) {
+		model.addAttribute("accounts", deletedAccountService.findAll(keywordEmpName, permission));
+		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
+
+		return "deleted-account/index";
+	}
+
 
     // ==========================================
     // 復元処理
@@ -126,7 +122,7 @@ public class DeletedAccountController {
 	        attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません。");
 	        return "redirect:/deleted-accounts";
 	    }		
-		model.addAttribute("count", deletedAccountService.deletedfindByIds(ids));
+		model.addAttribute("count", deletedAccountService.findByIds(ids));
 		
 		return "deleted_account/export";
 	}
@@ -135,7 +131,7 @@ public class DeletedAccountController {
 	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
 			RedirectAttributes attributes) { 
-		List<Account> delAccounts = deletedAccountService.deletedfindByIds(ids);
+		List<Account> delAccounts = deletedAccountService.findByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,削除フラグ,作成日時,更新日時,社員名\n");
 		for (Account delAcc : delAccounts) {
 			String employeeName = "";

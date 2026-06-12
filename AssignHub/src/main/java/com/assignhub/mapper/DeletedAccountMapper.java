@@ -10,27 +10,24 @@ import com.assignhub.entity.Account;
 @Mapper
 public interface DeletedAccountMapper {
 	/**
-	 * 論理削除済みのアカウント情報を全件取得する（一覧表示・検索用）。
+	 * 条件に一致する論理削除済み企業情報を全件取得する。
 	 *
-	 * @param keyword    検索ワード（ログインIDや社員名などの部分一致）
-	 * @param sort       ソート対象のカラム名
-	 * @param order      ソート順（asc または desc）
-	 * @param permission 権限による絞り込み（0:一般、1:管理者）
-	 * @return 削除済みアカウントエンティティのリスト
+	 * @param keyword 検索ワード（企業名の部分一致）
+	 * @param sort    ソート対象のカラム名
+	 * @param order   ソート順（asc または desc）
+	 * @return アカウントエンティティのリスト
 	 */
-	List<Account> deletedfindAll(
-			@Param("keyword") String keyword, 
-			@Param("sort") String sort, 
-			@Param("order") String order, 
-			@Param("permission") Integer permission);
-	
+	List<Account> findAll(@Param("keyword") String keyword, @Param("permission") Integer permission);
+
 	/**
-	 * チェックボックスにチェックをつけた複数のアカウント情報を取得する（エクスポート処理用）。
+	 * チェックボックスにチェックをつけたアカウント情報を全件取得する。
 	 *
-	 * @param ids 選択されたアカウントIDのリスト
-	 * @return 対象アカウントエンティティのリスト
+	 * @param keyword 検索ワード（企業名の部分一致）
+	 * @param sort    ソート対象のカラム名
+	 * @param order   ソート順（asc または desc）
+	 * @return アカウントエンティティのリスト
 	 */
-	List<Account> deletedfindByIds(@Param("ids") List<Integer> ids);
+	List<Account> findByIds(@Param("ids") List<Integer> ids);
 	
 	/**
 	 * 単一復元（対象データの delete_flg を 0 に更新する）
