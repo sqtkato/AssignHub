@@ -3,6 +3,8 @@ package com.assignhub.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +25,6 @@ import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
 import com.assignhub.service.AccountService;
 import com.assignhub.service.EmployeeService;
-
-import jakarta.servlet.http.HttpSession;
 
 /**
  * アカウント情報管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
@@ -73,7 +73,7 @@ public class AccountController {
 	 * @return アカウント情報新規登録画面のテンプレートパス
 	 */
 	@GetMapping("/new")
-	public String newAccount(Model model, HttpSession session) {
+	public String create(Model model, HttpSession session) {
 		int currentCount = accountService.findAll("", null).size();
 		if (currentCount >= 500) {
 			model.addAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
@@ -94,7 +94,7 @@ public class AccountController {
 	 * @return 成功時は一覧画面へのリダイレクト、失敗時は登録画面のテンプレートパス
 	 */
 	@PostMapping("/create")
-	public String create(@Validated @ModelAttribute("account") AccountForm form,
+	public String store(@Validated @ModelAttribute("account") AccountForm form,
 			BindingResult result, Model model, HttpSession session) {
 		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
 		if (result.hasErrors()) {
@@ -146,7 +146,7 @@ public class AccountController {
 	@PostMapping("/{id}/edit")
 	public String update(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
-			BindingResult result, RedirectAttributes attributes, Model model) {
+			BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
 			return "account/edit";
@@ -158,10 +158,7 @@ public class AccountController {
 		}
 
 		Account acc = new Account();
-		acc.setLoginId(accountForm.getLoginId());
-		acc.setPermission(accountForm.getPermission());
-		acc.setPasswordHash(accountForm.getPasswordHash());
-		acc.setAccountId(id);
+		copyFormToEntity(accountForm, acc);
 		accountService.save(acc);
 		return "redirect:/accounts";
 	}
