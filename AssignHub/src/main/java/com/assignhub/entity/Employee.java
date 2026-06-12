@@ -17,6 +17,9 @@ public class Employee {
 
 	/** 社員名 */
 	private String empName;
+	
+	
+	private String engineerType;
 
 	/** 入社年 */
 	private Integer hireYear;
@@ -26,4 +29,7 @@ public class Employee {
 
 	/** 更新日時 */
 	private LocalDateTime updatedAt;
+	
+	private Company company;
+	
 }
