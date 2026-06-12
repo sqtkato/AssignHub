@@ -58,9 +58,10 @@ public class EmployeeController {
 			@RequestParam(name = "empEngineerType", required = false) String empEngineerType,
 			@RequestParam(name = "empCompany", required = false) String empCompany,
 			Model model) {
-        model.addAttribute("employees", employeeService.findAll(empName, empAssignCompany, empEngineerType, empCompany));
-        model.addAttribute("empName", empName);
-        model.addAttribute("empAssignCompany", empAssignCompany);
+		model.addAttribute("employees",
+				employeeService.findAll(empName, empAssignCompany, empEngineerType, empCompany));
+		model.addAttribute("empName", empName);
+		model.addAttribute("empAssignCompany", empAssignCompany);
 		model.addAttribute("empEngineerType", empEngineerType);
 		model.addAttribute("empCompany", empCompany);
 		return "employee/index";
@@ -100,7 +101,7 @@ public class EmployeeController {
 		attributes.addFlashAttribute("toastMessage", "社員情報を登録しました");
 		return "redirect:/employees";
 	}
-	
+
 	/**
 	 * 社員の社員詳細画面を表示する。
 	 *
@@ -110,15 +111,17 @@ public class EmployeeController {
 	 */
 	@GetMapping("{id}/detail")
 	public String detail(@PathVariable("id") Integer id, Model model) {
-	    // 1. 社員情報を取得（アサイン情報、部署情報も一緒にロード）
-	    Employee emp = employeeService.findById(id);
-	    model.addAttribute("emp", emp);
-	    
-	    return "employee/detail";
+		// 1. 社員情報を取得（アサイン情報、部署情報も一緒にロード）
+		Employee emp = employeeService.findById(id);
+		model.addAttribute("employee", emp);
+
+		return "employee/detail";
 	}
-	
+
 	@GetMapping("/{id}/edit")
-	public String edit(@PathVariable("id") Integer id, Model model) {
+	public String edit(@PathVariable("id") Integer id,
+			@RequestParam(value = "from", required = false) String from,
+			Model model) {
 		if (!model.containsAttribute("employeeForm")) {
 			Employee emp = employeeService.findById(id);
 			EmployeeForm form = new EmployeeForm();
@@ -140,25 +143,30 @@ public class EmployeeController {
 			form.setDepartment(emp.getDepartment());
 			form.setJobTitle(emp.getJobTitle());
 			model.addAttribute("employeeForm", form);
+			model.addAttribute("fromPage", from);
 		}
-//		model.addAttribute("company", companyService.findAll(null, "emp_company_name", "asc"));
+		//		model.addAttribute("company", companyService.findAll(null, "emp_company_name", "asc"));
 		return "employee/edit";
 	}
-	
-	
+
 	@PostMapping("/{id}/edit")
 	public String update(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
-			BindingResult result, RedirectAttributes attributes, Model model) {
-
+			BindingResult result, RedirectAttributes attributes,
+			@RequestParam(value = "fromPage", required = false) String fromPage, Model model) {
 		if (employeeService.isEmailDuplicate(employeeForm.getEmail(), id)) {
 			result.rejectValue("email", "error.employeeForm", "このメールアドレスはすでに他の社員に使用されています");
 		}
 
 		if (result.hasErrors()) {
-//			model.addAttribute("departments", companyService.findAll(null, "dept_id", "asc"));
+			//			model.addAttribute("departments", companyService.findAll(null, "dept_id", "asc"));
+			model.addAttribute("fromPage", fromPage);
 			return "employee/edit";
 		}
+		
+		if ("detail".equals(fromPage)) {
+			return "redirect:/employee/" + employeeForm.getEmpId();
+			}
 
 		Employee emp = new Employee();
 		emp.setEmpId(id);
@@ -168,7 +176,6 @@ public class EmployeeController {
 		return "redirect:/employees";
 	}
 
-	
 	/**
 	 * 社員情報を1件論理削除する。
 	 *
@@ -182,7 +189,7 @@ public class EmployeeController {
 		attributes.addFlashAttribute("toastMessage", "社員情報を削除しました");
 		return "redirect:/employees";
 	}
-	
+
 	/**
 	 * 選択された複数の社員情報を一括で物理削除する。
 	 *
@@ -201,7 +208,7 @@ public class EmployeeController {
 		attributes.addFlashAttribute("toastMessage", ids.size() + "件の社員情報を削除しました");
 		return "redirect:/employees";
 	}
-	
+
 	/**
 	 * 社員データのインポート画面を表示する。
 	 *
@@ -211,7 +218,7 @@ public class EmployeeController {
 	public String showImport() {
 		return "employee/import";
 	}
-	
+
 	/**
 	 * インポート用のCSVテンプレートをダウンロードする。
 	 *
@@ -233,7 +240,7 @@ public class EmployeeController {
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * 社員データのエクスポート画面を表示する。
 	 *
@@ -243,12 +250,12 @@ public class EmployeeController {
 	 */
 	@GetMapping("/export")
 	public String showExport(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
-	    	model.addAttribute("employees", employeeService.findAll(keyword , null , null,null));
-	    model.addAttribute("count", employeeService.findAll(null,null , null,null).size());
-	    model.addAttribute("keyword", keyword);
-	    return "employee/export";
+		model.addAttribute("employees", employeeService.findAll(keyword, null, null, null));
+		model.addAttribute("count", employeeService.findAll(null, null, null, null).size());
+		model.addAttribute("keyword", keyword);
+		return "employee/export";
 	}
-		
+
 	/**
 	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
 	 *
@@ -256,12 +263,11 @@ public class EmployeeController {
 	 */
 	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv() {
-		List<Employee> employees = employeeService.findAll(null , null , null,null);
+		List<Employee> employees = employeeService.findAll(null, null, null, null);
 		StringBuilder csvBuilder = new StringBuilder(
 				"社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,"
-				+ "生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,"
-				+ "所属企業,所属部署,役職,電話番号,メールアドレス\n"
-				);
+						+ "生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,"
+						+ "所属企業,所属部署,役職,電話番号,メールアドレス\n");
 		for (Employee emp : employees) {
 			csvBuilder.append(emp.getEmpId()).append(",")
 					.append(emp.getLastName()).append(",")
@@ -301,7 +307,7 @@ public class EmployeeController {
 	 * @param e 更新対象のエンティティ
 	 */
 	private void copyFormToEntity(EmployeeForm f, Employee e) {
-		
+
 		e.setLastName(f.getLastName());
 		e.setFirstName(f.getFirstName());
 		e.setLastNameKana(f.getLastNameKana());
