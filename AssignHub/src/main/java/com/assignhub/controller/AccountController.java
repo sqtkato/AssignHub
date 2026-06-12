@@ -3,8 +3,6 @@ package com.assignhub.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +23,8 @@ import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
 import com.assignhub.service.AccountService;
 import com.assignhub.service.EmployeeService;
+
+import jakarta.servlet.http.HttpSession;
 
 /**
  * アカウント情報管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
@@ -57,10 +57,10 @@ public class AccountController {
 	 * @return 一覧画面のテンプレートパス
 	 */
 	@GetMapping
-	public String index(@RequestParam(name = "keywordEmpName", required = false) String keywordEmpName,
+	public String index(@RequestParam(name = "keywordEmpName", required = false) String empName,
 			Model model,
 			@RequestParam(name = "permission", required = false) Integer permission, HttpSession session) {
-		model.addAttribute("accounts", accountService.findAll(keywordEmpName, permission));
+		model.addAttribute("accounts", accountService.findAll(empName, permission));
 		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
 
 		return "account/index";
@@ -73,10 +73,10 @@ public class AccountController {
 	 * @return アカウント情報新規登録画面のテンプレートパス
 	 */
 	@GetMapping("/new")
-	public String create(Model model, HttpSession session) {
+	public String create(Model model, HttpSession session, RedirectAttributes attributes) {
 		int currentCount = accountService.findAll("", null).size();
 		if (currentCount >= 500) {
-			model.addAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
+			attributes.addFlashAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
 			return "redirect:/accounts";
 		}
 		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
@@ -200,10 +200,10 @@ public class AccountController {
 	 * アカウント情報インポート画面を表示する。
 	 */
 	@GetMapping("/import")
-	public String showImport(HttpSession session, Model model) {
+	public String showImport(HttpSession session, Model model, RedirectAttributes attributes) {
 		int currentCount = accountService.findAll("", null).size();
 		if (currentCount >= 500) {
-			model.addAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
+			attributes.addFlashAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
 			return "redirect:/accounts";
 		}
 		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
