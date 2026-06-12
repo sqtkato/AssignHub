@@ -1,11 +1,7 @@
 package com.assignhub.controller;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.assignhub.entity.DeletedAssign;
 import com.assignhub.service.DeletedAssignService;
 
 @Controller
@@ -143,45 +138,45 @@ public class DeletedAssignController {
 	    }
 		
 //		エクスポート画面へ遷移	
-		@GetMapping("/export")
-		public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
-			//引数内書き換え
-			model.addAttribute("count", deletedAssignService.findAllByIds(ids));
-			
-			return "deleted_account/export";
-		}
-		
-	//エクスポートのダウンロード処理
-		@GetMapping("/export/download")
-		public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
-				Model model) {
-			List<DeletedAssign> delAccount = deletedAssignService.findAllByIds(ids);
-			//引数名書き換え
-			StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,削除フラグ,作成日時,更新日時,社員名\n");
-			//括弧内書き換え
-			for (DeletedAssign delAcc : delAccount) {
-				csvBuilder.append(delAcc.getAssignmentId()).append(",")
-						.append(delAcc.getEmpId()).append(",")
-						.append(delAcc.getPasswordHash()).append(",")
-						.append(delAcc.getPermission()).append(",")
-						.append(delAcc.getDeleteFlg()).append(",")
-						.append(delAcc.getCreatedAt()).append(",")
-						.append(delAcc.getUpdatedAt()).append(",")
-						.append(delAcc.getEmpName()).append("\n");
-			}
-			byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
-			byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
-			byte[] result = new byte[bom.length + csvBytes.length];
-			System.arraycopy(bom, 0, result, 0, bom.length);
-			System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
-
-			HttpHeaders headers = new HttpHeaders();
-			//filename変更必要
-			headers.add("Content-Disposition", "attachment; filename=deletedAccount.csv");
-			headers.add("Content-Type", "text/csv; charset=UTF-8");
-			return new ResponseEntity<>(result, headers, HttpStatus.OK);
-		}
-	    }
+//		@GetMapping("/export")
+//		public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
+//			//引数内書き換え
+//			model.addAttribute("count", deletedAssignService.findAllByIds(ids));
+//			
+//			return "deleted_account/export";
+//		}
+//		
+//	//エクスポートのダウンロード処理
+//		@GetMapping("/export/download")
+//		public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
+//				Model model) {
+//			List<Assignment> delAccount = deletedAssignService.findAllByIds(ids);
+//			//引数名書き換え
+//			StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,削除フラグ,作成日時,更新日時,社員名\n");
+//			//括弧内書き換え
+//			for (Assignment delAcc : delAccount) {
+//				csvBuilder.append(delAcc.getAssignmentId()).append(",")
+//						.append(delAcc.getEmpId()).append(",")
+//						.append(delAcc.getPasswordHash()).append(",")
+//						.append(delAcc.getPermission()).append(",")
+//						.append(delAcc.getDeleteFlg()).append(",")
+//						.append(delAcc.getCreatedAt()).append(",")
+//						.append(delAcc.getUpdatedAt()).append(",")
+//						.append(delAcc.getEmpName()).append("\n");
+//			}
+//			byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
+//			byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+//			byte[] result = new byte[bom.length + csvBytes.length];
+//			System.arraycopy(bom, 0, result, 0, bom.length);
+//			System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+//
+//			HttpHeaders headers = new HttpHeaders();
+//			//filename変更必要
+//			headers.add("Content-Disposition", "attachment; filename=deletedAccount.csv");
+//			headers.add("Content-Type", "text/csv; charset=UTF-8");
+//			return new ResponseEntity<>(result, headers, HttpStatus.OK);
+//		}
+    }
 
 
 	

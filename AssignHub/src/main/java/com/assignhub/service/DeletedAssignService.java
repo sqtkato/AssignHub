@@ -3,11 +3,13 @@ package com.assignhub.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.assignhub.entity.Assignment;
 import com.assignhub.mapper.DeletedAssignMapper;
 
+@Service
 public class DeletedAssignService {
 	@Autowired
 	private DeletedAssignMapper deletedAssignMapper;

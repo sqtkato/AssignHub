@@ -41,7 +41,7 @@ public class DeletedAccountController {
 		model.addAttribute("accounts", deletedAccountService.findAll(keywordEmpName, permission));
 		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
 
-		return "deleted-account/index";
+		return "deleted_account/index";
 	}
 
 

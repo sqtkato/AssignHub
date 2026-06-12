@@ -3,11 +3,13 @@ package com.assignhub.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.assignhub.entity.Employee;
 import com.assignhub.mapper.DeletedEmployeeMapper;
 
+@Service
 public class DeletedEmployeeService {
 	@Autowired
     private DeletedEmployeeMapper deletedEmployeeMapper;
@@ -15,8 +17,8 @@ public class DeletedEmployeeService {
     /**
      * 論理削除済みのアカウント情報を全件取得する（一覧表示・検索用）。
      */
-    public List<Employee> findAll(String keyword, String sort, String order, Integer permission) {
-        return deletedEmployeeMapper.findAll(keyword, sort, order, permission);
+    public List<Employee> findAll(String empName, String empAssignCompany, String empEngineerType, String empCompany) {
+        return deletedEmployeeMapper.findAll(empName, empAssignCompany, empEngineerType, empCompany);
     }
 
     /**
