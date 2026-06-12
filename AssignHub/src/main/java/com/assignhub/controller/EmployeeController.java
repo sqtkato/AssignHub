@@ -49,7 +49,7 @@ public class EmployeeController {
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
 			@RequestParam(name = "sort", defaultValue = "emp_id") String sort,
 			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-		model.addAttribute("employees", employeeService.findAll(keyword, sort, order));
+		model.addAttribute("employees", employeeService.findAll(keyword, null, null, null));
 		model.addAttribute("keyward", keyword);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
