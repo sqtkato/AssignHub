@@ -6,19 +6,33 @@
 		type="com.assignhub.entity.Company">
 		<id property="companyId" column="company_id" />
 		<result property="companyName" column="company_name" />
+		<result property="companyNameKana" column="company_name_kana" />
+		<result property="companyZipCode" column="company_zipcode" />
+		<result property="companyAddress1" column="company_address1" />
+		<result property="companyAddress2" column="company_address2" />
+		<result property="companyTel" column="company_tel" />	
+		<result property="companyFax" column="company_fax" />
+		<result property="foundedYear" column="founded_year" />
+		<result property="employeeCount" column="employee_count" />
+		<result property="repLastName" column="rep_lastname" />
+		<result property="repFirstName" column="rep_firstname" />
+		<result property="repFirstNameKana" column="rep_firstname_kana" />
+		<result property="repLastNameKana" column="rep_lastname_kana" />
+		<result property="companyAddress1" column="company_address1" />
 		<result property="createdAt" column="created_at" />
 		<result property="updatedAt" column="updated_at" />
 	</resultMap>
-
 	<select id="findAll" resultMap="companyResultMap">
-		SELECT *
-		FROM m_company
-		<if test="keyword != null and keyword != ''">
-			<where>
-				company_name LIKE CONCAT('%', #{keyword}, '%')
-			</where>
+		SELECT * FROM m_company
+		<where>
+		<if test="companyName != null and companyName != ''">
+			company_name LIKE CONCAT('%', #{companyName}, '%')
 		</if>
-		ORDER BY ${sort} ${order}
+		<if test ="companyTel != null and companyTel != ''">
+			AND company_tel LIKE CONCAT('%', #{companyTel}, '%')
+		</if>
+		</where>
+		ORDER BY company_id ASC
 	</select>
 
 	<select id="findById" resultMap="companyResultMap">
