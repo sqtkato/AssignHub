@@ -19,30 +19,30 @@
 					<div class="form-group form-group-search">
 						<div class="form-group">
 							<label>社員名</label>
-							<input type="text" th:field="*{empName}" maxlength="100"
-								class="form-control" th:value="${searchForm.empName}" placeholder="例：山田">
+							<input type="text" th:field="*{empName}" maxlength="100" class="form-control"
+								th:value="${searchForm.empName}" placeholder="例：山田">
 						</div>
 						<div class="form-group">
 							<label>アサイン先企業</label>
-							<input type="text" th:field="*{assignName}" maxlength="50"
-								class="form-control" th:value="${searchForm.assignName}" placeholder="例：株式会社ABC">
+							<input type="text" th:field="*{assignName}" maxlength="50" class="form-control"
+								th:value="${searchForm.assignName}" placeholder="例：株式会社ABC">
 						</div>
 					</div>
 					<div class="form-group form-group-search">
 						<div class="form-group">
 							<label>契約期間</label>
 							<div class="date-range">
-								<input type="date" th:field="*{contractStartDate}"
-									class="form-control" th:value="${searchForm.contractStartDate}">
+								<input type="date" th:field="*{contractStartDate}" class="form-control"
+									th:value="${searchForm.contractStartDate}">
 								<span class="date-range-sep">～</span>
-								<input type="date" th:field="*{contractEndDate}"
-									class="form-control" th:value="${searchForm.contractEndDate}">
+								<input type="date" th:field="*{contractEndDate}" class="form-control"
+									th:value="${searchForm.contractEndDate}">
 							</div>
 						</div>
 						<div class="form-group">
 							<label>所属企業</label>
-							<input type="text" th:field="*{companyName}" maxlength="50"
-								class="form-control" th:value="${searchForm.companyName}" placeholder="例：株式会社ABC">
+							<input type="text" th:field="*{companyName}" maxlength="50" class="form-control"
+								th:value="${searchForm.companyName}" placeholder="例：株式会社ABC">
 						</div>
 					</div>
 				</div>
@@ -64,8 +64,7 @@
 						<line x1="12" y1="15" x2="12" y2="3"></line>
 					</svg>
 				</button>
-				<button type="submit" th:formaction="@{/assignments/export}"
-					class="toolbar-btn toolbar-btn-secondary">
+				<button type="submit" th:formaction="@{/assignments/export}" class="toolbar-btn toolbar-btn-secondary">
 					エクスポート
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
@@ -74,8 +73,7 @@
 						<line x1="12" y1="3" x2="12" y2="15"></line>
 					</svg>
 				</button>
-				<button type="button" class="toolbar-btn toolbar-btn-danger"
-					onclick="openBulkDeleteModal()">
+				<button type="button" class="toolbar-btn toolbar-btn-danger" onclick="openBulkDeleteModal()">
 					一括削除
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
@@ -95,71 +93,73 @@
 			</div>
 
 			<div class="card">
-				<table class="table">
-					<thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
-						<tr>
-							<th class="col-checkbox">
-								<input type="checkbox" class="select-all">
-							</th>
-							<th>ID</th>
-							<th>社員名</th>
-							<th>アサイン先企業</th>
-							<th>所属企業</th>
-							<th>契約開始日</th>
-							<th>契約終了日</th>
-							<th>単価</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="assign : ${assignments}" class="clickable-row">
-							<td class="col-checkbox">
-								<input type="checkbox" name="ids" th:value="${assign.assignmentId}"
-									class="chk_assign_select row-checkbox">
-							</td>
-							<td th:text="${assign.assignmentId}"></td>
-							<td th:text="${assign.empName}"></td>
-							<td th:text="${assign.assignCompanyName}"></td>
-							<td th:text="${assign.companyName}"></td>
-							<td th:text="${assign.contractStartDate}"></td>
-							<td th:text="${assign.contractEndDate != null ? assign.contractEndDate : 'ー'}"></td>
-							<td th:text="${assign.unitPrice}"></td>
-							<td>
-								<button type="button" class="btn_assign_detail btn-icon-svg detail" title="詳細"
-									th:onclick="|location.href='@{/assignments/{id}(id=${assign.assignmentId})}'|">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-										stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-										<circle cx="12" cy="12" r="10"></circle>
-										<path d="M12 16v-4"></path>
-										<path d="M12 8h.01"></path>
-									</svg>
-								</button>
+				<div class="table-scroll">
+					<table class="table">
+						<thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
+							<tr>
+								<th class="col-checkbox">
+									<input type="checkbox" class="select-all">
+								</th>
+								<th>ID</th>
+								<th>社員名</th>
+								<th>アサイン先企業</th>
+								<th>所属企業</th>
+								<th>契約開始日</th>
+								<th>契約終了日</th>
+								<th>単価</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="assign : ${assignments}" class="clickable-row">
+								<td class="col-checkbox">
+									<input type="checkbox" name="ids" th:value="${assign.assignmentId}"
+										class="chk_assign_select row-checkbox">
+								</td>
+								<td th:text="${assign.assignmentId}"></td>
+								<td th:text="${assign.empName}"></td>
+								<td th:text="${assign.assignCompanyName}"></td>
+								<td th:text="${assign.companyName}"></td>
+								<td th:text="${assign.contractStartDate}"></td>
+								<td th:text="${assign.contractEndDate != null ? assign.contractEndDate : 'ー'}"></td>
+								<td th:text="${assign.unitPrice}"></td>
+								<td>
+									<button type="button" class="btn_assign_detail btn-icon-svg detail" title="詳細"
+										th:onclick="|location.href='@{/assignments/{id}(id=${assign.assignmentId})}'|">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<circle cx="12" cy="12" r="10"></circle>
+											<path d="M12 16v-4"></path>
+											<path d="M12 8h.01"></path>
+										</svg>
+									</button>
 
-								<button type="button" class="btn_assign_edit btn-icon-svg edit" title="編集"
-									th:onclick="|location.href='@{/assignments/{id}/edit(id=${assign.assignmentId}, from='index')}'|">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-										stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-										<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-										<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-									</svg>
-								</button>
-								<button type="button" class="btn_assign_delete btn-icon-svg delete" title="削除"
-									th:onclick="|openDeleteModal(${assign.assignmentId})|">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-										stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-										<polyline points="3 6 5 6 21 6"></polyline>
-										<path
-											d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-										</path>
-									</svg>
-								</button>
-							</td>
-						</tr>
-						<tr th:if="${#lists.isEmpty(assignments)}">
-							<td colspan="9" class="text-center">該当するデータがありません。</td>
-						</tr>
-					</tbody>
-				</table>
+									<button type="button" class="btn_assign_edit btn-icon-svg edit" title="編集"
+										th:onclick="|location.href='@{/assignments/{id}/edit(id=${assign.assignmentId}, from='index')}'|">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+											<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+										</svg>
+									</button>
+									<button type="button" class="btn_assign_delete btn-icon-svg delete" title="削除"
+										th:onclick="|openDeleteModal(${assign.assignmentId})|">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<polyline points="3 6 5 6 21 6"></polyline>
+											<path
+												d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+											</path>
+										</svg>
+									</button>
+								</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(assignments)}">
+								<td colspan="9" class="text-center">該当するデータがありません。</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</form>
 		<!-- 削除確認モーダル -->

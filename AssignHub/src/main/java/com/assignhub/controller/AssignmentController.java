@@ -30,7 +30,7 @@ import com.assignhub.service.AssignmentService;
  * アサイン情報のコントローラークラス
  * 
  * @author Team Excel
- * @version 1.00 2024/06/08
+ * @version 1.00 2024/06/12
  */
 @Controller
 @RequestMapping("/assignments")
@@ -43,12 +43,10 @@ public class AssignmentController {
 	}
 	
 	/**
-	 * アサイン情報の一覧を表示する	
-	 * @param txtEmpName 社員名の検索キーワード
-	 * @param txtAssignName アサイン先企業名の検索キーワード
-	 * @param txtCompanyName 所属企業名の検索キーワード
-	 * @param txtContractStartDate 契約開始日の検索キーワード
-	 * @param txtContractEndDate 契約終了日の検索キーワード
+	 * アサイン情報の一覧画面を表示する
+	 * 
+	 * @param searchForm 検索条件のフォームオブジェクト
+	 * @param result バリデーション結果
 	 * @param model モデルオブジェクト
 	 * @return アサイン情報の一覧画面のテンプレートパス
 	 */
@@ -62,9 +60,11 @@ public class AssignmentController {
 
 	    String toastError = null;
 	    if (result.hasErrors()) {
-	        toastError = "契約期間は正しい日付を入力してください。";
-	    } else if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
-	        toastError = "契約開始日は契約終了日以前の日付を入力してください。";
+	        if (result.getFieldError("contractStartDate") != null || result.getFieldError("contractEndDate") != null) {
+	            toastError = "契約期間は正しい日付を入力してください。";
+	        } else {
+	            toastError = "契約開始日は契約終了日以前の日付を入力してください。";
+	        }
 	    }
 
 	    if (toastError != null) {
@@ -203,7 +203,6 @@ public class AssignmentController {
 		}
 		
 		if (result.hasErrors()) {
-			model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
 			model.addAttribute("fromPage", fromPage);
 			return "assignment/edit";
 		}
@@ -321,15 +320,9 @@ public class AssignmentController {
 	 * @param attributes リダイレクト属性オブジェクト
 	 * @return アサイン情報の一覧画面にリダイレクト
 	 */
-	@PostMapping("/export")
-	public String export(@RequestParam(name = "txt_emp_name", required = false) String txtEmpName,
-			@RequestParam(name = "txt_assign_name", required = false) String txtAssignName,
-			@RequestParam(name = "txt_company_name", required = false) String txtCompanyName,
-			@RequestParam(name = "txt_contract_start_date", required = false) String txtContractStartDate,
-			@RequestParam(name = "txt_contract_end_date", required = false) String txtContractEndDate,
-			@RequestParam(name = "ids", required = false) List<Integer> ids,
-			Model model,
-			RedirectAttributes redirectAttributes) {
+	@GetMapping("/export")
+	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
+	        Model model, RedirectAttributes redirectAttributes) {
 		if (ids == null || ids.isEmpty()) {
 			redirectAttributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
 			return "redirect:/assignments";
