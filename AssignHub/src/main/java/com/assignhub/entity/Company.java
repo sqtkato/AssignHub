@@ -12,25 +12,25 @@ import lombok.Data;
 @Data
 public class Company {
 	/** 企業ID（主キー） */
-	private Integer compId;
+	private Integer companyId;
 
 	/** 企業名 */
-	private String compName;
+	private String companyName;
 	
 	/** 企業名カナ */
-	private String compNameKana;
+	private String companyNameKana;
 	
 	/** 郵便番号 */
-	private String compZipCode;
+	private String companyZipCode;
 	
 	/** 住所1 */
-	private String compAddress1;
+	private String companyAddress1;
 	
 	/** 住所2 */
-	private String compAddress2;
+	private String companyAddress2;
 	
 	/** TEL */
-	private String compTel;
+	private String companyTel;
 	
 	/** FAX */
 	private String fax;
