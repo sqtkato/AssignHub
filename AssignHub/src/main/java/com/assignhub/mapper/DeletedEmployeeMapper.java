@@ -60,32 +60,32 @@ public interface DeletedEmployeeMapper {
 	int physicalDeleteBulk(@Param("ids") List<Integer> ids);
 	
 	/**
-	 * 指定されたアカウントIDに紐づく社員数をカウントする（単一物理削除の不在条件チェック用）。
+	 * 指定された社員IDに紐づく社員数をカウントする（単一物理削除の不在条件チェック用）。
 	 */
 	int countAccountsByEmpolyeeId(@Param("id") Integer id);
 	
 	/**
-	 * 指定されたアカウントIDリストのいずれかに紐づく社員数をカウントする（一括物理削除の不在条件チェック用）。
+	 * 指定された社員IDリストのいずれかに紐づくアカウントをカウントする（一括物理削除の不在条件チェック用）。
 	 */
 	int countAccountsByEmpolyeeIds(@Param("ids") List<Integer> ids);
 	
 	/**
-	 * 指定されたアカウントIDに紐づくアサイン履歴数をカウントする（単一物理削除の不在条件チェック用）。
+	 * 指定された社員IDに紐づく企業情報数をカウントする（単一物理削除の不在条件チェック用）。
 	 */
 	int countCompaniesByEmpolyeeId(@Param("id") Integer id);
 
 	/**
-	 * 指定されたアカウントIDリストのいずれかに紐づくアサイン履歴数をカウントする（一括物理削除の不在条件チェック用）。
+	 * 指定された社員IDリストのいずれかに紐づく企業情報数をカウントする（一括物理削除の不在条件チェック用）。
 	 */
 	int countCompaniesByEmpolyeeIds(@Param("ids") List<Integer> ids);
 	
 	/**
-	 * 指定されたアカウントIDに紐づくアサイン履歴数をカウントする（単一物理削除の不在条件チェック用）。
+	 * 指定された社員IDに紐づくアサイン履歴数をカウントする（単一物理削除の不在条件チェック用）。
 	 */
 	int countAssignmentsByEmpolyeeId(@Param("id") Integer id);
 
 	/**
-	 * 指定されたアカウントIDリストのいずれかに紐づくアサイン履歴数をカウントする（一括物理削除の不在条件チェック用）。
+	 * 指定された社員IDリストのいずれかに紐づくアサイン履歴数をカウントする（一括物理削除の不在条件チェック用）。
 	 */
 	int countAssignmentsByEmpolyeeIds(@Param("ids") List<Integer> ids);
 
