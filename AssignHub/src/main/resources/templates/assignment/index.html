@@ -117,9 +117,9 @@
 										class="chk_assign_select row-checkbox">
 								</td>
 								<td th:text="${assign.assignmentId}"></td>
-								<td th:text="${assign.empName}"></td>
-								<td th:text="${assign.assignCompanyName}"></td>
-								<td th:text="${assign.companyName}"></td>
+								<td th:text="${assign.employee.empName}"></td>
+								<td th:text="${assign.company.companyName}"></td>
+								<td th:text="${assign.employee.company.companyName}"></td>
 								<td th:text="${assign.contractStartDate}"></td>
 								<td th:text="${assign.contractEndDate != null ? assign.contractEndDate : 'ー'}"></td>
 								<td th:text="${assign.unitPrice}"></td>
