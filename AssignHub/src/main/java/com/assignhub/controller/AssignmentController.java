@@ -342,14 +342,14 @@ public class AssignmentController {
 		for (Assignment asn : assignments) {
 			csvBuilder.append(asn.getAssignmentId()).append(",")
 					.append(asn.getEmpId()).append(",")
-					.append(asn.getEmployee()).append(",")
-					.append(asn.getCompany()).append(",")
+					.append(asn.getEmployee().getEmpName()).append(",")
+					.append(asn.getCompany().getCompanyName()).append(",")
 					.append(asn.getCreatedAt()).append(",")
 					.append(asn.getUpdatedAt()).append(",")
 					.append(asn.getContractStartDate()).append(",")
 					.append(asn.getContractEndDate() != null ? asn.getContractEndDate() : "ー").append(",")
 					.append(asn.getUnitPrice()).append(",")
-					.append(asn.getRole()).append("\n");
+					.append(asn.getRole().getRole()).append("\n");
 	}
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
