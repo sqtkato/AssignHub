@@ -1,0 +1,4 @@
+
+2026-06-12T15:20:44.791+09:00  INFO 18148 --- [RMI TCP Connection(225)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-12T15:20:44.795+09:00  INFO 18148 --- [RMI TCP Connection(225)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-12T15:20:45.112+09:00  INFO 18148 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
