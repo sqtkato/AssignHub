@@ -3,20 +3,25 @@
 	layout:decorate="~{layout/layout}">
 
 <head>
-	<title>企業情報一覧</title>
+	<title>企業情報削除/復元一覧</title>
+	<link rel="stylesheet" href="/css/popup.css">
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
-			<h2>企業情報管理</h2>
+			<h2>企業情報削除/復元一覧</h2>
 		</div>
 
 		<div class="card">
-			<form th:action="@{/companies}" method="get" class="search-form">
+			<form th:action="@{/deleted-companies}" method="get" class="search-form">
 				<div class="form-group form-group-search">
-					<label>キーワード検索（企業名）</label>
+					<label>企業名</label>
 					<input type="text" name="keyword" class="form-control" th:value="${keyword}" placeholder="例：テクノ">
+				</div>
+				<div class="form-group form-group-search">
+					<label>電話番号</label>
+					<input type="text" name="tel" class="form-control" th:value="${tel}" placeholder="例：0901111111">
 				</div>
 				<button type="submit" class="btn btn-secondary">検索</button>
 			</form>
@@ -24,15 +29,37 @@
 
 		<form th:action="@{/companies/bulk-delete}" method="post" id="listForm">
 			<div class="table-toolbar">
-				<a th:href="@{/companies/new}" class="toolbar-btn toolbar-btn-primary" title="新しい企業を登録">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-						stroke-linecap="round" stroke-linejoin="round">
-						<line x1="12" y1="5" x2="12" y2="19"></line>
-						<line x1="5" y1="12" x2="19" y2="12"></line>
-					</svg>
-					新規登録
-				</a>
-			</div>
+				<button type="submit" formaction="/deleted-companies/restore-bulk" class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元"
+						onclick="return confirm('選択した項目を一括復元しますか？');">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-linecap="round" stroke-linejoin="round">
+							<path d="M7 16c2.21 0 4-1.79 5-3s2.79-3 5-3a4 4 0 1 1 0 8c-2.21 0-4-1.79-5-3s-2.79-3-5-3a4 4 0 0 0-3.4 1.9" />
+							<polyline points="5.5 10 2 12.5 4.5 16" />
+						</svg>
+						一括復元
+					</button>
+
+					<button type="submit" formmethod="get" formaction="/deleted-companies/export" class="toolbar-btn"
+						title="チェックした項目をエクスポート">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-linecap="round" stroke-linejoin="round">
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+							<polyline points="17 8 12 3 7 8"></polyline>
+							<line x1="12" y1="3" x2="12" y2="15"></line>
+						</svg>
+						エクスポート
+					</button>
+
+					<button type="submit" formaction="/deleted-companies/delete-bulk" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
+						onclick="return confirm('選択した項目を一括削除しますか？');">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-linecap="round" stroke-linejoin="round">
+							<polyline points="3 6 5 6 21 6"></polyline>
+							<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+						</svg>
+						一括削除
+					</button>
+				</div>
 
 			<div class="card">
 				<table class="table">
