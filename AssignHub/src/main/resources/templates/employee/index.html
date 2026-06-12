@@ -28,10 +28,10 @@
 				</div>
 				<div class="form-group form-group-search">
 					<label>エンジニアタイプ</label>
-					<select id="cmb_emp_engineer_type" name="cmb_emp_engineer_type" class="form-control">
-					<option value>未選択</option>
-					<option value="プロパー" th:selected="${cmb_emp_engineer_type == 'プロパー'}">プロパー</option>
-					<option value="パートナー" th:selected="${cmb_emp_engineer_type == 'パートナー'}">パートナー</option>
+					<select name="cmb_emp_engineer_type" class="form-control">
+					    <option value>未選択</option>
+					    <option value="プロパー" th:selected="${cmb_emp_engineer_type == 'プロパー'}">プロパー</option>
+					    <option value="パートナー" th:selected="${cmb_emp_engineer_type == 'パートナー'}">パートナー</option>
 					</select>
 				</div>
 			    <button type="submit" class="btn btn-secondary">検索</button>
