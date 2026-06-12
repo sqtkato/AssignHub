@@ -65,8 +65,8 @@
 					<select th:field="*{roleId}" class="form-control"
 						th:classappend="${#fields.hasErrors('roleId')} ? 'input-error'">
 						<option value="">未選択</option>
-						<option th:each="assignment : ${assignments}" th:value="${assignment.roleId}"
-							th:text="${assignment.role}" th:selected="${assignment.roleId == roleId}">
+						<option th:each="role : ${role}" th:value="${role.roleId}"
+							th:text="${role.role}" th:selected="${role.roleId == roleId}">
 						</option>
 					</select>
 					<div class="error-message" th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}">

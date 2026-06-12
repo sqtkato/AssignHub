@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.assignhub.entity.Assignment;
 import com.assignhub.form.AssignmentForm;
 import com.assignhub.form.SearchForm;
+import com.assignhub.mapper.RoleMapper;
 import com.assignhub.service.AssignmentService;
 
 /**
@@ -37,10 +38,11 @@ import com.assignhub.service.AssignmentService;
 public class AssignmentController {
 	
 	private final AssignmentService assignmentService;
-
-	public AssignmentController(AssignmentService assignmentService) {
+	private final RoleMapper roleMapper;
+	public AssignmentController(AssignmentService assignmentService, RoleMapper roleMapper) {
 		this.assignmentService = assignmentService;
-	}
+		this.roleMapper = roleMapper;
+		}
 	
 	/**
 	 * アサイン情報の一覧画面を表示する
@@ -101,6 +103,7 @@ public class AssignmentController {
 			return "redirect:/assignments";
 		}
 		model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
+		model.addAttribute("role", roleMapper.findAll());
 		return "assignment/create";
 	}
 	
