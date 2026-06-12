@@ -3,13 +3,13 @@
 	layout:decorate="~{layout/layout}">
 
 <head>
-	<title>論理削除アサイン履歴情報エクスポート</title>
+	<title>削除アサイン履歴情報エクスポート</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
-			<h2>論理削除アサイン履歴情報エクスポート</h2>
+			<h2>削除アサイン履歴情報エクスポート</h2>
 		</div>
 		<div class="card form-card-wide">
 			<p class="instruction">以下の条件と内容でCSVファイルを出力します。よろしければ「エクスポート」ボタンを押してください。</p>
@@ -29,54 +29,33 @@
 			</div>
 
 			<div class="table-scroll export-table">
-				<table class="table header-only-table table-dark">
+				<table class="table table-dark">
 					<thead>
 						<tr>
-							<th class="acc_id">ID</th>
-							<th class="acc_logId">社員名</th>
-							<th class="acc_per">アサイン先企業名</th>
+							<th>アサインID</th>
+							<th>社員名</th>
+							<th>アサイン先企業</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="account : ${accounts}">
-							<td th:text="${account.accountId}" class="acc_id"></td>
-							<td th:text="${account.loginId}" class="acc_logId"></td>
-							<td th:text="${account.permission}" class="acc_per"></td>
+						<tr th:each="assign : ${assigns}">
+							<td th:text="${assign.assignmentId}"></td>
+							<td th:text="${assign.employee.empName}"></td>
+							<td th:text="${assign.company.companyName}"></td>
+
 						</tr>
 					</tbody>
 				</table>
 			</div>
 
-			<table class="table">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>社員名</th>
-						<th>アサイン先企業名</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="account : ${accounts}">
-						<td th:text="${account.accountId}"></td>
-						<td th:text="${account.loginId}"></td>
-						<td th:text="${account.permission}"></td>					
-					</tr>
-				</tbody>
-			</table>
-
-
-
 			<div class="action-area">
-				<form th:action="@{/accounts/export/download}" method="post">
-
+				<form th:action="@{/deleted-assigns/export/download}" method="post">
 					<div th:each="id : ${ids}">
 						<input type="hidden" name="ids" th:value="${id}">
 					</div>
 
 					<button type="submit" class="btn btn-primary btn-wide">エクスポート</button>
-
-					<a th:href="@{/accounts}" class="btn btn-secondary btn-wide">戻る</a>
-
+					<a th:href="@{/deleted-assigns}" class="btn btn-secondary btn-wide">戻る</a>
 				</form>
 			</div>
 			<p class="export-note">※詳細情報がエクスポートされます。</p>
