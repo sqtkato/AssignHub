@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.assignhub.entity.DeletedAccount;
+import com.assignhub.entity.Employee;
 
 public interface DeletedEmployeeMapper {
 	/**
@@ -16,7 +16,8 @@ public interface DeletedEmployeeMapper {
 	 * @param permission 権限による絞り込み（0:一般、1:管理者）
 	 * @return 削除済みアカウントエンティティのリスト
 	 */
-	List<DeletedAccount> deletedfindAll(
+	//　もらって調整必要
+	List<Employee> findAll(
 			@Param("keyword") String keyword, 
 			@Param("sort") String sort, 
 			@Param("order") String order, 
@@ -28,7 +29,7 @@ public interface DeletedEmployeeMapper {
 	 * @param ids 選択されたアカウントIDのリスト
 	 * @return 対象アカウントエンティティのリスト
 	 */
-	List<DeletedAccount> deletedfindByIds(@Param("ids") List<Integer> ids);
+	List<Employee> findByIds(@Param("ids") List<Integer> ids);
 	
 	/**
 	 * 単一復元（対象データの delete_flg を 0 に更新する）
@@ -61,22 +62,32 @@ public interface DeletedEmployeeMapper {
 	/**
 	 * 指定されたアカウントIDに紐づく社員数をカウントする（単一物理削除の不在条件チェック用）。
 	 */
-	int countEmployeesByAccountId(@Param("id") Integer id);
+	int countAccountsByEmpolyeeId(@Param("id") Integer id);
 	
 	/**
 	 * 指定されたアカウントIDリストのいずれかに紐づく社員数をカウントする（一括物理削除の不在条件チェック用）。
 	 */
-	int countEmployeesByAccountIds(@Param("ids") List<Integer> ids);
+	int countAccountsByEmpolyeeIds(@Param("ids") List<Integer> ids);
 	
 	/**
 	 * 指定されたアカウントIDに紐づくアサイン履歴数をカウントする（単一物理削除の不在条件チェック用）。
 	 */
-	int countAssignmentsByAccountId(@Param("id") Integer id);
+	int countCompaniesByEmpolyeeId(@Param("id") Integer id);
 
 	/**
 	 * 指定されたアカウントIDリストのいずれかに紐づくアサイン履歴数をカウントする（一括物理削除の不在条件チェック用）。
 	 */
-	int countAssignmentsByAccountIds(@Param("ids") List<Integer> ids);
+	int countCompaniesByEmpolyeeIds(@Param("ids") List<Integer> ids);
+	
+	/**
+	 * 指定されたアカウントIDに紐づくアサイン履歴数をカウントする（単一物理削除の不在条件チェック用）。
+	 */
+	int countAssignmentsByEmpolyeeId(@Param("id") Integer id);
+
+	/**
+	 * 指定されたアカウントIDリストのいずれかに紐づくアサイン履歴数をカウントする（一括物理削除の不在条件チェック用）。
+	 */
+	int countAssignmentsByEmpolyeeIds(@Param("ids") List<Integer> ids);
 
 
 }
