@@ -15,7 +15,7 @@
 			</p>
 			<form th:action="@{/companies/import}" method="post" enctype="multipart/form-data">
 				<div class="upload-zone">
-					<div class="upload-icon"></div>
+					<div class="upload-icon">🏢</div>
 					<p class="upload-zone-text">企業情報データCSVを選択してください</p>
 					<p class="upload-zone-sub">対応形式: .csv (UTF-8 / BOMあり推奨、最大 5MB)</p>
 					<input type="file" name="file" accept=".csv" required class="form-control"
@@ -28,10 +28,21 @@
 					<button type="submit" class="btn btn-primary btn-wide">インポート</button>
 					<a th:href="@{/companies}" class="btn btn-secondary btn-wide">戻る</a>
 				</div>
+				<!-- ここに追加 -->
+				<p th:if="${errorMessage}" th:text="${errorMessage}" class="errorMessage"></p>
+				
+			
+			
 			</form>
 
 			<div class="result-area" th:if="${importResult != null}">
-				<h3 class="result-title">処理結果</h3>
+				<h3 class="result-title">処理結果
+    				<span th:if="${importResult.errors != null and !importResult.errors.isEmpty()and importResult.errors[0].field == '上限'}"
+          			th:text="${importResult.errors[0].message}"
+          			class="result-error-message">
+    				</span>
+				</h3>
+				</h3>
 				<div class="summary-box">
 					<div class="summary-item summary-success">
 						正常取り込み
@@ -43,7 +54,8 @@
 					</div>
 				</div>
 				<div th:if="${importResult.errorCount > 0}">
-					<p class="error-table-msg">以下の行でエラーが発生したため、取り込みをキャンセルしました。内容を修正して再アップロードしてください。</p>
+					<p class="error-table-msg">以下の行でエラーが発生したため、取り込みをキャンセルしました。</p>
+					<p class="error-table-msg">内容を修正して再アップロードしてください。</p>
 					<table class="table">
 						<thead class="table-dark">
 							<tr>
@@ -53,7 +65,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="error : ${importResult.errors}" class="error-row">
+							<tr th:each="error : ${importResult.errors}"  th:if="${error.field != '上限'}" class="error-row">
 								<td th:text="${error.rowNum} + '行目'"></td>
 								<td th:text="${error.field}"></td>
 								<td th:text="${error.message}"></td>
