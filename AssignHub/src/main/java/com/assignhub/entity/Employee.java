@@ -15,6 +15,12 @@ import lombok.Data;
 public class Employee {
 	/** 社員ID（主キー） */
 	private Integer empId;
+	
+	/** アカウントID（外部キー） */
+	private Integer accountId;
+	
+	/** 企業ID （外部キー）*/
+	private Integer companyId;
 
 	/** 社員姓 */
 	private String lastName;
@@ -49,18 +55,6 @@ public class Employee {
 	/** エンジニアタイプ */
 	private String engineerType;
 	
-	/** アカウントID */
-	private Integer accountId;
-	
-	/** 企業ID */
-	private Integer companyId;
-	
-	/** 所属先企業 */
-	private String companyName;
-	
-	/** アサイン先企業 */
-	private String companyNameAssign;
-	
 	/** 所属部署 */
 	private String department;
 	
@@ -82,15 +76,12 @@ public class Employee {
 	/** 更新日時 */
 	private LocalDateTime updatedAt;
 	
-	/** 契約開始日 */
-	private LocalDateTime contractStartDate;
+	/** アサイン情報 （外部DBからの取得）*/
+	private Assignment Assignment;
 	
-	/** 契約終了日 */
-	private LocalDateTime contractEndDate;
+	/** アカウント情報 （外部DBからの取得）*/
+	private Account Account;
 	
-	/** 契約単価 */
-	private Integer unitPrice;
-	
-	/** ログインID */
-	private String loginId;		
+	/** 企業情報 （外部DBからの取得）*/
+	private Company Company;
 }
