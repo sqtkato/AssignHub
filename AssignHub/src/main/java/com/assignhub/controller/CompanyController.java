@@ -1,7 +1,11 @@
 package com.assignhub.controller;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Company;
@@ -49,13 +54,13 @@ public class CompanyController {
 	 * @return 一覧画面のテンプレートパス
 	 */
 	@GetMapping
-	public String index(@RequestParam(name = "keyword", required = false) String keyword,
-			@RequestParam(name = "tel", required = false) String tel,
+	public String index(@RequestParam(name = "companySearch", required = false) String companySearch,
+			@RequestParam(name = "companyTelSearch", required = false) String companyTelSearch,
 			@RequestParam(name = "sort", defaultValue = "company_id") String sort,
 			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-		model.addAttribute("companies", companyService.findAll(keyword, sort, order));
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("phone", tel);
+		model.addAttribute("companies", companyService.findAll(companySearch,companyTelSearch ,sort, order));
+		model.addAttribute("companySearch", companySearch);
+		model.addAttribute("companyTelSearch", companyTelSearch);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
 		return "company/index";
@@ -86,7 +91,7 @@ public class CompanyController {
 	@PostMapping
 	public String store(@Validated @ModelAttribute("companyForm") CompanyForm companyForm, BindingResult result,
 			RedirectAttributes attributes) {
-		if (companyService.isDuplicate(companyForm.getCompanyName(), null)) {
+		if (companyService.isCompanyNameDuplicate(companyForm.getCompanyName(), null)) {
 			result.rejectValue("companyName", "error.companyForm", "この企業名は既に登録されています");
 		}
 		
@@ -101,27 +106,37 @@ public class CompanyController {
 		//郵便番号の形式が不正の場合
 		if (companyForm.getCompanyZipCode() != null && !companyForm.getCompanyZipCode().isEmpty()) {
 		    if (!companyForm.getCompanyZipCode().matches("^[0-9]*$")) {
-		        result.rejectValue("compZipCode", "error", "郵便番号の形式が正しくありません ハイフンなしで入力してください");
-		//郵便番号が8桁以上入力された場合        
-		    } else if (companyForm.getCompanyZipCode().length() != 7) {
-		        result.rejectValue("compZipCode", "error", "郵便番号は7桁で入力してください");
-		    }
+		        result.rejectValue("companyZipCode", "error", "郵便番号の形式が正しくありません ハイフンなしで入力してください");  
+		    } 
+		  //郵便番号が8桁以上入力された場合 
+		    else if(companyForm.getCompanyZipCode().length() !=7 ){
+				result.rejectValue("companyZipCode","error.companyForm", "郵便番号は7桁以内で入力してください");
+			}
 		}
 		
 		//TELが重複している場合
 		if (companyService.isTelDuplicate(companyForm.getCompanyTel(), null)) {
-			result.rejectValue("compTel", "error.companyForm", "この電話番号は既に登録されています");
+			result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に登録されています");
 		}
+	
+		if (companyForm.getCompanyTel() != null && !companyForm.getCompanyTel().isEmpty() ) {
+			// TELの形式が不正の場合
+			 if (!companyForm.getCompanyTel().matches("^[0-9]*$")) {
+		        result.rejectValue("companyTel", "error", "電話番号の形式が正しくありません ハイフンなしで入力してください");
+		    }
+			 else if(companyForm.getCompanyTel().length() <10 || companyForm.getCompanyTel().length() > 11 ){
+				result.rejectValue("companyTel","error.companyForm", "電話番号10桁または11桁で入力してください");
+			}
+		}
+		
+		//FAXが重複している場合
 		if (companyService.isFaxDuplicate(companyForm.getFax(), null)) {
-			result.rejectValue("fax", "error.companyForm", "このFAX電話は既に登録されています");
+			result.rejectValue("fax", "error.companyForm", "このFAX番号は既に登録されています");
 		}
-		// TELの形式が不正の場合
-		if (companyForm.getCompanyTel() != null && !companyForm.getCompanyTel().isEmpty()) {
-		    if (!companyForm.getCompanyTel().matches("^[0-9]*$")) {
-		        result.rejectValue("compTel", "error", "電話番号の形式が正しくありません ハイフンなしで入力してください");
-		//TELが9桁以下または12桁以上入力の場合
-		    } else if (companyForm.getCompanyTel().length() < 10 || companyForm.getCompanyTel().length() > 11) {
-		        result.rejectValue("compTel", "error", "電話番号は10桁または11桁内で入力してください");
+		// FAXの形式が不正の場合
+		if (companyForm.getFax() != null && !companyForm.getFax().isEmpty()) {
+		    if (!companyForm.getFax().matches("^[0-9]*$")) {
+		        result.rejectValue("fax", "error", "FAX番号の形式が正しくありません ハイフンなしで入力してください");
 		    }
 		}
 		if (result.hasErrors()) {
@@ -137,7 +152,7 @@ public class CompanyController {
 	/**
 	 * 企業情報を1件物理削除する。
 	 *
-	 * @param id         削除対象の社員ID
+	 * @param 企業id 削除対象の社員ID
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクト
 	 */
@@ -168,7 +183,7 @@ public class CompanyController {
 	}
 	
 	/**
-	 * 社員データのインポート画面を表示する。
+	 * 企業データのインポート画面を表示する。
 	 *
 	 * @return インポート画面のテンプレートパス
 	 */
@@ -177,61 +192,64 @@ public class CompanyController {
 		return "company/import";
 	}
 	
-	
-
-	
 	/**
-	 * 企業情報の編集画面を表示する。
+	 * CSVファイルを用いた企業データの一括インポート処理を実行する。
 	 *
-	 * @param company_id    編集対象の部署ID
+	 * @param file  アップロードされたCSVファイル
 	 * @param model 画面描画用のモデル
-	 * @return 企業情報編集画面のテンプレートパス
+	 * @return インポート画面のテンプレートパス
 	 */
-	@GetMapping("/{id}/edit")
-	public String edit(@PathVariable("id") Integer companyId, Model model) {
-		if (!model.containsAttribute("companyForm")) {
-			Company comp = companyService.findByCompanyId(companyId);
-			CompanyForm form = new CompanyForm();
-			form.setCompanyId(comp.getCompanyId());
-			form.setCompanyName(comp.getCompanyName());
-			form.setFoundedYear(comp.getFoundedYear());
-			model.addAttribute("companyForm", form);
+		@PostMapping("/import")
+		public String importCsv(@RequestParam("file") MultipartFile file, Model model) throws Exception {
+		// ファイル未選択
+		if (file.isEmpty()) {
+			model.addAttribute("toastError", "ファイルを選択してください");
+			return "company/import";
 		}
-		return "companies/edit";
-	}
-
+		
+		// CSV以外のファイル
+		String filename = file.getOriginalFilename();
+	    if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
+	        model.addAttribute("errorMessage", "ファイル形式が正しくありません。CSVファイルを選択してください。");
+	        return "company/import";
+	    }
+		// 容量チェック（5MB）
+		    if (file.getSize() > 5 * 1024 * 1024) {
+		        model.addAttribute("errorMessage", "ファイルサイズは5MB以内にしてください");
+		        return "company/import";
+		}
+		    try {
+		        CompanyService.ImportResult result = companyService.importCsv(file);
+		        if (result.errorCount > 0) {
+		            model.addAttribute("importResult", result);
+		            return "company/import";
+		        }
+		        return "redirect:/companies";
+		    } catch (java.nio.charset.MalformedInputException e) {
+		        model.addAttribute("errorMessage", "UTF-8のCSVファイルを選択してください");
+		        return "company/import";
+		    }
+		}    
+	
+	
 	/**
-	 * 企業情報の更新処理を実行する。
+	 * インポート用のCSVテンプレートをダウンロードする。
 	 *
-	 * @param companyId             更新対象の企業ID
-	 * @param companyForm 入力された部署情報フォーム
-	 * @param result         バリデーション結果
-	 * @param attributes     リダイレクト時にメッセージを引き継ぐための属性
-	 * @param model          画面描画用のモデル
-	 * @return 成功時は一覧画面へのリダイレクト、失敗時は編集画面のテンプレートパス
+	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
-	@PostMapping("/{id}/edit")
-	public String update(@PathVariable("id") Integer companyId,
-			@Validated @ModelAttribute("companyForm") CompanyForm companyForm,
-			BindingResult result, RedirectAttributes attributes, Model model) {
+	@GetMapping("/import/template")
+	public ResponseEntity<byte[]> downloadTemplate() {
+		String csvContent = "企業ID,企業名,企業名カナ,設立年度,社員数,郵便番号,住所1,住所2,TEL,FAX,代表者姓,代表者名,代表者姓カナ,代表者名カナ\n";
+		byte[] csvBytes = csvContent.getBytes(StandardCharsets.UTF_8);
+		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+		byte[] result = new byte[bom.length + csvBytes.length];
+		System.arraycopy(bom, 0, result, 0, bom.length);
+		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 
-		if (companyService.isCompanyNameDuplicate(companyForm.getCompanyName(), companyId)) {
-			result.rejectValue("companyName", "error.companyForm", "この企業名はすでに使用されています");
-		}
-
-		if (result.hasErrors()) {
-			model.addAttribute("companies", companyService.findAll(null, "companyId", "asc"));
-			return "companies/edit";
-		}
-
-		Company comp = new Company();
-		comp.setCompanyId(companyId);
-		copyFormToEntity(companyForm, comp);
-		companyService.save(comp);
-
-		attributes.addFlashAttribute("toastMessage", "企業情報を更新しました");
-
-		return "redirect:/companies";
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=company_template.csv");
+		headers.add("Content-Type", "text/csv; charset=UTF-8");
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
 	/**

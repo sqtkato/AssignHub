@@ -6,8 +6,18 @@
 		type="com.assignhub.entity.Company">
 		<id property="companyId" column="company_id" />
 		<result property="companyName" column="company_name" />
+		<result property="companyNameKana" column="company_name_kana" />
+		<result property="companyZipCode" column="company_zipcode" />
 		<result property="companyAddress1" column="company_address1" />
-		<result property="companyTel" column="company_tel" />	
+		<result property="companyAddress2" column="company_address2" />
+		<result property="companyTel" column="company_tel" />
+		<result property="fax" column="company_fax" />
+		<result property="foundedYear" column="founded_year" />	
+		<result property="employeeCount" column="employee_count" />	
+		<result property="repLastName" column="rep_lastname" />
+		<result property="repFirstName" column="rep_firstname" />
+		<result property="repLastNameKana" column="rep_lastname_kana" />
+		<result property="repFirstNameKana" column="rep_firstname_kana" />
 		<result property="createdAt" column="created_at" />
 		<result property="updatedAt" column="updated_at" />
 	</resultMap>
@@ -42,7 +52,7 @@
 <select id="existsByCompTel" resultType="boolean">
     SELECT COUNT(*) > 0
     FROM m_company
-    WHERE company_tel = #{compTel}
+    WHERE company_tel = #{companyTel}
     <if test="companyId != null">
         AND company_id != #{companyId}
     </if>
@@ -55,6 +65,10 @@
     <if test="companyId != null">
         AND company_id != #{companyId}
     </if>
+</select>
+
+<select id="countAll" resultType="int">
+    SELECT COUNT(*) FROM m_company 
 </select>
 	<delete id="delete">
 		DELETE FROM m_company

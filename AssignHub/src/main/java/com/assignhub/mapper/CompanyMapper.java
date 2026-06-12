@@ -22,33 +22,16 @@ public interface CompanyMapper {
 	 * @param order   ソート順（asc または desc）
 	 * @return 企業エンティティのリスト
 	 */
-	List<Company> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+	List<Company> findAll(@Param("companySearch") String keyword,@Param("companyTelSearch") String tel,@Param("sort") String sort, @Param("order") String order);
 
 	/**
 	 * 企業IDを指定して企業情報を1件取得する。
 	 * 論理削除済みのデータは取得対象外とする。
 	 *
-	 * @param companyId 取得対象の企業ID
+	 * @param id 取得対象の企業ID
 	 * @return 企業エンティティ（存在しない場合、または論理削除済みの場合はnull）
 	 */
-	Company findByCompanyId(@Param("id") Integer CompanyId);
-
-	/**
-	 * 企業情報を更新する。
-	 *
-	 * @param department 部署エンティティ
-	 */
-	void update(Company company);
-	Company findByCompanyId(@Param("id") Integer CompanyId);
-	
-
-	/**
-	 * 企業情報を更新する。
-	 *
-	 * @param department 部署エンティティ
-	 */
-	void update(Company company);
-
+	Company findById(@Param("id") Integer id);
 
 	/**
 	 * 企業情報を新規登録する。
@@ -58,9 +41,9 @@ public interface CompanyMapper {
 	 */
 	void insert(Company company);
 
-	boolean existsByCompanyName(@Param("companyName") String companyName,
-			@Param("companyId") Integer companyId);
-
+	boolean existsByCompanyName( @Param("companyName") String companyName, 
+		    @Param("companyId") Integer companyId);
+	
 	/**
 	 * 指定されたTELの登録件数を取得する（指定IDを除外）。
 	 *
@@ -68,41 +51,40 @@ public interface CompanyMapper {
 	 * @param excludecompanyId チェックから除外する自身の企業ID
 	 * @return 一致するTELの件数
 	 */
-	boolean existsByCompTel(@Param("compTel") String compTel,
-			@Param("companyId") Integer companyId);
-
+	boolean existsByCompTel( @Param("companyTel") String companyTel, 
+		    @Param("companyId") Integer companyId);
+	
 	/**
 	 * 指定されたFAXの登録件数を取得する（指定IDを除外）。
 	 *
 	 * @param FAX 重複チェックするFAX
 	 * @param excludecompanyId チェックから除外する自身の企業ID
 	 * @return 一致するFAXの件数
-	 */
-	boolean existsByFax(@Param("fax") String fax,
-			@Param("companyId") Integer companyId);
+	 */boolean existsByFax( @Param("fax") String fax, 
+			    @Param("companyId") Integer companyId);
 
-	/**
-	 * 企業情報を物理削除する。
-	 *
-	 * @param id 社員ID
-	 */
-	void delete(Integer id);
+/**
+ * 企業情報を物理削除する。
+ *
+ * @param id 企業ID
+ */
+void delete(Integer id);
 
-	/**
-	 * 複数の社員を一括で物理削除する。
-	 *
-	 * @param ids 削除対象IDリスト
-	 */
-	void deleteBulk(@Param("ids") List<Integer> ids);
+/**
+ * 複数のを一括で物理削除する。
+ *
+ * @param ids 削除対象IDリスト
+ */
+void deleteBulk(@Param("ids") List<Integer> ids);
 
-	/**
-	 * 指定された部署名の登録件数を取得する（指定IDを除外）。
-	 *
-	 * @param companyName      重複チェックする部署名
-	 * @param excludeCompanyId チェックから除外する自身の部署ID
-	 * @return 一致する部署名の件数
-	 */
-	int countByCompanyName(@Param("companyName") String companyName,
-			@Param("excludeCompanyId") Integer excludeCompanyId);
+
+int countAll();
+
+
+
+
+
+
+
 
 }
