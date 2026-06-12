@@ -596,3 +596,6 @@ jakarta.validation.UnexpectedTypeException: HV000030: No validator could be foun
 2026-06-12T16:41:01.451+09:00  INFO 25928 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
 2026-06-12T16:41:01.456+09:00  INFO 25928 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.367 seconds (process running for 18959.328)
 2026-06-12T16:41:01.459+09:00  INFO 25928 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-12T16:45:52.464+09:00  INFO 25928 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2026-06-12T16:45:52.466+09:00  INFO 25928 --- [Thread-21] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-12T16:45:52.743+09:00  INFO 25928 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
