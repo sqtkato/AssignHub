@@ -29,10 +29,10 @@
 			<where>
 			  delete_flg = 1                             
 			<if test="compName != null and compName != ''">
-			 AND company_name LIKE CONCAT('%', #{compName}, '%')	                               
+			 AND company_name LIKE CONCAT('%', #{companyName}, '%')	                               
 			</if>		                               
 			<if test="compTel != null and compTel != ''">
-			 AND company_tel LIKE CONCAT('%', #{compTel}, '%')	                               
+			 AND company_tel LIKE CONCAT('%', #{companyTel}, '%')	                               
 			</if>			                               
 		</where>
 		 ORDER BY company_id ASC	               

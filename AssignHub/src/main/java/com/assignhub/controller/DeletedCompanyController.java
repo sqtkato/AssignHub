@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.assignhub.entity.DeletedCompany;
+import com.assignhub.entity.Company;
 import com.assignhub.service.DeletedCompanyService;
 
 @Controller
@@ -31,12 +31,11 @@ public class DeletedCompanyController {
 	public String index(
 			@RequestParam(name = "compName", required = false) String compName,
 			@RequestParam(name = "compTel", required = false) String compTel, 
-			@RequestParam(name = "sort", defaultValue = "company_id") String sort, 
-	        @RequestParam(name = "order", defaultValue = "asc") String order,
 			Model model) { 
-		model.addAttribute("companies", deletedCompanyService.deletedfindAll(compName,compTel,sort,order));model.addAttribute("compName", compName);model.addAttribute("compTel", compTel);
-		model.addAttribute("currentSort", sort);
-		model.addAttribute("currentOrder", order);
+		model.addAttribute("companies", deletedCompanyService.deletedfindAll(compName,compTel));
+		model.addAttribute("compName", compName);
+		model.addAttribute("compTel", compTel);
+		
 	return "deleted-company/index";}
 
 	// ==========================================
@@ -116,7 +115,7 @@ public class DeletedCompanyController {
 			return "redirect:/deleted-companies";
 		}
 
-		List<DeletedCompany> Companies = deletedCompanyService.deletedfindByIds(ids);
+		List<Company> Companies = deletedCompanyService.deletedfindByIds(ids);
 
 		model.addAttribute("count", Companies.size());
 		model.addAttribute("companies", Companies);
@@ -128,22 +127,22 @@ public class DeletedCompanyController {
 	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids) {
 
-		List<DeletedCompany> delCompanies = deletedCompanyService.deletedfindByIds(ids);
+		List<Company> delCompanies = deletedCompanyService.deletedfindByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder(
 				"作成日時,更新日時,企業ID,企業名,企業名カナ,設立年度,社員数,郵便番号,住所1,住所2,TEL,FAX,代表者 姓,代表者 名,代表者 姓：カナ,代表者 名：カナ\n");
 
-		for (DeletedCompany comp : delCompanies) {
+		for (Company comp : delCompanies) {
 			csvBuilder.append(comp.getCreatedAt() != null ? comp.getCreatedAt() : "").append(",")
 					.append(comp.getUpdatedAt() != null ? comp.getUpdatedAt() : "").append(",")
-					.append(comp.getCompId()).append(",")
-					.append(comp.getCompName()).append(",")
-					.append(comp.getCompNameKana()).append(",")
+					.append(comp.getCompanyId()).append(",")
+					.append(comp.getCompanyName()).append(",")
+					.append(comp.getCompanyNameKana()).append(",")
 					.append(comp.getFoundedYear() != null ? comp.getFoundedYear() : "").append(",")
-					.append(comp.getEmpCount() != null ? comp.getEmpCount() : "").append(",")
-					.append(comp.getCompZipCode() != null ? comp.getCompZipCode() : "").append(",")
-					.append(comp.getCompAddress1()).append(",")
-					.append(comp.getCompAddress2() != null ? comp.getCompAddress2() : "").append(",")
-					.append(comp.getCompTel()).append(",")
+					.append(comp.getEmployeeCount() != null ? comp.getEmployeeCount() : "").append(",")
+					.append(comp.getCompanyZipCode() != null ? comp.getCompanyZipCode() : "").append(",")
+					.append(comp.getCompanyAddress1()).append(",")
+					.append(comp.getCompanyAddress2() != null ? comp.getCompanyAddress2() : "").append(",")
+					.append(comp.getCompanyTel()).append(",")
 					.append(comp.getFax() != null ? comp.getFax() : "").append(",")
 					.append(comp.getRepLastName() != null ? comp.getRepLastName() : "").append(",")
 					.append(comp.getRepFirstName() != null ? comp.getRepFirstName() : "").append(",")

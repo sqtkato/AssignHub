@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.assignhub.entity.DeletedCompany;
+import com.assignhub.entity.Company;
 
 @Mapper
 public interface DeletedCompanyMapper {
@@ -13,13 +13,11 @@ public interface DeletedCompanyMapper {
      * 論理削除済みの企業情報を全件取得する。
      * 
      */
-    List<DeletedCompany> deletedfindAll(
-            @Param("keyword") String keyword, 
-            @Param("tel") String tel,
-            @Param("sort") String sort, 
-            @Param("order") String order);
+    List<Company> deletedfindAll(
+            @Param("companyName") String companyName, 
+            @Param("companyTel") String companyTel);
     
-    List<DeletedCompany> deletedfindByIds(@Param("ids") List<Integer> ids);
+    List<Company> deletedfindByIds(@Param("ids") List<Integer> ids);
     
     int restore(@Param("id") Integer id);
     

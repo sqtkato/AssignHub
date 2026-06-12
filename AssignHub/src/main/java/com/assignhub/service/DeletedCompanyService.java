@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.assignhub.entity.DeletedCompany;
+import com.assignhub.entity.Company;
 import com.assignhub.mapper.DeletedCompanyMapper;
 
 @Service
@@ -17,14 +17,14 @@ public class DeletedCompanyService {
     /**
      * 論理削除済みの企業情報を全件取得する（一覧表示・検索用）。
      */
-    public List<DeletedCompany> deletedfindAll(String compName, String comptel,String sort, String order) {
-        return deletedCompanyMapper.deletedfindAll(compName, comptel,sort, order);
+    public List<Company> deletedfindAll(String companyName, String companyTel) {
+        return deletedCompanyMapper.deletedfindAll(companyName, companyTel);
     }
 
     /**
      * 選択された企業情報を取得する（CSVエクスポート用）。
      */
-    public List<DeletedCompany> deletedfindByIds(List<Integer> ids) {
+    public List<Company> deletedfindByIds(List<Integer> ids) {
         if (ids != null && !ids.isEmpty()) {
             return deletedCompanyMapper.deletedfindByIds(ids);
         }
