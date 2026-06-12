@@ -31,7 +31,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label>企業名 <span class="badge-required">必須</span></label>
+					<label>アサイン先企業 <span class="badge-required">必須</span></label>
 					<select th:field="*{companyId}" class="dropdown form-control">
 						<option th:value="">未選択</option>
 						<option th:each="assignment : ${assignments}" th:value="${assignmenrt.companyId}"
