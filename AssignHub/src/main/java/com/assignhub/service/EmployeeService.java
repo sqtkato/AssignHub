@@ -300,12 +300,12 @@ public class EmployeeService {
 				    emp.setEngineerType(engineerType);
 				}
 				
-				String roginId = cols[12].trim();
-				if (roginId.isEmpty()) {
+				String loginId = cols[12].trim();
+				if (loginId.isEmpty()) {
 				    result.errors.add(new CsvRowError(rowNum, "ログインID", "ログインIDは必須です"));
 				    hasError = true;
 				} else {
-				    Account account = accountService.findByName(roginId);
+				    Account account = accountService.findAll(loginId);
 				    
 				if (account == null) {
 				        result.errors.add(new CsvRowError(rowNum, "ログインID", "指定されたログインIDは存在しません"));
@@ -315,17 +315,17 @@ public class EmployeeService {
 					}
 				}
 				
-				String companyName = cols[13].trim();
-				if (companyName.isEmpty()) {
+				String compName = cols[13].trim();
+				if (compName.isEmpty()) {
 				    result.errors.add(new CsvRowError(rowNum, "所属企業", "所属企業は必須です"));
 				    hasError = true;
 				} else {
-				    Company company = companyService.findByName(companyName);
+				    Company company = companyService.findAll(compName);
 				    if (company == null) {
 				        result.errors.add(new CsvRowError(rowNum, "所属企業", "指定された所属企業は存在しません"));
 				        hasError = true;
 				    } else {
-				        emp.setCompanyId(company.getCompanyId());
+				        emp.setCompanyId(company.getCompId());
 				    }
 				}
 				
