@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.assignhub.entity.DeletedAccount;
+import com.assignhub.entity.Account;
 
 @Mapper
 public interface DeletedAccountMapper {
@@ -18,7 +18,7 @@ public interface DeletedAccountMapper {
 	 * @param permission 権限による絞り込み（0:一般、1:管理者）
 	 * @return 削除済みアカウントエンティティのリスト
 	 */
-	List<DeletedAccount> deletedfindAll(
+	List<Account> deletedfindAll(
 			@Param("keyword") String keyword, 
 			@Param("sort") String sort, 
 			@Param("order") String order, 
@@ -30,7 +30,7 @@ public interface DeletedAccountMapper {
 	 * @param ids 選択されたアカウントIDのリスト
 	 * @return 対象アカウントエンティティのリスト
 	 */
-	List<DeletedAccount> deletedfindByIds(@Param("ids") List<Integer> ids);
+	List<Account> deletedfindByIds(@Param("ids") List<Integer> ids);
 	
 	/**
 	 * 単一復元（対象データの delete_flg を 0 に更新する）

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.assignhub.entity.DeletedAccount;
+import com.assignhub.entity.Account;
 import com.assignhub.mapper.DeletedAccountMapper;
 
 @Service
@@ -18,7 +18,7 @@ public class DeletedAccountService {
     /**
      * 論理削除済みのアカウント情報を全件取得する（一覧表示・検索用）。
      */
-    public List<DeletedAccount> deletedfindAll(String keyword, String sort, String order, Integer permission) {
+    public List<Account> deletedfindAll(String keyword, String sort, String order, Integer permission) {
         return deletedAccountMapper.deletedfindAll(keyword, sort, order, permission);
     }
 
@@ -28,7 +28,7 @@ public class DeletedAccountService {
      * @param ids 画面のチェックボックスで選択されたアカウントIDのリスト
      * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
      */
-    public List<DeletedAccount> deletedfindByIds(List<Integer> ids) {
+    public List<Account> deletedfindByIds(List<Integer> ids) {
         if (ids != null && ids.isEmpty()) {
         	return deletedAccountMapper.deletedfindByIds(ids);
         }
