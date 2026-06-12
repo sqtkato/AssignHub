@@ -25,17 +25,17 @@
 	</resultMap>
 
 	<select id="findAll" resultMap="companyResultMap">
-		SELECT *FROM m_company
-			<where>
-			  delete_flg = 1                             
-			<if test="compName != null and compName != ''">
-			 AND company_name LIKE CONCAT('%', #{companyName}, '%')	                               
-			</if>		                               
-			<if test="compTel != null and compTel != ''">
-			 AND company_tel LIKE CONCAT('%', #{companyTel}, '%')	                               
-			</if>			                               
+		SELECT * FROM m_company
+		<where>
+			delete_flg = 1                                
+			<if test="companyName != null and companyName != ''">
+				AND company_name LIKE CONCAT('%', #{companyName}, '%')                               
+			</if>                                               
+			<if test="companyTel != null and companyTel != ''">
+				AND company_tel LIKE CONCAT('%', #{companyTel}, '%')                               
+			</if>                                               
 		</where>
-		 ORDER BY company_id ASC	               
+		ORDER BY company_id ASC                  
 	</select>
 
 	<select id="findByIds"

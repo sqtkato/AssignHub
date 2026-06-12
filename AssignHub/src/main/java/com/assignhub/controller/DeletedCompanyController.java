@@ -29,12 +29,12 @@ public class DeletedCompanyController {
 	
 	@GetMapping
 	public String index(
-			@RequestParam(name = "compName", required = false) String compName,
-			@RequestParam(name = "compTel", required = false) String compTel, 
+			@RequestParam(name = "compName", required = false) String companyName,
+			@RequestParam(name = "compTel", required = false) String companyTel, 
 			Model model) { 
-		model.addAttribute("companies", deletedCompanyService.findAll(compName,compTel));
-		model.addAttribute("compName", compName);
-		model.addAttribute("compTel", compTel);
+		model.addAttribute("companies", deletedCompanyService.findAll(companyName,companyTel));
+		model.addAttribute("compName", companyName);
+		model.addAttribute("compTel", companyTel);
 		
 	return "deleted-company/index";}
 
