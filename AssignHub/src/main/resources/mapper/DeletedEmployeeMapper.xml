@@ -2,29 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.assignhub.mapper.DeletedEmployeeMapper">
 
-	<resultMap id="deletedEmployeeResultMap" type="com.assignhub.entity.DeletedEmployee">
-        <id property="empId" column="account_id" />
-        <result property="lastName" column="last_name" />
-        <result property="firstName" column="first_name" />
-        <result property="lastNameKana" column="last_name_kana" />
-        <result property="firstNameKana" column="first_name_kana"/>
-        <result property="hireDate" column="hire_date" />
-        <result property="yearsOfService" column="years_of_service"/>
-        <result property="birthDate" column="birth_date" />
-        <result property="zipCode" column="zip_code" />
-        <result property="address1" column="address1" />
-        <result property="address2" column="address2" />
-        <result property="engineerType" column="engineer_type" />
-        <result property="accountId" column="account_id" />
-        <result property="companyId" column="company_id" />
-        <result property="department" column="department" />
-        <result property="jobTitle" column="job_title" />
-        <result property="empTel" column="emp_tel" />
-        <result property="email" column="email" />
-        <result property="deleteFlg" column="delete_flg" />
-        <result property="createdAt" column="created_at" />
-        <result property="updatedAt" column="updated_at" />
-    </resultMap>
+	<resultMap id="deletedEmployeeResultMap"
+		type="com.assignhub.entity.Employee">
+		<id property="empId" column="emp_id" />
+		<result property="lastName" column="last_name" />
+		<result property="firstName" column="first_name" />
+		<result property="lastNameKana" column="last_name_kana" />
+		<result property="firstNameKana" column="first_name_kana" />
+		<result property="hireDate" column="hire_date" />
+		<result property="yearsOfService" column="years_of_servise" />
+		<result property="BirthDate" column="birth_date" />
+		<result property="zipCode" column="zip_code" />
+		<result property="address1" column="address1" />
+		<result property="address2" column="address2" />
+		<result property="engineerType" column="engineer_type" />
+		<result property="accountId" column="account_id" />
+		<result property="companyId" column="company_id" />
+		<result property="companyName" column="emp_company" />
+		<result property="companyNameAssign" column="emp_assign_company" />
+		<result property="department" column="department" />
+		<result property="jobTitle" column="job_title" />
+		<result property="empTel" column="emp_tel" />
+		<result property="email" column="email" />
+		<result property="deleteFlg" column="delete_flg" />
+		<result property="createdAt" column="created_at" />
+		<result property="updatedAt" column="updated_at" />
+		<result property="contractStartDate" column="contract_start_date_assign" />
+		<result property="contractEndDate" column="contract_end_date_assign" />
+		<result property="unitPrice" column="unit_price_assign" />
+		<result property="loginId" column="login_id" />
+	</resultMap>
 	<!-- 一覧表示 -->
     <select id="deletedfindAll" resultMap="deletedEmployeeResultMap">
         SELECT 
@@ -109,13 +116,13 @@
         </foreach>
     </delete>
     
-    <select id="countEmployeesByAccountId" resultType="int">
+    <select id="countAccountsByEmpolyeeId" resultType="int">
         SELECT COUNT(*) 
         FROM m_employee 
         WHERE account_id = #{id}
     </select>
 
-    <select id="countEmployeesByAccountIds" resultType="int">
+    <select id="countAccountsByEmpolyeeIds" resultType="int">
         SELECT COUNT(*) 
         FROM m_employee 
         WHERE account_id IN
@@ -124,14 +131,31 @@
         </foreach>
     </select>
     
-    <select id="countAssignmentsByAccountId" resultType="int">
+    <select id="countCompaniesByEmpolyeeId" resultType="int">
         SELECT COUNT(a.assignment_id) 
         FROM t_assignment a
         INNER JOIN m_employee e ON a.emp_id = e.emp_id
         WHERE e.account_id = #{id}
     </select>
 
-    <select id="countAssignmentsByAccountIds" resultType="int">
+    <select id="countCompaniesByEmpolyeeIds" resultType="int">
+        SELECT COUNT(a.assignment_id) 
+        FROM t_assignment a
+        INNER JOIN m_employee e ON a.emp_id = e.emp_id
+        WHERE e.account_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    
+    <select id="countAssignmentsByEmpolyeeId" resultType="int">
+        SELECT COUNT(a.assignment_id) 
+        FROM t_assignment a
+        INNER JOIN m_employee e ON a.emp_id = e.emp_id
+        WHERE e.account_id = #{id}
+    </select>
+
+    <select id="countAssignmentsByEmpolyeeIds" resultType="int">
         SELECT COUNT(a.assignment_id) 
         FROM t_assignment a
         INNER JOIN m_employee e ON a.emp_id = e.emp_id
