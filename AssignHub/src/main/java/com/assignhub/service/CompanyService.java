@@ -2,6 +2,7 @@ package com.assignhub.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,10 +39,10 @@ public class CompanyService {
 	 * @param order   昇順（asc）または降順（desc）
 	 * @return 企業エンティティのリスト
 	 */
-	public List<Company> findAll(String keyword, String sort, String order) {
-		return companyMapper.findAll(keyword, sort, order);
+	public List<Company> findAll(@Param("companyName") String companyName, @Param("companyTel") String companyTel) {
+		return companyMapper.findAll(companyName, companyTel);
 	}
-
+	
 	/**
 	 * 企業IDを指定して、企業情報を1件取得する。
 	 *

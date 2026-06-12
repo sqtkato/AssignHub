@@ -39,8 +39,8 @@ public class EmployeeService {
 	 * @param order   昇順（asc）または降順（desc）
 	 * @return 社員エンティティのリスト
 	 */
-	public List<Employee> findAll(String keyword, String sort, String order) {
-		return employeeMapper.findAll(keyword, sort, order);
+	public List<Employee> findAll(String empName, String empAssignCompany, String empEngineerType, String empCompany) {
+		return employeeMapper.findAll(empName, empAssignCompany, empEngineerType, empCompany);
 	}
 
 	/**

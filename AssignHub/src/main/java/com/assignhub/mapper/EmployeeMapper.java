@@ -22,8 +22,7 @@ public interface EmployeeMapper {
 	 * @param order   ソート順
 	 * @return 社員リスト
 	 */
-	List<Employee> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
-
+	List<Employee> findAll(@Param("empName") String empName, @Param("empAssignCompany") String empAssignCompany, @Param("empEngineerType") String empEngineerType, @Param("empCompany") String empCompany);
 	/**
 	 * IDを指定して社員を1件取得する。論理削除済みのデータは取得しない。
 	 *
@@ -38,4 +37,25 @@ public interface EmployeeMapper {
 	 * @param employee 社員エンティティ
 	 */
 	void insert(Employee employee);
+	
+	/**
+	 * 社員を論理削除する。
+	 *
+	 * @param employee 社員エンティティ
+	 */
+	void delete(Integer id);
+	
+	
+	void deleteBulk(@Param("ids") List<Integer> ids);
+
+	void update(Employee employee);
+	
+	/**
+	 * 指定されたメールアドレスの登録件数を取得する（指定IDを除外）。
+	 *
+	 * @param email        重複チェックするメールアドレス
+	 * @param excludeEmpId チェックから除外する自身の社員ID
+	 * @return 一致するメールアドレスの件数
+	 */
+	int countByEmail(@Param("email") String email, @Param("excludeEmpId") Integer excludeEmpId);
 }

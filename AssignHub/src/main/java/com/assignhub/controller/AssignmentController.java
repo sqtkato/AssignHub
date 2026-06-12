@@ -24,8 +24,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.assignhub.entity.Assignment;
 import com.assignhub.form.AssignmentForm;
 import com.assignhub.form.SearchForm;
-import com.assignhub.mapper.RoleMapper;
 import com.assignhub.service.AssignmentService;
+import com.assignhub.service.CompanyService;
+import com.assignhub.service.EmployeeService;
 
 /**
  * アサイン情報のコントローラークラス
@@ -38,10 +39,19 @@ import com.assignhub.service.AssignmentService;
 public class AssignmentController {
 	
 	private final AssignmentService assignmentService;
-	private final RoleMapper roleMapper;
-	public AssignmentController(AssignmentService assignmentService, RoleMapper roleMapper) {
+	private final RoleService roleService;
+	private final CompanyService companyService;
+	private final EmployeeService employeeService;
+	
+	public AssignmentController(
+			AssignmentService assignmentService, 
+			RoleService roleService,
+			CompanyService companyService,
+			EmployeeService employeeService) {
 		this.assignmentService = assignmentService;
-		this.roleMapper = roleMapper;
+		this.roleService = roleService;
+		this.companyService = companyService;
+		this.employeeService = employeeService;
 		}
 	
 	/**
@@ -103,7 +113,9 @@ public class AssignmentController {
 			return "redirect:/assignments";
 		}
 		model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
-		model.addAttribute("role", roleMapper.findAll());
+		model.addAttribute("role", roleService.findAll());
+		model.addAttribute("companies", companyService.findAll(null, null));
+		model.addAttribute("employees", employeeService.findAll(null, null, null, null));
 		return "assignment/create";
 	}
 	
