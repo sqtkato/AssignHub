@@ -48,12 +48,10 @@ public class EmployeeForm {
 
 	/** 生年月日(任意) */
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-
 	private LocalDate birthDate;
-
+	
 	/** 入社年月(任意) */
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-
 	private LocalDate hireDate;
 
 	/**勤続年数（任意、最大３桁） */
@@ -78,7 +76,6 @@ public class EmployeeForm {
 	/**電話番号（必須、最大10桁または11桁、正しい形式かチェック） */
 	@NotBlank(message = "電話番号は必須です")
 	@Pattern(regexp = "^[^\\-]*$", message = "電話番号の形式が正しくありませんハイフンなしで入力してください")
-	// 半角数字の10桁または11桁のみを許容する正規表現
 	@Pattern(regexp = "^0[0-9]{9,10}$", message = "電話番号は10桁または11桁で入力してください")
 	private String empTel;
 
