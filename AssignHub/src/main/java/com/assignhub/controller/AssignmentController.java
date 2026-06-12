@@ -100,6 +100,7 @@ public class AssignmentController {
 					"登録可能なアサイン履歴情報は最大500件までです。");
 			return "redirect:/assignments";
 		}
+		model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
 		return "assignment/create";
 	}
 	
@@ -141,6 +142,7 @@ public class AssignmentController {
 					"既に同じ内容が登録されています。");
         	return "assignment/create";
     	}
+		model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
 		
 		assignmentService.save(assignment);
 		attributes.addFlashAttribute("toastMessage", "アサイン履歴情報を登録しました");
@@ -181,6 +183,7 @@ public class AssignmentController {
 		}
 
 		model.addAttribute("fromPage", from);
+		model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
 	    return "assignment/edit";
 	}
 	
@@ -204,6 +207,7 @@ public class AssignmentController {
 		
 		if (result.hasErrors()) {
 			model.addAttribute("fromPage", fromPage);
+			model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
 			return "assignment/edit";
 		}
 
