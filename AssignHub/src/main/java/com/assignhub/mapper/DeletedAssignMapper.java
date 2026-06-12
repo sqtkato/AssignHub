@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.assignhub.entity.DeletedAssign;
+import com.assignhub.entity.Assignment;
 
 @Mapper
 public interface DeletedAssignMapper {
@@ -17,14 +17,14 @@ public interface DeletedAssignMapper {
 	 * @param txtCompanyName 企業名の検索キーワード
 	 * @return アサイン情報のリスト
 	 */
-	List<DeletedAssign> findAll(
+	List<Assignment> findAll(
 			@Param("txtEmpName") String txtEmpName,
 			@Param("txtAssignName") String txtAssignName,
 			@Param("txtCompanyName") String txtCompanyName,
 			@Param("txtContractStartDate") String txtContractStartDate,
 			@Param("txtContractEndDate") String txtContractEndDate);
 
-	List<DeletedAssign> findAllByIds(@Param("ids") List<Integer> ids);
+	List<Assignment> findAllByIds(@Param("ids") List<Integer> ids);
 
 	/**
 	 * 単一復元（対象データの delete_flg を 0 に更新する）

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.assignhub.entity.DeletedAssign;
+import com.assignhub.entity.Assignment;
 import com.assignhub.mapper.DeletedAssignMapper;
 
 public class DeletedAssignService {
@@ -15,7 +15,7 @@ public class DeletedAssignService {
 	/**
 	 * 論理削除済みのアカウント情報を全件取得する（一覧表示・検索用）。
 	 */
-	public List<DeletedAssign> findAll(String txtEmpName, String txtAssignName, String txtCompanyName,
+	public List<Assignment> findAll(String txtEmpName, String txtAssignName, String txtCompanyName,
 			String txtContractStartDate, String txtContractEndDate) {
 		return deletedAssignMapper.findAll(txtEmpName, txtAssignName, txtCompanyName, txtContractStartDate,
 				txtContractEndDate);
@@ -27,7 +27,7 @@ public class DeletedAssignService {
 	 * @param ids 画面のチェックボックスで選択されたアカウントIDのリスト
 	 * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
 	 */
-	public List<DeletedAssign> findAllByIds(List<Integer> ids) {
+	public List<Assignment> findAllByIds(List<Integer> ids) {
 		if (ids != null && ids.isEmpty()) {
 			return deletedAssignMapper.findAllByIds(ids);
 		}
