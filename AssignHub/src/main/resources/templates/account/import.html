@@ -1,98 +1,71 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
 
 <head>
 	<meta charset="UTF-8">
 	<title>アカウント情報インポート</title>
-
-
-	<!-- CSSを外部ファイルに分離（import.css）-->
 	<link rel="stylesheet" th:href="@{/css/import.css}">
 </head>
 
 <body>
 	<div layout:fragment="content">
-		<div class="page-title-area">
-			<h2>アカウント情報のインポート</h2>
-		</div>
-
-		<p class="import-desc">
-			CSVファイルを選択してアカウント情報を一括登録・更新します。<br>
-			※既存のアカウントIDと一致する場合は上書き更新、空欄の場合は新規登録されます。
-		</p>
-
-		<form th:action="@{/accounts/import}" method="post" enctype="multipart/form-data">
-			<div class="upload-box">
-				<div class="big">アカウントデータCSVを選択してください</div>
-				<div class="small">対応形式: .csv (UTF-8) / BOMあり推奨、最大5M</div>
-				<div class="file-inner">
-					<input type="file" name="file" accept=".csv">
+		<div class="card form-card-wide">
+			<h2>アカウント情報インポート</h2>
+			<p class="instruction">
+				CSVファイルを選択してアカウント情報を一括登録・更新します。<br>
+				※既存のアカウントIDと一致する場合は上書き更新、空欄の場合は新規登録されます。
+			</p>
+			<form th:action="@{/accounts/import}" method="post" enctype="multipart/form-data">
+				<div class="upload-zone">
+					<p class="upload-zone-text">アカウントデータCSVを選択してください</p>
+					<p class="upload-zone-sub">対応形式: .csv (UTF-8 / BOMあり推奨、最大 5MB)</p>
+					<input type="file" name="file" accept=".csv" required
+					    style="margin-top: 15px; max-width: 450px; width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 4px; box-sizing: border-box;">
 				</div>
-
-				<div style="text-align: right; margin-top: 20px;">
-					<a th:href="@{/accounts/import/template}" class="template-link">
-						📥 CSVテンプレートをダウンロード
-					</a>
-			</div>
-			</div>
-
-			<div class="btn-area">
-				<button type="submit" class="import-btn import-btn-do">インポート</button>
-				<a th:href="@{/accounts}" class="import-btn import-btn-back" style="text-decoration:none; display:inline-block;">戻る</a>
-			</div>
-
-				<!-- エラーメッセージ：ボタンの下に表示（設計書通り）-->
-
-			<p th:if="${fileError}" th:text="${fileError}" class="file-error"></p>
-
-		</form>
-
-		<hr class="import-divider">
-
-
-		<p th:if="${globalError}" th:text="${globalError}"
-		   style="color:red; font-size:17px; font-weight:bold; text-align:center; margin-bottom:20px;"></p>
-
-		<div class="result" th:if="${importResult != null}">
-			<h3>処理結果</h3>
-
-			<div class="result-cards">
-				<div class="result-card card-success">
-					<div class="label">正常取り込み</div>
-
-					<div class="num" th:text="${importResult.successCount} + '件'">0件</div>
-
+				<div class="template-link-area">
+					<a th:href="@{/accounts/import/template}" class="template-link">↓ テンプレート(CSV)をダウンロード</a>
 				</div>
-				<div class="result-card card-error">
-					<div class="label">エラー</div>
-
-					<div class="num" th:text="${importResult.errorCount} + '件'">0件</div>
-
+				<div class="action-area">
+					<button type="submit" class="btn btn-primary btn-wide">インポート</button>
+					<a th:href="@{/accounts}" class="btn btn-secondary btn-wide">戻る</a>
 				</div>
-			</div>
+			</form>
 
-			<div th:if="${importResult.errorCount > 0}">
-				<p class="err-msg">
-					以下の行でエラーが発生したため、取り込みをキャンセルしました。<br>
-					内容を修正して再アップロードしてください。
-				</p>
-				<table class="err-table">
-					<thead>
-						<tr>
-							<th>行数</th>
-							<th>対象項目</th>
-							<th>エラー内容</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="error : ${importResult.errors}">
-							<td th:text="${error.rowNum} + '行目'"></td>
-							<td th:text="${error.field}"></td>
-							<td th:text="${error.message}"></td>
-						</tr>
-					</tbody>
-				</table>
+			<p th:if="${fileError}" th:text="${fileError}" class="error-table-msg" style="text-align:center;"></p>
+			<p th:if="${globalError}" th:text="${globalError}" class="error-table-msg" style="text-align:center;"></p>
+
+			<div class="result-area" th:if="${importResult != null}">
+				<h3 class="result-title">処理結果</h3>
+				<div class="summary-box">
+					<div class="summary-item summary-success">
+						正常取り込み
+						<span class="summary-value" th:text="${importResult.successCount} + ' 件'"></span>
+					</div>
+					<div class="summary-item summary-error">
+						エラー
+						<span class="summary-value" th:text="${importResult.errorCount} + ' 件'"></span>
+					</div>
+				</div>
+				<div th:if="${importResult.errorCount > 0}">
+					<p class="error-table-msg">以下の行でエラーが発生したため、取り込みをキャンセルしました。内容を修正して再アップロードしてください。</p>
+					<table class="table">
+						<thead class="table-dark">
+							<tr>
+								<th>行数</th>
+								<th>対象項目</th>
+								<th>エラー内容</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="error : ${importResult.errors}" class="error-row">
+								<td th:text="${error.rowNum} + '行目'"></td>
+								<td th:text="${error.field}"></td>
+								<td th:text="${error.message}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
