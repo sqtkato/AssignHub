@@ -93,8 +93,8 @@ public class EmployeeForm {
 	private String engineerType;
 
 	/**所属企業 (必須)*/
-	@NotBlank(message = "所属企業は必須です")
-	private String companyName;
+	@NotNull(message = "所属企業は必須です")
+	private Integer companyId;
 	
 	/**ログインID (必須)*/
 	@NotNull(message = "ログインIDは必須です")
