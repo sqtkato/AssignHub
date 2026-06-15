@@ -20,7 +20,8 @@
 				</div>
 				<div class="form-group">
 					<label>社員名 <span class="badge-required">必須</span></label>
-					<select th:field="*{empId}" class="dropdown form-control">
+					<select th:field="*{empId}" class="dropdown form-control"
+					th:classappend="${#fields.hasErrors('empId')} ? 'input-error select-error' : ''">
 						<option value="">未選択</option>
 						<option th:each="emp : ${employees}" th:value="${emp.empId}"
 							th:text="${emp.lastName} + ' ' + ${emp.firstName}">
@@ -31,7 +32,8 @@
 				</div>
 				<div class="form-group">
 					<label>アサイン先企業 <span class="badge-required">必須</span></label>
-					<select th:field="*{companyId}" class="dropdown form-control">
+					<select th:field="*{companyId}" class="dropdown form-control"
+					th:classappend="${#fields.hasErrors('companyId')} ? 'input-error select-error' : ''">
 						<option value="">未選択</option>
 						<option th:each="company : ${companies}" th:value="${company.companyId}"
 							th:text="${company.companyName}">
@@ -62,7 +64,8 @@
 				</div>
 				<div class="form-group">
 					<label>役割 <span class="badge-required">必須</span></label>
-					<select th:field="*{roleId}" class="dropdown form-control">
+					<select th:field="*{roleId}" class="dropdown form-control"
+					th:classappend="${#fields.hasErrors('roleId')} ? 'input-error select-error' : ''">
 						<option value="">未選択</option>
 						<option th:each="role : ${role}" th:value="${role.roleId}" th:text="${role.role}">
 						</option>
