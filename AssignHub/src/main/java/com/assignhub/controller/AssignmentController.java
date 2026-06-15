@@ -356,21 +356,21 @@ public class AssignmentController {
 	 */
 	@GetMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
-			Model model, RedirectAttributes redirectAttributes) {
+			Model model, RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
-			redirectAttributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
+			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
 			return "redirect:/assignments";
 		}
 		List<Assignment> assignments = assignmentService.findByIds(ids);
-		model.addAttribute("assignments", assignments);
 		model.addAttribute("count", assignments.size());
+		model.addAttribute("assignments", assignments);
 		model.addAttribute("ids", ids);
 		return "assignment/export";
 	}
 
 	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
-			@RequestParam(name = "ids") List<Integer> ids) {
+			@RequestParam(name = "ids", required=false) List<Integer> ids) {
 		List<Assignment> assignments = assignmentService.findByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder("アサインID,社員ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n");
 		for (Assignment asn : assignments) {
