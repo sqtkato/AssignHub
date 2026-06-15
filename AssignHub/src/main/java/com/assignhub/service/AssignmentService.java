@@ -45,11 +45,11 @@ public class AssignmentService {
 	}
 
 	/**
-	 * アサイン情報の一覧を取得する。
+	 * アサイン履歴情報の一覧を取得する。
 	 *
 	 * @param txtEmpName 社員名の検索キーワード（nullまたは空文字の場合は全件取得）
 	 * @param txtCompanyName 企業名の検索キーワード（nullまたは空文字の場合は全件取得）
-	 * @return アサイン情報のリスト
+	 * @return アサイン履歴情報のリスト
 	 */
 	public List<Assignment> findAll(String empName, String assignName, String companyName,
 			String contractStartDate, String contractEndDate) {
@@ -72,7 +72,7 @@ public class AssignmentService {
 	}
 
 	/**
-	 * アサイン情報を保存する。
+	 * アサイン履歴情報を保存する。
 	 * IDが存在しない場合（nullまたは0）は新規登録（INSERT）、存在する場合は更新（UPDATE）を行う。
 	 *
 	 * @param assignment 登録または更新するアサインエンティティ
