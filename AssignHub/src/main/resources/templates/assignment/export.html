@@ -36,12 +36,12 @@
 					<tbody>
 						<tr th:each="assign : ${assignments}" class="clickable-row">
 							<td th:text="${assign.assignmentId}"></td>
-							<td th:text="${assign.employee.empName}"></td>
+							<td th:text="${assign.employee.lastName} + ' ' + ${assign.employee.firstName}"></td>
 							<td th:text="${assign.company.companyName}"></td>
 						</tr>
 					</tbody>
 				</table>
-				<p class="export-note">※出力される項目：アサインID,社員ID,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割</p>
+				<p class="export-note">※詳細情報がエクスポートされます。</p>
 			</div>
 		</div>
 		<div class="action-area export_action-area">
@@ -50,4 +50,5 @@
 		</div>
 	</div>
 </body>
+
 </html>
