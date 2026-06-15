@@ -24,8 +24,10 @@
 		<association property="employee"
 			javaType="com.assignhub.entity.Employee">
 			<id property="empId" column="emp_id" />
-			<result property="empName" column="emp_name" />
-			<result property="empNameKana" column="emp_name_kana" />
+			<result property="lastName" column="last_name" />
+			<result property="firstName" column="first_name" />
+			<result property="lastNameKana" column="last_name_kana" />
+			<result property="firstNameKana" column="first_name_kana" />
 			<result property="engineerType" column="engineer_type" />
 			<association property="company"
 				javaType="com.assignhub.entity.Company">
@@ -61,8 +63,10 @@
 		a.delete_flg,
 		a.created_at,
 		a.updated_at,
-		CONCAT(e.last_name, e.first_name) AS emp_name,
-		CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana,
+		e.last_name,
+		e.first_name,
+		e.last_name_kana,
+		e.first_name_kana,
 		e.engineer_type,
 		c.company_name AS assign_company_name,
 		ec.company_id AS

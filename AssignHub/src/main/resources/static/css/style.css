@@ -534,7 +534,7 @@ a:hover {
 	z-index: 10;
 }
 
-/*ログインボタン*/
+/*ログアウトボタン*/
 .btn-logout {
 	display: block;
 	margin: 0 auto;
@@ -613,11 +613,11 @@ a:hover {
 	text-align: center;
 }
 
-.btn_assign_export {
+.btn_export {
 	width: 150px;
 }
 
-.btn_assign_back {
+.btn_back {
 	width: 150px;
 }
 
