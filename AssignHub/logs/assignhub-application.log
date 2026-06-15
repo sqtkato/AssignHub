@@ -6465,3 +6465,264 @@ java.lang.Error: Unresolved compilation problem:
 2026-06-15T16:28:07.660+09:00  INFO 31684 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
 2026-06-15T16:28:07.661+09:00  INFO 31684 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.21 seconds (process running for 22564.831)
 2026-06-15T16:28:07.662+09:00  INFO 31684 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-15T16:41:49.845+09:00  INFO 31684 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat-4].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-15T16:41:49.845+09:00  INFO 31684 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-15T16:41:49.847+09:00  INFO 31684 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-15T16:41:49.850+09:00  INFO 31684 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-18 - Starting...
+2026-06-15T16:41:49.866+09:00  INFO 31684 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-18 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2d4153c2
+2026-06-15T16:41:49.866+09:00  INFO 31684 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-18 - Start completed.
+2026-06-15T16:41:49.866+09:00 DEBUG 31684 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T16:41:49.867+09:00 DEBUG 31684 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T16:41:49.888+09:00 DEBUG 31684 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T16:42:08.001+09:00 DEBUG 31684 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-15T16:42:08.003+09:00 DEBUG 31684 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: koizumi219(String)
+2026-06-15T16:42:08.006+09:00 DEBUG 31684 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-15T16:42:08.112+09:00 DEBUG 31684 --- [http-nio-8080-exec-8] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-15T16:42:08.112+09:00 DEBUG 31684 --- [http-nio-8080-exec-8] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-15T16:42:08.117+09:00 DEBUG 31684 --- [http-nio-8080-exec-8] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 3
+2026-06-15T16:43:02.551+09:00 DEBUG 31684 --- [http-nio-8080-exec-1] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0 AND e.engineer_type LIKE CONCAT('%', ?, '%')
+2026-06-15T16:43:02.551+09:00 DEBUG 31684 --- [http-nio-8080-exec-1] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: パートナー(String)
+2026-06-15T16:43:02.556+09:00 DEBUG 31684 --- [http-nio-8080-exec-1] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 0
+2026-06-15T16:43:03.435+09:00 DEBUG 31684 --- [http-nio-8080-exec-6] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0 AND e.engineer_type LIKE CONCAT('%', ?, '%')
+2026-06-15T16:43:03.436+09:00 DEBUG 31684 --- [http-nio-8080-exec-6] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: パートナー(String)
+2026-06-15T16:43:03.438+09:00 DEBUG 31684 --- [http-nio-8080-exec-6] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 0
+2026-06-15T16:43:05.466+09:00 DEBUG 31684 --- [http-nio-8080-exec-5] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0 AND e.engineer_type LIKE CONCAT('%', ?, '%')
+2026-06-15T16:43:05.467+09:00 DEBUG 31684 --- [http-nio-8080-exec-5] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: プロパー(String)
+2026-06-15T16:43:05.472+09:00 DEBUG 31684 --- [http-nio-8080-exec-5] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 0
+2026-06-15T16:43:14.485+09:00  WARN 31684 --- [http-nio-8080-exec-9] c.a.controller.GlobalExceptionHandler    : 静的リソースが見つかりません: /assign-history
+2026-06-15T16:43:16.898+09:00 DEBUG 31684 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T16:43:16.899+09:00 DEBUG 31684 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T16:43:16.902+09:00 DEBUG 31684 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T17:12:04.170+09:00 DEBUG 31684 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T17:12:04.171+09:00 DEBUG 31684 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T17:12:04.180+09:00 DEBUG 31684 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T17:27:30.508+09:00  INFO 31684 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2026-06-15T17:27:30.510+09:00  INFO 31684 --- [Thread-149] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-15T17:27:30.689+09:00  INFO 31684 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-15T17:27:30.691+09:00  INFO 31684 --- [Thread-149] com.zaxxer.hikari.HikariDataSource       : HikariPool-18 - Shutdown initiated...
+2026-06-15T17:27:30.694+09:00  INFO 31684 --- [Thread-149] com.zaxxer.hikari.HikariDataSource       : HikariPool-18 - Shutdown completed.
+2026-06-15T17:27:30.798+09:00  INFO 31684 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 31684 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-15T17:27:30.798+09:00  INFO 31684 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-15T17:27:30.947+09:00  INFO 31684 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-15T17:27:30.947+09:00  INFO 31684 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-15T17:27:30.948+09:00  INFO 31684 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-15T17:27:30.961+09:00  INFO 31684 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 156 ms
+2026-06-15T17:27:31.070+09:00  INFO 31684 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-15T17:27:31.072+09:00  INFO 31684 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.3 seconds (process running for 26128.241)
+2026-06-15T17:27:31.072+09:00  INFO 31684 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-15T17:28:00.593+09:00  INFO 31684 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2026-06-15T17:28:00.594+09:00  INFO 31684 --- [Thread-153] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-15T17:28:00.776+09:00  INFO 31684 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-15T17:28:00.837+09:00  INFO 31684 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 31684 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-15T17:28:00.837+09:00  INFO 31684 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-15T17:28:00.964+09:00  INFO 31684 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-15T17:28:00.964+09:00  INFO 31684 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-15T17:28:00.965+09:00  INFO 31684 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-15T17:28:00.977+09:00  INFO 31684 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 139 ms
+2026-06-15T17:28:01.071+09:00  INFO 31684 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-15T17:28:01.072+09:00  INFO 31684 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.248 seconds (process running for 26158.242)
+2026-06-15T17:28:01.073+09:00  INFO 31684 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-15T17:28:38.995+09:00  INFO 31684 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 47 class path changes (0 additions, 23 deletions, 24 modifications)
+2026-06-15T17:28:38.997+09:00  INFO 31684 --- [Thread-157] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-15T17:28:39.565+09:00  INFO 31684 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-15T17:28:41.458+09:00  INFO 31684 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 31684 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-15T17:28:41.458+09:00  INFO 31684 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-15T17:28:41.629+09:00  INFO 31684 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-15T17:28:41.630+09:00  INFO 31684 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-15T17:28:41.630+09:00  INFO 31684 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-15T17:28:41.649+09:00  INFO 31684 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 189 ms
+2026-06-15T17:28:41.776+09:00  INFO 31684 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-15T17:28:41.779+09:00  INFO 31684 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.339 seconds (process running for 26198.948)
+2026-06-15T17:28:41.780+09:00  INFO 31684 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-15T17:29:44.974+09:00  INFO 31684 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat-5].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-15T17:29:44.974+09:00  INFO 31684 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-15T17:29:44.974+09:00  INFO 31684 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-06-15T17:29:44.983+09:00  INFO 31684 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-19 - Starting...
+2026-06-15T17:29:45.001+09:00  INFO 31684 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-19 - Added connection com.mysql.cj.jdbc.ConnectionImpl@11be233a
+2026-06-15T17:29:45.002+09:00  INFO 31684 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-19 - Start completed.
+2026-06-15T17:29:45.002+09:00 DEBUG 31684 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T17:29:45.002+09:00 DEBUG 31684 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T17:29:45.009+09:00 DEBUG 31684 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T17:29:45.419+09:00  WARN 31684 --- [http-nio-8080-exec-2] c.a.controller.GlobalExceptionHandler    : 静的リソースが見つかりません: /css/style.css
+2026-06-15T17:29:59.441+09:00  INFO 21496 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 21496 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-15T17:29:59.445+09:00  INFO 21496 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-15T17:29:59.659+09:00  INFO 21496 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-15T17:29:59.659+09:00  INFO 21496 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-15T17:30:00.385+09:00  INFO 21496 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-15T17:30:00.397+09:00  INFO 21496 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-15T17:30:00.397+09:00  INFO 21496 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-15T17:30:00.438+09:00  INFO 21496 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 778 ms
+2026-06-15T17:30:01.110+09:00  WARN 21496 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-06-15T17:30:01.119+09:00  INFO 21496 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-15T17:30:01.140+09:00 ERROR 21496 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2026-06-15T17:31:49.896+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 26716 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-15T17:31:49.901+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-15T17:31:50.070+09:00  INFO 26716 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-15T17:31:50.070+09:00  INFO 26716 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-15T17:31:50.662+09:00  INFO 26716 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-15T17:31:50.670+09:00  INFO 26716 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-15T17:31:50.671+09:00  INFO 26716 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-15T17:31:50.706+09:00  INFO 26716 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 635 ms
+2026-06-15T17:31:51.233+09:00  INFO 26716 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-15T17:31:51.239+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 1.632 seconds (process running for 2.108)
+2026-06-15T17:32:16.378+09:00  INFO 26716 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-15T17:32:16.381+09:00  INFO 26716 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-15T17:32:16.383+09:00  INFO 26716 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-06-15T17:32:16.419+09:00  WARN 26716 --- [http-nio-8080-exec-1] c.a.controller.GlobalExceptionHandler    : 静的リソースが見つかりません: /accounts
+2026-06-15T17:32:20.595+09:00  INFO 26716 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-15T17:32:20.803+09:00  INFO 26716 --- [http-nio-8080-exec-2] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3e5832fe
+2026-06-15T17:32:20.806+09:00  INFO 26716 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-15T17:32:20.816+09:00 DEBUG 26716 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T17:32:20.854+09:00 DEBUG 26716 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T17:32:20.892+09:00 DEBUG 26716 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T17:32:21.225+09:00  WARN 26716 --- [http-nio-8080-exec-3] c.a.controller.GlobalExceptionHandler    : 静的リソースが見つかりません: /account
+2026-06-15T17:32:25.048+09:00 DEBUG 26716 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T17:32:25.049+09:00 DEBUG 26716 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T17:32:25.055+09:00 DEBUG 26716 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T17:35:33.468+09:00  INFO 26716 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 46 class path changes (0 additions, 22 deletions, 24 modifications)
+2026-06-15T17:35:33.473+09:00  INFO 26716 --- [Thread-1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-15T17:35:33.790+09:00  INFO 26716 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-15T17:35:33.796+09:00  INFO 26716 --- [Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-15T17:35:33.806+09:00  INFO 26716 --- [Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-15T17:35:33.868+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 26716 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-15T17:35:33.869+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-15T17:35:34.074+09:00  INFO 26716 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-15T17:35:34.075+09:00  INFO 26716 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-15T17:35:34.076+09:00  INFO 26716 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-15T17:35:34.095+09:00  INFO 26716 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 220 ms
+2026-06-15T17:35:34.262+09:00  INFO 26716 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-15T17:35:34.266+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.422 seconds (process running for 225.135)
+2026-06-15T17:35:34.267+09:00  INFO 26716 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-15T17:46:30.732+09:00  INFO 26716 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 22 class path changes (22 additions, 0 deletions, 0 modifications)
+2026-06-15T17:46:30.755+09:00  INFO 26716 --- [Thread-5] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-15T17:46:32.301+09:00  INFO 26716 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-15T17:46:32.411+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 26716 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-15T17:46:32.412+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-15T17:46:32.887+09:00  INFO 26716 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-15T17:46:32.889+09:00  INFO 26716 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-15T17:46:32.890+09:00  INFO 26716 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-15T17:46:33.003+09:00  INFO 26716 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 588 ms
+2026-06-15T17:46:33.344+09:00  INFO 26716 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-15T17:46:33.344+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.985 seconds (process running for 884.22)
+2026-06-15T17:46:33.344+09:00  INFO 26716 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-15T17:47:05.074+09:00  INFO 26716 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2026-06-15T17:47:05.076+09:00  INFO 26716 --- [Thread-9] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-15T17:47:05.390+09:00  INFO 26716 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-15T17:47:05.456+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 26716 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-15T17:47:05.456+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-15T17:47:05.692+09:00  INFO 26716 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-15T17:47:05.693+09:00  INFO 26716 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-15T17:47:05.694+09:00  INFO 26716 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-15T17:47:05.729+09:00  INFO 26716 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 271 ms
+2026-06-15T17:47:05.909+09:00  INFO 26716 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-15T17:47:05.911+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.483 seconds (process running for 916.781)
+2026-06-15T17:47:05.912+09:00  INFO 26716 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-15T17:47:08.587+09:00  INFO 26716 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-15T17:47:08.587+09:00  INFO 26716 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-15T17:47:08.595+09:00  INFO 26716 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2026-06-15T17:47:08.596+09:00  INFO 26716 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-06-15T17:47:08.618+09:00  INFO 26716 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2f2d61c3
+2026-06-15T17:47:08.619+09:00  INFO 26716 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-06-15T17:47:08.619+09:00 DEBUG 26716 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T17:47:08.619+09:00 DEBUG 26716 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T17:47:08.627+09:00 DEBUG 26716 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T17:47:16.633+09:00 DEBUG 26716 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T17:47:16.634+09:00 DEBUG 26716 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T17:47:16.639+09:00 DEBUG 26716 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T17:48:17.866+09:00 DEBUG 26716 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T17:48:17.869+09:00 DEBUG 26716 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T17:48:17.874+09:00 DEBUG 26716 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T17:48:20.525+09:00 DEBUG 26716 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T17:48:20.526+09:00 DEBUG 26716 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T17:48:20.530+09:00 DEBUG 26716 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T17:48:22.650+09:00 DEBUG 26716 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T17:48:22.652+09:00 DEBUG 26716 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T17:48:22.655+09:00 DEBUG 26716 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T17:48:29.293+09:00 DEBUG 26716 --- [http-nio-8080-exec-7] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-15T17:48:29.294+09:00 DEBUG 26716 --- [http-nio-8080-exec-7] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-15T17:48:29.310+09:00 DEBUG 26716 --- [http-nio-8080-exec-7] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 3
+2026-06-15T17:48:41.513+09:00 DEBUG 26716 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-15T17:48:41.514+09:00 DEBUG 26716 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: koizumi219(String)
+2026-06-15T17:48:41.517+09:00 DEBUG 26716 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-15T17:48:41.625+09:00 DEBUG 26716 --- [http-nio-8080-exec-5] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-15T17:48:41.625+09:00 DEBUG 26716 --- [http-nio-8080-exec-5] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-15T17:48:41.636+09:00 DEBUG 26716 --- [http-nio-8080-exec-5] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 3
+2026-06-15T18:06:21.293+09:00  WARN 26716 --- [HikariPool-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@24dcc3e5 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-06-15T18:06:34.016+09:00  WARN 26716 --- [HikariPool-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@26e78478 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-06-15T18:06:37.839+09:00  WARN 26716 --- [HikariPool-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3c32be79 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-06-15T18:06:38.438+09:00  WARN 26716 --- [HikariPool-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@8b42ecc (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-06-15T18:12:15.388+09:00  WARN 26716 --- [HikariPool-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@215c88d5 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-06-15T18:12:15.388+09:00  WARN 26716 --- [HikariPool-2:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=5m36s405ms142µs).
+2026-06-15T18:12:15.388+09:00  WARN 26716 --- [HikariPool-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4f9da13d (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-06-15T18:12:15.388+09:00  WARN 26716 --- [HikariPool-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2f2d61c3 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-06-15T18:12:15.391+09:00  WARN 26716 --- [HikariPool-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6676344c (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-06-15T18:12:15.393+09:00  WARN 26716 --- [HikariPool-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@23291277 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-06-15T18:12:15.393+09:00  WARN 26716 --- [HikariPool-2:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3f2f575 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-06-15T18:12:18.243+09:00  WARN 26716 --- [HikariPool-2:connection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Pool is empty, failed to create/setup connection (592a213e-c23f-47a2-8909-5d81ca6d9338)
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at jdk.internal.reflect.GeneratedConstructorAccessor59.newInstance(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 13 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:547) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:602) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:633) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	... 16 common frames omitted
+
+2026-06-15T18:13:34.276+09:00  INFO 26716 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 28 class path changes (0 additions, 0 deletions, 28 modifications)
+2026-06-15T18:13:34.280+09:00  INFO 26716 --- [Thread-13] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-15T18:13:34.616+09:00  INFO 26716 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-15T18:13:34.618+09:00  INFO 26716 --- [Thread-13] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-06-15T18:13:34.623+09:00  INFO 26716 --- [Thread-13] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
