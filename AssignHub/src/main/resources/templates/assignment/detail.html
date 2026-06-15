@@ -35,7 +35,8 @@
 
 					<tr>
 						<th>社員名カナ</th>
-						<td th:text="${assignment.employee.lastNameKana} + ' ' + ${assignment.employee.firstNameKana}"></td>
+						<td th:text="${assignment.employee.lastNameKana} + ' ' + ${assignment.employee.firstNameKana}">
+						</td>
 					</tr>
 
 					<tr>
@@ -81,8 +82,9 @@
 						class="btn btn-primary detail-btn">変更
 					</a>
 
-					<button type="button"
-						class="btn modal-btn-danger detail-btn"
+
+
+					<button type="button" class="btn modal-btn-danger detail-btn"
 						th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
 					</button>
 
