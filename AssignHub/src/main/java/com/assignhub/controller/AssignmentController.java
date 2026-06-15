@@ -353,7 +353,7 @@ public class AssignmentController {
 			redirectAttributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
 			return "redirect:/assignments";
 		}
-		List<Assignment> assignments = ids.stream().map(assignmentService::findById).toList();
+		List<Assignment> assignments = assignmentService.findByIds(ids);
 		model.addAttribute("assignments", assignments);
 		model.addAttribute("count", assignments.size());
 		model.addAttribute("ids", ids);
@@ -363,7 +363,7 @@ public class AssignmentController {
 	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids") List<Integer> ids) {
-		List<Assignment> assignments = ids.stream().map(assignmentService::findById).toList();
+		List<Assignment> assignments = assignmentService.findByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder("アサインID,社員ID,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n");
 		for (Assignment asn : assignments) {
 			csvBuilder.append(asn.getAssignmentId()).append(",")

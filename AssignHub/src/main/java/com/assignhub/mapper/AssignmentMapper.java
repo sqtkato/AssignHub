@@ -41,6 +41,8 @@ public interface AssignmentMapper {
 	 * @return アサイン情報エンティティ
 	 */
     Assignment findById(@Param("id") Integer id);
+    
+    List<Assignment> findByIds(@Param("ids") List<Integer> ids);
 
     /**
 	 * アサイン情報を新規登録する。

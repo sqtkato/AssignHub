@@ -66,6 +66,10 @@ public class AssignmentService {
 	public Assignment findById(Integer id) {
 		return assignmentMapper.findById(id);
 	}
+	
+	public List<Assignment> findByIds(List<Integer> ids) {
+		return assignmentMapper.findByIds(ids);
+	}
 
 	/**
 	 * アサイン情報を保存する。

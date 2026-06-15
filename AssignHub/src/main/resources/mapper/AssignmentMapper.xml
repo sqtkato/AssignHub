@@ -151,6 +151,38 @@
 		AND c.delete_flg = 0
 		AND ec.delete_flg = 0
 	</select>
+	
+	<select id="findByIds" resultMap="assignmentResultMap">
+		SELECT 
+		a.assignment_id,
+		a.emp_id,
+		a.company_id,
+		a.contract_start_date,
+		a.contract_end_date,
+		a.unit_price,
+		a.role_id,
+		a.delete_flg,
+		a.created_at,
+		a.updated_at,
+		CONCAT(e.last_name, e.first_name) AS emp_name,
+		c.company_name AS
+		assign_company_name,
+		r.role
+		from t_assignment a
+		INNER JOIN m_employee e
+		ON a.emp_id = e.emp_id
+		JOIN m_company c
+		ON a.company_id = c.company_id
+		INNER JOIN m_role r
+		ON a.role_id = r.role_id
+		WHERE
+		assignment_id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+		AND a.delete_flg = 0
+	</select>
 
 	<insert id="insert" useGeneratedKeys="true"
 		keyProperty="assignmentId">
