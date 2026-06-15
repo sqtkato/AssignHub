@@ -2,6 +2,8 @@ package com.assignhub.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -29,16 +31,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class EmployeeService {
-
 	private final EmployeeMapper employeeMapper;
+	private final AccountService accountService;
+	private final CompanyService companyService;
 
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param employeeMapper 社員マスタに対するマッパー
 	 */
-	public EmployeeService(EmployeeMapper employeeMapper) {
-		this.employeeMapper = employeeMapper;
+	public EmployeeService(EmployeeMapper employeeMapper,AccountService accountService,
+			CompanyService companyService) {
+	    this.employeeMapper = employeeMapper;
+	    this.accountService = accountService;
+	    this.companyService = companyService;
 	}
 
 	/**
@@ -71,7 +77,7 @@ public class EmployeeService {
 	public void delete(Integer id) {
 		employeeMapper.delete(id);
 	}
-	
+
 	@Transactional
 	public void deleteBulk(List<Integer> ids) {
 		if (ids != null && !ids.isEmpty()) {
@@ -93,7 +99,7 @@ public class EmployeeService {
 			employeeMapper.update(employee);
 		}
 	}
-	
+
 	/**
 	 * インポート時の各行のエラー内容を保持するクラス。
 	 */
@@ -117,9 +123,11 @@ public class EmployeeService {
 		public int errorCount = 0;
 		public List<CsvRowError> errors = new ArrayList<>();
 	}
+
 	/**
 	 * アップロードされたCSVファイルを解析し、バリデーションおよび一括登録・更新を行う。
 	 * 1行ごとに保存処理を行うが、1件でもエラーがあれば全体をロールバックする。
+	 * ファイルがUTF-8でない場合は MalformedInputException を送出する。
 	 *
 	 * @param file アップロードされたマルチパート形式のCSVファイル
 	 * @return インポート処理の結果オブジェクト（成功・エラー件数および詳細）
@@ -129,8 +137,13 @@ public class EmployeeService {
 	public ImportResult importCsv(MultipartFile file) throws Exception {
 		ImportResult result = new ImportResult();
 
+		// UTF-8として不正なバイト列を検出したら例外を投げるデコーダ
+		CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
+				.onMalformedInput(CodingErrorAction.REPORT)
+				.onUnmappableCharacter(CodingErrorAction.REPORT);
+
 		try (BufferedReader br = new BufferedReader(
-				new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
+				new InputStreamReader(file.getInputStream(), decoder))) {
 			String line;
 			int rowNum = 1;
 			boolean isFirstLine = true;
@@ -138,6 +151,10 @@ public class EmployeeService {
 			while ((line = br.readLine()) != null) {
 				if (isFirstLine) {
 					isFirstLine = false;
+					// 先頭行のBOM（\uFEFF）を除去する
+					if (line.startsWith("\uFEFF")) {
+						line = line.substring(1);
+					}
 					rowNum++;
 					continue;
 				}
@@ -147,8 +164,8 @@ public class EmployeeService {
 				}
 
 				String[] cols = line.split(",", -1);
-				if (cols.length < 7) {
-					result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています（7項目必要）"));
+				if (cols.length < 18) {
+					result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています（18項目必要）"));
 					result.errorCount++;
 					rowNum++;
 					continue;
@@ -195,7 +212,7 @@ public class EmployeeService {
 				} else {
 				    emp.setFirstName(firstName);
 				}
-				
+
 				String lastNameKana = cols[3].trim();
 				if (lastNameKana.isEmpty()) {
 				    result.errors.add(new CsvRowError(rowNum, "社員姓カナ", "社員姓カナは必須です"));
@@ -217,18 +234,18 @@ public class EmployeeService {
 				} else {
 				    emp.setFirstNameKana(firstNameKana);
 				}
-				
-				String hireDate = cols[5].trim();
-				if (!hireDate.isEmpty()) {
+
+				String hireDatestr = cols[5].trim();
+				if (!hireDatestr.isEmpty()) {
 				    try {
-				        LocalDate hireDate = LocalDate.parse(hireDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				        LocalDate hireDate = LocalDate.parse(hireDatestr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				        emp.setHireDate(hireDate);
 				    } catch (DateTimeParseException e) {
 				        result.errors.add(new CsvRowError(rowNum, "入社年月日", "日付の形式が正しくありません\nYYYY-MM-DD 形式で入力してください"));
 				        hasError = true;
 				    }
 				}
-				
+
 				String yearsOfServiceStr = cols[6].trim();
 				if (!yearsOfServiceStr.isEmpty()) {
 				    try {
@@ -244,23 +261,23 @@ public class EmployeeService {
 				        hasError = true;
 				    }
 				}
-				
+
 				String birthDateStr = cols[7].trim();
 				if (!birthDateStr.isEmpty()) {
 				    try {
 				        LocalDate birthDate = LocalDate.parse(birthDateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				if (birthDate.isAfter(LocalDate.now())) {
+				        if (birthDate.isAfter(LocalDate.now())) {
 				            result.errors.add(new CsvRowError(rowNum, "生年月日", "入力された年月日は正しくありません"));
 				            hasError = true;
-				} else {
+				        } else {
 				            emp.setBirthDate(birthDate);
-				}
-				} catch (DateTimeParseException e) {
+				        }
+				    } catch (DateTimeParseException e) {
 				        result.errors.add(new CsvRowError(rowNum, "生年月日", "日付の形式が正しくありません\nYYYY-MM-DD 形式で入力してください"));
 				        hasError = true;
 				    }
 				}
-				
+
 				String zipCode = cols[8].trim();
 				if (zipCode.isEmpty()) {
 				    result.errors.add(new CsvRowError(rowNum, "郵便番号", "郵便番号は必須です"));
@@ -274,7 +291,7 @@ public class EmployeeService {
 				} else {
 				    emp.setZipCode(zipCode);
 				}
-				
+
 				String address1 = cols[9].trim();
 				if (address1.isEmpty()) {
 				    result.errors.add(new CsvRowError(rowNum, "住所1", "住所1は必須です"));
@@ -285,7 +302,7 @@ public class EmployeeService {
 				} else {
 				    emp.setAddress1(address1);
 				}
-				
+
 				String address2 = cols[10].trim();
 				if (address2.length() > 100) {
 				    result.errors.add(new CsvRowError(rowNum, "住所2", "住所2は100文字以内で入力してください"));
@@ -293,7 +310,7 @@ public class EmployeeService {
 				} else {
 				    emp.setAddress2(address2);
 				}
-				
+
 				String engineerType = cols[11].trim();
 				if (engineerType.isEmpty()) {
 				    result.errors.add(new CsvRowError(rowNum, "エンジニアタイプ", "エンジニアタイプは必須です"));
@@ -304,36 +321,35 @@ public class EmployeeService {
 				} else {
 				    emp.setEngineerType(engineerType);
 				}
-				
+
 				String loginId = cols[12].trim();
 				if (loginId.isEmpty()) {
 				    result.errors.add(new CsvRowError(rowNum, "ログインID", "ログインIDは必須です"));
 				    hasError = true;
 				} else {
-				    Account account = accountService.findAll(loginId);
-				    
-				if (account == null) {
+				    Account account = accountService.findByLoginId(loginId);
+				    if (account == null) {
 				        result.errors.add(new CsvRowError(rowNum, "ログインID", "指定されたログインIDは存在しません"));
 				        hasError = true;
-				} else {
-					emp.setAccountId(account.getAccountId());
-					}
+				    } else {
+				        emp.setAccountId(account.getAccountId());
+				    }
 				}
-				
-				String compName = cols[13].trim();
-				if (compName.isEmpty()) {
+
+				String companyName = cols[13].trim();
+				if (companyName.isEmpty()) {
 				    result.errors.add(new CsvRowError(rowNum, "所属企業", "所属企業は必須です"));
 				    hasError = true;
 				} else {
-				    Company company = companyService.findAll(compName);
+				    Company company = companyService.findByCompanyName(companyName);
 				    if (company == null) {
 				        result.errors.add(new CsvRowError(rowNum, "所属企業", "指定された所属企業は存在しません"));
 				        hasError = true;
 				    } else {
-				        emp.setCompanyId(company.getCompId());
+				        emp.setCompanyId(company.getCompanyId());
 				    }
 				}
-				
+
 				String department = cols[14].trim();
 				if (department.length() > 100) {
 				    result.errors.add(new CsvRowError(rowNum, "所属部署", "所属部署は100文字以内で入力してください"));
@@ -341,7 +357,7 @@ public class EmployeeService {
 				} else {
 				    emp.setDepartment(department);
 				}
-				
+
 				String jobTitle = cols[15].trim();
 				if (jobTitle.length() > 100) {
 				    result.errors.add(new CsvRowError(rowNum, "役職", "役職は100文字以内で入力してください"));
@@ -349,7 +365,7 @@ public class EmployeeService {
 				} else {
 				    emp.setJobTitle(jobTitle);
 				}
-				
+
 				String empTel = cols[16].trim();
 				if (empTel.isEmpty()) {
 				    result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号は必須です"));
@@ -363,7 +379,7 @@ public class EmployeeService {
 				} else {
 				    emp.setEmpTel(empTel);
 				}
-				
+
 				String email = cols[17].trim();
 				if (email.isEmpty()) {
 				    result.errors.add(new CsvRowError(rowNum, "メールアドレス", "メールアドレスは必須です"));
@@ -421,4 +437,3 @@ public class EmployeeService {
 		return count > 0;
 	}
 }
-

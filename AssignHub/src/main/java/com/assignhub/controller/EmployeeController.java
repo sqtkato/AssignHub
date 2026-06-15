@@ -1,5 +1,6 @@
 package com.assignhub.controller;
 
+import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Employee;
@@ -77,8 +79,8 @@ public class EmployeeController {
 	public String create(Model model) {
 		int currentCount = employeeService.findAll(null, null, null, null).size();
 		if(currentCount >= 500) {
-			model.addAttribute("toastEror","登録件数が上限に達しています");
-			return "redirect;/employees";
+			model.addAttribute("toastError","登録件数が上限に達しています");
+			return "redirect:/employees";
 		}
 		if (!model.containsAttribute("employeeForm")) {
 			model.addAttribute("employeeForm", new EmployeeForm());
@@ -143,7 +145,7 @@ public class EmployeeController {
 			form.setEmpTel(emp.getEmpTel());
 			form.setEmail(emp.getEmail());
 			form.setEngineerType(emp.getEngineerType());
-			form.setCompanyName(emp.getCompanyName());
+			form.setCompanyId(emp.getCompanyId());
 			form.setAccountId(emp.getAccountId());
 			form.setDepartment(emp.getDepartment());
 			form.setJobTitle(emp.getJobTitle());
@@ -168,7 +170,6 @@ public class EmployeeController {
 			model.addAttribute("fromPage", fromPage);
 			return "employee/edit";
 		}
-		
 		if ("detail".equals(fromPage)) {
 			return "redirect:/employee/" + employeeForm.getEmpId();
 			}
@@ -193,7 +194,6 @@ public class EmployeeController {
 		employeeService.delete(id);
 		attributes.addFlashAttribute("toastMessage", "社員情報を削除しました");
 		return "redirect:/employees";
-		
 	}
 
 	/**
@@ -224,10 +224,41 @@ public class EmployeeController {
 	public String showImport(Model model) {
 		int currentCount = employeeService.findAll(null, null, null, null).size();
 		if(currentCount >= 500) {
-			model.addAttribute("toastEror","登録件数が上限に達しています");
-			return "redirect;/employees";
+			model.addAttribute("toastError","登録件数が上限に達しています");
+			return "redirect:/employees";
 		}
 		return "employee/import";
+	}
+
+	/**
+	 * CSVファイルを用いた社員データの一括インポート処理を実行する。
+	 *
+	 * @param file  アップロードされたCSVファイル
+	 * @param model 画面描画用のモデル
+	 * @return インポート画面のテンプレートパス
+	 */
+	@PostMapping("/import")
+	public String importCsv(@RequestParam("file") MultipartFile file, Model model) {
+		if (file.isEmpty()) {
+			model.addAttribute("toastError", "ファイルが選択されていません");
+			return "employee/import";
+		}
+		try {
+			EmployeeService.ImportResult result = employeeService.importCsv(file);
+			model.addAttribute("importResult", result);
+			if (result.errorCount > 0) {
+				model.addAttribute("toastError", "一部の行でエラーが発生しました");
+			} else {
+				model.addAttribute("toastMessage", result.successCount + "件のインポート処理が完了しました");
+			}
+			return "employee/import";
+		} catch (MalformedInputException e) {
+			model.addAttribute("toastError", "ファイルの文字コードが正しくありません。UTF-8で保存してください");
+			return "employee/import";
+		} catch (Exception e) {
+			model.addAttribute("toastError", "ファイルの読み込みに失敗しました");
+			return "employee/import";
+		}
 	}
 
 	/**
@@ -237,9 +268,9 @@ public class EmployeeController {
 	 */
 	@GetMapping("/import/template")
 	public ResponseEntity<byte[]> downloadTemplate() {
-		String csvContent = "\"社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,\"\n"
-				+ "				+ \"生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,\"\n"
-				+ "				+ \"所属企業,所属部署,役職,電話番号,メールアドレス\n";
+		String csvContent = "社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,"
+		        + "生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,"
+		        + "所属企業,所属部署,役職,電話番号,メールアドレス\n";
 		byte[] csvBytes = csvContent.getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
 		byte[] result = new byte[bom.length + csvBytes.length];
@@ -292,7 +323,7 @@ public class EmployeeController {
 					.append(emp.getAddress2()).append(",")
 					.append(emp.getEngineerType()).append(",")
 					.append(emp.getAccountId()).append(",")
-					.append(emp.getCompanyName()).append(",")
+					.append(emp.getCompanyId()).append(",")
 					.append(emp.getDepartment()).append(",")
 					.append(emp.getJobTitle()).append(",")
 					.append(emp.getEmpTel()).append(",")
@@ -331,8 +362,8 @@ public class EmployeeController {
 		e.setEmpTel(f.getEmpTel());
 		e.setEmail(f.getEmail());
 		e.setEngineerType(f.getEngineerType());
-		e.setCompanyName(f.getCompanyName());
 		e.setAccountId(f.getAccountId());
+		e.setCompanyId(f.getCompanyId());
 		e.setDepartment(f.getDepartment());
 		e.setJobTitle(f.getJobTitle());
 	}
