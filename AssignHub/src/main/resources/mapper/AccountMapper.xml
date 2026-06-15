@@ -22,17 +22,20 @@
 		SELECT a.*, e.last_name, e.first_name
 		FROM
 		m_account a
-		left JOIN m_employee e ON
-		a.account_id = e.emp_id
-		AND (e.delete_flg = 0 OR e.delete_flg IS NULL)
+		left JOIN
+		m_employee e ON
+		a.account_id = e.account_id
+		AND (e.delete_flg = 0 OR
+		e.delete_flg IS NULL)
 
 		<where>
 			a.delete_flg = 0
-			
+
 			<if test="keyword != null and keyword != ''">
 				AND (
 				e.first_name LIKE CONCAT('%', #{keyword}, '%')
-				OR e.last_name
+				OR
+				e.last_name
 				LIKE CONCAT('%', #{keyword}, '%')
 
 				)
@@ -44,6 +47,49 @@
 		ORDER BY a.account_id ASC
 	</select>
 
+	<!-- アカウントIDで1件取得（存在チェック用） -->
+	<select id="findById" resultMap="accountResultMap">
+		SELECT * FROM m_account
+		WHERE
+		account_id = #{accountId}
+	</select>
+
+	<select id="findByIds" resultMap="accountResultMap">
+		SELECT
+		a.account_id,
+		a.login_id,
+		a.permission,
+		a.password_hash,
+		a.created_at,
+		a.updated_at,
+		e.emp_id,
+		e.last_name,
+		e.first_name
+		FROM m_account a
+		LEFT JOIN m_employee e
+		ON a.account_id = e.emp_id
+		WHERE
+		a.account_id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
+
+	<select id="findByLoginId" resultMap="accountResultMap">
+		SELECT *
+		FROM m_account
+		WHERE login_id = #{loginId}
+		AND delete_flg = 0
+	</select>
+
+	<insert id="insert" parameterType="com.assignhub.entity.Account">
+		INSERT INTO m_account
+		(login_id,
+		password_hash, permission, delete_flg)
+		VALUES (#{loginId},
+		#{passwordHash}, #{permission}, 0)
+	</insert>
 
 	<!-- 追加：ログインIDの重複チェック -->
 	<select id="isLoginIdDuplicate" resultType="boolean">
@@ -52,32 +98,27 @@
 		m_account
 		WHERE login_id = #{loginId}
 	</select>
-	<select id="findByIds" resultMap="accountResultMap">
-		SELECT 
-			a.account_id,
-			a.login_id,
-			a.permission,
-			a.password_hash,
-			a.created_at,
-			a.updated_at,
-			e.emp_id,
-			e.last_name,
-			e.first_name
-		FROM m_account a
-		LEFT JOIN m_employee e
-		ON a.account_id = e.emp_id
-		WHERE a.account_id IN
-		<foreach collection="ids" item="id" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</select>
 
-	<insert id="save" parameterType="com.assignhub.entity.Account">
-		INSERT INTO m_account (login_id,
-		password_hash, permission, delete_flg)
-		VALUES (#{loginId},
-		#{passwordHash}, #{permission}, 0)
-	</insert>
+	<update id="update">
+		UPDATE m_account
+		SET account_Id = #{accountId},
+		login_id =#{loginId},
+		permission= #{permission},
+		password_Hash =
+		#{passwordHash},
+		updated_at = NOW()
+		WHERE account_id =#{accountId}
+	</update>
+
+	<select id="isLoginIdDuplicateUpdate" resultType="boolean">
+		SELECT
+		IF(COUNT(*)
+		> 0, true, false)
+		FROM m_account
+		WHERE login_id = #{loginId}
+		AND
+		account_id != #{currentAccountId}
+	</select>
 
 	<update id="delete">
 		UPDATE m_account
@@ -95,39 +136,5 @@
 			#{id}
 		</foreach>
 	</update>
-	
-	<select id="findByLoginId" resultMap="accountResultMap">
-		SELECT *
-		FROM m_account
-		WHERE login_id = #{loginId}
-		AND delete_flg = 0
-	</select>
 
-
-	<select id="isLoginIdDuplicateUpdate" resultType="boolean">
-		SELECT IF(COUNT(*)
-		> 0, true, false)
-		FROM m_account
-		WHERE login_id = #{loginId}
-		AND
-		account_id != #{currentAccountId}
-	</select>
-
-	<!-- ===== インポート機能用に追加 ===== -->
-
-	<!-- アカウントIDで1件取得（存在チェック用） -->
-	<select id="findById" resultMap="accountResultMap">
-		SELECT * FROM m_account
-		WHERE account_id = #{accountId}
-	</select>
-
-	<update id="update">
-		UPDATE m_account
-		SET account_Id = #{accountId},
-		login_id =#{loginId},
-		permission= #{permission},
-		password_Hash = #{passwordHash},
-		updated_at = NOW()
-		WHERE account_id =#{accountId}
-	</update>
 </mapper>
