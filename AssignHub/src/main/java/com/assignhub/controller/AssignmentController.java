@@ -190,19 +190,19 @@ public class AssignmentController {
 			Model model) {
 		if (!model.containsAttribute("assignmentForm")) {
 			model.addAttribute("assignmentForm", new AssignmentForm());
-			Assignment emp = assignmentService.findById(id);
+			Assignment assign = assignmentService.findById(id);
 
-			if (emp == null) {
+			if (assign == null) {
 				return "redirect:/assignments";
 			}
 
 			AssignmentForm form = new AssignmentForm();
-			form.setEmpId(emp.getEmpId());
-			form.setCompanyId(emp.getCompanyId());
-			form.setContractStartDate(emp.getContractStartDate());
-			form.setContractEndDate(emp.getContractEndDate());
-			form.setUnitPrice(emp.getUnitPrice());
-			form.setRoleId(emp.getRoleId());
+			form.setEmpId(assign.getEmpId());
+			form.setCompanyId(assign.getCompanyId());
+			form.setContractStartDate(assign.getContractStartDate());
+			form.setContractEndDate(assign.getContractEndDate());
+			form.setUnitPrice(assign.getUnitPrice());
+			form.setRoleId(assign.getRoleId());
 			model.addAttribute("assignmentForm", form);
 		}
 
