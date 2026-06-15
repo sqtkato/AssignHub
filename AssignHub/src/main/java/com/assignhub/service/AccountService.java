@@ -86,6 +86,8 @@ public class AccountService {
 			accountMapper.update(account);
 		}
 	}
+	
+
 
 	/**
 	 * 指定されたアカウントIDのデータを物理削除する。
