@@ -185,6 +185,7 @@ public class AssignmentController {
 			@RequestParam(value="from", required=false) String from,
 			Model model) {
 		if (!model.containsAttribute("assignmentForm")) {
+			model.addAttribute("assignmentForm", new AssignmentForm());
 		
 			Assignment emp = assignmentService.findById(id);
 			if (emp == null) {
@@ -202,7 +203,9 @@ public class AssignmentController {
 		}
 
 		model.addAttribute("fromPage", from);
-		model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
+		model.addAttribute("employees", employeeService.findAll(null, null, null, null));
+		model.addAttribute("companies", companyService.findAll(null, null));
+		model.addAttribute("role", roleService.findAll());
 	    return "assignment/edit";
 	}
 	
@@ -226,7 +229,9 @@ public class AssignmentController {
 		
 		if (result.hasErrors()) {
 			model.addAttribute("fromPage", fromPage);
-			model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
+			model.addAttribute("employees", employeeService.findAll(null, null, null, null));
+			model.addAttribute("companies", companyService.findAll(null, null));
+			model.addAttribute("role", roleService.findAll());
 			return "assignment/edit";
 		}
 
