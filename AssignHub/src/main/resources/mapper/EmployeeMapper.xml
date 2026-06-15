@@ -11,7 +11,7 @@
 		<result property="firstNameKana" column="first_name_kana" />
 		<result property="hireDate" column="hire_date" />
 		<result property="yearsOfService" column="years_of_servise" />
-		<result property="BirthDate" column="birth_date" />
+		<result property="birthDate" column="birth_date" />
 		<result property="zipCode" column="zip_code" />
 		<result property="address1" column="address1" />
 		<result property="address2" column="address2" />
@@ -49,7 +49,7 @@
 
 		</association>
 
-		<association property="Account"
+		<association property="account"
 			javaType="com.assignhub.entity.Account">
 			<id property="accountId" column="account_id" />
 			<result property="loginId" column="login_id" />
