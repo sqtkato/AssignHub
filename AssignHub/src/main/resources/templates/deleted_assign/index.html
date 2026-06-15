@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>アサイン履歴情報削除/復元一覧</title>
+	<link rel="stylesheet" href="/css/popup.css">
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="page-title-area">
+			<h2>アサイン履歴情報削除/復元一覧</h2>
+		</div>
+
+		<div class="card">
+			<form th:action="@{/deleted-assigns}" th:object="${searchForm}" method="get" class="search-form" novalidate>
+				<div class="search-row">
+					<div class="form-group form-group-search">
+						<div class="form-group">
+							<label>社員名</label>
+							<input type="text" th:field="*{empName}" maxlength="100" class="form-control"
+								placeholder="例：山田">
+						</div>
+						<div class="form-group">
+							<label>アサイン先企業</label>
+							<input type="text" th:field="*{assignName}" maxlength="50" class="form-control"
+								placeholder="例：株式会社ABC">
+						</div>
+					</div>
+					<div class="form-group form-group-search">
+						<div class="form-group">
+							<label>契約期間</label>
+							<div class="date-range">
+								<input type="date" th:field="*{contractStartDate}" class="form-control">
+								<span class="date-range-sep">～</span>
+								<input type="date" th:field="*{contractEndDate}" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label>所属企業</label>
+							<input type="text" th:field="*{companyName}" maxlength="50" class="form-control"
+								placeholder="例：株式会社ABC">
+						</div>
+					</div>
+				</div>
+				<div class="search-button-area">
+					<button type="submit" class="btn btn-secondary">検索</button>
+				</div>
+			</form>
+		</div>
+
+		<form method="post" id="listForm">
+			<div class="table-toolbar">
+				<button type="submit" th:formaction="@{/deleted-assigns/restore-bulk}"
+					class="toolbar-btn toolbar-btn-danger" title="チェックした項目を復元">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50" width="100" height="50" fill="none"
+						stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M 25 25 C -5 5, -5 45, 25 25 C 55 5, 85 5, 75 25 C 65 45, 35 45, 25 25 Z" />
+						<path d="M 16 33 L 12 21 L 24 23" />
+					</svg>
+					一括復元
+				</button>
+				<button type="submit" th:formaction="@{/deleted-assigns/export}" class="toolbar-btn toolbar-btn-danger"
+					title="チェックした項目をエクスポート">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="17 8 12 3 7 8"></polyline>
+						<line x1="12" y1="3" x2="12" y2="15"></line>
+					</svg>
+					エクスポート
+				</button>
+				<button type="submit" th:formaction="@{/deleted-assigns/delete-bulk}"
+					class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="3 6 5 6 21 6"></polyline>
+						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+						</path>
+					</svg>
+					一括削除
+				</button>
+			</div>
+
+			<div class="card">
+				<div class="table-scroll">
+					<table class="table">
+						<thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
+							<tr>
+								<th class="col-checkbox">
+									<input type="checkbox" class="select-all">
+								</th>
+								<th>ID</th>
+								<th>社員名</th>
+								<th>アサイン先企業</th>
+								<th>所属企業</th>
+								<th>契約開始日</th>
+								<th>契約終了日</th>
+								<th>単価</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="assign : ${assignments}" class="clickable-row">
+								<td class="col-checkbox">
+									<input type="checkbox" name="ids" th:value="${assign.assignmentId}"
+										class="chk_assign_select row-checkbox">
+								</td>
+								<td th:text="${assign.assignmentId}"></td>
+								<td th:text="${assign.employee.empName}"></td>
+								<td th:text="${assign.company.companyName}"></td>
+								<td th:text="${assign.employee.company.companyName}"></td>
+								<td th:text="${assign.contractStartDate}"></td>
+								<td th:text="${assign.contractEndDate != null ? assign.contractEndDate : 'ー'}"></td>
+								<td th:text="${assign.unitPrice}"></td>
+
+								<td class="col-action">
+									<button type="submit"
+										th:formaction="@{/deleted-assigns/{id}/restore(id=${assign.assignmentId})}"
+										class="btn-icon-svg" title="復元"
+										style="background: none; border: none; cursor: pointer; padding: 0;">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round">
+											<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+											<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+										</svg>
+									</button>
+									<button type="button" th:attr="data-id=${assign.assignmentId}"
+										class="btn-icon-svg delete" title="削除"
+										onclick="openDeleteModal(this.dataset.id)">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round">
+											<polyline points="3 6 5 6 21 6"></polyline>
+											<path
+												d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+											</path>
+										</svg>
+									</button>
+								</td>
+							</tr>
+
+							<tr th:if="${#lists.isEmpty(assignments)}">
+								<td colspan="9" class="text-center">該当するデータがありません。</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</form>
+
+		<div id="deleteOverlay" class="modal-overlay">...</div>
+		<div id="bulkDeleteOverlay" class="modal-overlay">...</div>
+		<div id="noSelectionOverlay" class="modal-overlay">...</div>
+
+		<script src="/js/accunt.js"></script>
+
+	</div>
+</body>
+
+</html>

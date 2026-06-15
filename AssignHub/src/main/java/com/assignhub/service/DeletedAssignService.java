@@ -17,10 +17,10 @@ public class DeletedAssignService {
 	/**
 	 * 論理削除済みのアカウント情報を全件取得する（一覧表示・検索用）。
 	 */
-	public List<Assignment> findAll(String txtEmpName, String txtAssignName, String txtCompanyName,
-			String txtContractStartDate, String txtContractEndDate) {
-		return deletedAssignMapper.findAll(txtEmpName, txtAssignName, txtCompanyName, txtContractStartDate,
-				txtContractEndDate);
+	public List<Assignment> findAll(String empName, String assignName, String companyName,
+			String contractStartDate, String contractEndDate) {
+		return deletedAssignMapper.findAll(empName, assignName, companyName, contractStartDate,
+				contractEndDate);
 	}
 
 	/**
