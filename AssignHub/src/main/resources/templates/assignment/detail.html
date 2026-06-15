@@ -83,15 +83,14 @@
 
 
 					<form th:action="@{/assignments/{id}/delete(id=${assignment.assignmentId})}" method="post">
-						<button type="button" th:attr="data-id=${acc.accountId}"
-							class="btn_assign_delete btn-icon-svg delete" title="削除"
-							onclick="openDeleteModal(this.dataset.id)">
+						<button type="button"
+							class="btn modal-btn-danger detail-btn" title="削除"
+							th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
 						</button>
 					</form>
 
 					<a th:href="@{/assignments}" class="btn btn-secondary detail-btn">戻る
 					</a>
-
 				</div>
 			</div>
 		</div>
