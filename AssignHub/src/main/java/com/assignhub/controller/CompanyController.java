@@ -90,21 +90,6 @@ public class CompanyController {
 		attributes.addFlashAttribute("toastMessage", "企業情報を登録しました");
 		return "redirect:/companies";
 	}
-	/**
-	 * 企業一覧画面を表示する。検索に応じたデータを取得する
-	 * @param companyName 検索キーワード（企業名）
-	 * @param companyTel 検索キーワード (企業電話番号)
-	 * @param model 画面描画用モデル
-	 * @return 一覧画面のテンプレートパス
-	 */
-	@GetMapping
-	public String index(@RequestParam(name = "companyName", required = false) String companyName,
-			@RequestParam(name = "companyTel", required = false) String companyTel, Model model) {
-		model.addAttribute("companies", companyService.findAll(companyName,companyTel));
-		model.addAttribute("companyName", companyName);
-		model.addAttribute("companyTel", companyTel);
-		return "company/index";
-	}
 
 	/**
 	 * フォームオブジェクトからエンティティオブジェクトへ値の詰め替えを行う。
