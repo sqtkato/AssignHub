@@ -19,7 +19,7 @@
 				<div class="form-group">
 					<label>社員名 <span class="badge-required">必須</span></label>
 					<select th:field="*{empId}" class="form-control"
-						th:classappend="${#fields.hasErrors('empId')} ? 'input-error'">
+						th:classappend="${#fields.hasErrors('empId')} ? 'input-error select-error' : ''">
 						<option value="">未選択</option>
 						<option th:each="emp : ${employees}" th:value="${emp.empId}"
 							th:text="${emp.lastName} + ' ' + ${emp.firstName}">
