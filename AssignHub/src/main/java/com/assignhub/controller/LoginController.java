@@ -57,7 +57,7 @@ public class LoginController {
         session.setAttribute("loginId", account.getLoginId());
 
 
-        return "redirect:/accounts";
+        return "redirect:/employees";
     }
 
 
