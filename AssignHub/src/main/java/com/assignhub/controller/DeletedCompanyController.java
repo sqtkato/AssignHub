@@ -45,7 +45,6 @@ public class DeletedCompanyController {
 	@PostMapping("/{id}/restore")
 	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		deletedCompanyService.restore(id);
-		attributes.addFlashAttribute("toastMessage", "企業情報を復元しました");
 		return "redirect:/deleted-companies";
 	}
 
@@ -57,7 +56,6 @@ public class DeletedCompanyController {
 			return "redirect:/deleted-companies";
 		}
 		deletedCompanyService.restoreBulk(ids);
-		attributes.addFlashAttribute("toastMessage", ids.size() + "件の企業情報を復元しました");
 		return "redirect:/deleted-companies";
 	}
 
@@ -77,7 +75,6 @@ public class DeletedCompanyController {
 		}
 
 		deletedCompanyService.physicalDelete(id);
-		attributes.addFlashAttribute("toastMessage", "企業情報を完全に削除しました");
 		return "redirect:/deleted-companies";
 	}
 
@@ -99,7 +96,6 @@ public class DeletedCompanyController {
 		}
 
 		deletedCompanyService.physicalDeleteBulk(ids);
-		attributes.addFlashAttribute("toastMessage", ids.size() + "件の企業情報を完全に削除しました");
 		return "redirect:/deleted-companies";
 	}
 
@@ -143,7 +139,7 @@ public class DeletedCompanyController {
 					.append(comp.getCompanyAddress1()).append(",")
 					.append(comp.getCompanyAddress2() != null ? comp.getCompanyAddress2() : "").append(",")
 					.append(comp.getCompanyTel()).append(",")
-					//.append(comp.getFax() != null ? comp.getFax() : "").append(",")
+					.append(comp.getCompanyFax() != null ? comp.getCompanyFax() : "").append(",")
 					.append(comp.getRepLastName() != null ? comp.getRepLastName() : "").append(",")
 					.append(comp.getRepFirstName() != null ? comp.getRepFirstName() : "").append(",")
 					.append(comp.getRepLastNameKana() != null ? comp.getRepLastNameKana() : "").append(",")

@@ -4,9 +4,7 @@
 
 <head>
 	<title>論理削除企業情報エクスポート</title>
-
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
 </head>
 
 <body>
@@ -21,8 +19,8 @@
 				<h4 class="export-confirm-title">出力条件の確認</h4>
 				<table class="export-table">
 					<tr>
-						<td class="label">検索キーワード:</td>
-						<td class="value" th:text="${keyword != null and keyword != '' ? keyword : '（指定なし）'}"></td>
+						<td class="label">出力タイプ:</td>
+						<td class="value">一覧でのチェック選択</td>
 					</tr>
 					<tr>
 						<td class="label">出力対象件数:</td>
@@ -35,33 +33,32 @@
 				</table>
 			</div>
 			
-			<div class="table-scroll export-table">
-							<table class="table table-dark">
-								<thead>
-									<tr>
-										<th>企業ID</th>
-										<th>企業名</th>
-										<th>住所1</th>
-										<th>TEL</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="company : ${companies}">
-										<td th:text="${company.compId}"></td>
-										<td th:text="${company.compName}"></td>
-										<td th:text="${company.compAddress1}"></td>						
-										<td th:text="${company.compTel}"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-
-			<div class="action-area">
-				<a th:href="@{/companies/export/download(keyword=${keyword}, deptId=${deptId})}"
-					class="btn btn-primary btn-wide">エクスポート</a>
-				<a th:href="@{/companies}" class="btn btn-secondary btn-wide">戻る</a>
+			<div class="card">
+				<table class="table">					
+					<thead class="table-dark">
+						<tr>
+							<th>企業ID</th>
+							<th>企業名</th>
+							<th>住所1</th>
+							<th>電話番号</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="company : ${companies}">
+							<td th:text="${company.companyId}"></td>
+							<td th:text="${company.companyName}"></td>
+							<td th:text="${company.companyAddress1}"></td>						
+							<td th:text="${company.companyTel}"></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 			<p class="export-note">※詳細情報がエクスポートされます</p>
+			<div class="action-area">
+				<a th:href="@{/deleted-companies/export/download(ids=${ids})}"
+					class="btn btn-primary btn-wide">エクスポート</a>
+				<a th:href="@{/deleted-companies}" class="btn btn-secondary btn-wide">戻る</a>
+			</div>
 		</div>
 	</div>
 

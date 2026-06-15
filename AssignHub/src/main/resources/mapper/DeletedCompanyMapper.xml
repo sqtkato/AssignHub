@@ -78,17 +78,13 @@
 	<select id="countEmployeesByCompanyId" resultType="int">
 		SELECT COUNT(*)
 		FROM m_employee
-		WHERE dispatch_company_id = #{id} OR partner_company_id = #{id}
+		WHERE company_id = #{id}
 	</select>
 
 	<select id="countEmployeesByCompanyIds" resultType="int">
 		SELECT COUNT(*)
 		FROM m_employee
-		WHERE dispatch_company_id IN
-		<foreach item="id" collection="ids" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-		OR partner_company_id IN
+		WHERE company_id IN
 		<foreach item="id" collection="ids" open="(" separator="," close=")">
 			#{id}
 		</foreach>
@@ -97,14 +93,15 @@
 	<select id="countAssignmentsByCompanyId" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment
-		WHERE client_company_id = #{id}
+		WHERE company_id = #{id}
 	</select>
 
 	<select id="countAssignmentsByCompanyIds" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment
-		WHERE client_company_id IN
-		<foreach item="id" collection="ids" open="(" separator="," close=")">
+		WHERE company_id IN
+		<foreach item="id" collection="ids" open="(" separator=","
+			close=")">
 			#{id}
 		</foreach>
 	</select>
