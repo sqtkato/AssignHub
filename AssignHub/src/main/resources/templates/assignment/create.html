@@ -22,7 +22,7 @@
 						th:classappend="${#fields.hasErrors('empId')} ? 'input-error'">
 						<option value="">未選択</option>
 						<option th:each="emp : ${employees}" th:value="${emp.empId}"
-							th:text="${emp.empName}" >
+							th:text="${emp.lastName} + ' ' + ${emp.firstName}">
 						</option>
 					</select>
 					<div class="error-message" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}">

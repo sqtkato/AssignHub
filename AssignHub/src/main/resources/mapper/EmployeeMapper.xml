@@ -2,25 +2,95 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.assignhub.mapper.EmployeeMapper">
 
-	<resultMap id="employeeResultMap"
+		<resultMap id="employeeResultMap"
 		type="com.assignhub.entity.Employee">
 		<id property="empId" column="emp_id" />
-		<result property="empName" column="emp_name" />
-		<result property="hireYear" column="hire_year" />
+		<result property="lastName" column="last_name" />
+		<result property="firstName" column="first_name" />
+		<result property="lastNameKana" column="last_name_kana" />
+		<result property="firstNameKana" column="first_name_kana" />
+		<result property="hireDate" column="hire_date" />
+		<result property="yearsOfService" column="years_of_servise" />
+		<result property="BirthDate" column="birth_date" />
+		<result property="zipCode" column="zip_code" />
+		<result property="address1" column="address1" />
+		<result property="address2" column="address2" />
+		<result property="engineerType" column="engineer_type" />
+		<result property="accountId" column="account_id" />
+		<result property="companyId" column="company_id" />
+		<result property="department" column="department" />
+		<result property="jobTitle" column="job_title" />
+		<result property="empTel" column="emp_tel" />
+		<result property="email" column="email" />
+		<result property="deleteFlg" column="delete_flg" />
 		<result property="createdAt" column="created_at" />
 		<result property="updatedAt" column="updated_at" />
+
+		<association property="company"
+			javaType="com.assignhub.entity.Company">
+			<id property="companyId" column="company_id" />
+			<result property="companyName" column="emp_company" />
+		</association>
+
+		<association property="assignment"
+			javaType="com.assignhub.entity.Assignment">
+			<id property="assignmentId" column="assignment_id" />
+			<result property="contractStartDate"
+				column="contract_start_date_assign" />
+			<result property="contractEndDate"
+				column="contract_end_date_assign" />
+			<result property="unitPrice" column="unit_price_assign" />
+
+			<association property="company"
+				javaType="com.assignhub.entity.Company">
+				<id property="companyId" column="assign_company_id" />
+				<result property="companyName" column="emp_assign_company" />
+			</association>
+
+		</association>
 	</resultMap>
 
 	<select id="findAll" resultMap="employeeResultMap">
-		SELECT * FROM m_employee
-		<where>
-		<if test="empName != null and empName != ''"> AND emp_name LIKE CONCAT('%', #{empName}, '%')</if>
-		<if test="empAssignCompany != null and empAssignCompany != ''"> AND emp_assign_company = #{empAssignCompany}</if>
-		<if test="empEngineerType != null and empEngineerType != ''"> AND emp_engineer_type = #{empEngineerType}</if>
-		<if test="empCompany != null and empCompany != ''"> AND emp_company = #{empCompany}</if>
-		</where>
-	</select>
+		SELECT e.*,
+		c.company_name AS emp_company,
+		c2.company_name AS
+		emp_assign_company
+		FROM m_employee e
+		LEFT JOIN m_company c
+		ON
+		e.company_id = c.company_id
+		LEFT JOIN t_assignment a
+		ON a.emp_id =
+		e.emp_id
+		AND a.contract_end_date is null
+		LEFT JOIN m_company c2
+		ON
+		a.company_id = c2.company_id
 
+		<where>
+			e.delete_flg = 0
+			<if test="empName != null and empName != ''">
+				AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%',
+				#{empName}, '%')
+			</if>
+
+			<if test="empAssignCompany != null and  empAssignCompany != ''">
+				AND c2.company_name LIKE CONCAT('%', #{empAssignCompany},
+				'%')
+			</if>
+
+			<if test="empCompany != null and  empCompany != ''">
+				AND c.company_name LIKE CONCAT('%', #{empCompany}, '%')
+			</if>
+
+			<if test="empEngineerType != null and empEngineerType != ''">
+				AND e.engineer_type LIKE CONCAT('%', #{empEngineerType},
+				'%')
+			</if>
+		</where>
+
+	</select>
+	
 	<select id="findById" resultMap="employeeResultMap">
 		SELECT *
 		FROM m_employee

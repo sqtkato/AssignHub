@@ -2,16 +2,10 @@ package com.assignhub.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.assignhub.entity.Employee;
 import com.assignhub.form.EmployeeForm;
 import com.assignhub.service.EmployeeService;
 
@@ -68,37 +62,5 @@ public class EmployeeController {
 			model.addAttribute("employeeForm", new EmployeeForm());
 		}
 		return "employee/create";
-	}
-
-	/**
-	 * 入力された社員情報をデータベースに登録する。
-	 *
-	 * @param form 入力フォームデータ
-	 * @param result バリデーション結果
-	 * @param attributes リダイレクト先へ渡すフラッシュスコープ
-	 * @return 成功時は一覧画面へリダイレクト、失敗時は登録画面へ戻る
-	 */
-	@PostMapping
-	public String store(@Validated @ModelAttribute("employeeForm") EmployeeForm form, BindingResult result,
-			RedirectAttributes attributes) {
-		if (result.hasErrors()) {
-			return "employee/create";
-		}
-		Employee employee = new Employee();
-		copyFormToEntity(form, employee);
-		employeeService.save(employee);
-		attributes.addFlashAttribute("toastMessage", "社員情報を登録しました");
-		return "redirect:/employees";
-	}
-
-	/**
-	 * フォームオブジェクトからエンティティオブジェクトへ値の詰め替えを行う。
-	 *
-	 * @param f 入力フォーム
-	 * @param e 更新対象のエンティティ
-	 */
-	private void copyFormToEntity(EmployeeForm f, Employee e) {
-		e.setEmpName(f.getEmpName());
-		e.setHireYear(20);
 	}
 }
