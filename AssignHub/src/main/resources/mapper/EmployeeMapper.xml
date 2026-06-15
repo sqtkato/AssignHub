@@ -18,9 +18,6 @@
 		<result property="engineerType" column="engineer_type" />
 		<result property="accountId" column="account_id" />
 		<result property="companyId" column="company_id" />
-		<result property="companyName" column="emp_company" />
-		<result property="companyNameAssign"
-			column="emp_assign_company" />
 		<result property="department" column="department" />
 		<result property="jobTitle" column="job_title" />
 		<result property="empTel" column="emp_tel" />
@@ -28,24 +25,50 @@
 		<result property="deleteFlg" column="delete_flg" />
 		<result property="createdAt" column="created_at" />
 		<result property="updatedAt" column="updated_at" />
+
+		<association property="company"
+			javaType="com.assignhub.entity.Company">
+			<id property="companyId" column="company_id" />
+			<result property="companyName" column="emp_company" />
+		</association>
+
+		<association property="assignment"
+			javaType="com.assignhub.entity.Assignment">
+			<id property="assignmentId" column="assignment_id" />
 		<result property="contractStartDate"
 			column="contract_start_date_assign" />
 		<result property="contractEndDate"
 			column="contract_end_date_assign" />
 		<result property="unitPrice" column="unit_price_assign" />
+
+			<association property="company"
+				javaType="com.assignhub.entity.Company">
+				<id property="companyId" column="assign_company_id" />
+				<result property="companyName" column="emp_assign_company" />
+			</association>
+
+		</association>
+
+		<association property="Account"
+			javaType="com.assignhub.entity.Account">
+			<id property="accountId" column="account_id" />
 		<result property="loginId" column="login_id" />
+		</association>
+
 	</resultMap>
 
 	<select id="findAll" resultMap="employeeResultMap">
 		SELECT e.*,
 		c.company_name AS emp_company,
-		c2.company_name AS emp_assign_company
+		c2.company_name AS
+		emp_assign_company
 		FROM m_employee e
 		LEFT JOIN m_company c
 		ON
 		e.company_id = c.company_id
 		LEFT JOIN t_assignment a
-		ON a.emp_id = e.emp_id
+		ON a.emp_id =
+		e.emp_id
 		AND a.contract_end_date is null
 		LEFT JOIN m_company c2
 		ON
@@ -60,25 +83,22 @@
 	</select>
 
 	<select id="findById" resultMap="employeeResultMap">
-		SELECT e.*,
-		c.company_name AS company_name_belong,
-		c2.company_name AS
-		company_name_assign,
-		ac.login_id AS login_id,
-		a.contract_start_date AS
-		contract_start_date_assign,
-		a.contract_end_date AS
-		contract_end_date_assign,
-		a.unit_price AS unit_price_assign
-		FROM
-		m_employee e
+		SELECT
+		e.*,
+		c.company_name AS emp_company,
+		a.assignment_id AS assignment_id,
+		a.contract_start_date AS contract_start_date_assign,
+		a.contract_end_date AS contract_end_date_assign,
+		a.unit_price AS unit_price_assign,
+		a.company_id AS assign_company_id,
+		c2.company_name AS emp_assign_company,
+		ac.login_id AS login_id
+		FROM m_employee e
 		LEFT JOIN m_company c ON e.company_id = c.company_id
-		LEFT
-		JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date IS
+		LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date IS
 		NULL
 		LEFT JOIN m_company c2 ON a.company_id = c2.company_id
-		LEFT JOIN
-		m_account ac ON e.account_id = ac.account_id
+		LEFT JOIN m_account ac ON e.account_id = ac.account_id
 		WHERE e.emp_id = #{id}
 	</select>
 
