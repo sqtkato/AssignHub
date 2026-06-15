@@ -42,13 +42,13 @@ public interface AccountMapper {
 
 	void insert(Account account);
 
-	boolean isLoginIdDuplicate(@Param("loginId") String loginId);
+	
 
 	/** アカウントを更新する（ログインID・パスワード・権限を上書き）。 */
 
 	void update(Account account);
 
-	boolean isLoginIdDuplicateUpdate(@Param("loginId") String loginId, @Param("currentAccountId") int currentAccountId);
+	
 
 	/**
 	 * アカウントを一件論理削除。
@@ -62,4 +62,6 @@ public interface AccountMapper {
 	 */
 	void deleteBulk(@Param("ids") List<Integer> ids);
 
+	
+	int countByLoginId(@Param("loginId") String id, @Param("excludeAccountId") Integer excludeAccountId);
 }

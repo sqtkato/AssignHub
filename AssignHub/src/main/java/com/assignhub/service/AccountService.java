@@ -86,6 +86,9 @@ public class AccountService {
 			accountMapper.update(account);
 		}
 	}
+	
+	
+
 
 	/**
 	 * 指定されたアカウントIDのデータを物理削除する。
@@ -258,9 +261,11 @@ public class AccountService {
 	 * @param loginId        チェックするログインID
 	 * @return 重複していればtrue
 	 */
-	public boolean isLoginIdDuplicate(String loginId) {
-		return accountMapper.isLoginIdDuplicate(loginId);
+	public boolean isLoginIdDuplicate(String loginId,Integer excludeAccountId) {
+		int count = accountMapper.countByLoginId(loginId,excludeAccountId);
+		return count > 0;
 	}
+	
 
 	/**
 	 * ログインIDがすでに登録されているか（重複しているか）を判定する。
@@ -269,9 +274,7 @@ public class AccountService {
 	 * @param accountId		除外するアカウントID（ログインIDを変更しない場合）
 	 * @return 重複していればtrue
 	 */
-	public boolean isLoginIdDuplicateUpdate(String loginId, Integer accountId) {
-		return accountMapper.isLoginIdDuplicateUpdate(loginId, accountId);
-	}
+	
 
 	public int countDataRows(MultipartFile file) throws Exception {
 		int count = 0;

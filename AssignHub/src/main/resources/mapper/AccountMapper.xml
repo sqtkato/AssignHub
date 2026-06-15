@@ -91,13 +91,6 @@
 		#{passwordHash}, #{permission}, 0)
 	</insert>
 
-	<!-- 追加：ログインIDの重複チェック -->
-	<select id="isLoginIdDuplicate" resultType="boolean">
-		SELECT COUNT(*) > 0
-		FROM
-		m_account
-		WHERE login_id = #{loginId}
-	</select>
 
 	<update id="update">
 		UPDATE m_account
@@ -110,15 +103,6 @@
 		WHERE account_id =#{accountId}
 	</update>
 
-	<select id="isLoginIdDuplicateUpdate" resultType="boolean">
-		SELECT
-		IF(COUNT(*)
-		> 0, true, false)
-		FROM m_account
-		WHERE login_id = #{loginId}
-		AND
-		account_id != #{currentAccountId}
-	</select>
 
 	<update id="delete">
 		UPDATE m_account
@@ -136,5 +120,14 @@
 			#{id}
 		</foreach>
 	</update>
+	
+	<select id="countByLoginId" resultType="int">
+		SELECT COUNT(*) FROM m_account
+		WHERE login_id = #{loginId}
+		AND delete_flg=0
+		<if test="excludeAccountId != null">
+			AND account_id != #{excludeAccountId}
+		</if>
+	</select>
 
 </mapper>

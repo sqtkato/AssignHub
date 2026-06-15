@@ -97,7 +97,7 @@ public class AccountController {
 		if (result.hasErrors()) {
 			return "account/create";
 		}
-		if (accountService.isLoginIdDuplicate(form.getLoginId())) {
+		if (accountService.isLoginIdDuplicate(form.getLoginId(),null)) {
 			model.addAttribute("loginIdError", "このログインIDは既に使用されています");
 			return "account/create";
 		}
@@ -143,13 +143,13 @@ public class AccountController {
 	public String update(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result, Model model) {
-
+		
 		if (result.hasErrors()) {
 			return "account/edit";
 		}
 
-		if (accountService.isLoginIdDuplicateUpdate(accountForm.getLoginId(), id)) {
-			model.addAttribute("loginId", "このログインIDは既に使用されています");
+		if (accountService.isLoginIdDuplicate(accountForm.getLoginId(), id)) {
+			result.rejectValue("loginId","error.accountForm", "このログインIDは既に使用されています");
 			return "account/edit";
 		}
 
