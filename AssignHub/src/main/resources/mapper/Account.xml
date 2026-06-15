@@ -43,14 +43,25 @@
 		</where>
 		ORDER BY a.account_id ASC
 	</select>
-	
-<<<<<<< HEAD
 	<select id="findByLoginId" resultType="com.assignhub.entity.Account">
     SELECT * FROM m_account
     WHERE login_id = #{loginId}
     AND delete_flg = 0
     LIMIT 1
 </select>
-=======
->>>>>>> stash
+  <select id="findUnlinkedLoginId">
+   SELECT login_id,account_id
+   FROM m_account
+   WHERE login_id NOT IN (
+       SELECT login_id
+       FROM m_account
+       WHERE account_id IN (
+           SELECT account_id 
+           FROM m_employee
+           WHERE account_id IS NOT NULL
+          )
+   );
+   </select>
+   
+   
 </mapper>

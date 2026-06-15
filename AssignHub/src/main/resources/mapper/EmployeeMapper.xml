@@ -128,7 +128,7 @@
 		INSERT
 		INTO m_employee (
 		last_name, first_name, last_name_kana, first_name_kana,
-		birth_date ,hire_date,zip_code,address1,address2,empTel,
+		birth_date ,hire_date,zip_code,address1,address2,emp_tel,
 		email,engineer_type,account_id,company_id,
 		department,job_title
 		) VALUES (
@@ -166,7 +166,7 @@
 
 		SET last_name = #{lastName},
 		last_name, first_name, last_name_kana, first_name_kana,
-		birth_date ,hire_date,zip_code,address1,address2,empTel,
+		birth_date ,hire_date,zip_code,address1,address2,emp_tel,
 		email,engineer_type,account_id,company_id,
 		department,job_title
 		) VALUES (

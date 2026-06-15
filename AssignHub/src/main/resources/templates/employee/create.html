@@ -9,9 +9,9 @@
 
 <body>
 
-	<h2>社員情報変更入力</h2>
+	<h2>社員情報入力</h2>
 
-	<form th:action="@{/employees/{id}/edit(id=${id})}" th:object="${employeeForm}" method="post" class="h-adr">
+	<form th:action="@{/employees}" th:object="${employeeForm}" method="post" class="h-adr">
 
 		
 
@@ -115,7 +115,7 @@
 				<div id="loginIdArea" style="display: none;">
 					    <label>ログインID</label><br>
 					  
-					<select id="loginId" name="loginId">
+					<select id="loginId" th:field="*{accountId}">
 						    <option value="">未選択</option>
 						<option th:each="account : ${accounts}" th:value="${account.accountId}"
 							th:text="${account.loginId}">
@@ -128,13 +128,13 @@
 				<div id="companyArea" style="display: none;">
 					    <label>所属企業</label><br>
 					  
-					<select id="companyName" name="companyName">
-						   <option value="">未選択</option>
-						<option th:each="company : ${companies}" th:value="${company.companyId}"
-							th:text="${company.companyName}">
-						</option>
+					<select id="companyId" th:field="*{companyId}">
+					    <option value="">未選択</option>
+					    <option th:each="company : ${companies}"
+					            th:value="${company.companyId}"
+					            th:text="${company.companyName}">
+					    </option>
 					</select>
-					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
 					</div>
 				</div>
 
@@ -211,13 +211,10 @@
 				</div>
 				<div>
 
-					<div>
-						<input type="hidden" name="fromPage" th:value="${fromPage}" />
-						<button type="submit">変更</button>
-						<a th:if="${fromPage == 'detail'}" th:href="@{/employees/{id}/detail(id=${id})}"
-							class="btn btn-secondary">戻る</a>
-						<a th:if="${fromPage != 'detail'}" th:href="@{/employees}" class="btn btn-secondary">戻る</a>
-					</div>
+					<div class="form-actions">
+						<button type="submit" class="btn btn-primary">登録</button>
+						<a th:href="@{/employees}" class="btn btn-secondary">戻る</a>
+					</div>	
 	</form>
 
 	</div>

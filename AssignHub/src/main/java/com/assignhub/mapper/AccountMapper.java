@@ -63,6 +63,8 @@ public interface AccountMapper {
 	 */
 	void deleteBulk(@Param("ids") List<Integer> ids);
 	
+	List<Account> findUnlinkedLoginId();
+	
 	
 
 	

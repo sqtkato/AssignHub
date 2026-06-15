@@ -86,9 +86,9 @@ public class EmployeeController {
 			model.addAttribute("toastError","登録件数が上限に達しています");
 			return "redirect:/employees";
 		}
-		if (!model.containsAttribute("employeeForm")) {
-			model.addAttribute("employeeForm", new EmployeeForm());
-		}
+		model.addAttribute("employeeForm", new EmployeeForm());
+		model.addAttribute("companies",employeeService.findAllCompany());
+		model.addAttribute("accounts",employeeService.findUnlinkedLoginId());
 		return "employee/create";
 	}
 

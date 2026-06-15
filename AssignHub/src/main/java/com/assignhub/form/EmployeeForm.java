@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 /**
@@ -89,14 +92,13 @@ public class EmployeeForm {
 	private String engineerType;
 
 	/**所属企業 (必須)*/
-	@NotNull(message = "所属企業は必須です")
-	private Integer companyId;
 	
-//	@NotBlank(message = "所属企業は必須です")
-	private String companyName;
+	private Integer companyId;
 	
 	/**ログインID (必須)*/
 //	@NotNull(message = "ログインIDは必須です")
+	
+	
 	private Integer accountId;
 
 	/**所属部署（任意、最大100文字） */

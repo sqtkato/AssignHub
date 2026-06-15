@@ -15,8 +15,8 @@
 <select id="findAll" resultMap="companyResultMap">
 		SELECT *FROM m_company
 		<where>
-		<if test="companyName != null and companyName != ''">
-			company_name LIKE CONCAT('%', #{companyName}, '%')
+		<if test=" keyword != null and keyword != ''">
+			company_name LIKE CONCAT('%', #{keyword}, '%')
 		</if>
 		</where>
 		ORDER BY company_id ASC

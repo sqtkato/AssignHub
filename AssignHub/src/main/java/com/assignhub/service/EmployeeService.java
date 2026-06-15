@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.assignhub.entity.Account;
 import com.assignhub.entity.Company;
 import com.assignhub.entity.Employee;
+import com.assignhub.mapper.AccountMapper;
+import com.assignhub.mapper.CompanyMapper;
 import com.assignhub.mapper.EmployeeMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +36,8 @@ public class EmployeeService {
 	private final EmployeeMapper employeeMapper;
 	private final AccountService accountService;
 	private final CompanyService companyService;
+	private final AccountMapper accountMapper;
+	private final CompanyMapper companyMapper;
 
 	/**
 	 * コンストラクタによる依存性の注入。
@@ -41,10 +45,13 @@ public class EmployeeService {
 	 * @param employeeMapper 社員マスタに対するマッパー
 	 */
 	public EmployeeService(EmployeeMapper employeeMapper,AccountService accountService,
-			CompanyService companyService) {
+			CompanyService companyService, AccountMapper accountMapper,CompanyMapper companyMapper) {
 	    this.employeeMapper = employeeMapper;
 	    this.accountService = accountService;
 	    this.companyService = companyService;
+	    this.accountMapper = accountMapper;
+	    this.companyMapper = companyMapper;
+	    
 	}
 
 	/**
@@ -437,4 +444,13 @@ public class EmployeeService {
 		int count = employeeMapper.countByEmail(email, excludeEmpId);
 		return count > 0;
 	}
-}
+	
+	public List<Account> findUnlinkedLoginId() {
+		return accountMapper.findUnlinkedLoginId();
+		}	
+	
+	public List<Company> findAllCompany() {
+		return companyMapper.findAll(null,null,null);
+		}	
+	
+	}
