@@ -35,7 +35,8 @@
 
 					<tr>
 						<th>社員名カナ</th>
-						<td th:text="${assignment.employee.lastNameKana} + ' ' + ${assignment.employee.firstNameKana}"></td>
+						<td th:text="${assignment.employee.lastNameKana} + ' ' + ${assignment.employee.firstNameKana}">
+						</td>
 					</tr>
 
 					<tr>
@@ -82,12 +83,10 @@
 					</a>
 
 
-					<form th:action="@{/assignments/{id}/delete(id=${assignment.assignmentId})}" method="post">
-						<button type="button"
-							class="btn modal-btn-danger detail-btn"
-							th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
-						</button>
-					</form>
+
+					<button type="button" class="btn modal-btn-danger detail-btn"
+						th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
+					</button>
 
 					<a th:href="@{/assignments}" class="btn btn-secondary detail-btn">戻る
 					</a>

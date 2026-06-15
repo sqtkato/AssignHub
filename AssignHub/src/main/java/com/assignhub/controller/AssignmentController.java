@@ -73,7 +73,7 @@ public class AssignmentController {
 
 		String toastError = null;
 		if (result.hasErrors()) {
-			toastError = "契約開始日より前の日付は入力できません。";
+			toastError = "契約開始日より前の日付は入力できません";
 		}
 
 		if (toastError != null) {
@@ -106,7 +106,7 @@ public class AssignmentController {
 		if (assignmentService.isMaxCount()) {
 			attributes.addFlashAttribute(
 					"toastError",
-					"登録可能なアサイン履歴情報は最大500件までです。");
+					"登録件数が上限（500件）に達しています");
 			return "redirect:/assignments";
 		}
 		model.addAttribute("employees", employeeService.findAll(null, null, null, null));
@@ -136,7 +136,7 @@ public class AssignmentController {
 			result.rejectValue(
 					"contractEndDate",
 					"date.order",
-					"契約開始日より前の日付は入力できません。");
+					"契約開始日より前の日付は入力できません");
 
 		}
 
@@ -150,7 +150,7 @@ public class AssignmentController {
 		if (assignmentService.existsDuplicate(assignment)) {
 			result.reject(
 					"duplicate",
-					"既に同じ内容が登録されています。");
+					"既に同じ内容が登録されています");
 			model.addAttribute("employees", employeeService.findAll(null, null, null, null));
 			model.addAttribute("companies", companyService.findAll(null, null));
 			model.addAttribute("role", roleService.findAll());
@@ -233,7 +233,7 @@ public class AssignmentController {
 			result.rejectValue(
 					"contractEndDate",
 					"date.order",
-					"契約開始日より前の日付は入力できません。");
+					"契約開始日より前の日付は入力できません");
 		}
 
 		if (result.hasErrors()) {
@@ -324,7 +324,7 @@ public class AssignmentController {
 			RedirectAttributes attributes) {
 
 		if (ids == null || ids.isEmpty()) {
-			attributes.addFlashAttribute("toastError", "削除対象は必須です");
+			attributes.addFlashAttribute("toastError", "削除する対象が選択されていません");
 			return "redirect:/assignments";
 		}
 
