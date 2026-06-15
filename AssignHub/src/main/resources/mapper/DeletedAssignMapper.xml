@@ -82,11 +82,7 @@
         = ec.company_id
         INNER JOIN m_role r ON a.role_id = r.role_id
         <where>
-            a.delete_flg = 0
-            AND e.delete_flg = 0
-            AND c.delete_flg = 0
-            AND
-            ec.delete_flg = 0
+            a.delete_flg = 1
             <if test="empName != null and empName != ''">
                 AND CONCAT(e.last_name, e.first_name)
                 LIKE CONCAT('%',
