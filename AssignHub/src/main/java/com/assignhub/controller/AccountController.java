@@ -299,8 +299,8 @@ public class AccountController {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
 			return "redirect:/accounts"; // 元の一覧画面に戻す
 		}
-		model.addAttribute("count", accountService.findByIds(ids).size());
 		List<Account> accounts = accountService.findByIds(ids);
+		model.addAttribute("count", accountService.findByIds(ids).size());
 		model.addAttribute("accounts", accounts);
 		model.addAttribute("ids", ids);
 		return "account/export";
@@ -313,7 +313,7 @@ public class AccountController {
 	 * @param deptId  絞り込み部署ID
 	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
-	@PostMapping("/export/download")
+	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Account> accounts = accountService.findByIds(ids);

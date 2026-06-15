@@ -65,7 +65,7 @@
 			e.first_name
 		FROM m_account a
 		LEFT JOIN m_employee e
-		ON a.account_id = e.emp_id
+		ON a.account_id = e.account_id
 		WHERE a.account_id IN
 		<foreach collection="ids" item="id" open="(" separator="," close=")">
 			#{id}
