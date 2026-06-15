@@ -59,8 +59,10 @@ public class AccountController {
 	@GetMapping
 	public String index(@RequestParam(name = "keywordEmpName", required = false) String empName,
 			Model model,
+
 			@RequestParam(name = "permission", required = false) Integer permission) {
 		model.addAttribute("accounts", accountService.findAll(empName, permission));
+
 		return "account/index";
 	}
 
@@ -323,7 +325,8 @@ public class AccountController {
 		for (Account acc : accounts) {
 			csvBuilder.append(acc.getAccountId()).append(",")
 					.append(acc.getLoginId()).append(",")
-					.append(acc.getPermission()).append(",");
+					.append(acc.getPermission()).append(",")
+					.append(acc.getEmployee().getLastName()+ " " + acc.getEmployee().getFirstName()).append("\n");
 		}
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
