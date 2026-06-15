@@ -128,10 +128,10 @@
 		a.delete_flg,
 		a.created_at,
 		a.updated_at,
-		CONCAT(e.last_name,
-		e.first_name) AS emp_name,
-		CONCAT(e.last_name_kana, e.first_name_kana)
-		AS emp_name_kana,
+		e.last_name,
+		e.first_name,
+		e.last_name_kana,
+		e.first_name_kana,
 		e.engineer_type,
 		c.company_name AS
 		assign_company_name,

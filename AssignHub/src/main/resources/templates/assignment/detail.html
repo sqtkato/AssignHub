@@ -30,12 +30,12 @@
 
 					<tr>
 						<th>社員名</th>
-						<td th:text="${assignment.employee.empName}"></td>
+						<td th:text="${assignment.employee.lastName} + ' ' + ${assignment.employee.firstName}"></td>
 					</tr>
 
 					<tr>
 						<th>社員名カナ</th>
-						<td th:text="${assignment.employee.empNameKana}"></td>
+						<td th:text="${assignment.employee.lastNameKana} + ' ' + ${assignment.employee.firstNameKana}"></td>
 					</tr>
 
 					<tr>
