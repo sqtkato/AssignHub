@@ -75,8 +75,17 @@
 		a.company_id = c2.company_id
 <where>
     e.delete_flg = 0
-    <if test="keyword != null and keyword != ''">
-        AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%', #{keyword}, '%')
+    <if test="empName != null and empName != ''">
+        AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%', #{empName}, '%')
+    </if>
+    <if test="empAssignCompany != null and empAssignCompany != ''">
+        AND c2.company_name LIKE CONCAT('%', #{empAssignCompany}, '%')
+    </if>
+    <if test="empCompany != null and empCompany != ''">
+        AND c.company_name LIKE CONCAT('%', #{empCompany}, '%')
+    </if>
+    <if test="empEngineerType != null and empEngineerType != ''">
+        AND e.engineer_type LIKE CONCAT('%', #{empEngineerType}, '%')
     </if>
 </where>
 

@@ -5,7 +5,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<link rel="stylesheet" href="/css/popup.css">
 </head>
 
 <body>
@@ -26,22 +25,22 @@
 							<option value="1" th:selected="${permission != null and permission == 1}">管理</option>
 						</select>
 					</div>
-					<div class="search-item input">
+					<div class="search-item">
 						<label>社員名検索</label>
 						<input type="text" name="empName" class="form-control" th:value="${empName}"
 							placeholder="例：山田 太郎">
 					</div>
-					<div class="search-item ">
-						<button type="submit" class="btn btn-secondary">検索</button>
-					</div>
+
 				</div>
+						<button type="submit" class="btn btn-secondary">検索</button>
 				
 			</form>
 		</div>
 
 		<form method="post" id="listForm">
 			<div class="table-toolbar">
-				<a th:href="@{/accounts/import}" class="toolbar-btn" title="CSVファイルから一括登録">
+				<button type="button" class="toolbar-btn" title="CSVファイルから一括登録"
+					th:onclick="|location.href='@{/accounts/import}'|">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -49,10 +48,8 @@
 						<line x1="12" y1="15" x2="12" y2="3"></line>
 					</svg>
 					インポート
-				</a>
-
-				<button type="submit" formaction="/accounts/export" class="toolbar-btn"
-					title="チェックした項目を削除">
+				</button>
+				<button type="submit" formaction="/accounts/export" class="toolbar-btn" title="チェックした項目を削除">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -71,14 +68,15 @@
 					</svg>
 					一括削除
 				</button>
-				<a th:href="@{/accounts/new}" class="toolbar-btn toolbar-btn-primary" title="新しいアカウントを登録">
+				<button type="button" class="toolbar-btn toolbar-btn-primary" title="新しいアカウントを登録"
+					th:onclick="|location.href='@{/accounts/new}'|">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<line x1="12" y1="5" x2="12" y2="19"></line>
 						<line x1="5" y1="12" x2="19" y2="12"></line>
 					</svg>
 					新規登録
-				</a>
+				</button>
 			</div>
 
 			<div class="card">
@@ -88,7 +86,7 @@
 							<tr>
 								<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
 								<th>
-									<a class="sortable-header acc_id"></a>
+									<a class="sortable-header"></a>
 									アカウントID
 								</th>
 								<th>
@@ -113,7 +111,9 @@
 								<td th:text="${acc.accountId}" class="acc_id"></td>
 								<td th:text="${acc.loginId}" class="acc_logId"></td>
 								<td th:text="${acc.permission == 1 ? '管理' : '一般'}" class="acc_per"></td>
-								<td th:text="${acc.employee != null ? acc.employee.lastName + ' ' + acc.employee.firstName : ''}">社員名</td>
+								<td
+									th:text="${acc.employee != null ? acc.employee.lastName + ' ' + acc.employee.firstName : ''}">
+									社員名</td>
 								<td class="col-action">
 									<a th:href="@{/accounts/{id}/edit(id=${acc.accountId})}" class="btn-icon-svg"
 										title="編集">
@@ -123,10 +123,8 @@
 											<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
 										</svg>
 									</a>
-									<button type="button"
-										th:attr="data-id=${acc.accountId}"
-										class="btn-icon-svg delete" title="削除"
-										onclick="openDeleteModal(this.dataset.id)">
+									<button type="button" th:attr="data-id=${acc.accountId}" class="btn-icon-svg delete"
+										title="削除" onclick="openDeleteModal(this.dataset.id)">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
 											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
 											<polyline points="3 6 5 6 21 6"></polyline>

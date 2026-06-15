@@ -24,7 +24,7 @@
 		m_account a
 		left JOIN
 		m_employee e ON
-		a.account_id = e.emp_id
+		a.account_id = e.account_id
 		AND (e.delete_flg = 0 OR
 		e.delete_flg IS NULL)
 
