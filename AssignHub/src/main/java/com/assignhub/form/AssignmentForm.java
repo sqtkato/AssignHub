@@ -36,7 +36,7 @@ public class AssignmentForm {
     /** 契約単価 */
     @NotNull(message = "契約単価は必須です")
     @DecimalMin(value = "1", message = "この値は入力できません")
-    @Digits(integer = 10, fraction = 0, message = "10字以内で入力してください")
+    @Digits(integer = 10, fraction = 0, message = "契約単価は10文字以内で入力してください")
     private BigDecimal unitPrice;
 
     /** 役割 */
