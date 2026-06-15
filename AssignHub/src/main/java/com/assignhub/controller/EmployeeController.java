@@ -193,6 +193,7 @@ public class EmployeeController {
 		employeeService.delete(id);
 		attributes.addFlashAttribute("toastMessage", "社員情報を削除しました");
 		return "redirect:/employees";
+		
 	}
 
 	/**
