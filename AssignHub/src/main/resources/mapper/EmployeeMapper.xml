@@ -127,11 +127,19 @@
 	<insert id="insert" useGeneratedKeys="true" keyProperty="empId">
 		INSERT
 		INTO m_employee (
-		emp_name, hire_year, created_at, updated_at
+		last_name, first_name, last_name_kana, first_name_kana,
+		birth_date ,hire_date,zip_code,address1,address2,empTel,
+		email,engineer_type,account_id,company_id,
+		department,job_title
 		) VALUES (
-		#{empName}, #{hireYear}, NOW(), NOW()
-		)
-	</insert>
+		#{lastName}, #{firstName}, #{lastNameKana}, #{firstNameKana},
+        #{birthDate}, #{hireDate},#{zipCode}, #{address1}, #{address2}, 
+        #{empTel}, #{email}, #{engineerType}, #{accountId}, 
+        #{companyId}, #{department}, #{jobTitle}  
+        )
+</insert>
+	
+
 
 	<update id="delete">
 		UPDATE m_employee
@@ -157,28 +165,16 @@
 		UPDATE m_employee
 
 		SET last_name = #{lastName},
-		first_name =
-		#{firstName},
-		last_name_kana = #{lastNameKana},
-		first_name_kana =
-		#{firstNameKana},
-		hire_date = #{hireDate},
-		years_of_service =
-		#{yearsOfService},
-		birth_date = #{birthDate},
-		zip_code = #{zipCode},
-		address1 = #{address1},
-		address2 = #{address2},
-		engineer_type =
-		#{engineerType},
-		account_id = #{accountId},
-		company_id = #{companyId},
-		department = #{department},
-		job_title = #{jobTitle},
-		emp_tel =
-		#{empTel},
-		email = #{email}
-
+		last_name, first_name, last_name_kana, first_name_kana,
+		birth_date ,hire_date,zip_code,address1,address2,empTel,
+		email,engineer_type,account_id,company_id,
+		department,job_title
+		) VALUES (
+		#{lastName}, #{firstName}, #{lastNameKana}, #{firstNameKana},
+        #{birthDate}, #{hireDate},#{zipCode}, #{address1}, #{address2}, 
+        #{empTel}, #{email}, #{engineerType}, #{accountId}, 
+        #{companyId}, #{department}, #{jobTitle}  
+        )
 		<where>
 			emp_id = #{empId}
 		</where>
@@ -188,7 +184,7 @@
 
 	<select id="countByEmail" resultType="int">
 		SELECT COUNT(*) FROM m_employee
-		WHERE email = #{email}
+		WHERE email = #{email} AND delete_flg = 0;
 		<if test="excludeEmpId != null">
 			AND emp_id != #{excludeEmpId}
 		</if>
