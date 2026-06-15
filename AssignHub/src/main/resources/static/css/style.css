@@ -458,6 +458,31 @@ a:hover {
 	stroke-width: 2;
 }
 
+.detail-btn {
+	width: 120px;
+	height: 45px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1rem;
+	font-weight: bold;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+.detail-actions {
+	.detail-actions {
+		width: 100%;
+		justify-content: center;
+		align-items: center;
+		gap: 90px;
+	}
+}
+
+.detail-actions form {
+	margin: 0;
+}
+
 /* =========================================
    Badges (状態表示用バッジ)
 ========================================= */
@@ -519,6 +544,7 @@ a:hover {
 	display: flex;
 	gap: 10px;
 }
+
 /* =========================================
    テーブルスクロール
 ========================================= */
@@ -621,17 +647,7 @@ a:hover {
 	width: 150px;
 }
 
-.detail-btn {
-	width: 120px;
-	height: 45px;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 1rem;
-	font-weight: bold;
-	text-decoration: none;
-	box-sizing: border-box;
-}
+
 
 
 
@@ -825,14 +841,7 @@ a:hover {
 	color: #dc3545;
 }
 
-.detail-actions {
-	justify-content: center;
-	gap: 90px;
-}
 
-.detail-actions form {
-	margin: 0;
-}
 
 /* ========================================= Common Modal(全てのモーダル) ========================================= */
 .modal-overlay {
@@ -891,7 +900,7 @@ a:hover {
 	line-height: 1.5;
 }
 
-.modal-actions {	
+.modal-actions {
 	display: flex;
 	justify-content: center;
 	gap: 10px;
