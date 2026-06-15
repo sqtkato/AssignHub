@@ -18,11 +18,11 @@ public interface DeletedAssignMapper {
 	 * @return アサイン情報のリスト
 	 */
 	List<Assignment> findAll(
-			@Param("txtEmpName") String txtEmpName,
-			@Param("txtAssignName") String txtAssignName,
-			@Param("txtCompanyName") String txtCompanyName,
-			@Param("txtContractStartDate") String txtContractStartDate,
-			@Param("txtContractEndDate") String txtContractEndDate);
+			@Param("empName") String empName,
+			@Param("assignName") String assignName,
+			@Param("companyName") String companyName,
+			@Param("contractStartDate") String contractStartDate,
+			@Param("contractEndDate") String contractEndDate);
 
 	List<Assignment> findAllByIds(@Param("ids") List<Integer> ids);
 

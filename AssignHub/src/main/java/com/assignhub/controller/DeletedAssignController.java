@@ -18,7 +18,7 @@ import com.assignhub.form.SearchForm;
 import com.assignhub.service.DeletedAssignService;
 
 @Controller
-@RequestMapping("/deleted-assigns")
+@RequestMapping("/deleted-assignments")
 public class DeletedAssignController {
 	private final DeletedAssignService deletedAssignService;
 
@@ -69,26 +69,26 @@ public class DeletedAssignController {
 	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		if (deletedAssignService.countcompanysdispatchsByAssignId(id)) {
 			attributes.addFlashAttribute("toastError", "紐づく派遣先企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
-			return "redirect:/deleted-assigns";
+			return "redirect:/deleted-assignments";
 		}
 
 		if (deletedAssignService.countcompanyspartnerByAssignId(id)) {
 			attributes.addFlashAttribute("toastError", "紐づく所属元企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
-			return "redirect:/deleted-assigns"; // ⭕ タイポを修正（assgns -> assigns）
+			return "redirect:/deleted-assignments"; // ⭕ タイポを修正（assgns -> assigns）
 		}
 
 		if (deletedAssignService.countEmployeesproperByAssignId(id)) {
 			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報（プロパー）を復元してください。");
-			return "redirect:/deleted-assigns";
+			return "redirect:/deleted-assignments";
 		}
 
 		if (deletedAssignService.countEmployeespartnerByAssignId(id)) {
 			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報（パートナー）を復元してください。");
-			return "redirect:/deleted-assigns";
+			return "redirect:/deleted-assignments";
 		}
 		deletedAssignService.restore(id);
 		attributes.addFlashAttribute("toastMessage", "アカウント情報を復元しました");
-		return "redirect:/deleted-assigns";
+		return "redirect:/deleted-assignments";
 	}
 
 	/* 一括復元 */
@@ -97,16 +97,16 @@ public class DeletedAssignController {
 			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
-			return "redirect:/deleted-assigns";
+			return "redirect:/deleted-assignments";
 		}
 		if (deletedAssignService.countcompanysdispatchsByAssignIds(ids)) {
 			attributes.addFlashAttribute("toastError", "紐づく派遣先企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
-			return "redirect:/deleted-assigns";
+			return "redirect:/deleted-assignments";
 		}
 
 		if (deletedAssignService.countcompanyspartnerByAssignIds(ids)) {
 			attributes.addFlashAttribute("toastError", "紐づく所属元企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
-			return "redirect:/deleted-assigns";
+			return "redirect:/deleted-assignments";
 		}
 		if (deletedAssignService.countEmployeesproperByAssignIds(ids)) {
 			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報（プロパー）を復元してください。");
@@ -118,7 +118,7 @@ public class DeletedAssignController {
 		}
 		deletedAssignService.restoreBulk(ids);
 		attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を復元しました");
-		return "redirect:/deleted-assigns";
+		return "redirect:/deleted-assignments";
 	}
 
 	// ==========================================
@@ -139,12 +139,12 @@ public class DeletedAssignController {
 			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
-			return "redirect:/deleted-assigns";
+			return "redirect:/deleted-assignments";
 		}
 
 		deletedAssignService.physicalDeleteBulk(ids);
 		attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を完全に削除しました");
-		return "redirect:/deleted-assigns";
+		return "redirect:/deleted-assignments";
 	}
 
 
