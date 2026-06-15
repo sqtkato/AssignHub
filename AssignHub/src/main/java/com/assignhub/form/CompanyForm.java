@@ -2,10 +2,12 @@ package com.assignhub.form;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
 
+import lombok.Data;
 /**
  * 企業登録・編集画面の入力値を受け取るフォームクラス。
  * 画面からの入力チェック（バリデーション）を担う。
@@ -17,7 +19,6 @@ import lombok.Data;
 public class CompanyForm {
 
 	/** 企業ID（更新処理の際に対象を特定するために使用、新規登録時はnull） */
-	@NotBlank(message = "企業IDは必須です")
 	private Integer companyId;
 
 	/** 企業名（必須、最大50文字） */
@@ -31,6 +32,7 @@ public class CompanyForm {
 	
 	@NotBlank(message = "郵便番号は必須です")
 	@Size(max = 7, message = "郵便番号は7桁以内で入力してください")
+	@Pattern(regexp = "^[0-9]*$",message = "郵便番号の形式が正しくありません　ハイフンなしで入力してください")
 	private String companyZipCode;
 	
 	@NotBlank(message = "住所１は必須です")
@@ -41,16 +43,18 @@ public class CompanyForm {
 	private String companyAddress2;
 	
 	@NotBlank(message = "電話番号は必須です")
-	@Size(max = 11, message = "電話番号10桁または11桁で入力してください")
+	@Size(min =10,max = 11, message = "電話番号10桁または11桁で入力してください")
+	@Pattern(regexp = "^[0-9]*$",message = "電話番号の形式が正しくありません　ハイフンなしで入力してください")
+	
 	private String companyTel;
 	
 	@Size(max = 20, message = "FAX番号は20文字以内で入力してください")
 	private String fax;
 	
-	@Size(max = 4, message = "設立年度は4桁で入力してください")
+	@Digits(integer = 4,fraction = 0, message = "設立年度は4桁で入力してください")
 	private Integer foundedYear;
 	
-	@Size(max = 5, message = "社員数は5桁以内で入力してください")
+	@Digits(integer = 5,fraction = 0,message = "社員数は5桁以内で入力してください")
 	private Integer employeeCount;
 	
 	@Size(max = 50, message = "代表者姓は50文字以内で入力してください")
