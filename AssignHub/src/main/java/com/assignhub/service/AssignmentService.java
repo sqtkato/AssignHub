@@ -120,7 +120,6 @@ public class AssignmentService {
 	}
 
 	private static final int UNIT_PRICE_MAX_DIGITS = 10;
-	private static final int CSV_COLUMN_COUNT = 10;
 
 	/**
 	 * アップロードされたCSVファイルを解析し、バリデーションおよび一括登録・更新を行う。
@@ -166,7 +165,7 @@ public class AssignmentService {
 				}
 
 				String[] cols = line.split(",", -1);
-				if (cols.length < CSV_COLUMN_COUNT) {
+				if (cols.length < 10) {
 					result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています"));
 					result.errorCount++;
 					rowNum++;
@@ -189,11 +188,6 @@ public class AssignmentService {
 					}
 				}
 
-				if (cols[2].trim().isEmpty()) {
-					result.errors.add(new CsvRowError(rowNum, "社員名", "社員名は必須です"));
-					hasError = true;
-				}
-
 				String sEmpId = cols[1].trim();
 				Integer empId = parseInteger(sEmpId);
 				if (empId == null || sEmpId.length() > 5) {
@@ -205,8 +199,18 @@ public class AssignmentService {
 				} else {
 					asm.setEmpId(empId);
 				}
+				
+				if (cols[2].trim().isEmpty()) {
+					result.errors.add(new CsvRowError(rowNum, "社員姓", "社員姓は必須です"));
+					hasError = true;
+				}
+				
+				if (cols[3].trim().isEmpty()) {
+					result.errors.add(new CsvRowError(rowNum, "社員名", "社員名は必須です"));
+					hasError = true;
+				}
 
-				String companyName = cols[3].trim();
+				String companyName = cols[6].trim();
 				if (companyName.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "企業名", "企業名は必須です"));
 					hasError = true;
@@ -220,7 +224,7 @@ public class AssignmentService {
 					}
 				}
 
-				String sStart = cols[6].trim();
+				String sStart = cols[7].trim();
 				if (sStart.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "契約開始日", "契約開始日は必須です"));
 					hasError = true;
@@ -234,7 +238,7 @@ public class AssignmentService {
 					}
 				}
 
-				String sEnd = cols[7].trim();
+				String sEnd = cols[8].trim();
 				if (!sEnd.isEmpty() && !"ー".equals(sEnd) && !"-".equals(sEnd)) {
 					end = parseDate(sEnd);
 					if (end == null) {
@@ -250,7 +254,7 @@ public class AssignmentService {
 					hasError = true;
 				}
 
-				String sPrice = cols[8].trim();
+				String sPrice = cols[9].trim();
 				if (sPrice.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "契約単価", "契約単価は必須です"));
 					hasError = true;
@@ -270,7 +274,7 @@ public class AssignmentService {
 					}
 				}
 
-				String role = cols[9].trim();
+				String role = cols[10].trim();
 				if (role.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "役割", "役割は必須です"));
 					hasError = true;
