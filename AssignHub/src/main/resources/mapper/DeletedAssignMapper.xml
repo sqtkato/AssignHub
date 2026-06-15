@@ -18,11 +18,15 @@
 		<result property="createdAt" column="created_at" />
 		<result property="updatedAt" column="updated_at" />
 
+
+
 		<association property="employee"
 			javaType="com.assignhub.entity.Employee">
 			<id property="empId" column="emp_id" />
-			<result property="empName" column="emp_name" />
-			<result property="empNameKana" column="emp_name_kana" />
+			<result property="lastName" column="last_name" />
+			<result property="firstName" column="first_name" />
+			<result property="lastNameKana" column="last_name_kana" />
+			<result property="firstNameKana" column="first_name_kana" />
 			<result property="engineerType" column="engineer_type" />
 			<association property="company"
 				javaType="com.assignhub.entity.Company">

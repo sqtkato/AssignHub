@@ -143,14 +143,14 @@ public class DeletedAssignController {
 		return "redirect:/deleted-assignments";
 	}
 
-	//		エクスポート画面へ遷移	
-	//		@GetMapping("/export")
-	//		public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
-	//			//引数内書き換え
-	//			model.addAttribute("count", deletedAssignService.findAllByIds(ids));
-	//			
-	//			return "deleted_assign/export";
-	//		}
+//			エクスポート画面へ遷移	
+			@GetMapping("/export")
+			public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
+				//引数内書き換え
+				model.addAttribute("count", deletedAssignService.findAllByIds(ids));
+				
+				return "deleted_assign/export";
+			}
 
 	//		
 	//	//エクスポートのダウンロード処理
