@@ -77,6 +77,9 @@ public class AccountService {
 	 */
 	@Transactional
 	public void save(Account account) {
+		account.setPasswordHash(
+			    passwordEncoder.encode(account.getPasswordHash())
+			);
 		if (account.getAccountId() == null) {
 			accountMapper.save(account);
 		} else {

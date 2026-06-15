@@ -325,7 +325,8 @@ public class AccountController {
 		for (Account acc : accounts) {
 			csvBuilder.append(acc.getAccountId()).append(",")
 					.append(acc.getLoginId()).append(",")
-					.append(acc.getPermission()).append(",");
+					.append(acc.getPermission()).append(",")
+					.append(acc.getEmployee().getLastName()+ " " + acc.getEmployee().getFirstName()).append("\n");
 		}
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
