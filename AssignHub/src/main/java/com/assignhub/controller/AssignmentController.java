@@ -253,7 +253,7 @@ public class AssignmentController {
 		attributes.addFlashAttribute("toastMessage", "アサイン履歴情報を更新しました");
 
 		if ("detail".equals(fromPage)) {
-			return "redirect:/assignments/" + id;
+			return "redirect:/assignments/" + id + "/detail";
 		}
 		return "redirect:/assignments";
 	}

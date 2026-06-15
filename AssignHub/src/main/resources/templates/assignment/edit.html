@@ -72,7 +72,7 @@
 				</div>
 				<div class="form-actions">
 					<button type="submit" class="btn btn-primary">更新</button>
-					<a th:if="${fromPage=='detail'}" th:href="@{/assignments/{id}(id=${id})}"
+					<a th:if="${fromPage=='detail'}" th:href="@{/assignments/{id}/detail(id=${id})}"
 						class="btn btn-secondary">戻る</a>
 					<a th:if="${fromPage != 'detail'}" th:href="@{/assignments}" class="btn btn-secondary">戻る</a>
 				</div>
