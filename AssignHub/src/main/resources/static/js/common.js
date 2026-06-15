@@ -157,19 +157,18 @@ function closeLogoutModal() {
 // 削除モーダル
 // ==========================================
 function openDeleteModal(id) {
+        const overlay = document.getElementById('deleteOverlay');
+        const form = document.getElementById('deleteForm');
 
-	const overlay = document.getElementById('deleteOverlay');
-	const form = document.getElementById('deleteForm');
+        if (form) {
+                const basePath = window.location.pathname.split('/')[1];
+                form.action = '/' + basePath + '/' + id + '/delete';
+        }
 
-	if (form) {
-		const baseUrl = window.location.pathname;
-		form.action = baseUrl + '/' + id + '/delete';
-	}
-
-	if (overlay) {
-		overlay.style.display = 'flex';
-	}
-}
+        if (overlay) {
+                overlay.style.display = 'flex';
+        }
+  }
 
 function closeDeleteModal() {
 
