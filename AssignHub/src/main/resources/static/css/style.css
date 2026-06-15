@@ -29,7 +29,9 @@ a:hover {
 	background-color: #2c3e50;
 	color: #fff;
 	padding: 20px 0;
-	position: relative;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 .sidebar-footer {
@@ -90,7 +92,6 @@ a:hover {
 .table {
 	width: 100%;
 	border-collapse: collapse;
-	margin-top: 10px;
 }
 
 .table th,
@@ -377,23 +378,23 @@ a:hover {
 /* =========================================
    モダンツールバー＆アイコンボタン
    ========================================= */
- .toolbar-btn {
-   	display: inline-flex;
-   	align-items: center;
-   	justify-content: center;
-   	gap: 6px;
-   	padding: 8px 16px;
-   	border-radius: 6px;
-   	font-size: 0.95rem;
-   	font-weight: bold;
-   	text-decoration: none;
-   	transition: all 0.2s ease-in-out;
-   	border: 1px solid #CBD5E1;
-   	background-color: #F8FAFC;
-   	color: #475569;
-   	cursor: pointer;
-   	min-width: 140px;
-   }
+.toolbar-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	padding: 8px 16px;
+	border-radius: 6px;
+	font-size: 0.95rem;
+	font-weight: bold;
+	text-decoration: none;
+	transition: all 0.2s ease-in-out;
+	border: 1px solid #CBD5E1;
+	background-color: #F8FAFC;
+	color: #475569;
+	cursor: pointer;
+	min-width: 150px;
+}
 
 .toolbar-btn:hover {
 	background-color: #e2e8f0;
@@ -519,6 +520,7 @@ a:hover {
 	margin-top: 25px;
 	display: flex;
 	gap: 10px;
+	justify-content: center;
 }
 /* =========================================
    テーブルスクロール
@@ -535,7 +537,7 @@ a:hover {
 	z-index: 10;
 }
 
-/*ログインボタン*/
+/*ログアウトボタン*/
 .btn-logout {
 	display: block;
 	margin: 0 auto;
@@ -548,6 +550,11 @@ a:hover {
 
 .submenu li a {
 	padding-left: 40px;
+}
+
+.btn-logout {
+	display: block;
+	margin: 0 auto;
 }
 
 .search-row {
@@ -605,42 +612,28 @@ a:hover {
 	text-align: center;
 }
 
-.action-area {
-	display: flex;
+.export_action-area {
+	text-align: center;
+}
+
+.btn_assign_export {
+	width: 150px;
+}
+
+.btn_assign_back {
+	width: 150px;
+}
+
+.detail-btn {
+	width: 120px;
+	height: 45px;
+	display: inline-flex;
+	align-items: center;
 	justify-content: center;
-	gap: 10px;
-	margin-top: 8px;
-	margin-bottom: 40px;
-}
-
-.btn-export,
-.btn-back {
-	width: 160px;
-	padding: 14px 0;
-	border: none;
-	border-radius: 4px;
-	font-size: 1.1rem;
+	font-size: 1rem;
 	font-weight: bold;
-	cursor: pointer;
-	transition: background-color 0.2s;
-}
-
-.btn-export {
-	background-color: #4a78c8;
-	color: #fff;
-}
-
-.btn-export:hover {
-	background-color: #3a68b8;
-}
-
-.btn-back {
-	background-color: #cfcfcf;
-	color: #333;
-}
-
-.btn-back:hover {
-	background-color: #bfbfbf;
+	text-decoration: none;
+	box-sizing: border-box;
 }
 
 
@@ -650,7 +643,7 @@ a:hover {
    ========================================= */
 
 .import-container {
-	max-width: 720px;
+	max-width: 100%;
 }
 
 .instruction {
@@ -714,7 +707,7 @@ a:hover {
 	margin-bottom: 40px;
 }
 
-.btn-import,
+.btn-csv,
 .btn-back {
 	width: 160px;
 	padding: 14px 0;
@@ -726,12 +719,12 @@ a:hover {
 	transition: background-color 0.2s;
 }
 
-.btn-import {
+.btn-csv {
 	background-color: #4a78c8;
 	color: #fff;
 }
 
-.btn-import:hover {
+.btn-csv:hover {
 	background-color: #3a68b8;
 }
 

@@ -18,16 +18,16 @@
 
 		<ul>
 			<li><a th:href="@{/employees}">社員情報</a></li>
-			<li><a th:href="@{/companies}">企業情報</a></li>
-			<li><a th:href="@{/accounts}">アカウント情報</a></li>
-			<li><a th:href="@{/assignments}">アサイン履歴情報</a></li>
+			<li th:if="${session.permission == 1}"><a th:href="@{/companies}">企業情報</a></li>
+			<li th:if="${session.permission == 1}"><a th:href="@{/accounts}">アカウント情報</a></li>
+			<li th:if="${session.permission == 1}"><a th:href="@{/assign-history}">アサイン履歴情報</a></li>
 			<li>
-				<span class="menu-title">削除・復元一覧</span>
-				<ul class="submenu">
-					<li><a th:href="@{/deleted/employees}">社員情報</a></li>
-					<li><a th:href="@{/deleted/companies}">企業情報</a></li>
-					<li><a th:href="@{/deleted/accounts}">アカウント情報</a></li>
-					<li><a th:href="@{/deleted/assignments}">アサイン履歴情報</a></li>
+				<span class="menu-title" th:if="${session.permission == 1}">削除・復元一覧</span>
+				<ul class="submenu" th:if="${session.permission == 1}"s>
+					<li><a th:href="@{/deleted-employees}">社員情報</a></li>
+					<li><a th:href="@{/deleted-companies}">企業情報</a></li>
+					<li><a th:href="@{/deleted-accounts}">アカウント情報</a></li>
+					<li><a th:href="@{/deleted/assign-history}">アサイン履歴情報</a></li>
 				</ul>
 			</li>
 		</ul>
@@ -120,32 +120,6 @@
 			</div>
 		</div>
 	</div>
-	
-	<!-- =========================
-	     一括復元モーダル
-	========================= -->
-	<div id="bulkRestoreOverlay" class="modal-overlay" onclick="closeBulkRestoreModal()">
-		<div class="modal-box" onclick="event.stopPropagation()">
-			<div class="modal-icon modal-icon-success">
-				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-					stroke="#198754" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-					<polyline points="20 6 9 17 4 12"></polyline>
-				</svg>
-			</div>
-
-			<p class="modal-title">選択した内容を復元しますか？</p>
-			<p class="modal-subtitle">削除済みデータを復元します。</p>
-
-			<div class="modal-actions">
-				<button type="button" class="modal-btn modal-btn-success"
-					onclick="submitBulkRestore()">復元する</button>
-
-				<button type="button" class="modal-btn modal-btn-cancel"
-					onclick="closeBulkRestoreModal()">キャンセル</button>
-			</div>
-		</div>
-	</div>
-	
 </body>
 
 </html>
