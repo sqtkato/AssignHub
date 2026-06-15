@@ -132,6 +132,7 @@ public class AssignmentService {
 	@Transactional(rollbackFor = Exception.class)
 	public ImportResult importCsv(MultipartFile file) throws Exception {
 		ImportResult result = new ImportResult();
+		
 
 		if (file.getSize() > 5L * 1024 * 1024) {
 			result.errors.add(new CsvRowError(0, "全体", "ファイルサイズは5MB以内にしてください"));
@@ -352,7 +353,7 @@ public class AssignmentService {
 	}
 	
 	private LocalDate parseDate(String s) {
-		for (String p : new String[] { "yyyy/MM/dd", "yyyy-MM-dd" }) {
+		for (String p : new String[] { "yyyy/M/d", "yyyy-M-d" }) {
 			try {
 				return LocalDate.parse(s, DateTimeFormatter.ofPattern(p));
 			} catch (Exception e) {
