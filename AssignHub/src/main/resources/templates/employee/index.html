@@ -49,7 +49,7 @@
 						</svg>
 						インポート
 					</a>
-					<a th:href="@{/employees/export}" class="toolbar-btn"
+					<button type="submit" formaction="/employees/export" formmethod="get" class="toolbar-btn"
 						title="現在の検索条件でCSV出力">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 							stroke-linecap="round" stroke-linejoin="round">
@@ -58,7 +58,7 @@
 							<line x1="12" y1="3" x2="12" y2="15"></line>
 						</svg>
 						エクスポート
-					</a>
+					</button>
 					<button type="button" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除" onclick="openBulkDeleteModal()">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 							stroke-linecap="round" stroke-linejoin="round">
@@ -82,7 +82,7 @@
 				<table class="table">
 					<thead class="table-dark">
 						<tr>
-							<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
+							<th class="col-checkbox"><input type="checkbox"  id="selectAll"></th>
 							<th>
 								<a class="sortable-header"
 									th:href="@{/employees(keyword=${keyword}, sort='emp_id', order=${currentSort == 'emp_id' and currentOrder == 'asc' ? 'desc' : 'asc'})}">

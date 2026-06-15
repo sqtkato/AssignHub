@@ -63,6 +63,10 @@ public class EmployeeService {
 		return employeeMapper.findById(id);
 	}
 	
+	public List<Employee> findByIds(List<Integer> ids) {
+	    return employeeMapper.findByIds(ids);
+	}
+	
 	@Transactional
 	public void delete(Integer id) {
 		employeeMapper.delete(id);

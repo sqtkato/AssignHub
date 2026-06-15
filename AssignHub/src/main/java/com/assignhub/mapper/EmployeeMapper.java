@@ -31,6 +31,9 @@ public interface EmployeeMapper {
 	 */
 	Employee findById(@Param("id") Integer id);
 
+	
+	List<Employee> findByIds(@Param("ids") List<Integer> ids);
+	
 	/**
 	 * 社員を新規登録する。
 	 *

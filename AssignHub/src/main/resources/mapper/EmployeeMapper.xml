@@ -117,6 +117,13 @@
         WHERE e.emp_id = #{id}
     </select>
     
+    	<select id="findByIds" resultMap="employeeResultMap">
+		Select * 
+		FROM m_employee
+		WHERE emp_id IN
+		<foreach collection="ids" item="id" open="(" separator="," close=")"> #{id} </foreach>
+	</select>
+    
 	<insert id="insert" useGeneratedKeys="true" keyProperty="empId">
 		INSERT
 		INTO m_employee (

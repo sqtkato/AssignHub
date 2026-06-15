@@ -260,10 +260,9 @@ public class EmployeeController {
 	 * @return エクスポート画面のテンプレートパス
 	 */
 	@GetMapping("/export")
-	public String showExport(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
-		model.addAttribute("employees", employeeService.findAll(keyword, null, null, null));
-		model.addAttribute("count", employeeService.findAll(null, null, null, null).size());
-		model.addAttribute("keyword", keyword);
+	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
+		model.addAttribute("employees", employeeService.findByIds(ids));
+		model.addAttribute("count", employeeService.findByIds(ids).size());
 		return "employee/export";
 	}
 
@@ -273,8 +272,8 @@ public class EmployeeController {
 	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
 	@GetMapping("/export/download")
-	public ResponseEntity<byte[]> downloadCsv() {
-		List<Employee> employees = employeeService.findAll(null, null, null, null);
+	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids) {
+		List<Employee> employees = employeeService.findByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder(
 				"社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,"
 						+ "生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,"
