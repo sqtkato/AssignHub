@@ -44,9 +44,12 @@
 				<p class="export-note">※詳細情報がエクスポートされます。</p>
 			</div>
 		</div>
-		<div class="action-area export_action-area">
-			<a th:href="@{/assignments/export/download(ids=${ids})}" class="btn btn-primary btn-wide">エクスポート</a>
-			<a th:href="@{/assignments}" class="btn btn-secondary btn-wide">戻る</a>
+		<div class="action-area">
+				<form th:action="@{/accounts/export/download(ids=${ids})}" method="post">
+					<button type="submit" class="btn-csv">ダウンロード</button>
+					<button type="button" id="btn_account_back" class="btn-back"
+								th:onclick="|location.href='@{/accounts}'|">戻る</button>
+				</form>
 		</div>
 	</div>
 </body>

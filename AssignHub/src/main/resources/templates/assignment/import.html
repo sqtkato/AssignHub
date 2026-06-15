@@ -25,8 +25,11 @@
 					<a id="lnk_csv_download" class="template-link" th:href="@{/assignments/import/template}">CSVテンプレートダウンロード</a>
 				</div>
 				<div class="action-area">
-					<button type="submit" id="btn_assign_import" class="btn-import">インポート</button>
-					<button type="button" id="btn_assign_back" class="btn-back" th:onclick="|location.href='@{/assignments}'|">戻る</button>
+				<form th:action="@{/accounts/export/download(ids=${ids})}" method="post">
+					<button type="submit" class="btn-csv">ダウンロード</button>
+					<button type="button" id="btn_account_back" class="btn-back"
+								th:onclick="|location.href='@{/accounts}'|">戻る</button>
+				</form>
 				</div>
 			</form>
 		</div>
