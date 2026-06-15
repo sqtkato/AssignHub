@@ -3,6 +3,8 @@ package com.assignhub.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
 import com.assignhub.service.DeletedAccountService;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/deleted-accounts")
@@ -53,7 +53,7 @@ public class DeletedAccountController {
     @PostMapping("/{id}/restore") 
     public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
         deletedAccountService.restore(id);
-        attributes.addFlashAttribute("toastMessage", "アカウント情報を復元しました");
+        attributes.addFlashAttribute("toastMessage", "");
         return "redirect:/deleted-accounts"; 
     }
 
@@ -65,7 +65,7 @@ public class DeletedAccountController {
             return "redirect:/deleted-accounts";
         }
         deletedAccountService.restoreBulk(ids);
-        attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を復元しました");
+        attributes.addFlashAttribute("toastMessage", "");
         return "redirect:/deleted-accounts";
     }
     
