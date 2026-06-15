@@ -22,7 +22,14 @@ public interface EmployeeMapper {
 	 * @param order   ソート順
 	 * @return 社員リスト
 	 */
-	List<Employee> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+	List<Employee> findAll(
+	        @Param("empName") String empName, 
+	        @Param("empAssignCompany") String empAssignCompany, 
+	        @Param("empCompany") String empCompany, 
+	        @Param("empEngineerType") String empEngineerType, 
+	        @Param("sort") String sort, 
+	        @Param("order") String order
+	    );
 
 	/**
 	 * IDを指定して社員を1件取得する。論理削除済みのデータは取得しない。

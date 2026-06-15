@@ -57,7 +57,7 @@ public class AccountController {
 	 * @return 一覧画面のテンプレートパス
 	 */
 	@GetMapping
-	public String index(@RequestParam(name = "keywordEmpName", required = false) String empName,
+	public String index(@RequestParam(name = "empName", required = false) String empName,
 			Model model,
 
 			@RequestParam(name = "permission", required = false) Integer permission) {

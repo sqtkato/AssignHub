@@ -55,6 +55,7 @@ public class LoginController {
 
         
         session.setAttribute("loginId", account.getLoginId());
+        session.setAttribute("permission", account.getPermission());
 
 
         return "redirect:/employees";
