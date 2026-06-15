@@ -40,4 +40,6 @@ public interface CompanyMapper {
 	 * @param company 登録する企業エンティティ
 	 */
 	void insert(Company company);
+	
+	Company findByCompanyName(String companyName);
 }

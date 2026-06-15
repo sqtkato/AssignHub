@@ -43,7 +43,6 @@ public class CompanyService {
 	}
 	
 	
-
 	/**
 	 * 企業IDを指定して、企業情報を1件取得する。
 	 *
@@ -63,5 +62,10 @@ public class CompanyService {
 	@Transactional(rollbackFor = Exception.class)
 	public void save(Company company) {
 		companyMapper.insert(company);
+		
+	}
+	
+	public Company findByCompanyName(String companyName) {
+	    return companyMapper.findByCompanyName(companyName);
 	}
 }

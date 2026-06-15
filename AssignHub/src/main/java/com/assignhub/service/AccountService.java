@@ -1,43 +1,38 @@
-//package com.assignhub.service;
-//
-//import java.io.BufferedReader;
-//import java.io.InputStreamReader;
-//import java.nio.charset.StandardCharsets;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
-//import org.springframework.web.multipart.MultipartFile;
-//
-//import com.assignhub.entity.Account;
-//import com.assignhub.mapper.AccountMapper;
-//
-//import lombok.extern.slf4j.Slf4j;
-//
-///**
-// * アカウント情報に関するビジネスロジックを提供するサービスクラス。
-// * 
-// * @version 1.00 2026/06/12
-// * @author ATO）黒木
-// */
-//@Slf4j
-//@Service
-//public class AccountService {
-//
-//	private final AccountMapper accountMapper;
+package com.assignhub.service;
+
+import org.springframework.stereotype.Service;
+
+import com.assignhub.entity.Account;
+import com.assignhub.mapper.AccountMapper;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * アカウント情報に関するビジネスロジックを提供するサービスクラス。
+ * 
+ * @version 1.00 2026/06/12
+ * @author ATO）黒木
+ */
+@Slf4j
+@Service
+public class AccountService {
+
+	private final AccountMapper accountMapper;
 //	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//
-//	/**
-//	 * コンストラクタによる依存性の注入。
-//	 *
-//	 * @param accountMapper アカウント情報マスタに対するマッパー
-//	 */
-//	public AccountService(AccountMapper accountMapper) {
-//		this.accountMapper = accountMapper;
-//	}
-//
+
+	/**
+	 * コンストラクタによる依存性の注入。
+	 *
+	 * @param accountMapper アカウント情報マスタに対するマッパー
+	 */
+	public AccountService(AccountMapper accountMapper) {
+		this.accountMapper = accountMapper;
+	}
+	
+	public Account findByLoginId(String loginId) {
+	    return accountMapper.findByLoginId(loginId);
+	}
+
 //	/**
 //	 * 検索条件およびソート条件に合致するアカウント情報を全件取得する。
 //	 *
@@ -105,7 +100,7 @@
 //			accountMapper.deleteBulk(ids);
 //		}
 //	}
-//	
+	
 //	/**
 //	 * インポート時の各行のエラー内容を保持するクラス。
 //	 */
@@ -287,5 +282,5 @@
 //		}
 //		return count;
 //	}
-//
-//}
+
+}

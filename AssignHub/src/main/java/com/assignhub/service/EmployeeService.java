@@ -73,6 +73,7 @@ public class EmployeeService {
 	    return employeeMapper.findByIds(ids);
 	}
 	
+
 	@Transactional
 	public void delete(Integer id) {
 		employeeMapper.delete(id);

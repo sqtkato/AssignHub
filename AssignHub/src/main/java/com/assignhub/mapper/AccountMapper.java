@@ -62,6 +62,8 @@ public interface AccountMapper {
 	 * アカウント情報を一括で削除する。
 	 */
 	void deleteBulk(@Param("ids") List<Integer> ids);
+	
+	
 
 	
 }
