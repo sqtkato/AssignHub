@@ -163,12 +163,9 @@
 		SELECT
 		a.assignment_id,
 		a.emp_id,
-		a.company_id,
 		a.contract_start_date,
 		a.contract_end_date,
 		a.unit_price,
-		a.role_id,
-		a.delete_flg,
 		a.created_at,
 		a.updated_at,
 		e.last_name,
