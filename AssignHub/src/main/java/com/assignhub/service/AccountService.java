@@ -223,10 +223,6 @@ public class AccountService {
 						hasError = true;
 					}
 				}
-				if(500 >= findAll("",null).size()) {
-					result.errors.add(new CsvRowError(rowNum, "","アカウントの登録数が上限（500件）に達しているため、新規登録できません。"));
-				}
-				
 				
 				if (!hasError) {
 					try {

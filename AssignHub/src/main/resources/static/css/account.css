@@ -126,9 +126,9 @@ a:hover {
 /* 社員名 */
 .table-dark th:nth-child(5),
 .table-dark td:nth-child(5) {
-    width: 20em;              /* 全角30文字程度 */
-    white-space: normal;      /* 折り返し可 */
-    word-break: break-word;   /* 長い文字列も折り返し */
+    width: 20em;              
+    white-space: normal;    
+    word-break: break-word;  
     overflow-wrap: break-word;
 }
 
