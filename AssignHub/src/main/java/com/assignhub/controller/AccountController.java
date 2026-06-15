@@ -57,11 +57,11 @@ public class AccountController {
 	 * @return 一覧画面のテンプレートパス
 	 */
 	@GetMapping
-	public String index(@RequestParam(name = "keywordEmpName", required = false) String keywordEmpName,
+	public String index(@RequestParam(name = "keywordEmpName", required = false) String empName,
 			Model model,
-			@RequestParam(name = "permission", required = false) Integer permission, HttpSession session) {
-		model.addAttribute("accounts", accountService.findAll(keywordEmpName, permission));
-//		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
+
+			@RequestParam(name = "permission", required = false) Integer permission) {
+		model.addAttribute("accounts", accountService.findAll(empName, permission));
 
 		return "account/index";
 	}
@@ -73,10 +73,10 @@ public class AccountController {
 	 * @return アカウント情報新規登録画面のテンプレートパス
 	 */
 	@GetMapping("/new")
-	public String newAccount(Model model, HttpSession session) {
+	public String create(Model model, HttpSession session, RedirectAttributes attributes) {
 		int currentCount = accountService.findAll("", null).size();
 		if (currentCount >= 500) {
-			model.addAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
+			attributes.addFlashAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
 			return "redirect:/accounts";
 		}
 		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
@@ -89,14 +89,13 @@ public class AccountController {
 	 *
 	 * @param form 入力されたアカウント情報フォーム
 	 * @param result       バリデーション結果
-	 * @param attributes   リダイレクト時にメッセージを引き継ぐための属性
+	 * @param session   ログイン中のユーザー情報を取得するためのセッション
 	 * @param model        画面描画用のモデル
 	 * @return 成功時は一覧画面へのリダイレクト、失敗時は登録画面のテンプレートパス
 	 */
 	@PostMapping("/create")
-	public String create(@Validated @ModelAttribute("account") AccountForm form,
-			BindingResult result, Model model, HttpSession session) {
-		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
+	public String store(@Validated @ModelAttribute("account") AccountForm form,
+			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "account/create";
 		}
@@ -119,9 +118,8 @@ public class AccountController {
 	 * @return アカウント情報編集画面のテンプレートパス
 	 */
 	@GetMapping("/{id}/edit")
-	public String edit(@PathVariable("id") Integer id, HttpSession session, Model model) {
+	public String edit(@PathVariable("id") Integer id, Model model) {
 		if (!model.containsAttribute("accountForm")) {
-			model.addAttribute("currentLoginId", session.getAttribute("loginId"));
 			Account acc = accountService.findById(id);
 			AccountForm form = new AccountForm();
 			form.setAccountId(acc.getAccountId());
@@ -146,7 +144,7 @@ public class AccountController {
 	@PostMapping("/{id}/edit")
 	public String update(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
-			BindingResult result, RedirectAttributes attributes, Model model) {
+			BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
 			return "account/edit";
@@ -158,10 +156,8 @@ public class AccountController {
 		}
 
 		Account acc = new Account();
-		acc.setLoginId(accountForm.getLoginId());
-		acc.setPermission(accountForm.getPermission());
-		acc.setPasswordHash(accountForm.getPasswordHash());
 		acc.setAccountId(id);
+		copyFormToEntity(accountForm, acc);
 		accountService.save(acc);
 		return "redirect:/accounts";
 	}
@@ -203,13 +199,12 @@ public class AccountController {
 	 * アカウント情報インポート画面を表示する。
 	 */
 	@GetMapping("/import")
-	public String showImport(HttpSession session, Model model) {
+	public String showImport(Model model, RedirectAttributes attributes) {
 		int currentCount = accountService.findAll("", null).size();
 		if (currentCount >= 500) {
-			model.addAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
+			attributes.addFlashAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
 			return "redirect:/accounts";
 		}
-		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
 		return "account/import";
 	}
 
@@ -297,9 +292,8 @@ public class AccountController {
 	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
-			Model model, HttpSession session, RedirectAttributes attributes) {
+			Model model, RedirectAttributes attributes) {
 
-		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
 		// ★【最優先】まず最初にnullチェックを行う
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");

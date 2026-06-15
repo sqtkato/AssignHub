@@ -17,7 +17,7 @@
 
 			<div class="form-group">
 			    <label>ログインID <span class="badge-required">必須</span></label>
-			    <input type="text" th:field="*{loginId}" id="loginId" class="form-control"
+			    <input type="text" th:field="*{loginId}" class="form-control"
 			        th:classappend="${#fields.hasErrors('loginId')} ? 'input-error'">
 			    <div th:if="${#fields.hasErrors('loginId')}">
 			        <div class="error-message" th:each="err : ${#fields.errors('loginId')}" th:text="${err}"></div>
@@ -27,7 +27,7 @@
 
 			<div class="form-group">
 			    <label>パスワード <span class="badge-required">必須</span></label>
-			    <input type="password" th:field="*{passwordHash}" id="passwordHash" class="form-control"
+			    <input type="password" th:field="*{passwordHash}"  class="form-control"
 			        th:classappend="${#fields.hasErrors('passwordHash')} ? 'input-error'">
 			    <div th:if="${#fields.hasErrors('passwordHash')}">
 			        <div class="error-message" th:each="err : ${#fields.errors('passwordHash')}" th:text="${err}"></div>
