@@ -37,22 +37,11 @@ public class DeletedAccountController {
 	@GetMapping
 	public String index(@RequestParam(name = "empName", required = false) String empName,
 			Model model,
-
 			@RequestParam(name = "permission", required = false) Integer permission) {
 		model.addAttribute("accounts", deletedAccountService.findAll(empName, permission));
 
 		return "deleted_account/index";
 	}
-//	public String index(@RequestParam(name = "keywordEmpName", required = false) String keywordEmpName,
-//			Model model,
-//			@RequestParam(name = "permission", required = false) Integer permission, HttpSession session) {
-//		model.addAttribute("accounts", deletedAccountService.findAll(keywordEmpName, permission));
-//		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
-
-//		return "deleted_account/index";
-	
-
-
     // ==========================================
     // 復元処理
     // ==========================================
@@ -61,7 +50,6 @@ public class DeletedAccountController {
     @PostMapping("/{id}/restore") 
     public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
         deletedAccountService.restore(id);
-        attributes.addFlashAttribute("toastMessage", "");
         return "redirect:/deleted-accounts"; 
     }
 
@@ -73,7 +61,6 @@ public class DeletedAccountController {
             return "redirect:/deleted-accounts";
         }
         deletedAccountService.restoreBulk(ids);
-        attributes.addFlashAttribute("toastMessage", "");
         return "redirect:/deleted-accounts";
     }
     
@@ -95,7 +82,6 @@ public class DeletedAccountController {
         }
         
         deletedAccountService.physicalDelete(id);
-        attributes.addFlashAttribute("toastMessage", "アカウント情報を完全に削除しました");
         return "redirect:/deleted-accounts";
     }
 
@@ -118,7 +104,6 @@ public class DeletedAccountController {
         }
         
         deletedAccountService.physicalDeleteBulk(ids);
-        attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を完全に削除しました");
         return "redirect:/deleted-accounts";
     }
 	
@@ -137,37 +122,26 @@ public class DeletedAccountController {
 	
 //エクスポートのダウンロード処理
 	@GetMapping("/export/download")
-	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
-			RedirectAttributes attributes) { 
-		List<Account> delAccounts = deletedAccountService.findByIds(ids);
-		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,削除フラグ,作成日時,更新日時,社員名\n");
-		for (Account delAcc : delAccounts) {
-			String employeeName = "";
-			if (delAcc.getEmployee() != null) {
-				employeeName = delAcc.getEmployee().getLastName() + " " + delAcc.getEmployee().getFirstName();
-			}
-			csvBuilder.append(delAcc.getAccountId()).append(",")
-					.append(delAcc.getLoginId()).append(",")
-					.append(delAcc.getPasswordHash() != null ? delAcc.getPasswordHash() : "").append(",")
-					.append(delAcc.getPermission() != null ? delAcc.getPermission() : "").append(",")
-					.append(delAcc.getDeleteFlg() != null ? delAcc.getDeleteFlg() : "").append(",")
-					.append(delAcc.getCreatedAt() != null ? delAcc.getCreatedAt() : "").append(",")
-					.append(delAcc.getUpdatedAt() != null ? delAcc.getUpdatedAt() : "").append(",")
-					.append(employeeName).append("\n");
+	public ResponseEntity<byte[]> downloadCsv(
+			@RequestParam(name = "ids", required = false) List<Integer> ids) {
+		List<Account> accounts = deletedAccountService.findByIds(ids);
+		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名(姓),社員名(名)\n");
+		for (Account acc : accounts) {
+			csvBuilder.append(acc.getAccountId()).append(",")
+					.append(acc.getLoginId()).append(",")
+					.append(acc.getPermission()).append(",")
+					.append(acc.getEmployee().getLastName()).append(",")
+					.append(acc.getEmployee().getFirstName()).append("\n");
 		}
-		
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
 		byte[] result = new byte[bom.length + csvBytes.length];
 		System.arraycopy(bom, 0, result, 0, bom.length);
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
-
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment; filename=deletedAccount.csv");
+		headers.add("Content-Disposition", "attachment; filename=account.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
-		
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
-
 
 }

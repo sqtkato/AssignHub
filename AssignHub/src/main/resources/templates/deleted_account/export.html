@@ -28,9 +28,10 @@
 				</table>
 			</div>
 
-			<div class="table-scroll export-table">
-				<table class="table table-dark">
-					<thead>
+			<div class="card">
+							<table class="table">					
+								<thead class="table-dark">
+					
 						<tr>
 							<th>アカウントID</th>
 							<th>ログインID</th>
@@ -43,7 +44,7 @@
 							<td th:text="${account.accountId}"></td>
 							<td th:text="${account.loginId}"></td>
 							<td th:text="${account.permission == 1 ? '管理' : '一般'}"></td>						
-							<td th:text="${account.deletedEmployee != null ? account.deletedEmployee.lastName + ' ' + account.deletedEmployee.firstName : ''}"></td>
+							<td th:text="${account.employee != null ? account.employee.lastName + ' ' + account.employee.firstName : ''}"></td>
 						</tr>
 					</tbody>
 				</table>
