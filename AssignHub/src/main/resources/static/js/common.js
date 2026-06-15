@@ -131,7 +131,8 @@ function openDeleteModal(id) {
 	const form = document.getElementById('deleteForm');
 
 	if (form) {
-		form.action = '/accounts/' + id + '/delete';
+		const baseUrl = window.location.pathname;
+		form.action = baseUrl + '/' + id + '/delete';
 	}
 
 	if (overlay) {
@@ -165,16 +166,17 @@ function closeBulkDeleteModal() {
 
 	const overlay = document.getElementById('bulkDeleteOverlay');
 
-	if (overlay) {
-		overlay.style.display = 'none';
-	}
+	if (overlay) { overlay.style.display = 'none'; }
+
 }
 
 function submitBulkDelete() {
+
 	const form = document.getElementById('listForm');
 
 	if (form) {
-		form.action = '/accounts/bulk-delete';
+		const baseUrl = window.location.pathname;
+		form.action = baseUrl + '/bulk-delete';
 		form.submit();
 	}
 }
