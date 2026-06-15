@@ -165,6 +165,101 @@
 ////		accountService.save(acc);
 ////		return "redirect:/accounts";
 ////	}
+=======
+//	@GetMapping("/new")
+//	public String newAccount(Model model, HttpSession session) {
+//		int currentCount = accountService.findAll("", null).size();
+//		if (currentCount >= 500) {
+//			model.addAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
+//			return "redirect:/accounts";
+//		}
+//		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
+//		model.addAttribute("account", new AccountForm());
+//		return "account/create";
+//	}
+//
+//	/**
+//	 * アカウント情報の新規登録処理を実行する。
+//	 *
+//	 * @param form 入力されたアカウント情報フォーム
+//	 * @param result       バリデーション結果
+//	 * @param attributes   リダイレクト時にメッセージを引き継ぐための属性
+//	 * @param model        画面描画用のモデル
+//	 * @return 成功時は一覧画面へのリダイレクト、失敗時は登録画面のテンプレートパス
+//	 */
+//	@PostMapping("/create")
+//	public String create(@Validated @ModelAttribute("account") AccountForm form,
+//			BindingResult result, Model model, HttpSession session) {
+//		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
+//		if (result.hasErrors()) {
+//			return "account/create";
+//		}
+//		if (accountService.isLoginIdDuplicate(form.getLoginId())) {
+//			model.addAttribute("loginIdError", "このログインIDは既に使用されています");
+//			return "account/create";
+//		}
+//		Account account = new Account();
+//		copyFormToEntity(form, account);
+//		accountService.save(account);
+//
+//		return "redirect:/accounts";
+//	}
+//
+//	/**
+//	 * アカウント情報の編集画面を表示する。
+//	 *
+//	 * @param id    編集対象のアカウントID
+//	 * @param model 画面描画用のモデル
+//	 * @return アカウント情報編集画面のテンプレートパス
+//	 */
+//	@GetMapping("/{id}/edit")
+//	public String edit(@PathVariable("id") Integer id, HttpSession session, Model model) {
+//		if (!model.containsAttribute("accountForm")) {
+//			model.addAttribute("currentLoginId", session.getAttribute("loginId"));
+//			Account acc = accountService.findById(id);
+//			AccountForm form = new AccountForm();
+//			form.setAccountId(acc.getAccountId());
+//			form.setLoginId(acc.getLoginId());
+//			form.setPasswordHash(acc.getPasswordHash());
+//			form.setPermission(acc.getPermission());
+//			model.addAttribute("accountForm", form);
+//		}
+//		return "account/edit";
+//	}
+//
+//	/**
+//	 * アカウント情報の更新処理を実行する。
+//	 *
+//	 * @param id           更新対象のアカウントID
+//	 * @param accountForm 入力されたアカウント情報フォーム
+//	 * @param result       バリデーション結果
+//	 * @param attributes   リダイレクト時にメッセージを引き継ぐための属性
+//	 * @param model        画面描画用のモデル
+//	 * @return 成功時は一覧画面へのリダイレクト、失敗時は編集画面のテンプレートパス
+//	 */
+//	@PostMapping("/{id}/edit")
+//	public String update(@PathVariable("id") Integer id,
+//			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
+//			BindingResult result, RedirectAttributes attributes, Model model) {
+//
+//		if (result.hasErrors()) {
+//			return "account/edit";
+//		}
+//
+//		if (accountService.isLoginIdDuplicateUpdate(accountForm.getLoginId(), id)) {
+//			model.addAttribute("loginId", "このログインIDは既に使用されています");
+//			return "account/edit";
+//		}
+//
+//		Account acc = new Account();
+//		acc.setLoginId(accountForm.getLoginId());
+//		acc.setPermission(accountForm.getPermission());
+//		acc.setPasswordHash(accountForm.getPasswordHash());
+//		acc.setAccountId(id);
+//		accountService.save(acc);
+//		return "redirect:/accounts";
+//	}
+>>>>>>> stash
 //
 //	/**
 //	 * アカウントを一件論理削除

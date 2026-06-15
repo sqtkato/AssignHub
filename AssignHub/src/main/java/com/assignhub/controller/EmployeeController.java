@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Employee;
 import com.assignhub.form.EmployeeForm;
+import com.assignhub.service.CompanyService;
 import com.assignhub.service.EmployeeService;
 
 /**
@@ -35,14 +36,17 @@ import com.assignhub.service.EmployeeService;
 public class EmployeeController {
 
 	private final EmployeeService employeeService;
+	private final CompanyService companyService;
 
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param employeeService 社員サービス
 	 */
-	public EmployeeController(EmployeeService employeeService) {
+	public EmployeeController(EmployeeService employeeService,CompanyService companyService) {
 		this.employeeService = employeeService;
+		this.companyService = companyService;
+		
 	}
 
 	/**
@@ -149,7 +153,7 @@ public class EmployeeController {
 			form.setAccountId(emp.getAccountId());
 			form.setDepartment(emp.getDepartment());
 			form.setJobTitle(emp.getJobTitle());
-			model.addAttribute("employeeForm", form);
+			model.addAttribute("employeeForm", form);	
 			model.addAttribute("fromPage", from);
 		}
 		//		model.addAttribute("company", companyService.findAll(null, "emp_company_name", "asc"));
@@ -162,12 +166,13 @@ public class EmployeeController {
 			BindingResult result, RedirectAttributes attributes,
 			@RequestParam(value = "fromPage", required = false) String fromPage, Model model) {
 		if (employeeService.isEmailDuplicate(employeeForm.getEmail(), id)) {
-			result.rejectValue("email", "error.employeeForm", "このメールアドレスはすでに他の社員に使用されています");
+			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
 		}
 
 		if (result.hasErrors()) {
 			//			model.addAttribute("departments", companyService.findAll(null, "dept_id", "asc"));
 			model.addAttribute("fromPage", fromPage);
+			model.addAttribute("companies", companyService.findAll(null, "company_name", "asc"));
 			return "employee/edit";
 		}
 		if ("detail".equals(fromPage)) {
@@ -179,6 +184,10 @@ public class EmployeeController {
 		copyFormToEntity(employeeForm, emp);
 		employeeService.save(emp);
 		attributes.addFlashAttribute("toastMessage", "社員情報を更新しました");
+		
+		if ("detail".equals(fromPage)) {
+			return "redirect:/employees/" + id +"/detail";
+			}
 		return "redirect:/employees";
 	}
 

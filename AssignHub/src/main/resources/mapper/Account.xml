@@ -44,10 +44,13 @@
 		ORDER BY a.account_id ASC
 	</select>
 	
+<<<<<<< HEAD
 	<select id="findByLoginId" resultType="com.assignhub.entity.Account">
     SELECT * FROM m_account
     WHERE login_id = #{loginId}
     AND delete_flg = 0
     LIMIT 1
 </select>
+=======
+>>>>>>> stash
 </mapper>
