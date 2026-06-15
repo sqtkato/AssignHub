@@ -3,143 +3,163 @@
 	layout:decorate="~{layout/layout}">
 
 <head>
-	<title>企業情報/削除復元一覧</title>
+	<meta charset="UTF-8">
+	<title>論理削除社員情報一覧</title>
+	<link rel="stylesheet" href="/css/popup.css">
 </head>
 
 <body>
-	<div class="card">
-				<form th:action="@{/deleted-employees}" method="get" class="search-form">
-					<div class="form-group form-group-search">
-						<label>社員名</label>
-						<input type="text" name="keyword" class="form-control" th:value="${keyword}" placeholder="例：山田">
-					</div>
-					<div class="form-group form-group-search">
-						<label>電話番号</label>
-						<input type="text" name="tel" class="form-control" th:value="${tel}" placeholder="例：0901111111">
-					</div>
-					<button type="submit" class="btn btn-secondary">検索</button>
-				</form>
+	<div layout:fragment="content">
+		<div class="page-title-area">
+			<h2>論理削除社員情報一覧</h2>
+		</div>
+
+		<div class="card acc">
+			<form th:action="@{/deleted-accounts}" method="get" class="search-form">
+				<div class="form-group form-group-search">
+					<label>社員名</label>
+					<input type="text" name="empName" class="form-control" th:value="${empName}" placeholder="例：山田 太郎">
+				</div>
+				<div class="form-group form-group-search">
+					<label>アサイン先企業</label>
+					<input type="text" name="empAssignCompany" class="form-control" th:value="${empAssignCompany}" placeholder="例：山田 太郎">
+				</div>
+				<div class="form-group form-group-search">
+					<label>所属企業</label>
+					<input type="text" name="empCompany" class="form-control" th:value="${empCompany}" placeholder="例：山田 太郎">
+				</div>
+				<div class="form-group form-group-search">
+					<label>エンジニアタイプ</label>
+					<select name="empEngineerType" class="form-control">
+					    <option value>未選択</option>
+					    <option value="プロパー" th:selected="${empEngineerType == 'プロパー'}">プロパー</option>
+					    <option value="パートナー" th:selected="${empEngineerType == 'パートナー'}">パートナー</option>
+						</select>
+				</div>
+				<button type="submit" class="btn btn-secondary">検索</button>
+			</form>
+		</div>
+
+		<form method="post" id="listForm">
+			<div class="table-toolbar">
+	<button type="submit" formaction="/deleted-accounts/restore-bulk" class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元"
+		onclick="return confirm('選択した項目を一括復元しますか？');">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+			stroke-linecap="round" stroke-linejoin="round">
+			<path d="M7 16c2.21 0 4-1.79 5-3s2.79-3 5-3a4 4 0 1 1 0 8c-2.21 0-4-1.79-5-3s-2.79-3-5-3a4 4 0 0 0-3.4 1.9" />
+			<polyline points="5.5 10 2 12.5 4.5 16" />
+		</svg>
+		一括復元
+	</button>
+
+	<button type="submit" formmethod="get" formaction="/deleted-accounts/export" class="toolbar-btn"
+		title="チェックした項目をエクスポート">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+			stroke-linecap="round" stroke-linejoin="round">
+			<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+			<polyline points="17 8 12 3 7 8"></polyline>
+			<line x1="12" y1="3" x2="12" y2="15"></line>
+		</svg>
+		エクスポート
+	</button>
+
+	<button type="submit" formaction="/deleted-accounts/delete-bulk" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
+		onclick="return confirm('選択した項目を一括削除しますか？');">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+			stroke-linecap="round" stroke-linejoin="round">
+			<polyline points="3 6 5 6 21 6"></polyline>
+			<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+		</svg>
+		一括削除
+	</button>
+</div>
+
+			<div class="card">
+				<div class="table-scroll">
+					<table class="table">
+						<thead class="table-dark">
+							<tr>
+								<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
+								<th>ID</th>
+								<th>社員名</th>
+								<th>アサイン先企業</th>
+								<th>エンジニアタイプ</th>
+								<th>所属先企業</th>
+								<th class="col-action">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="emp : ${employees}" class="clickable-row">
+								<td class="col-checkbox">
+									<input type="checkbox" name="ids" th:value="${emp.empId}" class="row-checkbox">
+								</td>
+								<td th:text="${emp.empId}"></td>
+								<td th:text="${emp.lastName} + ' ' + ${emp.firstName}"></td>
+								<td th:text="${emp.companyNameAssign}"></td>
+								<td th:text="${emp.engineerType}"></td>
+								<td th:text="${emp.companyName ?: 'ー'}"></td>
+								<td class="col-action">
+									<button type="submit" th:formaction="@{/deleted-employees/{id}/restore(id=${emp.empId})}" class="btn-icon-svg" title="復元">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+									</button>
+									<button type="button" th:attr="data-id=${acc.accountId}" class="btn-icon-svg delete" title="削除" onclick="openDeleteModal(this.dataset.id)">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+									</button>
+								</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(accounts)}">
+								<td colspan="6" class="text-center">該当するデータがありません。</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
+		</form>
 
-			<form th:action="@{/employees/bulk-delete}" method="post" id="listForm">
-				<div class="table-toolbar">
-					<button type="submit" formaction="/deleted-employees/restore-bulk" class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元"
-							onclick="return confirm('選択した項目を一括復元しますか？');">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-								stroke-linecap="round" stroke-linejoin="round">
-								<path d="M7 16c2.21 0 4-1.79 5-3s2.79-3 5-3a4 4 0 1 1 0 8c-2.21 0-4-1.79-5-3s-2.79-3-5-3a4 4 0 0 0-3.4 1.9" />
-								<polyline points="5.5 10 2 12.5 4.5 16" />
-							</svg>
-							一括復元
-						</button>
+		<div id="deleteOverlay" class="modal-overlay">
+			<div class="modal-box">
+				<div class="modal-icon modal-icon-danger">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+				</div>
+				<p class="modal-title">社員情報を削除しますか？</p>
+				<p class="modal-subtitle">この操作は取り消せません。</p>
+				<div class="modal-actions">
+					<button type="button" onclick="closeDeleteModal()" class="modal-btn modal-btn-cancel">キャンセル</button>
+					<form id="deleteForm" method="post">
+						<button type="submit" class="modal-btn modal-btn-danger">削除する</button>
+					</form>
+				</div>
+			</div>
+		</div>
 
-						<button type="submit" formmethod="get" formaction="/deleted-employees/export" class="toolbar-btn"
-							title="チェックした項目をエクスポート">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-								stroke-linecap="round" stroke-linejoin="round">
-								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-								<polyline points="17 8 12 3 7 8"></polyline>
-								<line x1="12" y1="3" x2="12" y2="15"></line>
-							</svg>
-							エクスポート
-						</button>
+		<div id="bulkDeleteOverlay" class="modal-overlay">
+			<div class="modal-box">
+				<div class="modal-icon modal-icon-danger">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+				</div>
+				<p class="modal-title">選択した社員情報を削除しますか？</p>
+				<p class="modal-subtitle">この操作は取り消せません。</p>
+				<div class="modal-actions">
+					<button type="button" onclick="closeBulkDeleteModal()" class="modal-btn modal-btn-cancel">キャンセル</button>
+					<button type="button" onclick="submitBulkDelete()" class="modal-btn modal-btn-danger">削除する</button>
+				</div>
+			</div>
+		</div>
 
-						<button type="submit" formaction="/deleted-employees/delete-bulk" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
-							onclick="return confirm('選択した項目を一括削除しますか？');">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-								stroke-linecap="round" stroke-linejoin="round">
-								<polyline points="3 6 5 6 21 6"></polyline>
-								<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-							</svg>
-							一括削除
-						</button>
-					</div>
-					
-					<div class="card">
-						<div class="table-scroll">
-							<table class="table">
-								<thead class="table-dark">
-									<tr>
-										<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
-										<th>社員ID</th>
-										<th>社員名</th>
-										<th>アサイン先企業</th>
-										<th>エンジニアタイプ</th>
-										<th>所属企業</th>
-										<th class="col-action">操作</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr th:each="company : ${employees}" class="clickable-row">
-																	<td class="col-checkbox">
-																		<input type="checkbox" name="ids" th:value="${company.compId}" class="row-checkbox">
-																	</td>
-																	<td th:text="${employee.compId}"></td>
-																	<td th:text="${employee.compName}"></td>
-																	<td th:text="${employee.compAddress1}"></td>
-																	<td th:text="${employee.compTel}"></td>
-																	<td class="col-action">
-																		<button type="submit" th:formaction="@{/deleted-companies/{id}/restore(id=${acc.compId})}" class="btn-icon-svg" title="復元">
-																			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-																		</button>
-																		<button type="button" th:attr="data-id=${acc.compId}" class="btn-icon-svg delete" title="削除" onclick="openDeleteModal(this.dataset.id)">
-																			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-																		</button>
-																	</td>
-																</tr>
-																<tr th:if="${#lists.isEmpty(companies)}">
-																	<td colspan="6" class="text-center">該当するデータがありません。</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</form>
+		<div id="noSelectionOverlay" class="modal-overlay">
+			<div class="modal-box">
+				<div class="modal-icon modal-icon-warning">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+				</div>
+				<p class="modal-title">社員情報が選択されていません</p>
+				<p class="modal-subtitle">削除する社員情報をチェックしてください。</p>
+				<div class="modal-actions">
+					<button type="button" onclick="closeNoSelectionModal()" class="modal-btn modal-btn-cancel">OK</button>
+				</div>
+			</div>
+		</div>
 
-											<div id="deleteOverlay" class="modal-overlay">
-												<div class="modal-box">
-													<div class="modal-icon modal-icon-danger">
-														<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-													</div>
-													<p class="modal-title">アカウントを削除しますか？</p>
-													<p class="modal-subtitle">この操作は取り消せません。</p>
-													<div class="modal-actions">
-														<button type="button" onclick="closeDeleteModal()" class="modal-btn modal-btn-cancel">キャンセル</button>
-														<form id="deleteForm" method="post">
-															<button type="submit" class="modal-btn modal-btn-danger">削除する</button>
-														</form>
-													</div>
-												</div>
-											</div>
-
-											<div id="bulkDeleteOverlay" class="modal-overlay">
-												<div class="modal-box">
-													<div class="modal-icon modal-icon-danger">
-														<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-													</div>
-													<p class="modal-title">選択したアカウントを削除しますか？</p>
-													<p class="modal-subtitle">この操作は取り消せません。</p>
-													<div class="modal-actions">
-														<button type="button" onclick="closeBulkDeleteModal()" class="modal-btn modal-btn-cancel">キャンセル</button>
-														<button type="button" onclick="submitBulkDelete()" class="modal-btn modal-btn-danger">削除する</button>
-													</div>
-												</div>
-											</div>
-
-											<div id="noSelectionOverlay" class="modal-overlay">
-												<div class="modal-box">
-													<div class="modal-icon modal-icon-warning">
-														<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-													</div>
-													<p class="modal-title">アカウントが選択されていません</p>
-													<p class="modal-subtitle">削除するアカウントをチェックしてください。</p>
-													<div class="modal-actions">
-														<button type="button" onclick="closeNoSelectionModal()" class="modal-btn modal-btn-cancel">OK</button>
-													</div>
-												</div>
-											</div>
-
-											<script src="/js/accunt.js"></script>
-										</div>
-									</body>
-									</html>
+		<script src="/js/accunt.js"></script>
+	</div>
+</body>
+</html>

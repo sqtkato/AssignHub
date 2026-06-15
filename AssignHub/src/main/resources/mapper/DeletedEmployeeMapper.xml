@@ -140,58 +140,60 @@
 	</delete>
 
 	<select id="countAccountsByEmpolyeeId" resultType="int">
-		SELECT
-		COUNT(*)
-		FROM m_account
-		WHERE account_id = #{id}
+		SELECT COUNT(*)
+		FROM m_employee e
+		INNER JOIN m_account a
+		 ON e.account_id = a_account_id
+		WHERE e.emp_id = #{id} 
+		AND a.delete_flg = 0
 	</select>
 
 	<select id="countAccountsByEmpolyeeIds" resultType="int">
 		SELECT COUNT(*)
-		FROM m_account
-		WHERE account_id IN
+		FROM m_employee e
+		INNER JOIN m_account a
+		 ON e.account_id = a_account_id
+		WHERE e.emp_id IN
 		<foreach item="id" collection="ids" open="(" separator=","
 			close=")">
 			#{id}
 		</foreach>
+		AND a.delete_flg = 0
 	</select>
 
 	<select id="countCompaniesByEmpolyeeId" resultType="int">
-		SELECT
-		COUNT(a.assignment_id)
-		FROM t_assignment a
-		INNER JOIN m_employee e ON
-		a.emp_id = e.emp_id
-		WHERE e.account_id = #{id}
+		SELECT COUNT(*)
+		FROM m_employee e
+		INNER JOIN m_company c
+		 ON e.company_id = c.company_id
+		WHERE e.emp_id = #{id} 
+		AND c.delete_flg = 0
 	</select>
 
 	<select id="countCompaniesByEmpolyeeIds" resultType="int">
-		SELECT COUNT(a.assignment_id)
-		FROM t_assignment a
-		INNER JOIN m_employee
-		e ON a.emp_id = e.emp_id
-		WHERE e.account_id IN
+		SELECT COUNT(*)
+		FROM m_employee e
+		INNER JOIN m_company c
+		 ON e.company_id = c.company_id
+		WHERE e.emp_id IN
 		<foreach item="id" collection="ids" open="(" separator=","
 			close=")">
 			#{id}
 		</foreach>
+		AND c.delete_flg = 0
 	</select>
 
 	<select id="countAssignmentsByEmpolyeeId" resultType="int">
 		SELECT
-		COUNT(a.assignment_id)
-		FROM t_assignment a
-		INNER JOIN m_employee e ON
-		a.emp_id = e.emp_id
-		WHERE e.account_id = #{id}
+		COUNT(*)
+		FROM t_assignment
+		WHERE emp_id = #{id}
 	</select>
 
 	<select id="countAssignmentsByEmpolyeeIds" resultType="int">
-		SELECT COUNT(a.assignment_id)
+		SELECT COUNT(*)
 		FROM t_assignment a
-		INNER JOIN m_employee
-		e ON a.emp_id = e.emp_id
-		WHERE e.account_id IN
+		WHERE emp_id IN
 		<foreach item="id" collection="ids" open="(" separator=","
 			close=")">
 			#{id}

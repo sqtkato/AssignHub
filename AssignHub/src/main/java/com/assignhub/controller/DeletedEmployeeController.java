@@ -53,7 +53,7 @@ public class DeletedEmployeeController {
         model.addAttribute("empAssignCompany", empAssignCompany);
 		model.addAttribute("empEngineerType", empEngineerType);
 		model.addAttribute("empCompany", empCompany);
-		return "deleted-employee/index";
+		return "deleted_employee/index";
 	}
 	
 	/**

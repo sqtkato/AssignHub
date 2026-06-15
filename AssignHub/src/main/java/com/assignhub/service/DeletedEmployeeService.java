@@ -78,22 +78,22 @@ public class DeletedEmployeeService {
 
     /** 単一社員情報に紐づくアカウントが存在するか判定 生存*/
     public boolean countAccountsByEmpolyeeId(Integer id) {
-        return deletedEmployeeMapper.countAccountsByEmpolyeeId(id) > 0;
+        return deletedEmployeeMapper.countAccountsByEmpolyeeId(id) < 1;
     }
 
     /** 複数社員情報の中に、紐づくアカウントが存在するものが含まれているか判定 生存*/
     public boolean countAccountsByEmpolyeeIds(List<Integer> ids) {
-        return deletedEmployeeMapper.countAccountsByEmpolyeeIds(ids) > 0;
+        return deletedEmployeeMapper.countAccountsByEmpolyeeIds(ids) < ids.size();
     }
 
     /** 単一社員情報に紐づく企業情報（パートナー所属）が存在するか判定 生存*/
     public boolean countCompaniesByEmpolyeeId(Integer id) {
-        return deletedEmployeeMapper.countCompaniesByEmpolyeeId(id) > 0;
+        return deletedEmployeeMapper.countCompaniesByEmpolyeeId(id) < 1;
     }
 
     /** 複数社員情報の中に、企業情報（パートナー所属）が存在するものが含まれているか判定 生存*/
     public boolean countCompaniesByEmpolyeeIds(List<Integer> ids) {
-        return deletedEmployeeMapper.countCompaniesByEmpolyeeIds(ids) > 0;
+        return deletedEmployeeMapper.countCompaniesByEmpolyeeIds(ids) < ids.size();
     }
     
     
