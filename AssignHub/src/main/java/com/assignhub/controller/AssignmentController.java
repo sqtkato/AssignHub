@@ -368,7 +368,7 @@ public class AssignmentController {
 		return "assignment/export";
 	}
 
-	@GetMapping("/export/download")
+	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required=false) List<Integer> ids) {
 		List<Assignment> assignments = assignmentService.findByIds(ids);
