@@ -19,11 +19,20 @@ document.addEventListener("DOMContentLoaded", function() {
 	const selectAll = document.getElementById('selectAll');
 	const rowCheckboxes = document.querySelectorAll('.row-checkbox');
 	const btnBulkDelete = document.getElementById('btnBulkDelete');
+	const btnBulkRestore = document.getElementById('btnBulkRestore');
 	const clickableRows = document.querySelectorAll('.clickable-row');
 	function updateBulkActionButton() {
-		if (!btnBulkDelete) return;
-		const checkedCount = document.querySelectorAll('.row-checkbox:checked').length;
-		btnBulkDelete.disabled = checkedCount === 0;
+
+	    const checkedCount =
+	        document.querySelectorAll('.row-checkbox:checked').length;
+
+	    if (btnBulkDelete) {
+	        btnBulkDelete.disabled = checkedCount === 0;
+	    }
+
+	    if (btnBulkRestore) {
+	        btnBulkRestore.disabled = checkedCount === 0;
+	    }
 	}
 	function updateRowBackground(checkbox) {
 		const tr = checkbox.closest('tr');
@@ -86,6 +95,28 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 			openBulkDeleteModal();
 		});
+	}
+	if (btnBulkRestore) {
+	    btnBulkRestore.addEventListener('click', function(e) {
+	        const checkedCount =
+	            document.querySelectorAll('.row-checkbox:checked').length;
+	        let toastElement =
+	            document.getElementById("toastMessage");
+	        if (checkedCount === 0) {
+	            e.preventDefault();
+	            if (toastElement) {
+	                toastElement.className = "toast toast-error";
+	                toastElement.querySelector('span').textContent =
+	                    "復元対象が選択されていません";
+	                toastElement.classList.add("show");
+	                setTimeout(function() {
+	                    toastElement.classList.remove("show");
+	                }, 3000);
+	            }
+	            return;
+	        }
+	        openBulkRestoreModal();
+	    });
 	}
 
 	// ==========================================
@@ -177,6 +208,37 @@ function submitBulkDelete() {
 	if (form) {
 		const baseUrl = window.location.pathname;
 		form.action = baseUrl + '/bulk-delete';
+		form.submit();
+	}
+}
+
+// ==========================================
+// 一括復元モーダル
+// ==========================================
+function openBulkRestoreModal() {
+
+	const overlay = document.getElementById('bulkRestoreOverlay');
+
+	if (overlay) {
+		overlay.style.display = 'flex';
+	}
+}
+
+function closeBulkRestoreModal() {
+
+	const overlay = document.getElementById('bulkRestoreOverlay');
+
+	if (overlay) { overlay.style.display = 'none'; }
+
+}
+
+function submitBulkRestore() {
+
+	const form = document.getElementById('listForm');
+
+	if (form) {
+		const baseUrl = window.location.pathname;
+		form.action = baseUrl + '/bulk-restore';
 		form.submit();
 	}
 }
