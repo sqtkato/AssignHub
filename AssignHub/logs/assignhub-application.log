@@ -6726,3 +6726,34 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 2026-06-15T18:13:34.616+09:00  INFO 26716 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
 2026-06-15T18:13:34.618+09:00  INFO 26716 --- [Thread-13] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
 2026-06-15T18:13:34.623+09:00  INFO 26716 --- [Thread-13] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-06-15T18:13:34.695+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 26716 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-15T18:13:34.696+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-15T18:13:34.945+09:00  INFO 26716 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-15T18:13:34.947+09:00  INFO 26716 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-15T18:13:34.947+09:00  INFO 26716 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-15T18:13:34.970+09:00  INFO 26716 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 269 ms
+2026-06-15T18:13:35.200+09:00  INFO 26716 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-15T18:13:35.203+09:00  INFO 26716 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.532 seconds (process running for 2506.072)
+2026-06-15T18:13:35.204+09:00  INFO 26716 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-15T18:14:39.768+09:00  INFO 26716 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-15T18:14:39.771+09:00  INFO 26716 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-15T18:14:39.773+09:00  INFO 26716 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-06-15T18:14:39.983+09:00  WARN 26716 --- [http-nio-8080-exec-5] c.a.controller.GlobalExceptionHandler    : 静的リソースが見つかりません: /favicon.ico
+2026-06-15T18:14:47.965+09:00  INFO 26716 --- [http-nio-8080-exec-10] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-06-15T18:14:48.004+09:00  INFO 26716 --- [http-nio-8080-exec-10] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6c815682
+2026-06-15T18:14:48.005+09:00  INFO 26716 --- [http-nio-8080-exec-10] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-06-15T18:14:48.006+09:00 DEBUG 26716 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T18:14:48.007+09:00 DEBUG 26716 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T18:14:48.082+09:00 DEBUG 26716 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T18:16:39.829+09:00 DEBUG 26716 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-15T18:16:39.831+09:00 DEBUG 26716 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: koizumi219(String)
+2026-06-15T18:16:39.836+09:00 DEBUG 26716 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-15T18:16:39.960+09:00 DEBUG 26716 --- [http-nio-8080-exec-9] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-15T18:16:39.961+09:00 DEBUG 26716 --- [http-nio-8080-exec-9] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-15T18:16:39.987+09:00 DEBUG 26716 --- [http-nio-8080-exec-9] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 3
+2026-06-15T18:16:47.829+09:00 DEBUG 26716 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T18:16:47.830+09:00 DEBUG 26716 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T18:16:47.836+09:00 DEBUG 26716 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-15T18:22:24.455+09:00 DEBUG 26716 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-15T18:22:24.456+09:00 DEBUG 26716 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-15T18:22:24.464+09:00 DEBUG 26716 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
