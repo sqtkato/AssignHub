@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	}
 	// ==========================================
-	//一括削除ボタンのクリック制御
+	//一括ボタンのクリック制御
 	// ==========================================
 	if (btnBulkDelete) {
 		btnBulkDelete.addEventListener('click', function(e) {
@@ -180,6 +180,32 @@ function closeDeleteModal() {
 	}
 }
 
+// ==========================================
+// 復元モーダル
+// ==========================================
+function openRestoreModal(id) {
+
+	const overlay = document.getElementById('restoreOverlay');
+	const form = document.getElementById('restoreForm');
+
+	if (form) {
+		const baseUrl = window.location.pathname;
+		form.action = baseUrl + '/' + id + '/restore';
+	}
+
+	if (overlay) {
+		overlay.style.display = 'flex';
+	}
+}
+
+function closeRestoreModal() {
+
+	const overlay = document.getElementById('restoreOverlay');
+
+	if (overlay) {
+		overlay.style.display = 'none';
+	}
+}
 
 // ==========================================
 // 一括削除モーダル

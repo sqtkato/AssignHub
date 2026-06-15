@@ -120,6 +120,35 @@
 			</div>
 		</div>
 	</div>
+	
+		<!-- =========================
+	     復元モーダル
+	========================= -->
+	
+	<div id="restoreOverlay" class="modal-overlay" onclick="closeRestoreModal()">
+		<div class="modal-box" onclick="event.stopPropagation()">
+			<div class="modal-icon modal-icon-success">
+				<!-- SVG -->
+			</div>
+
+			<p class="modal-title">復元しますか？</p>
+			<p class="modal-subtitle">削除済みデータを復元します。</p>
+
+			<div class="modal-actions">
+				<form id="restoreForm" method="post">
+					<button type="submit" class="modal-btn modal-btn-success">
+						復元する
+					</button>
+					<button type="button" class="modal-btn modal-btn-cancel"
+						onclick="closeRestoreModal()">
+						キャンセル
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
 </body>
 
 </html>
