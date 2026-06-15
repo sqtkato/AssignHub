@@ -50,28 +50,12 @@
 		LEFT JOIN m_company c2
 		ON
 		a.company_id = c2.company_id
-
-		<where>
-			e.delete_flg = 0
-			<if test=" txt_emp_name != null and txt_emp_name != ''">
-				AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%', #{txt_emp_name},
-				'%')
-			</if>
-
-			<if
-				test=" txt_emp_assign_company != null and  txt_emp_assign_company != ''">
-				AND c2.company_name LIKE CONCAT('%', #{txt_emp_assign_company}, '%')
-			</if>
-
-			<if test=" txt_emp_company != null and  txt_emp_company != ''">
-				AND c.company_name LIKE CONCAT('%', #{txt_emp_company}, '%')
-			</if>
-
-			<if
-				test="cmb_emp_engineer_type != null and  cmb_emp_engineer_type != ''">
-				AND e.engineer_type LIKE CONCAT('%', #{cmb_emp_engineer_type}, '%')
-			</if>
-		</where>
+<where>
+    e.delete_flg = 0
+    <if test="keyword != null and keyword != ''">
+        AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%', #{keyword}, '%')
+    </if>
+</where>
 
 	</select>
 

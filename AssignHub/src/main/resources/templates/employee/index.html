@@ -60,7 +60,7 @@
 							<td class="col-checkbox"><input type="checkbox" name="ids" th:value="${emp.empId}"
 									class="row-checkbox"></td>
 							<td th:text="${emp.empId}"></td>
-							<td th:text="${emp.empName}"></td>
+							<td th:text="${emp.lastName + ' ' + emp.firstName}"></td>
 							</td>
 						</tr>
 						<tr th:if="${#lists.isEmpty(employees)}">
