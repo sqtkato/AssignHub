@@ -18,7 +18,7 @@
 			<form th:action="@{/accounts}" method="get" class="search-form">
 				<div class="form-group form-group-search">
 
-					<div class="search-item">
+					<div class="search-item input" >
 						<label>権限</label>
 						<select name="permission" class="form-control">
 							<option value="" th:selected="${permission == null}" class="">未選択</option>
@@ -26,14 +26,15 @@
 							<option value="1" th:selected="${permission != null and permission == 1}">管理</option>
 						</select>
 					</div>
-					<div class="search-item">
+					<div class="search-item input">
 						<label>社員名検索</label>
 						<input type="text" name="keywordEmpName" class="form-control" th:value="${empName}"
 							placeholder="例：山田 太郎">
 					</div>
-
+					<div class="search-item ">
+						<button type="submit" class="btn btn-secondary">検索</button>
+					</div>
 				</div>
-				<button type="submit" class="btn btn-secondary">検索</button>
 			</form>
 		</div>
 

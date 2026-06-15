@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-width=1.0">
 	<title layout:title-pattern="$CONTENT_TITLE - AssignHub">AssignHub</title>
-	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/account.css}">
 	<script th:src="@{/js/common.js}" defer></script>
 </head>
 
@@ -33,7 +33,7 @@
 		<div class="sidebar-footer">
 
 			<!--			usernameの表示を行う場所。変更必要-->
-			<!--            <span th:text="${#authentication.name}">admin123</span>-->
+			            <span th:text="${session.loginId}">admin123</span>
 
 
 			<button type="button" class="btn-logout" onclick="openLogoutModal()">ログアウト</button>

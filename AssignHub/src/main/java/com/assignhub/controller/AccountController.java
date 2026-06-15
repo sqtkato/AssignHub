@@ -26,8 +26,6 @@ import com.assignhub.service.EmployeeService;
 
 import jakarta.servlet.http.HttpSession;
 
-import jakarta.servlet.http.HttpSession;
-
 /**
  * アカウント情報管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
  *
@@ -63,7 +61,7 @@ public class AccountController {
 			Model model,
 			@RequestParam(name = "permission", required = false) Integer permission, HttpSession session) {
 		model.addAttribute("accounts", accountService.findAll(keywordEmpName, permission));
-		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
+//		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
 
 		return "account/index";
 	}

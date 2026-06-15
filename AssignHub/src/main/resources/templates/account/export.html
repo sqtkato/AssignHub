@@ -50,7 +50,7 @@
 			</div>
 
 			<div class="action-area">
-				<form th:action="@{/accounts/export/download}" method="post">
+				<form th:action="@{/accounts/export/download(ids=${ids})}" method="post">
 <!--					ems、aタグ。form不要-->
 					<button type="submit" class="btn btn-primary btn-wide">ダウンロード</button>
 					<a th:href="@{/accounts}" class="btn btn-secondary btn-wide">戻る</a>
