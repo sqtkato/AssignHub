@@ -3,6 +3,8 @@ package com.assignhub.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +25,6 @@ import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
 import com.assignhub.service.AccountService;
 import com.assignhub.service.EmployeeService;
-
-import jakarta.servlet.http.HttpSession;
 
 /**
  * アカウント情報管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
@@ -89,7 +89,7 @@ public class AccountController {
 	 *
 	 * @param form 入力されたアカウント情報フォーム
 	 * @param result       バリデーション結果
-	 * @param session   ログイン中のユーザー情報を取得するためのセッション
+	 * @param attributes   リダイレクト時にメッセージを引き継ぐための属性
 	 * @param model        画面描画用のモデル
 	 * @return 成功時は一覧画面へのリダイレクト、失敗時は登録画面のテンプレートパス
 	 */
@@ -105,7 +105,7 @@ public class AccountController {
 		}
 		Account account = new Account();
 		copyFormToEntity(form, account);
-		accountService.save(account);
+		accountService.save  (account);
 
 		return "redirect:/accounts";
 	}
