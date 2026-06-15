@@ -10,17 +10,20 @@
 </head>
 
 <body>
+	<!-- =========================
+     サイドバー
+========================= -->
 	<div class="sidebar">
 		<h1>AssignHub</h1>
 
 		<ul>
 			<li><a th:href="@{/employees}">社員情報</a></li>
-			<li><a th:href="@{/companies}">企業情報</a></li>
-			<li><a th:href="@{/accounts}">アカウント情報</a></li>
-			<li><a th:href="@{/assign-history}">アサイン履歴情報</a></li>
+			<li th:if="${session.permission == 1}"><a th:href="@{/companies}">企業情報</a></li>
+			<li th:if="${session.permission == 1}"><a th:href="@{/accounts}">アカウント情報</a></li>
+			<li th:if="${session.permission == 1}"><a th:href="@{/assign-history}">アサイン履歴情報</a></li>
 			<li>
-				<span class="menu-title">削除・復元一覧</span>
-				<ul class="submenu">
+				<span class="menu-title" th:if="${session.permission == 1}">削除・復元一覧</span>
+				<ul class="submenu" th:if="${session.permission == 1}"s>
 					<li><a th:href="@{/deleted-employees}">社員情報</a></li>
 					<li><a th:href="@{/deleted-companies}">企業情報</a></li>
 					<li><a th:href="@{/deleted-accounts}">アカウント情報</a></li>
@@ -29,18 +32,30 @@
 			</li>
 		</ul>
 
+		<!-- サイドバー フッター -->
 		<div class="sidebar-footer">
 			<span th:text="${session.loginId}"></span>
 			<button type="button" class="btn-logout toolbar-btn" onclick="openLogoutModal()"> ログアウト</button>
 		</div>
 	</div>
+	<!-- =========================
+     メイン
+========================= -->
 	<div class="main-content">
 		<div class="content-wrapper" layout:fragment="content"></div>
 	</div>
+
+	<!-- =========================
+     トースト
+========================= -->
 	<div id="toastMessage" class="toast" th:if="${toastMessage != null or toastError != null}"
 		th:classappend="${toastError != null} ? 'toast-error' : ''">
 		<span th:text="${toastMessage != null ? toastMessage : toastError}"></span>
 	</div>
+
+	<!-- =========================
+     ログアウトモーダル
+========================= -->
 	<div id="logoutOverlay" class="modal-overlay" onclick="closeLogoutModal()">
 		<div class="modal-box" onclick="event.stopPropagation()">
 			<div class="modal-icon modal-icon-danger">
@@ -61,6 +76,10 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- =========================
+     削除モーダル
+========================= -->
 	<div id="deleteOverlay" class="modal-overlay" onclick="closeDeleteModal()">
 		<div class="modal-box" onclick="event.stopPropagation()">
 			<div class="modal-icon modal-icon-danger">
@@ -80,6 +99,10 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- =========================
+     一括削除モーダル
+========================= -->
 	<div id="bulkDeleteOverlay" class="modal-overlay" onclick="closeBulkDeleteModal()">
 		<div class="modal-box" onclick="event.stopPropagation()">
 			<div class="modal-icon modal-icon-danger">
