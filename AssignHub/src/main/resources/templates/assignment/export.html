@@ -25,31 +25,33 @@
 						<td class="value">UTF-8</td>
 					</tr>
 				</table>
-				<table class="table">
-					<thead class="table-dark">
-						<tr>
-							<th>アサインID</th>
-							<th>社員名</th>
-							<th>アサイン先企業</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="assign : ${assignments}" class="clickable-row">
-							<td th:text="${assign.assignmentId}"></td>
-							<td th:text="${assign.employee.lastName} + ' ' + ${assign.employee.firstName}"></td>
-							<td th:text="${assign.company.companyName}"></td>
-						</tr>
-					</tbody>
-				</table>
-				<p class="export-note">※詳細情報がエクスポートされます。</p>
+				<div class="table-scroll">
+					<table class="table">
+						<thead class="table-dark">
+							<tr>
+								<th>アサインID</th>
+								<th>社員名</th>
+								<th>アサイン先企業</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="assign : ${assignments}" class="clickable-row">
+								<td th:text="${assign.assignmentId}"></td>
+								<td th:text="${assign.employee.lastName} + ' ' + ${assign.employee.firstName}"></td>
+								<td th:text="${assign.company.companyName}"></td>
+							</tr>
+						</tbody>
+					</table>
+					<p class="export-note">※詳細情報がエクスポートされます。</p>
+				</div>
 			</div>
-		</div>
-		<div class="action-area">
+			<div class="action-area">
 				<form th:action="@{/accounts/export/download(ids=${ids})}" method="post">
 					<button type="submit" class="btn-csv">エクスポート</button>
 					<button type="button" id="btn_account_back" class="btn-back"
-								th:onclick="|location.href='@{/assignments}'|">戻る</button>
+						th:onclick="|location.href='@{/assignments}'|">戻る</button>
 				</form>
+			</div>
 		</div>
 	</div>
 </body>
