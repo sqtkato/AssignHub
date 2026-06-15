@@ -184,8 +184,7 @@
 	</select>
 
 	<select id="countAssignmentsByEmpolyeeId" resultType="int">
-		SELECT
-		COUNT(*)
+		SELECT COUNT(*)
 		FROM t_assignment
 		WHERE emp_id = #{id}
 	</select>
