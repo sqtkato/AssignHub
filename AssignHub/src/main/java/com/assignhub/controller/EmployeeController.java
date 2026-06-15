@@ -291,7 +291,12 @@ public class EmployeeController {
 	 * @return エクスポート画面のテンプレートパス
 	 */
 	@GetMapping("/export")
-	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
+	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model,
+			RedirectAttributes attributes) {
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "削除する対象が選択されていません");
+			return "redirect:/employees";
+		}
 		model.addAttribute("employees", employeeService.findByIds(ids));
 		model.addAttribute("count", employeeService.findByIds(ids).size());
 		return "employee/export";
