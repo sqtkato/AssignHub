@@ -81,13 +81,10 @@
 						class="btn btn-primary detail-btn">変更
 					</a>
 
-
-					<form th:action="@{/assignments/{id}/delete(id=${assignment.assignmentId})}" method="post">
-						<button type="button"
-							class="btn modal-btn-danger detail-btn"
-							th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
-						</button>
-					</form>
+					<button type="button"
+						class="btn modal-btn-danger detail-btn"
+						th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
+					</button>
 
 					<a th:href="@{/assignments}" class="btn btn-secondary detail-btn">戻る
 					</a>
