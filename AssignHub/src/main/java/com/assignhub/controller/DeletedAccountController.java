@@ -3,7 +3,7 @@ package com.assignhub.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import jakarta.servlet.http.HttpSession;
+//import jakarta.servlet.http.HttpSession;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,14 +35,22 @@ public class DeletedAccountController {
 	}
 
 	@GetMapping
-	public String index(@RequestParam(name = "keywordEmpName", required = false) String keywordEmpName,
+	public String index(@RequestParam(name = "empName", required = false) String empName,
 			Model model,
-			@RequestParam(name = "permission", required = false) Integer permission, HttpSession session) {
-		model.addAttribute("accounts", deletedAccountService.findAll(keywordEmpName, permission));
-		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
+
+			@RequestParam(name = "permission", required = false) Integer permission) {
+		model.addAttribute("accounts", deletedAccountService.findAll(empName, permission));
 
 		return "deleted_account/index";
 	}
+//	public String index(@RequestParam(name = "keywordEmpName", required = false) String keywordEmpName,
+//			Model model,
+//			@RequestParam(name = "permission", required = false) Integer permission, HttpSession session) {
+//		model.addAttribute("accounts", deletedAccountService.findAll(keywordEmpName, permission));
+//		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
+
+//		return "deleted_account/index";
+	
 
 
     // ==========================================

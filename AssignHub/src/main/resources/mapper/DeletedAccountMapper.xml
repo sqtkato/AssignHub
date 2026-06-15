@@ -26,8 +26,8 @@
 		<where>
 			a.delete_flg = 1
 			
-			<if test="keyword != null and keyword != ''"> 
-				AND ( e.first_name LIKE CONCAT('%', #{keyword}, '%') OR e.last_name LIKE CONCAT('%', #{keyword}, '%') ) 
+			<if test="empName != null and empName != ''"> 
+				AND ( e.first_name LIKE CONCAT('%', #{empName}, '%') OR e.last_name LIKE CONCAT('%', #{empName}, '%') ) 
 			</if>
 			<if test="permission != null"> 
 				AND a.permission = #{permission} 

@@ -17,7 +17,7 @@ public interface DeletedAccountMapper {
 	 * @param order   ソート順（asc または desc）
 	 * @return アカウントエンティティのリスト
 	 */
-	List<Account> findAll(@Param("keyword") String keyword, @Param("permission") Integer permission);
+	List<Account> findAll(@Param("empName") String empName, @Param("permission") Integer permission);
 
 	/**
 	 * チェックボックスにチェックをつけたアカウント情報を全件取得する。

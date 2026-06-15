@@ -18,8 +18,8 @@ public class DeletedAccountService {
     /**
      * 論理削除済みのアカウント情報を全件取得する（一覧表示・検索用）。
      */
-    public List<Account> findAll(String keyword,Integer permission) {
-        return deletedAccountMapper.findAll(keyword,permission);
+    public List<Account> findAll(String empName,Integer permission) {
+        return deletedAccountMapper.findAll(empName,permission);
     }
 
     /**
