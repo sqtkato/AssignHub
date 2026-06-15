@@ -303,7 +303,7 @@ public class AssignmentController {
 	 */
 	@GetMapping("/import/template")
 	public ResponseEntity<byte[]> downloadTemplate() {
-		String csvContent = "アサインID,社員ID,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n";
+		String csvContent = "アサインID,社員ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n";
 		byte[] csvBytes = csvContent.getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
 		byte[] result = new byte[bom.length + csvBytes.length];
@@ -376,12 +376,12 @@ public class AssignmentController {
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids") List<Integer> ids) {
 		List<Assignment> assignments = assignmentService.findByIds(ids);
-		StringBuilder csvBuilder = new StringBuilder("アサインID,社員ID,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n");
+		StringBuilder csvBuilder = new StringBuilder("アサインID,社員ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n");
 		for (Assignment asn : assignments) {
 			csvBuilder.append(asn.getAssignmentId()).append(",")
 					.append(asn.getEmpId()).append(",")
-					.append(asn.getEmployee().getFirstName()).append(",")
 					.append(asn.getEmployee().getLastName()).append(",")
+					.append(asn.getEmployee().getFirstName()).append(",")
 					.append(asn.getCompany().getCompanyName()).append(",")
 					.append(asn.getCreatedAt()).append(",")
 					.append(asn.getUpdatedAt()).append(",")
