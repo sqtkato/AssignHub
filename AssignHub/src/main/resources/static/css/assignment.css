@@ -14,6 +14,7 @@
 .date-range .form-control {
       flex: 1;
       min-width: 0;
+	  height: 33px;
 }
 .date-range-sep {
       flex: 0 0 auto;
