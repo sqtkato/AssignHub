@@ -38,18 +38,18 @@ public class AssignmentService {
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
-	 * @param assignmentMapper アサイン情報に対するマッパー
+	 * @param assignmentMapper アサイン履歴情報に対するマッパー
 	 */
 	public AssignmentService(AssignmentMapper assignmentMapper) {
 		this.assignmentMapper = assignmentMapper;
 	}
 
 	/**
-	 * アサイン情報の一覧を取得する。
+	 * アサイン履歴情報の一覧を取得する。
 	 *
 	 * @param txtEmpName 社員名の検索キーワード（nullまたは空文字の場合は全件取得）
 	 * @param txtCompanyName 企業名の検索キーワード（nullまたは空文字の場合は全件取得）
-	 * @return アサイン情報のリスト
+	 * @return アサイン履歴情報のリスト
 	 */
 	public List<Assignment> findAll(String empName, String assignName, String companyName,
 			String contractStartDate, String contractEndDate) {
@@ -58,10 +58,10 @@ public class AssignmentService {
 	}
 
 	/**
-	 * アサイン情報をIDで取得する。
+	 * アサイン履歴情報をIDで取得する。
 	 *
-	 * @param id アサイン情報のID
-	 * @return IDに対応するアサイン情報、存在しない場合はnull
+	 * @param id アサイン履歴情報のID
+	 * @return IDに対応するアサイン履歴情報、存在しない場合はnull
 	 */
 	public Assignment findById(Integer id) {
 		return assignmentMapper.findById(id);
@@ -72,7 +72,7 @@ public class AssignmentService {
 	}
 
 	/**
-	 * アサイン情報を保存する。
+	 * アサイン履歴情報を保存する。
 	 * IDが存在しない場合（nullまたは0）は新規登録（INSERT）、存在する場合は更新（UPDATE）を行う。
 	 *
 	 * @param assignment 登録または更新するアサインエンティティ
@@ -363,7 +363,7 @@ public class AssignmentService {
 	}
 
 	/**
-	 * アサイン情報の重複をチェックする。
+	 * アサイン履歴情報の重複をチェックする。
 	 * @param assignment チェック対象のアサインエンティティ
 	 * @return
 	 */

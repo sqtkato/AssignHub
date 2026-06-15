@@ -20,29 +20,27 @@
 						<div class="form-group">
 							<label>社員名</label>
 							<input type="text" th:field="*{empName}" maxlength="100" class="form-control"
-								th:value="${searchForm.empName}" placeholder="例：山田">
+								placeholder="例：山田">
 						</div>
 						<div class="form-group">
 							<label>アサイン先企業</label>
 							<input type="text" th:field="*{assignName}" maxlength="50" class="form-control"
-								th:value="${searchForm.assignName}" placeholder="例：株式会社ABC">
+								placeholder="例：株式会社ABC">
 						</div>
 					</div>
 					<div class="form-group form-group-search">
 						<div class="form-group">
 							<label>契約期間</label>
 							<div class="date-range">
-								<input type="date" th:field="*{contractStartDate}" class="form-control"
-									th:value="${searchForm.contractStartDate}">
+								<input type="date" th:field="*{contractStartDate}" class="form-control">
 								<span class="date-range-sep">～</span>
-								<input type="date" th:field="*{contractEndDate}" class="form-control"
-									th:value="${searchForm.contractEndDate}">
+								<input type="date" th:field="*{contractEndDate}" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
 							<label>所属企業</label>
 							<input type="text" th:field="*{companyName}" maxlength="50" class="form-control"
-								th:value="${searchForm.companyName}" placeholder="例：株式会社ABC">
+								placeholder="例：株式会社ABC">
 						</div>
 					</div>
 				</div>
