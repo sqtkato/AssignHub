@@ -65,21 +65,25 @@
 		CONCAT(e.last_name_kana, e.first_name_kana) AS emp_name_kana,
 		e.engineer_type,
 		c.company_name AS assign_company_name,
-		ec.company_id AS ec_company_id,
+		ec.company_id AS
+		ec_company_id,
 		ec.company_name AS emp_company_name,
 		ec.company_name_kana AS emp_company_name_kana,
 		r.role
 		FROM
 		t_assignment a
 		INNER JOIN m_employee e ON a.emp_id = e.emp_id
-		INNER JOIN m_company c ON a.company_id = c.company_id
-		INNER JOIN m_company ec ON e.company_id = ec.company_id
+		INNER JOIN m_company c
+		ON a.company_id = c.company_id
+		INNER JOIN m_company ec ON e.company_id
+		= ec.company_id
 		INNER JOIN m_role r ON a.role_id = r.role_id
 		<where>
 			a.delete_flg = 0
 			AND e.delete_flg = 0
 			AND c.delete_flg = 0
-			AND ec.delete_flg = 0
+			AND
+			ec.delete_flg = 0
 			<if test="empName != null and empName != ''">
 				AND CONCAT(e.last_name, e.first_name)
 				LIKE CONCAT('%',
@@ -94,8 +98,7 @@
 				LIKE CONCAT('%', #{companyName},
 				'%')
 			</if>
-			<if
-				test="contractStartDate != null and contractStartDate != ''">
+			<if test="contractStartDate != null and contractStartDate != ''">
 				AND a.contract_start_date &gt;= #{contractStartDate}
 			</if>
 			<if test="contractEndDate != null and contractEndDate != ''">
@@ -151,9 +154,9 @@
 		AND c.delete_flg = 0
 		AND ec.delete_flg = 0
 	</select>
-	
+
 	<select id="findByIds" resultMap="assignmentResultMap">
-		SELECT 
+		SELECT
 		a.assignment_id,
 		a.emp_id,
 		a.company_id,
@@ -283,24 +286,27 @@
 		t_assignment
 		WHERE delete_flg = 0
 	</select>
-	
+
 	<select id="existsEmployee" resultType="int">
-		SELECT COUNT(*) FROM m_employee
+		SELECT COUNT(*) FROM
+		m_employee
 		WHERE emp_id = #{empId}
 		AND delete_flg = 0
 	</select>
 
 	<select id="findCompanyIdByName" resultType="java.lang.Integer">
-		SELECT company_id FROM m_company
+		SELECT company_id
+		FROM m_company
 		WHERE company_name = #{companyName}
 		AND delete_flg = 0
 	</select>
 
 	<select id="findRoleIdByName" resultType="java.lang.Integer">
-		SELECT role_id FROM m_role
+		SELECT role_id FROM
+		m_role
 		WHERE role = #{role}
 	</select>
-	
-	
+
+
 
 </mapper>
