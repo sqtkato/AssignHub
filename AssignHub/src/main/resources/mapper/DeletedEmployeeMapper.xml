@@ -76,7 +76,7 @@
 		a.company_id = c2.company_id
 
 		<where>
-			e.delete_flg = 0
+			e.delete_flg = 1
 			<if test="empName != null and empName != ''">
 				AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%',
 				#{empName}, '%')
@@ -161,21 +161,21 @@
 		</foreach>
 	</delete>
 
-	<select id="countAccountsByEmpolyeeId" resultType="int">
+	<select id="existAccountsByEmpolyeeId" resultType="int">
 		SELECT
 		COUNT(*)
 		FROM m_employee e
 		INNER JOIN m_account a
-		ON e.account_id = a_account_id
+		ON e.account_id = a.account_id
 		WHERE e.emp_id = #{id}
 		AND a.delete_flg = 0
 	</select>
 
-	<select id="countAccountsByEmpolyeeIds" resultType="int">
+	<select id="existAccountsByEmpolyeeIds" resultType="int">
 		SELECT COUNT(*)
 		FROM m_employee e
 		INNER JOIN m_account a
-		ON e.account_id = a_account_id
+		ON e.account_id = a.account_id
 		WHERE e.emp_id IN
 		<foreach item="id" collection="ids" open="(" separator=","
 			close=")">
@@ -184,7 +184,7 @@
 		AND a.delete_flg = 0
 	</select>
 
-	<select id="countCompaniesByEmpolyeeId" resultType="int">
+	<select id="existCompaniesByEmpolyeeId" resultType="int">
 		SELECT
 		COUNT(*)
 		FROM m_employee e
@@ -194,7 +194,7 @@
 		AND c.delete_flg = 0
 	</select>
 
-	<select id="countCompaniesByEmpolyeeIds" resultType="int">
+	<select id="existCompaniesByEmpolyeeIds" resultType="int">
 		SELECT COUNT(*)
 		FROM m_employee e
 		INNER JOIN m_company c
@@ -207,14 +207,14 @@
 		AND c.delete_flg = 0
 	</select>
 
-	<select id="countAssignmentsByEmpolyeeId" resultType="int">
+	<select id="existAssignmentsByEmpolyeeId" resultType="int">
 		SELECT
 		COUNT(*)
 		FROM t_assignment
 		WHERE emp_id = #{id}
 	</select>
 
-	<select id="countAssignmentsByEmpolyeeIds" resultType="int">
+	<select id="existAssignmentsByEmpolyeeIds" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment a
 		WHERE emp_id IN

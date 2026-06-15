@@ -65,16 +65,15 @@ public class DeletedEmployeeController {
 	 */
 	@PostMapping("/{id}/restore")
 	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-		if(deletedEmployeeService.countAccountsByEmpolyeeId(id)) {
+		if(deletedEmployeeService.existAccountsByEmpolyeeId(id)) {
 			attributes.addFlashAttribute("toastMessage","紐づくアカウント情報が削除状態のため、復元できません。先にアカウント情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
-		if(deletedEmployeeService.countCompaniesByEmpolyeeId(id)) {
+		if(deletedEmployeeService.existCompaniesByEmpolyeeId(id)) {
 			attributes.addFlashAttribute("toastMessage","所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
         deletedEmployeeService.restore(id);
-        attributes.addFlashAttribute("toastMessage", "社員情報を復元しました");
         return "redirect:/deleted-employees";
     }
 	
@@ -85,22 +84,21 @@ public class DeletedEmployeeController {
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクト
 	 */
-	@PostMapping("/bulk-restore")
+	@PostMapping("/restore-bulk")
     public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
         if (ids == null || ids.isEmpty()) {
             attributes.addFlashAttribute("toastError", "復元対象が選択されていません");
             return "redirect:/deleted-employees";
         }
-        if(deletedEmployeeService.countAccountsByEmpolyeeIds(ids)) {
+        if(deletedEmployeeService.existAccountsByEmpolyeeIds(ids)) {
         	attributes.addFlashAttribute("toastError","紐づくアカウント情報が削除状態のため、復元できません。先にアカウント情報を復元してください。");
         	return "redirect:/deleted-employees";
         }
-        if(deletedEmployeeService.countCompaniesByEmpolyeeIds(ids)) {
+        if(deletedEmployeeService.existCompaniesByEmpolyeeIds(ids)) {
         	attributes.addFlashAttribute("toastError","所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
         	return "redirect:/deleted-employees";
         }
         deletedEmployeeService.restoreBulk(ids);
-        attributes.addFlashAttribute("toastMessage", ids.size() + "件の社員情報を復元しました");
         return "redirect:/deleted-employees";
     }
 		
@@ -113,14 +111,13 @@ public class DeletedEmployeeController {
 	 */
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-		if(deletedEmployeeService.countAssignmentsByEmpolyeeId(id)) {
+		if(deletedEmployeeService.existAssignmentsByEmpolyeeId(id)) {
 			attributes.addFlashAttribute("toastMessage","紐づくアサイン履歴情報が存在するため、削除できません。先にアサイン履歴情報を削除してください。");
-			return "redirect:/employees";
+			return "redirect:/deleted-employees";
 		}
 	
 		deletedEmployeeService.physicalDelete(id);
-		attributes.addFlashAttribute("toastMessage", "社員情報を削除しました");
-		return "redirect:/employees";
+		return "redirect:/deleted-employees";
 	}
 	
 	/**
@@ -130,21 +127,20 @@ public class DeletedEmployeeController {
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクト
 	 */
-	@PostMapping("/bulk-delete")
+	@PostMapping("/delete-bulk")
     public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
         if (ids == null || ids.isEmpty()) {
             attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
-            return "redirect:/deleted-Employees";
+            return "redirect:/deleted-employees";
         }
         
         // Serviceの判定メソッドを使って一括不在条件をチェック
-        if (deletedEmployeeService.countAssignmentsByEmpolyeeIds(ids)) {
+        if (deletedEmployeeService.existAssignmentsByEmpolyeeIds(ids)) {
             attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するアカウントが含まれているため、物理削除できません。先にアサイン履歴情報を削除してください。");
-            return "redirect:/deleted-Employees";
+            return "redirect:/deleted-employees";
         }
         
         deletedEmployeeService.physicalDeleteBulk(ids);
-        attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を完全に削除しました");
         return "redirect:/deleted-employees";
     }
 	

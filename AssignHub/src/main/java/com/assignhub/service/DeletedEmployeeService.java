@@ -77,34 +77,34 @@ public class DeletedEmployeeService {
     // =======================================================
 
     /** 単一社員情報に紐づくアカウントが存在するか判定 生存*/
-    public boolean countAccountsByEmpolyeeId(Integer id) {
-        return deletedEmployeeMapper.countAccountsByEmpolyeeId(id) < 1;
+    public boolean existAccountsByEmpolyeeId(Integer id) {
+        return deletedEmployeeMapper.existAccountsByEmpolyeeId(id) < 1;
     }
 
     /** 複数社員情報の中に、紐づくアカウントが存在するものが含まれているか判定 生存*/
-    public boolean countAccountsByEmpolyeeIds(List<Integer> ids) {
-        return deletedEmployeeMapper.countAccountsByEmpolyeeIds(ids) < ids.size();
+    public boolean existAccountsByEmpolyeeIds(List<Integer> ids) {
+        return deletedEmployeeMapper.existAccountsByEmpolyeeIds(ids) < ids.size();
     }
 
     /** 単一社員情報に紐づく企業情報（パートナー所属）が存在するか判定 生存*/
-    public boolean countCompaniesByEmpolyeeId(Integer id) {
-        return deletedEmployeeMapper.countCompaniesByEmpolyeeId(id) < 1;
+    public boolean existCompaniesByEmpolyeeId(Integer id) {
+        return deletedEmployeeMapper.existCompaniesByEmpolyeeId(id) < 1;
     }
 
     /** 複数社員情報の中に、企業情報（パートナー所属）が存在するものが含まれているか判定 生存*/
-    public boolean countCompaniesByEmpolyeeIds(List<Integer> ids) {
-        return deletedEmployeeMapper.countCompaniesByEmpolyeeIds(ids) < ids.size();
+    public boolean existCompaniesByEmpolyeeIds(List<Integer> ids) {
+        return deletedEmployeeMapper.existCompaniesByEmpolyeeIds(ids) < ids.size();
     }
     
     
     /** 単一社員情報に紐づくアサイン情報が存在するか判定 不在*/
-    public boolean countAssignmentsByEmpolyeeId(Integer id) {
-        return deletedEmployeeMapper.countAssignmentsByEmpolyeeId(id) > 0;
+    public boolean existAssignmentsByEmpolyeeId(Integer id) {
+        return deletedEmployeeMapper.existAssignmentsByEmpolyeeId(id) > 0;
     }
 
     /** 複数社員情報の中に、アサイン情報が存在するものが含まれているか判定 不在*/
-    public boolean countAssignmentsByEmpolyeeIds(List<Integer> ids) {
-        return deletedEmployeeMapper.countAssignmentsByEmpolyeeIds(ids) > 0;
+    public boolean existAssignmentsByEmpolyeeIds(List<Integer> ids) {
+        return deletedEmployeeMapper.existAssignmentsByEmpolyeeIds(ids) > 0;
     }
     
 }

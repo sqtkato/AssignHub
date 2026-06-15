@@ -15,7 +15,7 @@
 		</div>
 
 		<div class="card acc">
-			<form th:action="@{/deleted-accounts}" method="get" class="search-form">
+			<form th:action="@{/deleted-employees}" method="get" class="search-form">
 				<div class="form-group form-group-search">
 					<label>社員名</label>
 					<input type="text" name="empName" class="form-control" th:value="${empName}" placeholder="例：山田 太郎">
@@ -42,7 +42,7 @@
 
 		<form method="post" id="listForm">
 			<div class="table-toolbar">
-	<button type="submit" formaction="/deleted-accounts/restore-bulk" class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元"
+	<button type="submit" formaction="/deleted-employees/restore-bulk" class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元"
 		onclick="return confirm('選択した項目を一括復元しますか？');">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 			stroke-linecap="round" stroke-linejoin="round">
@@ -52,7 +52,7 @@
 		一括復元
 	</button>
 
-	<button type="submit" formmethod="get" formaction="/deleted-accounts/export" class="toolbar-btn"
+	<button type="submit" formmethod="get" formaction="/deleted-employees/export" class="toolbar-btn"
 		title="チェックした項目をエクスポート">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 			stroke-linecap="round" stroke-linejoin="round">
@@ -63,12 +63,13 @@
 		エクスポート
 	</button>
 
-	<button type="submit" formaction="/deleted-accounts/delete-bulk" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
-		onclick="return confirm('選択した項目を一括削除しますか？');">
+	<button type="button" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
+		onclick="openBulkDeleteModal()">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 			stroke-linecap="round" stroke-linejoin="round">
 			<polyline points="3 6 5 6 21 6"></polyline>
-			<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+			<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+			</path>
 		</svg>
 		一括削除
 	</button>
@@ -100,7 +101,7 @@
 								<td th:text="${emp.company?.companyName} ?: 'ー'"></td>
 								<td class="col-action">
 									<button type="submit" th:formaction="@{/deleted-employees/{id}/restore(id=${emp.empId})}" class="btn-icon-svg" title="復元">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-linecap="round" stroke-linejoin="round"><path d="M7 16c2.21 0 4-1.79 5-3s2.79-3 5-3a4 4 0 1 1 0 8c-2.21 0-4-1.79-5-3s-2.79-3-5-3a4 4 0 0 0-3.4 1.9" /><polyline points="5.5 10 2 12.5 4.5 16" /></svg>
 									</button>
 									<button type="button" th:attr="data-id=${emp.empId}" class="btn-icon-svg delete" title="削除" onclick="openDeleteModal(this.dataset.id)">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
