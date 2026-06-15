@@ -38,4 +38,11 @@
 		#{companyName}, NOW(), NOW()
 		)
 	</insert>
+	
+	<select id="findByCompanyName" resultType="com.assignhub.entity.Company">
+    SELECT * FROM m_company
+    WHERE company_name = #{companyName}
+    AND delete_flg = 0
+    LIMIT 1
+</select>
 </mapper>
