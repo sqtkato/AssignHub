@@ -11,7 +11,7 @@
 	<h2>社員情報変更入力</h2>
 
 	<form th:action="@{/employees/{id}/edit(id=${id})}" th:object="${employeeForm}" method="post">
-			
+
 		<label>社員ID</label>
 		<div th:text="*{empId}"></div>
 		<input type="hidden" th:field="*{empId}">
@@ -46,14 +46,16 @@
 		<div>
 			<label>生年月日</label>
 			<div></div>
-			<input type="text" th:field="*{birthDate}"
+			<input type="date" max="9999-12-31" th:field="*{birthDate}"
 				th:classappend="${#fields.hasErrors('birthDate')} ? 'input-error'">
 			<div class="error-message" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
 		</div>
+
 		<div>
 			<label>入社年月</label>
 			<div></div>
-			<input type="text" th:field="*{hireDate}" th:classappend="${#fields.hasErrors('hireDate')} ? 'input-error'">
+			<input type="date" max="9999-12-31" th:field="*{hireDate}"
+				th:classappend="${#fields.hasErrors('hireDate')} ? 'input-error'">
 			<div class="error-message" th:if="${#fields.hasErrors('hireDate')}" th:errors="*{hireDate}"></div>
 		</div>
 		<div>
@@ -73,14 +75,14 @@
 		<div>
 			<label>住所１</label>
 			<div></div>
-			<input type="text" th:field="*{Address1}" th:classappend="${#fields.hasErrors('Address1')} ? 'input-error'">
-			<div class="error-message" th:if="${#fields.hasErrors('Address1')}" th:errors="*{Address1}"></div>
+			<input type="text" th:field="*{address1}" th:classappend="${#fields.hasErrors('Address1')} ? 'input-error'">
+			<div class="error-message" th:if="${#fields.hasErrors('address1')}" th:errors="*{address1}"></div>
 		</div>
 		<div>
 			<label>住所２</label>
 			<div></div>
-			<input type="text" th:field="*{Address2}" th:classappend="${#fields.hasErrors('Address2')} ? 'input-error'">
-			<div class="error-message" th:if="${#fields.hasErrors('Address2')}" th:errors="*{Address2}"></div>
+			<input type="text" th:field="*{address2}" th:classappend="${#fields.hasErrors('Address2')} ? 'input-error'">
+			<div class="error-message" th:if="${#fields.hasErrors('address2')}" th:errors="*{address2}"></div>
 		</div>
 		<div>
 			<label>電話番号</label>
@@ -104,21 +106,19 @@
 				    <option value="プロパー">プロパー</option>
 				    <option value="パートナー">パートナー</option>
 			</select>
-
+			<div class="error-message" th:if="${#fields.hasErrors('deptId')}" th:errors="*{deptId}"></div>
+			
 			<!-- ログインID（プロパーのときだけ表示） -->
-			<div id="loginIdArea" style="display: none;"
-			>
+			<div id="loginIdArea" style="display: none;">
 				    <label>ログインID</label><br>
 				  
 				<select id="loginId" name="loginId">
 					    <option value="">未選択</option>
-					<option th:each="account : ${accounts}"
-					               th:value="${account.accountId}"
-					               th:text="${account.loginId}">
-					       </option>
+					<option th:each="account : ${accounts}" th:value="${account.accountId}"
+						th:text="${account.loginId}">
+					</option>
 				</select>
-				<div class="error-message" th:if="${#fields.hasErrors('accountId')}" 
-				th:errors="*{accountId}"></div>
+				<div class="error-message" th:if="${#fields.hasErrors('accountId')}" th:errors="*{accountId}"></div>
 			</div>
 
 			<!-- 所属企業（パートナーのときだけ表示） -->
@@ -127,10 +127,9 @@
 				  
 				<select id="companyName" name="companyName">
 					   <option value="">未選択</option>
-					<option th:each="company : ${companies}"
-					               th:value="${company.companyId}"
-					               th:text="${company.companyName}">
-					       </option>
+					<option th:each="company : ${companies}" th:value="${company.companyId}"
+						th:text="${company.companyName}">
+					</option>
 				</select>
 				<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}"></div>
 			</div>
@@ -171,11 +170,14 @@
 				</div>
 			</div>
 			<div>
-	
-	<div>
-		<button type="submit">変更</button>
-		<a th:href="@{/employees}">戻る</a>
-	</div>
+
+				<div>
+					<input type="hidden" name="fromPage" th:value="${fromPage}" />
+					<button type="submit">変更</button>
+					<a th:if="${fromPage == 'detail'}" th:href="@{/employees/{id}(id=${employeeForm.empId})}"
+						class="btn btn-secondary">戻る</a>
+					<a th:if="${fromPage != 'detail'}" th:href="@{/employees}" class="btn btn-secondary">戻る</a>
+				</div>
 	</form>
 
 	</div>

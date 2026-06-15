@@ -75,6 +75,11 @@ public class EmployeeController {
 	 */
 	@GetMapping("/new")
 	public String create(Model model) {
+		int currentCount = employeeService.findAll(null, null, null, null).size();
+		if(currentCount >= 500) {
+			model.addAttribute("toastEror","登録件数が上限に達しています");
+			return "redirect;/employees";
+		}
 		if (!model.containsAttribute("employeeForm")) {
 			model.addAttribute("employeeForm", new EmployeeForm());
 		}
@@ -215,7 +220,12 @@ public class EmployeeController {
 	 * @return インポート画面のテンプレートパス
 	 */
 	@GetMapping("/import")
-	public String showImport() {
+	public String showImport(Model model) {
+		int currentCount = employeeService.findAll(null, null, null, null).size();
+		if(currentCount >= 500) {
+			model.addAttribute("toastEror","登録件数が上限に達しています");
+			return "redirect;/employees";
+		}
 		return "employee/import";
 	}
 
