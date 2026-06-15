@@ -1,11 +1,9 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
 
 <head>
-	<meta charset="UTF-8">
 	<title>アサイン履歴情報削除/復元一覧</title>
-	<link rel="stylesheet" href="/css/popup.css">
+	<link rel="stylesheet" th:href="@{/css/assignment.css}">
 </head>
 
 <body>
@@ -15,7 +13,8 @@
 		</div>
 
 		<div class="card">
-			<form th:action="@{/deleted-assigns}" th:object="${searchForm}" method="get" class="search-form" novalidate>
+			<form th:action="@{/deleted-assignments}" method="get" th:object="${searchForm}" class="search-form"
+				novalidate>
 				<div class="search-row">
 					<div class="form-group form-group-search">
 						<div class="form-group">
@@ -53,16 +52,19 @@
 
 		<form method="post" id="listForm">
 			<div class="table-toolbar">
-				<button type="submit" th:formaction="@{/deleted-assigns/restore-bulk}"
-					class="toolbar-btn toolbar-btn-danger" title="チェックした項目を復元">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50" width="100" height="50" fill="none"
-						stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-						<path d="M 25 25 C -5 5, -5 45, 25 25 C 55 5, 85 5, 75 25 C 65 45, 35 45, 25 25 Z" />
-						<path d="M 16 33 L 12 21 L 24 23" />
+				<button type="submit" formaction="/deleted-assignments/restore-bulk"
+					class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元"
+					onclick="return confirm('選択した項目を一括復元しますか？');">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<path
+							d="M7 16c2.21 0 4-1.79 5-3s2.79-3 5-3a4 4 0 1 1 0 8c-2.21 0-4-1.79-5-3s-2.79-3-5-3a4 4 0 0 0-3.4 1.9" />
+						<polyline points="5.5 10 2 12.5 4.5 16" />
 					</svg>
 					一括復元
 				</button>
-				<button type="submit" th:formaction="@{/deleted-assigns/export}" class="toolbar-btn toolbar-btn-danger"
+
+				<button type="submit" formmethod="get" formaction="/deleted-assignments/export" class="toolbar-btn"
 					title="チェックした項目をエクスポート">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
@@ -72,17 +74,19 @@
 					</svg>
 					エクスポート
 				</button>
-				<button type="submit" th:formaction="@{/deleted-assigns/delete-bulk}"
-					class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除">
+
+				<button type="submit" formaction="/deleted-assignments/delete-bulk"
+					class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
+					onclick="return confirm('選択した項目を一括削除しますか？');">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<polyline points="3 6 5 6 21 6"></polyline>
-						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-						</path>
+						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
 					</svg>
 					一括削除
 				</button>
 			</div>
+
 
 			<div class="card">
 				<div class="table-scroll">
@@ -109,31 +113,17 @@
 										class="chk_assign_select row-checkbox">
 								</td>
 								<td th:text="${assign.assignmentId}"></td>
-								<td th:text="${assign.employee.empName}"></td>
+								<td th:text="${assign.employee.lastName} + ' ' + ${assign.employee.firstName}"></td>
 								<td th:text="${assign.company.companyName}"></td>
 								<td th:text="${assign.employee.company.companyName}"></td>
 								<td th:text="${assign.contractStartDate}"></td>
 								<td th:text="${assign.contractEndDate != null ? assign.contractEndDate : 'ー'}"></td>
 								<td th:text="${assign.unitPrice}"></td>
-
-								<td class="col-action">
-									<button type="submit"
-										th:formaction="@{/deleted-assigns/{id}/restore(id=${assign.assignmentId})}"
-										class="btn-icon-svg" title="復元"
-										style="background: none; border: none; cursor: pointer; padding: 0;">
+								<td>
+									<button type="button" class="btn_assign_delete btn-icon-svg delete" title="削除"
+										th:onclick="|openDeleteModal(${assign.assignmentId})|">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-											stroke="currentColor" stroke-width="2" stroke-linecap="round"
-											stroke-linejoin="round">
-											<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-											<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-										</svg>
-									</button>
-									<button type="button" th:attr="data-id=${assign.assignmentId}"
-										class="btn-icon-svg delete" title="削除"
-										onclick="openDeleteModal(this.dataset.id)">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-											stroke="currentColor" stroke-width="2" stroke-linecap="round"
-											stroke-linejoin="round">
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
 											<polyline points="3 6 5 6 21 6"></polyline>
 											<path
 												d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
@@ -142,7 +132,6 @@
 									</button>
 								</td>
 							</tr>
-
 							<tr th:if="${#lists.isEmpty(assignments)}">
 								<td colspan="9" class="text-center">該当するデータがありません。</td>
 							</tr>
@@ -151,14 +140,8 @@
 				</div>
 			</div>
 		</form>
-
-		<div id="deleteOverlay" class="modal-overlay">...</div>
-		<div id="bulkDeleteOverlay" class="modal-overlay">...</div>
-		<div id="noSelectionOverlay" class="modal-overlay">...</div>
-
-		<script src="/js/accunt.js"></script>
-
 	</div>
+
 </body>
 
 </html>

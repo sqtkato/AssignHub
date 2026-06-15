@@ -30,17 +30,13 @@ public class DeletedAssignController {
 	public String index(@Validated @ModelAttribute("searchForm") SearchForm searchForm,
 			BindingResult result,
 			Model model) {
-		
+
 		java.time.LocalDate startDate = searchForm.getContractStartDate();
 		java.time.LocalDate endDate = searchForm.getContractEndDate();
 
 		String toastError = null;
 		if (result.hasErrors()) {
-			if (result.getFieldError("contractStartDate") != null || result.getFieldError("contractEndDate") != null) {
-				toastError = "契約期間は正しい日付を入力してください。";
-			} else {
-				toastError = "契約開始日は契約終了日以前の日付を入力してください。";
-			}
+			toastError = "契約開始日は契約終了日以前の日付を入力してください。";
 		}
 
 		if (toastError != null) {
@@ -57,7 +53,7 @@ public class DeletedAssignController {
 				searchForm.getCompanyName(),
 				startDate == null ? null : startDate.toString(),
 				endDate == null ? null : endDate.toString()));
-		
+
 		return "deleted_assign/index";
 	}
 	// ==========================================
@@ -130,7 +126,7 @@ public class DeletedAssignController {
 	public String deleted(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		deletedAssignService.physicalDelete(id);
 		attributes.addFlashAttribute("toastMessage", "アカウント情報を完全に削除しました");
-		return "redirect:/deleted-assigns";
+		return "redirect:/deleted-assignments";
 	}
 
 	/* 一括削除 */
@@ -147,46 +143,44 @@ public class DeletedAssignController {
 		return "redirect:/deleted-assignments";
 	}
 
+	//		エクスポート画面へ遷移	
+	//		@GetMapping("/export")
+	//		public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
+	//			//引数内書き換え
+	//			model.addAttribute("count", deletedAssignService.findAllByIds(ids));
+	//			
+	//			return "deleted_assign/export";
+	//		}
 
-//		エクスポート画面へ遷移	
-//		@GetMapping("/export")
-//		public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
-//			//引数内書き換え
-//			model.addAttribute("count", deletedAssignService.findAllByIds(ids));
-//			
-//			return "deleted_assign/export";
-//		}
-
-//		
-//	//エクスポートのダウンロード処理
-//		@GetMapping("/export/download")
-//		public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
-//				Model model) {
-//			List<Assignment> delAccount = deletedAssignService.findAllByIds(ids);
-//			//引数名書き換え
-//			StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,削除フラグ,作成日時,更新日時,社員名\n");
-//			//括弧内書き換え
-//			for (Assignment delAcc : delAccount) {
-//				csvBuilder.append(delAcc.getAssignmentId()).append(",")
-//						.append(delAcc.getEmpId()).append(",")
-//						.append(delAcc.getPasswordHash()).append(",")
-//						.append(delAcc.getPermission()).append(",")
-//						.append(delAcc.getDeleteFlg()).append(",")
-//						.append(delAcc.getCreatedAt()).append(",")
-//						.append(delAcc.getUpdatedAt()).append(",")
-//						.append(delAcc.getEmpName()).append("\n");
-//			}
-//			byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
-//			byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
-//			byte[] result = new byte[bom.length + csvBytes.length];
-//			System.arraycopy(bom, 0, result, 0, bom.length);
-//			System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
-//
-//			HttpHeaders headers = new HttpHeaders();
-//			//filename変更必要
-//			headers.add("Content-Disposition", "attachment; filename=deletedAccount.csv");
-//			headers.add("Content-Type", "text/csv; charset=UTF-8");
-//			return new ResponseEntity<>(result, headers, HttpStatus.OK);
-//		}
+	//		
+	//	//エクスポートのダウンロード処理
+	//		@GetMapping("/export/download")
+	//		public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
+	//				Model model) {
+	//			List<Assignment> delAccount = deletedAssignService.findAllByIds(ids);
+	//			//引数名書き換え
+	//			StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,削除フラグ,作成日時,更新日時,社員名\n");
+	//			//括弧内書き換え
+	//			for (Assignment delAcc : delAccount) {
+	//				csvBuilder.append(delAcc.getAssignmentId()).append(",")
+	//						.append(delAcc.getEmpId()).append(",")
+	//						.append(delAcc.getPasswordHash()).append(",")
+	//						.append(delAcc.getPermission()).append(",")
+	//						.append(delAcc.getDeleteFlg()).append(",")
+	//						.append(delAcc.getCreatedAt()).append(",")
+	//						.append(delAcc.getUpdatedAt()).append(",")
+	//						.append(delAcc.getEmpName()).append("\n");
+	//			}
+	//			byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
+	//			byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+	//			byte[] result = new byte[bom.length + csvBytes.length];
+	//			System.arraycopy(bom, 0, result, 0, bom.length);
+	//			System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+	//
+	//			HttpHeaders headers = new HttpHeaders();
+	//			//filename変更必要
+	//			headers.add("Content-Disposition", "attachment; filename=deletedAccount.csv");
+	//			headers.add("Content-Type", "text/csv; charset=UTF-8");
+	//			return new ResponseEntity<>(result, headers, HttpStatus.OK);
+	//		}
 }
-
