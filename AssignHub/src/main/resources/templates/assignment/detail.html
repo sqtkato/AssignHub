@@ -84,7 +84,7 @@
 
 					<form th:action="@{/assignments/{id}/delete(id=${assignment.assignmentId})}" method="post">
 						<button type="button"
-							class="btn modal-btn-danger detail-btn" title="削除"
+							class="btn modal-btn-danger detail-btn"
 							th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
 						</button>
 					</form>
