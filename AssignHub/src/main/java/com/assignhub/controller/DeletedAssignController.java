@@ -70,7 +70,7 @@ public class DeletedAssignController {
 
 		if (deletedAssignService.countcompanyspartnerByAssignId(id)) {
 			attributes.addFlashAttribute("toastError", "紐づく所属元企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
-			return "redirect:/deleted-assignments"; // ⭕ タイポを修正（assgns -> assigns）
+			return "redirect:/deleted-assignments"; 
 		}
 
 		if (deletedAssignService.countEmployeesproperByAssignId(id)) {
