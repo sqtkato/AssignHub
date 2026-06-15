@@ -985,22 +985,21 @@ a:hover {
     border: 1px solid #333;
     padding: 12px;
 }
-    .detail-btn {
-    width: 120px;
-    height: 45px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    font-weight: bold;
-    text-decoration: none;
-    box-sizing: border-box;
+.detail-btn {
+	width: 120px;
+	height: 45px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1rem;
+	font-weight: bold;
+	text-decoration: none;
+	box-sizing: border-box;
 }
-.detail-actions {
-    width: 100%;
-       justify-content: center;
-       align-items: center;
-       gap: 90px;
+.form-actions.detail-actions {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 90px;
 }
-.detail-actions form {
-    margin: 0;}

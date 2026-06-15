@@ -5,13 +5,9 @@ import java.time.LocalDate;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.Data;
 
 /**
@@ -49,12 +45,12 @@ public class EmployeeForm {
 
 	/** 生年月日(任意) */
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@PastOrPresent(message = "入力された年月日は存在しません") 
+	@PastOrPresent(message = "入力された年月日は存在しません")
 	private LocalDate birthDate;
 	
 	/** 入社年月(任意) */
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@PastOrPresent(message = "入力された年月日は存在しません") 
+	@PastOrPresent(message = "入力された年月日は存在しません")
 	private LocalDate hireDate;
 
 	/**勤続年数（任意、最大３桁） */
@@ -89,15 +85,20 @@ public class EmployeeForm {
 	private String email;
 
 	/**エンジニアタイプ (必須)*/
-	@NotBlank(message = "エンジニアタイプは必須です")
+//	@NotBlank(message = "エンジニアタイプは必須です")
 	private String engineerType;
 
 	/**所属企業 (必須)*/
+<<<<<<< HEAD
 	@NotNull(message = "所属企業は必須です")
 	private Integer companyId;
+=======
+//	@NotBlank(message = "所属企業は必須です")
+	private String companyName;
+>>>>>>> stash
 	
 	/**ログインID (必須)*/
-	@NotNull(message = "ログインIDは必須です")
+//	@NotNull(message = "ログインIDは必須です")
 	private Integer accountId;
 
 	/**所属部署（任意、最大100文字） */
