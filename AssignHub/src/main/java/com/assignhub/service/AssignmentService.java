@@ -368,14 +368,13 @@ public class AssignmentService {
 	 * @return
 	 */
 	public boolean existsDuplicate(Assignment assignment) {
-		Assignment duplicate = assignmentMapper.findDuplicate(
-				assignment.getAssignmentId(),
-				assignment.getEmpId(),
-				assignment.getCompanyId(),
-				assignment.getContractStartDate(),
-				assignment.getContractEndDate());
-
-		return duplicate != null;
+	    int count = assignmentMapper.countDuplicate(
+	            assignment.getAssignmentId(),
+	            assignment.getEmpId(),
+	            assignment.getCompanyId(),
+	            assignment.getContractStartDate(),
+	            assignment.getContractEndDate());
+	    return count > 0;
 	}
 
 	public boolean isMaxCount() {

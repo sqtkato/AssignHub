@@ -253,33 +253,20 @@
 		AND delete_flg = 0
 	</update>
 
-	<select id="findDuplicate" resultMap="assignmentResultMap">
-		SELECT
-		assignment_id,
-		emp_id,
-		company_id,
-		contract_start_date,
-		contract_end_date,
-		unit_price,
-		role_id,
-		delete_flg,
-		created_at,
-		updated_at
-		FROM t_assignment
-		WHERE delete_flg = 0
-		AND emp_id = #{empId}
-		AND
-		company_id = #{companyId}
-		AND contract_start_date =
-		#{contractStartDate}
-		AND (
-		contract_end_date = #{contractEndDate}
-		OR
-		(contract_end_date IS NULL AND #{contractEndDate} IS NULL)
-		)
-		<if test="assignmentId != null">
-			AND assignment_id != #{assignmentId}
-		</if>
+	<select id="countDuplicate" resultType="int">
+    	SELECT COUNT(*)
+    	FROM t_assignment
+    	WHERE delete_flg = 0
+    	AND emp_id = #{empId}
+    	AND company_id = #{companyId}
+    	AND contract_start_date = #{contractStartDate}
+    	AND (
+        	contract_end_date = #{contractEndDate}
+        	OR (contract_end_date IS NULL AND #{contractEndDate} IS NULL)
+    	)
+    	<if test="assignmentId != null">
+        	AND assignment_id != #{assignmentId}
+    	</if>
 	</select>
 
 	<select id="countAll" resultType="int">

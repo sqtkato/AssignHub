@@ -90,24 +90,12 @@ public interface AssignmentMapper {
      */
     Integer findRoleIdByName(@Param("role") String role);
     
-    /**
-     * アサイン情報の重複をチェックする。
-     * 社員ID、企業ID、契約開始日、契約終了日がすべて一致するデータを取得する。
-     *
-     * @param assignmentId チェック対象のアサインID（更新時は自身のIDを除外するために指定、登録時はnull）
-     * @param empId 社員ID
-     * @param companyId 企業ID
-     * @param contractStartDate 契約開始日
-     * @param contractEndDate 契約終了日
-     * @return 重複するアサイン情報エンティティ（重複がない場合はnull）
-     */
-	Assignment findDuplicate(
-    	@Param("assignmentId") Integer assignmentId,
-    	@Param("empId") Integer empId,
-    	@Param("companyId") Integer companyId,
-    	@Param("contractStartDate") LocalDate contractStartDate,
-    	@Param("contractEndDate") LocalDate contractEndDate
-	);
+    int countDuplicate(
+    	    @Param("assignmentId") Integer assignmentId,
+    	    @Param("empId") Integer empId,
+    	    @Param("companyId") Integer companyId,
+    	    @Param("contractStartDate") LocalDate contractStartDate,
+    	    @Param("contractEndDate") LocalDate contractEndDate);
 
 	int countAll();
 }
