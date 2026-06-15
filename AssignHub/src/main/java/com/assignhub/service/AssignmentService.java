@@ -165,7 +165,7 @@ public class AssignmentService {
 				}
 
 				String[] cols = line.split(",", -1);
-				if (cols.length < 10) {
+				if (cols.length < 11) {
 					result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています"));
 					result.errorCount++;
 					rowNum++;
@@ -210,7 +210,7 @@ public class AssignmentService {
 					hasError = true;
 				}
 
-				String companyName = cols[6].trim();
+				String companyName = cols[4].trim();
 				if (companyName.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "企業名", "企業名は必須です"));
 					hasError = true;
