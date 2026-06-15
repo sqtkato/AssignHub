@@ -73,11 +73,7 @@ public class AssignmentController {
 
 		String toastError = null;
 		if (result.hasErrors()) {
-			if (result.getFieldError("contractStartDate") != null || result.getFieldError("contractEndDate") != null) {
-				toastError = "契約期間は正しい日付を入力してください。";
-			} else {
-				toastError = "契約開始日は契約終了日以前の日付を入力してください。";
-			}
+			toastError = "契約開始日より前の日付は入力できません。";
 		}
 
 		if (toastError != null) {
