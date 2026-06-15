@@ -35,7 +35,8 @@
 							<th class="acc_id">アカウントID</th>
 							<th class="acc_logId">ログインID</th>
 							<th class="acc_per">権限</th>
-							<th class="acc_name">氏名</th>
+							<th class="acc_name">社員名(姓)</th>
+							<th class="acc_name">社員名(名)</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -43,19 +44,16 @@
 							<td th:text="${account.accountId}" class="acc_id"></td>
 							<td th:text="${account.loginId}" class="acc_logId"></td>
 							<td th:text="${account.permission == 1 ? '管理' : '一般'}" class="acc_per"></td>
-							<td th:text="${account.employee != null ? account.employee.lastName + ' ' + account.employee.firstName : '-'}" class="acc_name">社員名</td>
+							<td th:text="${account.employee != null ? account.employee.lastName : '-'}" class="acc_name">社員名(姓)</td>
+							<td th:text="${account.employee != null ? account.employee.firstName : '-'}" class="acc_name">社員名(名)</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 
 			<div class="action-area">
-				<form th:action="@{/accounts/export/download(ids=${ids})}" method="post">
-<!--					ems、aタグ。form不要-->
-					<button type="submit" class="btn btn-primary btn-wide">ダウンロード</button>
+					<a th:href="@{/accounts/export/download(ids=${ids})}" class="btn btn-primary btn-wide">ダウンロード</a>
 					<a th:href="@{/accounts}" class="btn btn-secondary btn-wide">戻る</a>
-
-				</form>
 			</div>
 			<p class="export-note">※詳細情報がエクスポートされます。</p>
 		</div>

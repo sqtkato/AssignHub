@@ -274,7 +274,7 @@ public class AccountService {
 	}
 
 	public int countDataRows(MultipartFile file) throws Exception {
-		int count = 0;
+		int count = findAll("",null).size();
 		try (BufferedReader br = new BufferedReader(
 				new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
 			String line;

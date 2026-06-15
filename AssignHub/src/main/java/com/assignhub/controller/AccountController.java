@@ -299,10 +299,6 @@ public class AccountController {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
 			return "redirect:/accounts"; // 元の一覧画面に戻す
 		}
-		if (ids.size() == 0) {
-			return "account/index";
-
-		}
 		model.addAttribute("count", accountService.findByIds(ids).size());
 		List<Account> accounts = accountService.findByIds(ids);
 		model.addAttribute("accounts", accounts);
@@ -321,12 +317,13 @@ public class AccountController {
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Account> accounts = accountService.findByIds(ids);
-		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名\n");
+		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名(姓),社員名(名)\n");
 		for (Account acc : accounts) {
 			csvBuilder.append(acc.getAccountId()).append(",")
 					.append(acc.getLoginId()).append(",")
 					.append(acc.getPermission()).append(",")
-					.append(acc.getEmployee().getLastName()+ " " + acc.getEmployee().getFirstName()).append("\n");
+					.append(acc.getEmployee().getLastName()).append(",")
+					.append(acc.getEmployee().getFirstName()).append("\n");
 		}
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };

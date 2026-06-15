@@ -183,6 +183,23 @@ a:hover {
 	cursor: not-allowed;
 }
 
+.btn-wide {
+	padding: 12px 40px;
+	font-size: 1.05rem;
+}
+
+/*エクスポート*/
+.action-area {
+	text-align: center;
+	margin-bottom: 40px;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+
+
+
 /* アイコン専用ボタン（編集・削除など） */
 .btn-icon {
 	display: inline-flex;
