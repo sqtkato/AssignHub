@@ -27,7 +27,7 @@ public class Company {
 	private String companyTel;
 	
 	/** FAX */
-	private String comanyFax;
+	private String companyFax;
 	
 	/** 設立年度 */
 	private Integer foundedYear;
