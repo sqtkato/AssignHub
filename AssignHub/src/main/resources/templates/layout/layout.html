@@ -24,9 +24,9 @@
 			<li>
 				<span class="menu-title" th:if="${session.permission == 1}">削除・復元一覧</span>
 				<ul class="submenu" th:if="${session.permission == 1}"s>
-					<li><a th:href="@{/deleted-employees}">社員情報</a></li>
-					<li><a th:href="@{/deleted-companies}">企業情報</a></li>
-					<li><a th:href="@{/deleted-accounts}">アカウント情報</a></li>
+					<li><a th:href="@{/deleted/employees}">社員情報</a></li>
+					<li><a th:href="@{/deleted/companies}">企業情報</a></li>
+					<li><a th:href="@{/deleted/accounts}">アカウント情報</a></li>
 					<li><a th:href="@{/deleted/assign-history}">アサイン履歴情報</a></li>
 				</ul>
 			</li>
@@ -120,35 +120,6 @@
 			</div>
 		</div>
 	</div>
-	
-		<!-- =========================
-	     復元モーダル
-	========================= -->
-	
-	<div id="restoreOverlay" class="modal-overlay" onclick="closeRestoreModal()">
-		<div class="modal-box" onclick="event.stopPropagation()">
-			<div class="modal-icon modal-icon-success">
-				<!-- SVG -->
-			</div>
-
-			<p class="modal-title">復元しますか？</p>
-			<p class="modal-subtitle">削除済みデータを復元します。</p>
-
-			<div class="modal-actions">
-				<form id="restoreForm" method="post">
-					<button type="submit" class="modal-btn modal-btn-success">
-						復元する
-					</button>
-					<button type="button" class="modal-btn modal-btn-cancel"
-						onclick="closeRestoreModal()">
-						キャンセル
-					</button>
-				</form>
-			</div>
-		</div>
-	</div>
-	
-	
 </body>
 
 </html>

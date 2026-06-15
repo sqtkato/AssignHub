@@ -35,11 +35,11 @@
 		<association property="assignment"
 			javaType="com.assignhub.entity.Assignment">
 			<id property="assignmentId" column="assignment_id" />
-			<result property="contractStartDate"
-				column="contract_start_date_assign" />
-			<result property="contractEndDate"
-				column="contract_end_date_assign" />
-			<result property="unitPrice" column="unit_price_assign" />
+		<result property="contractStartDate"
+			column="contract_start_date_assign" />
+		<result property="contractEndDate"
+			column="contract_end_date_assign" />
+		<result property="unitPrice" column="unit_price_assign" />
 
 			<association property="company"
 				javaType="com.assignhub.entity.Company">
@@ -52,7 +52,7 @@
 		<association property="Account"
 			javaType="com.assignhub.entity.Account">
 			<id property="accountId" column="account_id" />
-			<result property="loginId" column="login_id" />
+		<result property="loginId" column="login_id" />
 		</association>
 
 	</resultMap>
@@ -73,28 +73,21 @@
 		LEFT JOIN m_company c2
 		ON
 		a.company_id = c2.company_id
-
-		<where>
-			e.delete_flg = 0
-			<if test="empName != null and empName != ''">
-				AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%',
-				#{empName}, '%')
-			</if>
-
-			<if test="empAssignCompany != null and  empAssignCompany != ''">
-				AND c2.company_name LIKE CONCAT('%', #{empAssignCompany},
-				'%')
-			</if>
-
-			<if test="empCompany != null and  empCompany != ''">
-				AND c.company_name LIKE CONCAT('%', #{empCompany}, '%')
-			</if>
-
-			<if test="empEngineerType != null and empEngineerType != ''">
-				AND e.engineer_type LIKE CONCAT('%', #{empEngineerType},
-				'%')
-			</if>
-		</where>
+<where>
+    e.delete_flg = 0
+    <if test="empName != null and empName != ''">
+        AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%', #{empName}, '%')
+    </if>
+    <if test="empAssignCompany != null and empAssignCompany != ''">
+        AND c2.company_name LIKE CONCAT('%', #{empAssignCompany}, '%')
+    </if>
+    <if test="empCompany != null and empCompany != ''">
+        AND c.company_name LIKE CONCAT('%', #{empCompany}, '%')
+    </if>
+    <if test="empEngineerType != null and empEngineerType != ''">
+        AND e.engineer_type LIKE CONCAT('%', #{empEngineerType}, '%')
+    </if>
+</where>
 
 	</select>
 
