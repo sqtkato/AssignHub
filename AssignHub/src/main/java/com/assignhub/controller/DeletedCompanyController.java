@@ -28,15 +28,15 @@ public class DeletedCompanyController {
 	}
 	
 	@GetMapping
-	public String index(
-			@RequestParam(name = "compName", required = false) String companyName,
-			@RequestParam(name = "compTel", required = false) String companyTel, 
-			Model model) { 
-		model.addAttribute("companies", deletedCompanyService.findAll(companyName,companyTel));
-		model.addAttribute("compName", companyName);
-		model.addAttribute("compTel", companyTel);
-		
-	return "deleted_company/index";}
+	public String index(@RequestParam(name = "companyName", required = false) String companyName,
+			@RequestParam(name = "companyTel", required = false) String companyTel,
+			Model model) {
+		// ⭕ 4つの引数をすべてServiceに引き渡します
+		model.addAttribute("companies", deletedCompanyService.findAll(companyName, companyTel));
+		model.addAttribute("companyName", companyName);
+		model.addAttribute("companyTel", companyTel);
+		return "deleted_company/index";
+	}
 
 	// ==========================================
 	// 復元処理

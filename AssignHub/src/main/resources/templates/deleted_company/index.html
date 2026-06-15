@@ -17,11 +17,11 @@
 			<form th:action="@{/deleted-companies}" method="get" class="search-form">
 				<div class="form-group form-group-search">
 					<label>企業名</label>
-					<input type="text" name="keyword" class="form-control" th:value="${keyword}" placeholder="例：テクノ">
+					<input type="text" name="companyName" class="form-control" th:value="${companyName}" placeholder="例：テクノ">
 				</div>
 				<div class="form-group form-group-search">
 					<label>電話番号</label>
-					<input type="text" name="tel" class="form-control" th:value="${tel}" placeholder="例：0901111111">
+					<input type="text" name="companyTel" class="form-control" th:value="${companyTel}" placeholder="例：0901111111">
 				</div>
 				<button type="submit" class="btn btn-secondary">検索</button>
 			</form>
@@ -77,17 +77,17 @@
 										<tbody>
 											<tr th:each="company : ${companies}" class="clickable-row">
 												<td class="col-checkbox">
-													<input type="checkbox" name="ids" th:value="${company.compId}" class="row-checkbox">
+													<input type="checkbox" name="ids" th:value="${company.companyId}" class="row-checkbox">
 												</td>
-												<td th:text="${company.compId}"></td>
-												<td th:text="${company.compName}"></td>
-												<td th:text="${company.compAddress1}"></td>
-												<td th:text="${company.compTel}"></td>
+												<td th:text="${company.companyId}"></td>
+												<td th:text="${company.companyName}"></td>
+												<td th:text="${company.companyAddress1}"></td>
+												<td th:text="${company.companyTel}"></td>
 												<td class="col-action">
-													<button type="submit" th:formaction="@{/deleted-companies/{id}/restore(id=${acc.compId})}" class="btn-icon-svg" title="復元">
+													<button type="submit" th:formaction="@{/deleted-companies/{id}/restore(id=${company.companyId})}" class="btn-icon-svg" title="復元">
 														<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
 													</button>
-													<button type="button" th:attr="data-id=${acc.compId}" class="btn-icon-svg delete" title="削除" onclick="openDeleteModal(this.dataset.id)">
+													<button type="button" th:attr="data-id=${company.companyId}" class="btn-icon-svg delete" title="削除" onclick="openDeleteModal(this.dataset.id)">
 														<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
 													</button>
 												</td>
@@ -144,7 +144,7 @@
 							</div>
 						</div>
 
-						<script src="/js/accunt.js"></script>
+						<script src="/js/common.js"></script>
 					</div>
 				</body>
 				</html>
