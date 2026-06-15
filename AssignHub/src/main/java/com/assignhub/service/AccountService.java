@@ -81,7 +81,7 @@ public class AccountService {
 			    passwordEncoder.encode(account.getPasswordHash())
 			);
 		if (account.getAccountId() == null) {
-			accountMapper.save(account);
+			accountMapper.insert(account);
 		} else {
 			accountMapper.update(account);
 		}
