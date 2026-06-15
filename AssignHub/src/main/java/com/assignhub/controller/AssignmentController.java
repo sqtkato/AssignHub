@@ -113,10 +113,9 @@ public class AssignmentController {
 					"登録可能なアサイン履歴情報は最大500件までです。");
 			return "redirect:/assignments";
 		}
-		model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
-		model.addAttribute("role", roleService.findAll());
-		model.addAttribute("companies", companyService.findAll(null, null));
 		model.addAttribute("employees", employeeService.findAll(null, null, null, null));
+		model.addAttribute("companies", companyService.findAll(null, null));
+		model.addAttribute("role", roleService.findAll());
 		return "assignment/create";
 	}
 	
@@ -149,6 +148,9 @@ public class AssignmentController {
 		}
 		
 		if (result.hasErrors()) {
+			model.addAttribute("employees", employeeService.findAll( null, null, null, null));
+			model.addAttribute("companies", companyService.findAll(null,null));
+			model.addAttribute("role", roleService.findAll());
 			return "assignment/create";
 		}
 		
@@ -156,10 +158,11 @@ public class AssignmentController {
 			result.reject(
 					"duplicate",
 					"既に同じ内容が登録されています。");
+			model.addAttribute("employees", employeeService.findAll( null, null, null, null));
+			model.addAttribute("companies", companyService.findAll(null,null));
+			model.addAttribute("role", roleService.findAll());
         	return "assignment/create";
     	}
-		model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
-		
 		assignmentService.save(assignment);
 		attributes.addFlashAttribute("toastMessage", "アサイン履歴情報を登録しました");
 		return "redirect:/assignments";

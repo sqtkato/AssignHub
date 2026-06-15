@@ -21,8 +21,8 @@
 					<select th:field="*{empId}" class="form-control"
 						th:classappend="${#fields.hasErrors('empId')} ? 'input-error'">
 						<option value="">未選択</option>
-						<option th:each="assignment : ${assignments}" th:value="${assignment.empId}"
-							th:text="${assignment.empName}" th:selected="${assignment.empId == empId}">
+						<option th:each="emp : ${employees}" th:value="${emp.empId}"
+							th:text="${emp.empName}" >
 						</option>
 					</select>
 					<div class="error-message" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}">
@@ -33,8 +33,8 @@
 					<select th:field="*{companyId}" class="form-control"
 						th:classappend="${#fields.hasErrors('companyId')} ? 'input-error'">
 						<option value="">未選択</option>
-						<option th:each="assignment : ${assignments}" th:value="${assignment.companyId}"
-							th:text="${assignment.companyName}" th:selected="${assignment.companyId == companyId}">
+						<option th:each="company : ${companies}" th:value="${company.companyId}"
+							th:text="${company.companyName}">
 						</option>
 					</select>
 					<div class="error-message" th:if="${#fields.hasErrors('companyId')}" th:errors="*{companyId}">

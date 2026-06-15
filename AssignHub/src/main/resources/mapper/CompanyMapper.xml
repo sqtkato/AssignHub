@@ -18,7 +18,6 @@
 		<result property="repFirstName" column="rep_firstname" />
 		<result property="repFirstNameKana" column="rep_firstname_kana" />
 		<result property="repLastNameKana" column="rep_lastname_kana" />
-		<result property="companyAddress1" column="company_address1" />
 		<result property="createdAt" column="created_at" />
 		<result property="updatedAt" column="updated_at" />
 	</resultMap>
