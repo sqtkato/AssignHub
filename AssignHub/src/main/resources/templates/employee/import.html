@@ -1,36 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	>
+	layout:decorate="~{layout/layout}">
 
 <head>
 	<title>社員情報インポート</title>
 </head>
 
 <body>
-	<div>
-		
+	<div layout:fragment="content">
+		<div class="card form-card-wide">
 			<h2>社員情報インポート</h2>
-			
+			<p class="instruction">
 				CSVファイルを選択して社員情報を一括登録・更新します。<br>
 				※既存の社員IDと一致する場合は上書き更新、空欄の場合は新規登録されます。
 			</p>
-			<form>
-				<div>
-					
-					<p>社員情報データCSVを選択してください</pp>
-					<p>対応形式: .csv (UTF-8)/ BOMあり推奨、最大 5MB</p>
-					<input type="file" name="file" accept=".csv">
+			<form th:action="@{/employees/import}" method="post" enctype="multipart/form-data">
+				<div class="upload-zone">
+					<div class="upload-icon">👥</div>
+					<p class="upload-zone-text">社員データCSVを選択してください</p>
+					<p class="upload-zone-sub">対応形式: .csv (UTF-8)/ BOMあり推奨、最大 5MB</p>
+					<input type="file" name="file" accept=".csv" required class="form-control"
+						style="margin-top: 15px;">
 				</div>
-				<div>
+				<div class="template-link-area">
 					<a th:href="@{/employees/import/template}" class="template-link">CSVテンプレートをダウンロード</a>
 				</div>
-				<div>
-					<button>インポート</button>
-					<a>戻る</a>
+				<div class="action-area">
+					<button type="submit" class="btn btn-primary btn-wide">インポート</button>
+					<a th:href="@{/employees}" class="btn btn-secondary btn-wide">戻る</a>
 				</div>
 			</form>
 
-	
+			<div class="result-area" th:if="${importResult != null}">
+				<h3 class="result-title">処理結果</h3>
+				<div class="summary-box">
+					<div class="summary-item summary-success">
+						正常取り込み
+						<span class="summary-value" th:text="${importResult.successCount} + ' 件'"></span>
+					</div>
+					<div class="summary-item summary-error">
+						エラー
+						<span class="summary-value" th:text="${importResult.errorCount} + ' 件'"></span>
+					</div>
+				</div>
+				<div th:if="${importResult.errorCount > 0}">
+					<p class="error-table-msg">以下の行でエラーが発生したため、取り込みをキャンセルしました。内容を修正して再アップロードしてください。</p>
+					<table class="table">
+						<thead class="table-dark">
+							<tr>
+								<th>行数</th>
+								<th>対象項目</th>
+								<th>エラー内容</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="error : ${importResult.errors}" class="error-row">
+								<td th:text="${error.rowNum} + '行目'"></td>
+								<td th:text="${error.field}"></td>
+								<td th:text="${error.message}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
