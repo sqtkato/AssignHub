@@ -39,8 +39,9 @@ public class EmployeeService {
 	 * @param order   昇順（asc）または降順（desc）
 	 * @return 社員エンティティのリスト
 	 */
-	public List<Employee> findAll(String keyword, String sort, String order) {
-		return employeeMapper.findAll(keyword, sort, order);
+	public List<Employee> findAll(String empName, String empAssignCompany, String empCompany, String empEngineerType, String sort, String order) {
+		// Controller から受け取った6つの引数を、そのまま Mapper へ中継します
+		return employeeMapper.findAll(empName, empAssignCompany, empCompany, empEngineerType, sort, order);
 	}
 
 	/**
