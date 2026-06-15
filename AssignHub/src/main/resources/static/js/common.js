@@ -6,14 +6,13 @@ document.addEventListener("DOMContentLoaded", function() {
     // ==========================================
     // 1. Toast通知の表示制御
     // ==========================================
-    const toastElement = document.getElementById("toast");
+    const toastElement = document.getElementById("toastMessage");
     if (toastElement && toastElement.textContent.trim() !== "") {
         toastElement.classList.add("show");
         setTimeout(function() {
             toastElement.classList.remove("show");
         }, 3000);
     }
-
     // ==========================================
     // 2. データテーブルの行選択・一括操作制御
     // ==========================================
@@ -21,15 +20,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const rowCheckboxes = document.querySelectorAll('.row-checkbox');
     const btnBulkDelete = document.getElementById('btnBulkDelete');
     const clickableRows = document.querySelectorAll('.clickable-row');
-
-    // 一括操作ボタンの活性/非活性を切り替え
     function updateBulkActionButton() {
         if (!btnBulkDelete) return;
         const checkedCount = document.querySelectorAll('.row-checkbox:checked').length;
         btnBulkDelete.disabled = checkedCount === 0;
     }
-
-    // 行の背景色を更新
     function updateRowBackground(checkbox) {
         const tr = checkbox.closest('tr');
         if (tr && tr.classList.contains('clickable-row')) {
@@ -40,11 +35,8 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
     }
-
-    // 行全体をクリックした時のイベント
     clickableRows.forEach(row => {
         row.addEventListener('click', function(e) {
-            // チェックボックス自身、またはリンク/ボタンがクリックされた場合はスキップ
             if (e.target.type === 'checkbox' || e.target.closest('a') || e.target.closest('button')) {
                 return;
             }
@@ -55,8 +47,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
-
-    // 各チェックボックス変更時のイベント
     rowCheckboxes.forEach(cb => {
         cb.addEventListener('change', function() {
             updateRowBackground(this);
@@ -66,8 +56,6 @@ document.addEventListener("DOMContentLoaded", function() {
             updateBulkActionButton();
         });
     });
-
-    // 「全選択」チェックボックスのイベント
     if (selectAll) {
         selectAll.addEventListener('change', function() {
             rowCheckboxes.forEach(cb => {
@@ -77,4 +65,116 @@ document.addEventListener("DOMContentLoaded", function() {
             updateBulkActionButton();
         });
     }
-});
+    // ==========================================
+    //一括削除ボタンのクリック制御
+    // ==========================================
+    if (btnBulkDelete) {
+        btnBulkDelete.addEventListener('click', function(e) {
+            const checkedCount = document.querySelectorAll('.row-checkbox:checked').length;
+                let toastElement = document.getElementById("toastMessage");
+            if (checkedCount === 0) {
+                e.preventDefault(); 
+                if (toastElement) {
+                    toastElement.className = "toast toast-error"; 
+                    toastElement.querySelector('span').textContent = "削除対象が選択されていません";
+                    toastElement.classList.add("show");
+                    setTimeout(function() {
+                        toastElement.classList.remove("show");
+                    }, 3000);
+                }
+                return;
+            }
+			openBulkDeleteModal();
+       });
+	}
+	
+			// ==========================================
+			// ログアウトモーダル
+			// ==========================================
+			    const logoutOverlay =
+			        document.getElementById('logoutOverlay');
+			    if (logoutOverlay) {
+			        logoutOverlay.addEventListener('click', function(e) {
+			            if (e.target === this) {
+			                closeLogoutModal();
+			            }
+			       });
+				}
+			 });
+			/**
+			 * ログアウトモーダル表示
+			 */
+			function openLogoutModal() {
+			    const overlay =
+			        document.getElementById('logoutOverlay');
+			    if (overlay) {
+			        overlay.style.display = 'flex';
+			    }
+			}
+			/**
+			 * ログアウトモーダル非表示
+			 */
+			function closeLogoutModal() {
+			    const overlay =
+			        document.getElementById('logoutOverlay');
+			    if (overlay) {
+			        overlay.style.display = 'none';
+			    }
+			}
+			
+			// ==========================================
+			// 削除モーダル
+			// ==========================================
+			function openDeleteModal(id) {
+
+			    const overlay = document.getElementById('deleteOverlay');
+			    const form = document.getElementById('deleteForm');
+
+			    if (form) {
+			        form.action = '/accounts/' + id + '/delete';
+			    }
+
+			    if (overlay) {
+			        overlay.style.display = 'flex';
+			    }
+			}
+
+			function closeDeleteModal() {
+
+			    const overlay = document.getElementById('deleteOverlay');
+
+			    if (overlay) {
+			        overlay.style.display = 'none';
+			    }
+			}
+
+
+			// ==========================================
+			// 一括削除モーダル
+			// ==========================================
+			function openBulkDeleteModal() {
+
+			    const overlay = document.getElementById('bulkDeleteOverlay');
+
+			    if (overlay) {
+			        overlay.style.display = 'flex';
+			    }
+			}
+
+			function closeBulkDeleteModal() {
+
+			    const overlay = document.getElementById('bulkDeleteOverlay');
+
+			    if (overlay) {
+			        overlay.style.display = 'none';
+			    }
+			}
+
+			function submitBulkDelete() {
+			    const form = document.getElementById('listForm');
+
+			    if (form) {
+			        form.action = '/accounts/bulk-delete';
+			        form.submit();
+			    }
+			}
