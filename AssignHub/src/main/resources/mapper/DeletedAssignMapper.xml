@@ -5,7 +5,7 @@
 	<resultMap id="assignmentResultMap"
 		type="com.assignhub.entity.Assignment">
 
-		<id property="assignmentId" column="assignment_id" />
+		<id property="assignmentId" column="assignment_id"/>
 
 		<result property="empId" column="emp_id" />
 		<result property="companyId" column="company_id" />
