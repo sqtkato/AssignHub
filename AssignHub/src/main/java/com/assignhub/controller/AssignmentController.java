@@ -138,7 +138,6 @@ public class AssignmentController {
 					"contractEndDate",
 					"date.order",
 					"契約開始日より前の日付は入力できません");
-
 		}
 		if (result.hasErrors()) {
 			model.addAttribute("employees", employeeService.findAll(null, null, null, null));
@@ -159,7 +158,7 @@ public class AssignmentController {
 		attributes.addFlashAttribute("toastMessage", "アサイン履歴情報を登録しました");
 		return "redirect:/assignments";
 	}
-	
+
 	/**
 	 * アサイン履歴情報の詳細画面を表示する。
 	 *
@@ -170,9 +169,6 @@ public class AssignmentController {
 	@GetMapping("/{id}/detail")
 	public String detail(@PathVariable Integer id, Model model) {
 		Assignment assignment = assignmentService.findById(id);
-		if (assignment == null) {
-			return "redirect:/assignments";
-		}
 		model.addAttribute("assignment", assignment);
 		return "assignment/detail";
 	}
@@ -192,9 +188,6 @@ public class AssignmentController {
 		if (!model.containsAttribute("assignmentForm")) {
 			model.addAttribute("assignmentForm", new AssignmentForm());
 			Assignment assign = assignmentService.findById(id);
-			if (assign == null) {
-				return "redirect:/assignments";
-			}
 			AssignmentForm form = new AssignmentForm();
 			form.setEmpId(assign.getEmpId());
 			form.setCompanyId(assign.getCompanyId());
@@ -250,7 +243,7 @@ public class AssignmentController {
 		}
 		return "redirect:/assignments";
 	}
-	
+
 	/**
 	 * アサイン履歴情報のインポート画面を表示する。
 	 *
