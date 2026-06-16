@@ -62,6 +62,8 @@ public class AccountController {
 			Model model,
 			@RequestParam(name = "permission", required = false) Integer permission) {
 		model.addAttribute("accounts", accountService.findAll(empName, permission));
+		model.addAttribute("empName", empName);
+	    model.addAttribute("permission", permission);
 		return "account/index";
 	}
 
