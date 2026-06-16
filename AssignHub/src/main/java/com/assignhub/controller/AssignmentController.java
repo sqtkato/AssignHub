@@ -30,10 +30,10 @@ import com.assignhub.service.EmployeeService;
 import com.assignhub.service.RoleService;
 
 /**
- * アサイン情報のコントローラークラス
+ * アサイン履歴情報のコントローラークラス
  * 
  * @author Team Excel
- * @version 1.00 2024/06/12
+ * @version 1.00 2026/06/16
  */
 @Controller
 @RequestMapping("/assignments")
@@ -44,6 +44,14 @@ public class AssignmentController {
 	private final CompanyService companyService;
 	private final EmployeeService employeeService;
 
+	/**
+	 * コンストラクタによる依存性の注入。
+	 * 
+	 * @param assignmentService アサイン履歴情報のサービス
+	 * @param roleService 役割情報のサービス
+	 * @param companyService 企業情報のサービス
+	 * @param employeeService 社員情報のサービス
+	 */
 	public AssignmentController(
 			AssignmentService assignmentService,
 			RoleService roleService,
@@ -56,32 +64,28 @@ public class AssignmentController {
 	}
 
 	/**
-	 * アサイン情報の一覧画面を表示する
+	 * アサイン履歴情報の一覧画面を表示する
 	 * 
 	 * @param searchForm 検索条件のフォームオブジェクト
 	 * @param result バリデーション結果
-	 * @param model モデルオブジェクト
-	 * @return アサイン情報の一覧画面のテンプレートパス
+	 * @param model 画面描画用のモデル
+	 * @return アサイン履歴情報の一覧画面のテンプレートパス
 	 */
 	@GetMapping
 	public String index(@Validated @ModelAttribute("searchForm") SearchForm searchForm,
 			BindingResult result,
 			Model model) {
-
 		LocalDate startDate = searchForm.getContractStartDate();
 		LocalDate endDate = searchForm.getContractEndDate();
-
 		String toastError = null;
 		if (result.hasErrors()) {
 			toastError = "契約開始日より前の日付は入力できません";
 		}
-
 		if (toastError != null) {
 			model.addAttribute("toastError", toastError);
 			model.addAttribute("assignments", assignmentService.findAll(null, null, null, null, null));
 			return "assignment/index";
 		}
-
 		model.addAttribute("assignments", assignmentService.findAll(
 				searchForm.getEmpName(),
 				searchForm.getAssignName(),
@@ -102,7 +106,6 @@ public class AssignmentController {
 		if (!model.containsAttribute("assignmentForm")) {
 			model.addAttribute("assignmentForm", new AssignmentForm());
 		}
-
 		if (assignmentService.isMaxCount()) {
 			attributes.addFlashAttribute(
 					"toastError",
@@ -127,10 +130,8 @@ public class AssignmentController {
 	@PostMapping
 	public String store(@Validated @ModelAttribute("assignmentForm") AssignmentForm form,
 			BindingResult result, RedirectAttributes attributes, Model model) {
-
 		Assignment assignment = new Assignment();
 		copyFormToEntity(form, assignment);
-
 		if (assignment.getContractEndDate() != null
 				&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
 			result.rejectValue(
@@ -139,14 +140,12 @@ public class AssignmentController {
 					"契約開始日より前の日付は入力できません");
 
 		}
-
 		if (result.hasErrors()) {
 			model.addAttribute("employees", employeeService.findAll(null, null, null, null));
 			model.addAttribute("companies", companyService.findAll(null, null));
 			model.addAttribute("role", roleService.findAll());
 			return "assignment/create";
 		}
-
 		if (assignmentService.existsDuplicate(assignment)) {
 			result.reject(
 					"duplicate",
@@ -160,15 +159,20 @@ public class AssignmentController {
 		attributes.addFlashAttribute("toastMessage", "アサイン履歴情報を登録しました");
 		return "redirect:/assignments";
 	}
-
+	
+	/**
+	 * アサイン履歴情報の詳細画面を表示する。
+	 *
+	 * @param id    表示対象のアサインID
+	 * @param model 画面描画用のモデル
+	 * @return アサイン履歴情報詳細画面のテンプレートパス
+	 */
 	@GetMapping("/{id}/detail")
 	public String detail(@PathVariable Integer id, Model model) {
 		Assignment assignment = assignmentService.findById(id);
-
 		if (assignment == null) {
 			return "redirect:/assignments";
 		}
-
 		model.addAttribute("assignment", assignment);
 		return "assignment/detail";
 	}
@@ -177,6 +181,7 @@ public class AssignmentController {
 	 * アサイン履歴情報の編集画面を表示する。
 	 *
 	 * @param id    編集対象のアサインID
+	 * @param from どの画面から遷移してきたかを示すパラメータ
 	 * @param model 画面描画用のモデル
 	 * @return アサイン履歴情報編集画面のテンプレートパス
 	 */
@@ -187,11 +192,9 @@ public class AssignmentController {
 		if (!model.containsAttribute("assignmentForm")) {
 			model.addAttribute("assignmentForm", new AssignmentForm());
 			Assignment assign = assignmentService.findById(id);
-
 			if (assign == null) {
 				return "redirect:/assignments";
 			}
-
 			AssignmentForm form = new AssignmentForm();
 			form.setEmpId(assign.getEmpId());
 			form.setCompanyId(assign.getCompanyId());
@@ -201,7 +204,6 @@ public class AssignmentController {
 			form.setRoleId(assign.getRoleId());
 			model.addAttribute("assignmentForm", form);
 		}
-
 		model.addAttribute("fromPage", from);
 		model.addAttribute("employees", employeeService.findAll(null, null, null, null));
 		model.addAttribute("companies", companyService.findAll(null, null));
@@ -224,10 +226,8 @@ public class AssignmentController {
 			@Validated @ModelAttribute("assignmentForm") AssignmentForm form,
 			BindingResult result, RedirectAttributes attributes,
 			@RequestParam(value = "fromPage", required = false) String fromPage, Model model) {
-
 		Assignment assignment = new Assignment();
 		copyFormToEntity(form, assignment);
-
 		if (assignment.getContractEndDate() != null
 				&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
 			result.rejectValue(
@@ -235,7 +235,6 @@ public class AssignmentController {
 					"date.order",
 					"契約開始日より前の日付は入力できません");
 		}
-
 		if (result.hasErrors()) {
 			model.addAttribute("fromPage", fromPage);
 			model.addAttribute("employees", employeeService.findAll(null, null, null, null));
@@ -243,17 +242,20 @@ public class AssignmentController {
 			model.addAttribute("role", roleService.findAll());
 			return "assignment/edit";
 		}
-
 		assignment.setAssignmentId(id);
 		assignmentService.save(assignment);
 		attributes.addFlashAttribute("toastMessage", "アサイン履歴情報を更新しました");
-
 		if ("detail".equals(fromPage)) {
 			return "redirect:/assignments/" + id + "/detail";
 		}
 		return "redirect:/assignments";
 	}
-
+	
+	/**
+	 * アサイン履歴情報のインポート画面を表示する。
+	 *
+	 * @return アサイン履歴情報のインポート画面のテンプレートパス
+	 */
 	@GetMapping("/import")
 	public String showImport() {
 		return "assignment/import";
@@ -312,31 +314,29 @@ public class AssignmentController {
 	}
 
 	/**
-	 * アサイン情報を一括で削除する
+	 * 選択された複数のアサイン履歴情報を一括で論理削除する。
 	 * 
-	 * @param ids 削除対象のアサインIDリスト
+	 * @param ids 削除対象のアサイン履歴IDのリスト
 	 * @param attributes リダイレクト属性オブジェクト
-	 * @return アサイン情報の一覧画面にリダイレクト
+	 * @return アサイン履歴情報の一覧画面にリダイレクト
 	 */
 	@PostMapping("/bulk-delete")
 	public String bulkDelete(
 			@RequestParam(name = "ids", required = false) List<Integer> ids,
 			RedirectAttributes attributes) {
-
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "削除する対象が選択されていません");
 			return "redirect:/assignments";
 		}
-
 		assignmentService.deleteBulk(ids);
 		attributes.addFlashAttribute("toastMessage", "選択したアサイン履歴情報を削除しました");
 		return "redirect:/assignments";
 	}
 
 	/**
-	 * アサイン情報を削除する
+	 * アサイン履歴情報を1件論理削除する
 	 * 
-	 * @param id 削除対象のアサインID
+	 * @param id 削除対象のアサイン履歴ID
 	 * @param attributes リダイレクト属性オブジェクト
 	 * @return アサイン情報の一覧画面にリダイレクト
 	 */
@@ -348,11 +348,11 @@ public class AssignmentController {
 	}
 
 	/**
-	 * アサイン情報を一括でエクスポートする
+	 * 選択されたアサイン履歴情報を一括でエクスポートする
 	 * 
 	 * @param ids エクスポート対象のアサインIDリスト
 	 * @param attributes リダイレクト属性オブジェクト
-	 * @return アサイン情報の一覧画面にリダイレクト
+	 * @return アサイン履歴情報の一覧画面にリダイレクト
 	 */
 	@GetMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
@@ -368,9 +368,15 @@ public class AssignmentController {
 		return "assignment/export";
 	}
 
+	/**
+	 * 検索条件に合致するアサイン履歴データをCSV形式でダウンロードする。
+	 * 
+	 * @param ids エクスポート対象のアサインIDリスト
+	 * @return CSVファイルのバイナリデータを含むHTTPレスポンスエンティティ
+	 */
 	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
-			@RequestParam(name = "ids", required=false) List<Integer> ids) {
+			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Assignment> assignments = assignmentService.findByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder("アサインID,社員ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n");
 		for (Assignment asn : assignments) {
@@ -399,10 +405,10 @@ public class AssignmentController {
 	}
 
 	/**
-	 * アサイン情報のフォームオブジェクトからエンティティオブジェクトに値をコピーする
+	 * フォームオブジェクトからエンティティオブジェクトへプロパティを詰め替える。
 	 * 
-	 * @param f アサイン情報のフォームオブジェクト
-	 * @param e アサイン情報のエンティティオブジェクト
+	 * @param f 入力フォーム（コピー元）
+	 * @param e エンティティ（コピー先）
 	 */
 	private void copyFormToEntity(AssignmentForm f, Assignment e) {
 		e.setAssignmentId(f.getAssignmentId());
