@@ -132,16 +132,8 @@ public class AssignmentService {
 	@Transactional(rollbackFor = Exception.class)
 	public ImportResult importCsv(MultipartFile file) throws Exception {
 		ImportResult result = new ImportResult();
-		
-
-		if (file.getSize() > 5L * 1024 * 1024) {
-			result.errors.add(new CsvRowError(0, "全体", "ファイルサイズは5MB以内にしてください"));
-			result.errorCount++;
-			return result;
-		}
 
 		Set<String> seenInCsv = new HashSet<>();
-		int insertPlan = 0;
 
 		CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
 				.onMalformedInput(CodingErrorAction.REPORT)
@@ -303,11 +295,17 @@ public class AssignmentService {
 					hasError = true;
 				}
 
+				if (!hasError && (asm.getAssignmentId() == null || asm.getAssignmentId() == 0)) {
+					int assignCount = assignmentMapper.countAll();
+					if ((assignCount + result.successCount + 1) > 500) {
+						result.errors.add(new CsvRowError(rowNum, "上限",
+								"登録後の件数が上限に達しています。アサインの登録上限は500件です"));
+						hasError = true;
+					}
+				}
+
 				if (!hasError) {
 					try {
-						if (asm.getAssignmentId() == null || asm.getAssignmentId() == 0) {
-							insertPlan++;
-						}
 						save(asm);
 						result.successCount++;
 					} catch (Exception e) {
@@ -319,11 +317,6 @@ public class AssignmentService {
 					result.errorCount++;
 				}
 				rowNum++;
-			}
-
-			if (result.errorCount == 0 && assignmentMapper.countAll() + insertPlan > 500) {
-				result.errors.add(new CsvRowError(0, "上限", "登録後の件数が上限に達しています。アサインの登録上限は500件です"));
-				result.errorCount++;
 			}
 
 			if (result.errorCount > 0) {
