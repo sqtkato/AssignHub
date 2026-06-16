@@ -49,7 +49,8 @@ public class CompanyForm {
 	private String companyTel;
 	
 	@Size(max = 20, message = "FAX番号は20文字以内で入力してください")
-	private String fax;
+	@Pattern(regexp = "^[0-9]*$",message = "FAX番号の形式が正しくありません　ハイフンなしで入力してください")
+	private String companyFax;
 	
 	@Digits(integer = 4,fraction = 0, message = "設立年度は4桁で入力してください")
 	private Integer foundedYear;
