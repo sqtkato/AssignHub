@@ -29,7 +29,7 @@ public class DeletedAccountService {
      * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
      */
     public List<Account> findByIds(List<Integer> ids) {
-        if (ids != null && ids.isEmpty()) {
+        if (ids != null && !ids.isEmpty()) {
         	return deletedAccountMapper.findByIds(ids);
         }
         return null;
@@ -77,28 +77,42 @@ public class DeletedAccountService {
     // =======================================================
 
     /** 単一アカウントに紐づく社員情報が存在するか判定 */
-    public boolean countEmployeesByAccountId(Integer id) {
-        return deletedAccountMapper.countEmployeesByAccountId(id) > 0;
+    public boolean existEmployeesByAccountId(Integer id) {
+        return deletedAccountMapper.existEmployeesByAccountId(id) > 0;
     }
 
     /** 複数アカウントの中に、紐づく社員情報が存在するものが含まれているか判定 */
-    public boolean countEmployeesByAccountIds(List<Integer> ids) {
-        return deletedAccountMapper.countEmployeesByAccountIds(ids) > 0;
+    public boolean existEmployeesByAccountIds(List<Integer> ids) {
+        return deletedAccountMapper.existEmployeesByAccountIds(ids) > 0;
     }
 
     /** 単一アカウントに紐づくアサイン履歴が存在するか判定 */
-    public boolean countAssignmentsByAccountId(Integer id) {
-        return deletedAccountMapper.countAssignmentsByAccountId(id) > 0;
+    public boolean existAssignmentsByAccountId(Integer id) {
+        return deletedAccountMapper.existAssignmentsByAccountId(id) > 0;
     }
 
     /** 複数アカウントの中に、紐づくアサイン履歴が存在するものが含まれているか判定 */
-    public boolean countAssignmentsByAccountIds(List<Integer> ids) {
-        return deletedAccountMapper.countAssignmentsByAccountIds(ids) > 0;
+    public boolean existAssignmentsByAccountIds(List<Integer> ids) {
+        return deletedAccountMapper.existAssignmentsByAccountIds(ids) > 0;
     }
     
     /** 復元時に重複するアカウントが存在するか判定 */
     public boolean isLoginIdDuplicate(String loginId,Integer excludeAccountId) {
-		int count = deletedAccountMapper.countByLoginId(loginId,excludeAccountId);
+		int count = deletedAccountMapper.existByLoginId(loginId,excludeAccountId);
 		return count > 0;
+    }
+		/**
+		 * 復元した結果、登録上限（500件）を超えるか判定する
+		 * @param restoreCount 復元しようとしている件数（単一なら1、一括ならリストのサイズ）
+		 * @return 500件を超える場合はtrue
+		 */
+		public boolean isCompanyLimitReachedAfterRestore(int restoreCount) {
+		    // 1. 現在有効な（削除されていない）企業数を取得する
+		    // ※ 既存のCompanyService等から取得するか、独自に count を取得してください
+		    int currentActiveCount = deletedAccountMapper.existActiveCompanies();
+
+		    // 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
+		    return (currentActiveCount + restoreCount) > 500;
 	}
+
 }

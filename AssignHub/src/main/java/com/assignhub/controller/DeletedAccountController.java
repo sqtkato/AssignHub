@@ -49,6 +49,10 @@ public class DeletedAccountController {
     /* 単一復元 */
     @PostMapping("/{id}/restore") 
     public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+    	if (deletedAccountService.isCompanyLimitReachedAfterRestore(1)) {
+			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
+			return "redirect:/deleted-companies";
+		}
         deletedAccountService.restore(id);
         return "redirect:/deleted-accounts"; 
     }
@@ -60,6 +64,10 @@ public class DeletedAccountController {
             attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
             return "redirect:/deleted-accounts";
         }
+        if (deletedAccountService.isCompanyLimitReachedAfterRestore(ids.size())) {
+			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
+			return "redirect:/deleted-companies";
+		}
         deletedAccountService.restoreBulk(ids);
         return "redirect:/deleted-accounts";
     }
@@ -72,15 +80,10 @@ public class DeletedAccountController {
     @PostMapping("/{id}/delete")
     public String deleted(@PathVariable("id") Integer id, RedirectAttributes attributes) {
         // Serviceの判定メソッドを使って不在条件をチェック
-        if (deletedAccountService.countEmployeesByAccountId(id)) {
+        if (deletedAccountService.existEmployeesByAccountId(id)) {
             attributes.addFlashAttribute("toastError", "紐づく社員情報が存在するため、物理削除できません。先に社員情報を物理削除してください。");
             return "redirect:/deleted-accounts";
         }
-        if (deletedAccountService.countAssignmentsByAccountId(id)) {
-            attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するため、物理削除できません。先にアサイン履歴情報を物理削除してください。");
-            return "redirect:/deleted-accounts";
-        }
-        
         deletedAccountService.physicalDelete(id);
         return "redirect:/deleted-accounts";
     }
@@ -94,12 +97,8 @@ public class DeletedAccountController {
         }
         
         // Serviceの判定メソッドを使って一括不在条件をチェック
-        if (deletedAccountService.countEmployeesByAccountIds(ids)) {
+        if (deletedAccountService.existEmployeesByAccountIds(ids)) {
             attributes.addFlashAttribute("toastError", "紐づく社員情報が存在するアカウントが含まれているため、物理削除できません。");
-            return "redirect:/deleted-accounts";
-        }
-        if (deletedAccountService.countAssignmentsByAccountIds(ids)) {
-            attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するアカウントが含まれているため、物理削除できません。");
             return "redirect:/deleted-accounts";
         }
         

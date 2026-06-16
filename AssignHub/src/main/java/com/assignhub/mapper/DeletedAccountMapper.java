@@ -60,26 +60,30 @@ public interface DeletedAccountMapper {
 	/**
 	 * 指定されたアカウントIDに紐づく社員数をカウントする（単一物理削除の不在条件チェック用）。
 	 */
-	int countEmployeesByAccountId(@Param("id") Integer id);
+	int existEmployeesByAccountId(@Param("id") Integer id);
 	
 	/**
 	 * 指定されたアカウントIDリストのいずれかに紐づく社員数をカウントする（一括物理削除の不在条件チェック用）。
 	 */
-	int countEmployeesByAccountIds(@Param("ids") List<Integer> ids);
+	int existEmployeesByAccountIds(@Param("ids") List<Integer> ids);
 	
 	/**
 	 * 指定されたアカウントIDに紐づくアサイン履歴数をカウントする（単一物理削除の不在条件チェック用）。
 	 */
-	int countAssignmentsByAccountId(@Param("id") Integer id);
+	int existAssignmentsByAccountId(@Param("id") Integer id);
 
 	/**
 	 * 指定されたアカウントIDリストのいずれかに紐づくアサイン履歴数をカウントする（一括物理削除の不在条件チェック用）。
 	 */
-	int countAssignmentsByAccountIds(@Param("ids") List<Integer> ids);
+	int existAssignmentsByAccountIds(@Param("ids") List<Integer> ids);
 	
 	/**
 	 * 復元時に重複するアカウントが存在するか判定
 	 */
-	int countByLoginId(@Param("loginId") String id, @Param("excludeAccountId") Integer excludeAccountId);
-	
+	int existByLoginId(@Param("loginId") String id, @Param("excludeAccountId") Integer excludeAccountId);
+	/**
+	 * 現在有効な（削除されていない）企業総数をカウントする。
+	 * （500件登録上限チェック用）
+	 */
+	int existActiveCompanies();
 }

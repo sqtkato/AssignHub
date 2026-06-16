@@ -35,8 +35,7 @@
 						<th class="acc_id">アカウントID</th>
 						<th class="acc_logId">ログインID</th>
 						<th class="acc_per">権限</th>
-						<th class="acc_name">社員名(姓)</th>
-						<th class="acc_name">社員名(名)</th>
+						
 						</tr>
 					</thead>
 				<tbody>
@@ -44,20 +43,17 @@
 							<td th:text="${account.accountId}"class="acc_id"></td>
 							<td th:text="${account.loginId}"class="acc_logId"></td>
 							<td th:text="${account.permission == 1 ? '管理' : '一般'}"class="acc_per"></td>						
-							<td th:text="${account.employee != null ? account.employee.lastName : '-'}"
-								class="acc_name">社員名(姓)</td>
-							<td th:text="${account.employee != null ? account.employee.firstName : '-'}"
-								class="acc_name">社員名(名)</td>
+
 						</tr>
 					</tbody>
 				</table>
 			</div>
 
 			<div class="action-area">
-    			<form th:action="@{/deleted-accounts/export/download(ids=${ids})}" method="post">
-<!--       				 <input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">-->
-        					<button type="submit" class="btn btn-primary btn-wide">エクスポート</button>
-							<button type="button" class="btn-back" th:onclick="|location.href='@{/deleted-accounts}'|">戻る</button>
+    			<form th:action="@{/deleted-accounts/export/download}" method="post">
+							<input type="hidden" name="ids" th:value="${id}" th:each="id : ${ids}">
+        					<button type="submit" class="btn btn-primary common-btn">エクスポート</button>
+							<a th:href="@{/deleted-accounts}" class="btn btn-secondary common-btn">戻る</a>
 							</form>
 			</div>
 			<p class="export-note">※詳細情報がエクスポートされます。</p>

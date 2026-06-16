@@ -78,13 +78,13 @@
         </foreach>
     </delete>
     
-    <select id="countEmployeesByAccountId" resultType="int">
+    <select id="existEmployeesByAccountId" resultType="int">
         SELECT COUNT(*) 
         FROM m_employee 
         WHERE account_id = #{id}
     </select>
 
-    <select id="countEmployeesByAccountIds" resultType="int">
+    <select id="existEmployeesByAccountIds" resultType="int">
         SELECT COUNT(*) 
         FROM m_employee 
         WHERE account_id IN
@@ -93,14 +93,14 @@
         </foreach>
     </select>
     
-    <select id="countAssignmentsByAccountId" resultType="int">
+    <select id="existAssignmentsByAccountId" resultType="int">
         SELECT COUNT(a.assignment_id) 
         FROM t_assignment a
         INNER JOIN m_employee e ON a.emp_id = e.emp_id
         WHERE e.account_id = #{id}
     </select>
 
-    <select id="countAssignmentsByAccountIds" resultType="int">
+    <select id="existAssignmentsByAccountIds" resultType="int">
         SELECT COUNT(a.assignment_id) 
         FROM t_assignment a
         INNER JOIN m_employee e ON a.emp_id = e.emp_id
@@ -110,7 +110,7 @@
         </foreach>
     </select>
     
-    <select id="countByLoginId" resultType="int">
+    <select id="existByLoginId" resultType="int">
 		SELECT COUNT(*) 
 		FROM m_account
 		WHERE login_id = #{loginId}
@@ -118,6 +118,12 @@
 		<if test="excludeAccountId != null">
 			AND account_id != #{excludeAccountId}
 		</if>
+	</select>
+	
+	<select id="existActiveCompanies" resultType="int">
+		SELECT COUNT(*)
+		FROM m_company
+		WHERE delete_flg = 0
 	</select>
 
 </mapper>      
