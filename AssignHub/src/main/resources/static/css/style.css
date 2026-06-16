@@ -270,7 +270,7 @@ a:hover {
 }
 
 
-.detail-btn {
+.common-btn {
 	width: 120px;
 	height: 45px;
 	display: inline-flex;
@@ -281,7 +281,7 @@ a:hover {
 	text-decoration: none;
 	box-sizing: border-box;
 }
-.form-actions.detail-actions {
+.form-actions.common-actions {
 	width: 100%;
 	display: flex;
 	justify-content: center;
