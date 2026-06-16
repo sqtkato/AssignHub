@@ -105,8 +105,21 @@ public class EmployeeController {
 	 */
 	@PostMapping
 	public String store(@Validated @ModelAttribute("employeeForm") EmployeeForm form, BindingResult result,
-			RedirectAttributes attributes) {
-		if (result.hasErrors()) {
+			RedirectAttributes attributes,Model model) {
+		
+			
+			if ("プロパー".equals(form.getEngineerType()) && form.getAccountId() == null) {
+				result.rejectValue("accountId", "error.employeeForm", "ログインIDは必須です");
+			}
+			if ("パートナー".equals(form.getEngineerType()) && form.getCompanyId() == null) {
+				result.rejectValue("companyId", "error.employeeForm", "所属企業は必須です");
+			}
+			
+			if (result.hasErrors()) {
+				// 新規登録画面（create）を開いたときと同じように、コンボボックスのリストを再セットする
+				model.addAttribute("companies", employeeService.findAllCompany());
+				model.addAttribute("accounts", employeeService.findUnlinkedLoginId());
+				
 			return "employee/create";
 		}
 		Employee employee = new Employee();
@@ -159,7 +172,8 @@ public class EmployeeController {
 			model.addAttribute("employeeForm", form);	
 			model.addAttribute("fromPage", from);
 		}
-		//		model.addAttribute("company", companyService.findAll(null, "emp_company_name", "asc"));
+				model.addAttribute("companies", companyService.findAll(null, "emp_company_name", "asc"));
+				model.addAttribute("accounts", employeeService.findUnlinkedLoginId());
 		return "employee/edit";
 	}
 
@@ -168,14 +182,24 @@ public class EmployeeController {
 			@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
 			BindingResult result, RedirectAttributes attributes,
 			@RequestParam(value = "fromPage", required = false) String fromPage, Model model) {
+		
+
+		if ("プロパー".equals(employeeForm.getEngineerType()) && employeeForm.getAccountId() == null) {
+			result.rejectValue("accountId", "error.employeeForm", "ログインIDは必須です");
+		}
+		if ("パートナー".equals(employeeForm.getEngineerType()) && employeeForm.getCompanyId() == null) {
+			result.rejectValue("companyId", "error.employeeForm", "所属企業は必須です");
+		}
+		
 		if (employeeService.isEmailDuplicate(employeeForm.getEmail(), id)) {
 			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
 		}
+		
 
 		if (result.hasErrors()) {
-			//			model.addAttribute("departments", companyService.findAll(null, "dept_id", "asc"));
 			model.addAttribute("fromPage", fromPage);
-			model.addAttribute("companies", companyService.findAll(null, "company_name", "asc"));
+			model.addAttribute("companies", employeeService.findAllCompany());
+			model.addAttribute("accounts", employeeService.findUnlinkedLoginId());
 			return "employee/edit";
 		}
 		if ("detail".equals(fromPage)) {
