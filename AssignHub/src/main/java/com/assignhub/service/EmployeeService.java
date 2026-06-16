@@ -7,6 +7,7 @@ import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,6 @@ import com.assignhub.mapper.AccountMapper;
 import com.assignhub.mapper.CompanyMapper;
 import com.assignhub.mapper.EmployeeMapper;
 
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 社員管理に関するビジネスロジックを提供するサービスクラス。
@@ -29,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.01 2026/06/01
  * @author SQT）チームB
  */
-@Slf4j
 @Service
 public class EmployeeService {
 	private final EmployeeMapper employeeMapper;
@@ -143,8 +142,6 @@ public class EmployeeService {
 	@Transactional(rollbackFor = Exception.class)
 	public ImportResult importCsv(MultipartFile file) throws Exception {
 		ImportResult result = new ImportResult();
-		
-		 int insertPlan = 0;
 
 		// UTF-8として不正なバイト列を検出したら例外を投げるデコーダ
 		CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
@@ -246,12 +243,12 @@ public class EmployeeService {
 
 				String hireDatestr = cols[5].trim();
 				if (!hireDatestr.isEmpty()) {
-				    LocalDate hireDate = parseDate(hireDatestr);
-				    if (hireDate == null) {
-				        result.errors.add(new CsvRowError(rowNum, "入社年月日", "日付の形式が正しくありません\nYYYY/MM/DD 形式で入力してください"));
-				        hasError = true;
-				    } else {
+				    try {
+				        LocalDate hireDate = LocalDate.parse(hireDatestr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				        emp.setHireDate(hireDate);
+				    } catch (DateTimeParseException e) {
+				        result.errors.add(new CsvRowError(rowNum, "入社年月日", "日付の形式が正しくありません\nYYYY-MM-DD 形式で入力してください"));
+				        hasError = true;
 				    }
 				}
 
@@ -273,15 +270,17 @@ public class EmployeeService {
 
 				String birthDateStr = cols[7].trim();
 				if (!birthDateStr.isEmpty()) {
-				    LocalDate birthDate = parseDate(birthDateStr);
-				    if (birthDate == null) {
-				        result.errors.add(new CsvRowError(rowNum, "生年月日", "日付の形式が正しくありません\nYYYY/MM/DD 形式で入力してください"));
+				    try {
+				        LocalDate birthDate = LocalDate.parse(birthDateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				        if (birthDate.isAfter(LocalDate.now())) {
+				            result.errors.add(new CsvRowError(rowNum, "生年月日", "入力された年月日は正しくありません"));
+				            hasError = true;
+				        } else {
+				            emp.setBirthDate(birthDate);
+				        }
+				    } catch (DateTimeParseException e) {
+				        result.errors.add(new CsvRowError(rowNum, "生年月日", "日付の形式が正しくありません\nYYYY-MM-DD 形式で入力してください"));
 				        hasError = true;
-				    } else if (birthDate.isAfter(LocalDate.now())) {
-				        result.errors.add(new CsvRowError(rowNum, "生年月日", "入力された年月日は正しくありません"));
-				        hasError = true;
-				    } else {
-				        emp.setBirthDate(birthDate);
 				    }
 				}
 
@@ -330,7 +329,10 @@ public class EmployeeService {
 				}
 
 				String loginId = cols[12].trim();
-				if (!loginId.isEmpty()) {
+				if (loginId.isEmpty()) {
+				    result.errors.add(new CsvRowError(rowNum, "ログインID", "ログインIDは必須です"));
+				    hasError = true;
+				} else {
 				    Account account = accountService.findByLoginId(loginId);
 				    if (account == null) {
 				        result.errors.add(new CsvRowError(rowNum, "ログインID", "指定されたログインIDは存在しません"));
@@ -341,7 +343,10 @@ public class EmployeeService {
 				}
 
 				String companyName = cols[13].trim();
-				if (!companyName.isEmpty()) {
+				if (companyName.isEmpty()) {
+				    result.errors.add(new CsvRowError(rowNum, "所属企業", "所属企業は必須です"));
+				    hasError = true;
+				} else {
 				    Company company = companyService.findByCompanyName(companyName);
 				    if (company == null) {
 				        result.errors.add(new CsvRowError(rowNum, "所属企業", "指定された所属企業は存在しません"));
@@ -401,27 +406,18 @@ public class EmployeeService {
 				}
 
 				if (!hasError) {
-				    try {
-				        if (emp.getEmpId() == null || emp.getEmpId() == 0) {
-				            insertPlan++;
-				        }
-				        save(emp);
-				        result.successCount++;
-				    } catch (Exception e) {
-				        log.error("CSVインポート中エラー（{}行目）: データの保存に失敗しました。", rowNum, e);
-				        result.errors.add(new CsvRowError(rowNum, "DB登録", "保存に失敗しました"));
-				        result.errorCount++;
-				    }
+					try {
+						save(emp);
+						result.successCount++;
+					} catch (Exception e) {
+						result.errors.add(new CsvRowError(rowNum, "DB登録", "保存に失敗しました"));
+						result.errorCount++;
+					}
 				} else {
-				    result.errorCount++;
+					result.errorCount++;
 				}
 				rowNum++;
 			}
-			
-			if (result.errorCount == 0 && employeeMapper.countAll() + insertPlan > 500) {
-		        result.errors.add(new CsvRowError(0, "-", "登録後の件数が上限に達しています。社員の登録上限は500件です"));
-		        result.errorCount++;
-		    }
 
 			// エラーが1件でも発生した場合はトランザクションをロールバックする
 			if (result.errorCount > 0) {
@@ -453,16 +449,5 @@ public class EmployeeService {
 	public List<Company> findAllCompany() {
 		return companyMapper.findAll(null,null,null);
 		}	
-	
-	
-	private LocalDate parseDate(String s) {
-	    for (String p : new String[] { "yyyy/M/d", "yyyy-M-d" }) {
-	        try {
-	            return LocalDate.parse(s, DateTimeFormatter.ofPattern(p));
-	        } catch (Exception e) {
-	        }
-	    }
-	    return null;
-	}
 	
 	}
