@@ -97,13 +97,13 @@ public class AccountController {
 		if (result.hasErrors()) {
 			return "account/create";
 		}
-		if (accountService.isLoginIdDuplicate(form.getLoginId(),null)) {
+		if (accountService.isLoginIdDuplicate(form.getLoginId(), null)) {
 			model.addAttribute("loginIdError", "このログインIDは既に使用されています");
 			return "account/create";
 		}
 		Account account = new Account();
 		copyFormToEntity(form, account);
-		accountService.save  (account);
+		accountService.save(account);
 
 		return "redirect:/accounts";
 	}
@@ -143,13 +143,13 @@ public class AccountController {
 	public String update(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result, Model model) {
-		
+
 		if (result.hasErrors()) {
 			return "account/edit";
 		}
 
 		if (accountService.isLoginIdDuplicate(accountForm.getLoginId(), id)) {
-			result.rejectValue("loginId","error.accountForm", "このログインIDは既に使用されています");
+			result.rejectValue("loginId", "error.accountForm", "このログインIDは既に使用されています");
 			return "account/edit";
 		}
 
@@ -311,17 +311,24 @@ public class AccountController {
 	 * @param deptId  絞り込み部署ID
 	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
-	@GetMapping("/export/download")
+	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Account> accounts = accountService.findByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名(姓),社員名(名)\n");
 		for (Account acc : accounts) {
+			String lastName = "-";
+			String firstName = "-";
+			if (acc.getEmployee() != null) {
+				lastName = acc.getEmployee().getLastName();
+				firstName = acc.getEmployee().getFirstName();
+			}
+
 			csvBuilder.append(acc.getAccountId()).append(",")
 					.append(acc.getLoginId()).append(",")
 					.append(acc.getPermission()).append(",")
-					.append(acc.getEmployee().getLastName()).append(",")
-					.append(acc.getEmployee().getFirstName()).append("\n");
+					.append(lastName).append(",") 
+					.append(firstName).append("\n");
 		}
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
