@@ -11,7 +11,6 @@
 		<div class="page-title-area">
 			<h2>アサイン履歴情報削除/復元一覧</h2>
 		</div>
-
 		<div class="card">
 			<form th:action="@{/deleted-assignments}" method="get" th:object="${searchForm}" class="search-form"
 				novalidate>
@@ -63,7 +62,6 @@
 					</svg>
 					一括復元
 				</button>
-
 				<button type="submit" formmethod="post" formaction="/deleted-assignments/export" class="toolbar-btn"
 					title="チェックした項目をエクスポート">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -74,7 +72,6 @@
 					</svg>
 					エクスポート
 				</button>
-
 				<button type="submit" formaction="/deleted-assignments/delete-bulk"
 					class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
 					onclick="return confirm('選択した項目を一括削除しますか？');">
@@ -115,7 +112,7 @@
 								<td th:text="${assign.assignmentId}"></td>
 								<td th:text="${assign.employee.lastName} + ' ' + ${assign.employee.firstName}"></td>
 								<td th:text="${assign.company.companyName}"></td>
-								<td th:text="${assign.employee.company.companyName}"></td>
+								<td th:text="${assign.employee.company != null ? assign.employee.company.companyName :'ー'}"></td>
 								<td th:text="${assign.contractStartDate}"></td>
 								<td th:text="${assign.contractEndDate != null ? assign.contractEndDate : 'ー'}"></td>
 								<td th:text="${assign.unitPrice}"></td>
@@ -124,7 +121,9 @@
 										title="復元" onclick="openRestoreModal(this.dataset.id)">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
 											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-											<polyline points="20 6 9 17 4 12"></polyline>
+											<path
+												d="M7 16c2.21 0 4-1.79 5-3s2.79-3 5-3a4 4 0 1 1 0 8c-2.21 0-4-1.79-5-3s-2.79-3-5-3a4 4 0 0 0-3.4 1.9" />
+											<polyline points="5.5 10 2 12.5 4.5 16" />
 										</svg>
 									</button>
 									<button type="button" class="btn_assign_delete btn-icon-svg delete" title="削除"
