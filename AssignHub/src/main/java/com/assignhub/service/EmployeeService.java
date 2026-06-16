@@ -141,6 +141,7 @@ public class EmployeeService {
 	@Transactional(rollbackFor = Exception.class)
 	public ImportResult importCsv(MultipartFile file) throws Exception {
 		ImportResult result = new ImportResult();
+		int insertPlan = 0;
 
 		// UTF-8として不正なバイト列を検出したら例外を投げるデコーダ
 		CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
@@ -395,17 +396,23 @@ public class EmployeeService {
 				    hasError = true;
 				}
 
-				// 登録上限チェック
-				int employeeCount = employeeMapper.countAll();
-				if (!hasError && (employeeCount + result.successCount + 1) > 500) {
-				    result.errors.add(new CsvRowError(rowNum, "上限",
-				        "登録後の件数が上限に達しています。社員情報の登録上限は500件です。"));
-				    hasError = true;
+				// 登録上限チェック（新規登録のときだけ）
+				if (!hasError && (emp.getEmpId() == null)) {
+				    int employeeCount = employeeMapper.countAll();
+				    if ((employeeCount + insertPlan) >= 500) {
+				        result.errors.add(new CsvRowError(rowNum, "上限",
+				            "登録後の件数が上限に達しています。社員情報の登録上限は500件です。"));
+				        hasError = true;
+				    }
 				}
 
 				if (!hasError) {
 				    try {
+				        boolean isNew = (emp.getEmpId() == null);
 				        save(emp);
+				        if (isNew) {
+				            insertPlan++;
+				        }
 				        result.successCount++;
 				    } catch (Exception e) {
 				        result.errors.add(new CsvRowError(rowNum, "DB登録", "保存に失敗しました"));
@@ -416,7 +423,6 @@ public class EmployeeService {
 				}
 				rowNum++;
 			}
-			
 
 			// エラーが1件でも発生した場合はトランザクションをロールバックする
 			if (result.errorCount > 0) {
@@ -460,5 +466,6 @@ public class EmployeeService {
 	public boolean isMaxCount() {
 		return employeeMapper.countAll() >= 500;
 	}
+	
 	
 	}
