@@ -66,41 +66,41 @@ public interface DeletedAssignMapper {
 	/**
 	 * 指定されたアサインIDに紐づく企業数(派遣先)をカウントする（単一復元の生存チェック用）。
 	 */
-	int countcompanysdispatchsByAssignId(@Param("id") Integer id);
+	int existCompanyDispatchsByAssignId(@Param("id") Integer id);
 
 	/**
 	 * 指定されたアサインIDのいずれかに紐づく企業数(派遣先)をカウントする（一括復元の生存条件チェック用）。
 	 */
-	int countcompanysdispatchsByAssignIds(@Param("ids") List<Integer> ids);
+	int existCompanyDispatchsByAssignIds(@Param("ids") List<Integer> ids);
 
 	/**
 	 * 指定されたアサインIDに紐づく企業数(パートナー所属）をカウントする（単一復元の生存条件チェック用）。
 	 */
-	int countcompanyspartnerByAssignId(@Param("id") Integer id);
+	int existCompanyPartnerByAssignId(@Param("id") Integer id);
 
 	/**
 	 * 指定されたアサインIDのいずれかに紐づく企業数(パートナー所属）をカウントする（一括復元の生存条件チェック用）。
 	 */
-	int countcompanyspartnerByAssignIds(@Param("ids") List<Integer> ids);
+	int existCompanyPartnerByAssignIds(@Param("ids") List<Integer> ids);
 
 	/**
 	 * 指定されたアサインIDに紐づく社員情報(プロパー)をカウントする（単一復元の生存条件チェック用）。
 	 */
-	int countEmployeesproperByAssignId(@Param("id") Integer id);
+	int existEmployeeProperByAssignId(@Param("id") Integer id);
 
 	/**
 	 * 指定されたアサインIDのいずれかに紐づく社員情報(プロパー)をカウントする（一括復元の生存条件チェック用）。
 	 */
-	int countEmployeesproperByAssignIds(@Param("ids") List<Integer> ids);
+	int existEmployeeProperByAssignIds(@Param("ids") List<Integer> ids);
 
 	/**
 	 * 指定されたアサインIDに紐づく社員情報(パートナー)をカウントする（単一復元の生存条件チェック用）。
 	 */
-	int countEmployeespartnerByAssignId(@Param("id") Integer id);
+	int existEmployeePartnerByAssignId(@Param("id") Integer id);
 
 	/**
 	 * 指定されたアサインIDのいずれかに紐づく社員情報(パートナー)をカウントする（一括復元の生存条件チェック用）。
 	 */
-	int countEmployeespartnersByAssignIds(@Param("ids") List<Integer> ids);
+	int existEmployeePartnersByAssignIds(@Param("ids") List<Integer> ids);
 
 }

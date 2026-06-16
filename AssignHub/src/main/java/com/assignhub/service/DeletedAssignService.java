@@ -98,42 +98,42 @@ public class DeletedAssignService {
 	// =======================================================
 
 	//    単一復元の不在条件
-	public boolean countcompanysdispatchsByAssignId(Integer id) {
-		return deletedAssignMapper.countcompanysdispatchsByAssignId(id) > 0;
+	public boolean existCompanyDispatchsByAssignId(Integer id) {
+		return deletedAssignMapper.existCompanyDispatchsByAssignId(id) > 0;
 	}
 
 	//    一括復元の生存条件
-	public boolean countcompanysdispatchsByAssignIds(List<Integer> ids) {
-		return deletedAssignMapper.countcompanysdispatchsByAssignIds(ids) > 0;
+	public boolean existCompanyDispatchsByAssignIds(List<Integer> ids) {
+		return deletedAssignMapper.existCompanyDispatchsByAssignIds(ids) > 0;
 	}
 
 	//    単一復元の生存条件
-	public boolean countcompanyspartnerByAssignId(Integer id) {
-		return deletedAssignMapper.countcompanyspartnerByAssignId(id) > 0;
+	public boolean existCompanyPartnerByAssignId(Integer id) {
+		return deletedAssignMapper.existCompanyPartnerByAssignId(id) > 0;
 	}
 
 	//    一括復元の生存条件
-	public boolean countcompanyspartnerByAssignIds(List<Integer> ids) {
-		return deletedAssignMapper.countcompanyspartnerByAssignIds(ids) > 0;
+	public boolean existCompanyPartnerByAssignIds(List<Integer> ids) {
+		return deletedAssignMapper.existCompanyPartnerByAssignIds(ids) > 0;
 	}
 
 	//    単一復元の生存条件
-	public boolean countEmployeesproperByAssignId(Integer id) {
-		return deletedAssignMapper.countEmployeesproperByAssignId(id) > 0;
+	public boolean existEmployeeProperByAssignId(Integer id) {
+		return deletedAssignMapper.existEmployeeProperByAssignId(id) > 0;
 	}
 
 	//    一括復元の生存条件
-	public boolean countEmployeesproperByAssignIds(List<Integer> ids) {
-		return deletedAssignMapper.countEmployeesproperByAssignIds(ids) > 0;
+	public boolean existEmployeeProperByAssignIds(List<Integer> ids) {
+		return deletedAssignMapper.existEmployeeProperByAssignIds(ids) > 0;
 	}
 
 	//    単一復元の生存条件
-	public boolean countEmployeespartnerByAssignId(Integer id) {
-		return deletedAssignMapper.countEmployeespartnerByAssignId(id) > 0;
+	public boolean existEmployeePartnerByAssignId(Integer id) {
+		return deletedAssignMapper.existEmployeePartnerByAssignId(id) > 0;
 	}
 
 	//    一括復元の生存条件
-	public boolean countEmployeespartnersByAssignIds(List<Integer> ids) {
-		return deletedAssignMapper.countEmployeespartnersByAssignIds(ids) > 0;
+	public boolean existEmployeePartnersByAssignIds(List<Integer> ids) {
+		return deletedAssignMapper.existEmployeePartnersByAssignIds(ids) > 0;
 	}
 }
