@@ -4,13 +4,13 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>アカウント情報変更入力</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
-			<h2>アカウント情報の変更</h2>
+			<h2>アカウント情報変更入力</h2>
 		</div>
 		<div class="card form-card">
 			<form th:action="@{/accounts/{id}/edit(id=${id})}" th:object="${accountForm}" method="post">

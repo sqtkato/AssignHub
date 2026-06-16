@@ -42,13 +42,9 @@ public interface AccountMapper {
 
 	void insert(Account account);
 
-	
-
 	/** アカウントを更新する（ログインID・パスワード・権限を上書き）。 */
 
 	void update(Account account);
-
-	
 
 	/**
 	 * アカウントを一件論理削除。
@@ -62,6 +58,7 @@ public interface AccountMapper {
 	 */
 	void deleteBulk(@Param("ids") List<Integer> ids);
 
-	
 	int countByLoginId(@Param("loginId") String id, @Param("excludeAccountId") Integer excludeAccountId);
+
+	int countAll();
 }
