@@ -320,7 +320,7 @@ public class AccountController {
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Account> accounts = accountService.findByIds(ids);
-		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,社員名(姓),社員名(名)\n");
+		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限\n");
 		for (Account acc : accounts) {
 			String Permission = "";
 			if(acc.getPermission() == 0) {
