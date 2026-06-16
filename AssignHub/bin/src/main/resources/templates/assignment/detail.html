@@ -77,18 +77,18 @@
 						<td th:text="${assignment.role.role}"></td>
 					</tr>
 				</table>
-				<div class="form-actions common-actions">
+				<div class="form-actions detail-actions">
 					<a th:href="@{/assignments/{id}/edit(id=${assignment.assignmentId}, from='detail')}"
-						class="btn btn-primary common-btn">変更
+						class="btn btn-primary detail-btn">変更
 					</a>
 
 
 
-					<button type="button" class="btn modal-btn-danger common-btn"
+					<button type="button" class="btn modal-btn-danger detail-btn"
 						th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
 					</button>
 
-					<a th:href="@{/assignments}" class="btn btn-secondary common-btn">戻る
+					<a th:href="@{/assignments}" class="btn btn-secondary detail-btn">戻る
 					</a>
 				</div>
 			</div>

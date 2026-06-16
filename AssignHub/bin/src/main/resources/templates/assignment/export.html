@@ -25,9 +25,9 @@
 						<td class="value">UTF-8</td>
 					</tr>
 				</table>
-				<div class="table-scroll export-table">
-					<table class="table header-only-table table-dark">
-						<thead>
+				<div class="table-scroll">
+					<table class="table">
+						<thead class="table-dark">
 							<tr>
 								<th>アサインID</th>
 								<th>社員名</th>
@@ -42,8 +42,8 @@
 							</tr>
 						</tbody>
 					</table>
+					<p class="export-note">※詳細情報がエクスポートされます。</p>
 				</div>
-				<p class="export-note">※詳細情報がエクスポートされます。</p>
 			</div>
 			<div class="action-area">
 				<form th:action="@{/assignments/export/download(ids=${ids})}" method="post">

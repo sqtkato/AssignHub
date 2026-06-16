@@ -24,11 +24,10 @@ import com.assignhub.mapper.AssignmentMapper;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * AssignmentServiceは、アサイン情報の管理に関するビジネスロジックを実装するサービスクラスです。
- * このクラスは、AssignmentMapperを介してデータベース操作を行い、アサイン情報の一覧取得、新規登録などの機能を提供します。
+ * アサイン履歴情報管理に関するビジネスロジックを提供するサービスクラス。
  * 
  * @author Team Excel
- * @version 1.00 2026/06/10
+ * @version 1.00 2026/06/16
  */
 @Slf4j
 @Service
@@ -47,9 +46,12 @@ public class AssignmentService {
 	/**
 	 * アサイン履歴情報の一覧を取得する。
 	 *
-	 * @param txtEmpName 社員名の検索キーワード（nullまたは空文字の場合は全件取得）
-	 * @param txtCompanyName 企業名の検索キーワード（nullまたは空文字の場合は全件取得）
-	 * @return アサイン履歴情報のリスト
+	 * @param empName           社員名の部分一致検索キーワード
+	 * @param assignName        アサイン先企業名の部分一致検索キーワード
+	 * @param companyName       企業名の部分一致検索キーワード
+	 * @param contractStartDate 契約開始日の範囲検索の開始日（yyyy/MM/dd形式）
+	 * @param contractEndDate   契約終了日の範囲検索の終了日（yyyy/MM/dd形式）
+	 * @return アサイン履歴エンティティのリスト
 	 */
 	public List<Assignment> findAll(String empName, String assignName, String companyName,
 			String contractStartDate, String contractEndDate) {
@@ -58,15 +60,21 @@ public class AssignmentService {
 	}
 
 	/**
-	 * アサイン履歴情報をIDで取得する。
+	 * アサイン履歴IDを指定して、アサイン履歴情報情報を1件取得する。
 	 *
 	 * @param id アサイン履歴情報のID
-	 * @return IDに対応するアサイン履歴情報、存在しない場合はnull
+	 * @return 該当するアサイン履歴エンティティ（存在しない場合はnull）
 	 */
 	public Assignment findById(Integer id) {
 		return assignmentMapper.findById(id);
 	}
 	
+
+	/**
+	 * チェックボックスでアサイン履歴IDを取得する。
+	 * @param ids 選択されたチェックボックスの行に対応するアサイン履歴ID
+	 * @return 該当するアサイン履歴エンティティのリスト
+	 */
 	public List<Assignment> findByIds(List<Integer> ids) {
 		return assignmentMapper.findByIds(ids);
 	}
@@ -75,7 +83,7 @@ public class AssignmentService {
 	 * アサイン履歴情報を保存する。
 	 * IDが存在しない場合（nullまたは0）は新規登録（INSERT）、存在する場合は更新（UPDATE）を行う。
 	 *
-	 * @param assignment 登録または更新するアサインエンティティ
+	 * @param assignment 登録または更新するアサイン履歴エンティティ
 	 */
 	@Transactional
 	public void save(Assignment assignment) {
@@ -85,11 +93,23 @@ public class AssignmentService {
 			assignmentMapper.update(assignment);
 		}
 	}
-
+	
+	/**
+	 * 指定されたアサイン履歴IDのデータを論理削除する。
+	 *
+	 * @param id 削除対象のアサイン履歴ID
+	 */
+	@Transactional
 	public void delete(Integer id) {
 		assignmentMapper.delete(id);
 	}
-
+	
+	/**
+	 * 指定された複数のアサイン履歴IDのデータを一括で論理削除する。
+	 *
+	 * @param ids 削除対象となるアサイン履歴IDのリスト
+	 */
+	@Transactional
 	public void deleteBulk(List<Integer> ids) {
 		assignmentMapper.deleteBulk(ids);
 	}
@@ -324,9 +344,11 @@ public class AssignmentService {
 				}
 				rowNum++;
 			}
-
+			
+			// エラーが1件でも発生した場合はトランザクションをロールバックする
 			if (result.errorCount > 0) {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				// ロールバックされたため、成功件数を0に戻して画面表示を正す
 				result.successCount = 0;
 			}
 		}
@@ -364,8 +386,8 @@ public class AssignmentService {
 
 	/**
 	 * アサイン履歴情報の重複をチェックする。
-	 * @param assignment チェック対象のアサインエンティティ
-	 * @return
+	 * @param assignment チェック対象のアサイン履歴エンティティ
+	 * @return 重複していればtrue
 	 */
 	public boolean existsDuplicate(Assignment assignment) {
 	    int count = assignmentMapper.countDuplicate(
@@ -376,7 +398,11 @@ public class AssignmentService {
 	            assignment.getContractEndDate());
 	    return count > 0;
 	}
-
+	
+	/**
+	 * アサイン履歴情報の件数が上限に達しているかを判定する。
+	 * @return 上限に達していればtrue
+	 */
 	public boolean isMaxCount() {
 		return assignmentMapper.countAll() >= 500;
 	}

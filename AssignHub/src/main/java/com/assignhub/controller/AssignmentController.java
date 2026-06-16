@@ -235,6 +235,15 @@ public class AssignmentController {
 			model.addAttribute("role", roleService.findAll());
 			return "assignment/edit";
 		}
+		if (assignmentService.existsDuplicate(assignment)) {
+			result.reject(
+					"duplicate",
+					"既に同じ内容が登録されています");
+			model.addAttribute("employees", employeeService.findAll(null, null, null, null));
+			model.addAttribute("companies", companyService.findAll(null, null));
+			model.addAttribute("role", roleService.findAll());
+			return "assignment/create";
+		}
 		assignment.setAssignmentId(id);
 		assignmentService.save(assignment);
 		attributes.addFlashAttribute("toastMessage", "アサイン履歴情報を更新しました");
