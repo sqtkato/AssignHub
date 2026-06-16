@@ -193,13 +193,9 @@ public class AccountController {
 		return "redirect:/accounts";
 	}
 
-	/**
-	 * アカウント情報インポート画面を表示する。
-	 */
 	@GetMapping("/import")
 	public String showImport(Model model, RedirectAttributes attributes) {
-		int currentCount = accountService.findAll("", null).size();
-		if (currentCount >= 500) {
+		if (accountService.isAccountLimitReached()) {
 			attributes.addFlashAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
 			return "redirect:/accounts";
 		}

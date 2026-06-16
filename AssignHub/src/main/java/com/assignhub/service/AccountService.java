@@ -134,6 +134,15 @@ public class AccountService {
 	}
 	
 	/**
+	 * アカウント登録数が上限（500件）に達しているかを判定する。
+	 *
+	 * @return 上限に達していればtrue
+	 */
+	public boolean isAccountLimitReached() {
+		return findAll("", null).size() >= 500;
+	}
+	
+	/**
 	 * アップロードされたCSVファイルを解析し、バリデーションおよび一括登録・更新を行う。
 	 * 1行ごとに保存処理を行うが、1件でもエラーがあれば全体をロールバックする。
 	 *
