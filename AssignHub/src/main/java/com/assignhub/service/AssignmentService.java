@@ -295,7 +295,6 @@ public class AssignmentService {
 					hasError = true;
 				}
 
-				// 登録上限チェック（企業班と同じ方式：新規登録時のみ判定）
 				if (!hasError && (asm.getAssignmentId() == null || asm.getAssignmentId() == 0)) {
 					int assignCount = assignmentMapper.countAll();
 					if ((assignCount + result.successCount + 1) > 500) {
