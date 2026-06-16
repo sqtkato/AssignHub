@@ -587,7 +587,9 @@ a:hover {
 	width: 100%;
 	border-spacing: 0 10px;
 	font-size: 0.95rem;
+	max-height: 330px;
 }
+
 
 .export-table td.label {
 	width: 180px;
