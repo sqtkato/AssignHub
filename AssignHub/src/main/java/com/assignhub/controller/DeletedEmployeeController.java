@@ -117,7 +117,7 @@ public class DeletedEmployeeController {
         	attributes.addFlashAttribute("toastError","所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
         	return "redirect:/deleted-employees";
         }
-        if (employeeService.isEmailDuplicate(employeeForm.getEmail(), ids)) {
+        if (employeeService.isEmailDuplicate(employeeForm.getEmail(), id)) {
 			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
         }
         deletedEmployeeService.restoreBulk(ids);
