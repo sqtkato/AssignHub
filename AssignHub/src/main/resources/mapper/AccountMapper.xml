@@ -137,7 +137,7 @@
 		WHERE delete_flg = 0
 	</select>
 	
-	<select id="findUnlinkedLoginId">
+	<select id="findLoginId">
    SELECT login_id,account_id
    FROM m_account
    WHERE login_id NOT IN (

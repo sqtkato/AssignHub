@@ -47,7 +47,11 @@ public interface EmployeeMapper {
 	 */
 	void delete(Integer id);
 	
-	
+	/**
+	 * 複数の社員を一括でする。
+	 *
+	 * @param ids 削除対象IDリスト
+	 */
 	void deleteBulk(@Param("ids") List<Integer> ids);
 
 	void update(Employee employee);
