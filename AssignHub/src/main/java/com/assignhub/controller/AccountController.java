@@ -3,8 +3,6 @@ package com.assignhub.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +23,8 @@ import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
 import com.assignhub.service.AccountService;
 import com.assignhub.service.EmployeeService;
+
+import jakarta.servlet.http.HttpSession;
 
 /**
  * アカウント情報管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
@@ -297,12 +297,8 @@ public class AccountController {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
 			return "redirect:/accounts"; // 元の一覧画面に戻す
 		}
-		if (ids.size() == 0) {
-			return "account/index";
-
-		}
-		model.addAttribute("count", accountService.findByIds(ids).size());
 		List<Account> accounts = accountService.findByIds(ids);
+		model.addAttribute("count", accountService.findByIds(ids).size());
 		model.addAttribute("accounts", accounts);
 		model.addAttribute("ids", ids);
 		return "account/export";
@@ -315,15 +311,17 @@ public class AccountController {
 	 * @param deptId  絞り込み部署ID
 	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
-	@PostMapping("/export/download")
+	@GetMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Account> accounts = accountService.findByIds(ids);
-		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名\n");
+		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名(姓),社員名(名)\n");
 		for (Account acc : accounts) {
 			csvBuilder.append(acc.getAccountId()).append(",")
 					.append(acc.getLoginId()).append(",")
-					.append(acc.getPermission()).append(",");
+					.append(acc.getPermission()).append(",")
+					.append(acc.getEmployee().getLastName()).append(",")
+					.append(acc.getEmployee().getFirstName()).append("\n");
 		}
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
