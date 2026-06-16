@@ -10,6 +10,7 @@
 <body>
 	<div layout:fragment="content">
 		<div class="card form-card-wide">
+			<div class="page-title-area">
 			<h2>社員情報インポート</h2>
 			<p class="instructionOverview">CSVファイルを選択して社員情報を一括登録・更新します。</p>
 			<p class="instruction">※既存の社員IDと一致する場合は上書き更新、空欄の場合は新規登録されます。</p>
@@ -22,9 +23,9 @@
 				<div class="template-link-area">
 					<a th:href="@{/employees/import/template}" class="template-link">↓ テンプレート(CSV)をダウンロード</a>
 				</div>
-				<div class="action-area">
-					<button type="submit" class="btn btn-primary btn-wide">インポート</button>
-					<a th:href="@{/employees}" class="btn btn-secondary btn-wide">戻る</a>
+				<div class="action-area form-actions common-actions" >
+					<button type="submit" class="btn btn-primary common-btn">インポート</button>
+					<a th:href="@{/employees}" class="btn btn-secondary common-btn">戻る</a>
 				</div>
 				<p th:if="${errorMessage}" th:text="${errorMessage}" class="errorMessage"></p>
 			</form>
