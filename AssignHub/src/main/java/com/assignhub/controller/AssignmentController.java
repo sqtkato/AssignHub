@@ -270,28 +270,41 @@ public class AssignmentController {
 	 */
 	@PostMapping("/import")
 	public String importCsv(
-			@RequestParam(name = "input_assign_file_upload", required = false) MultipartFile file,
-			Model model) {
-		if (file == null || file.isEmpty()) {
-			model.addAttribute("toastError", "ファイルを選択してください");
-			return "assignment/import";
-		}
-		try {
-			AssignmentService.ImportResult result = assignmentService.importCsv(file);
-			model.addAttribute("importResult", result);
-			if (result.errorCount > 0) {
-				model.addAttribute("toastError", "一部の行でエラーが発生しました");
-			} else {
-				model.addAttribute("toastMessage", result.successCount + "件のインポート処理が完了しました");
-			}
-			return "assignment/import";
-		} catch (MalformedInputException e) {
-			model.addAttribute("toastError", "CSVファイルはUTF-8形式でアップロードしてください");
-			return "assignment/import";
-		} catch (Exception e) {
-			model.addAttribute("toastError", "ファイルの読み込みに失敗しました");
-			return "assignment/import";
-		}
+	        @RequestParam(name = "input_assign_file_upload", required = false) MultipartFile file,
+	        Model model) {
+
+	    if (file == null || file.isEmpty()) {
+	        model.addAttribute("toastError", "ファイルを選択してください");
+	        return "assignment/import";
+	    }
+
+	    String filename = file.getOriginalFilename();
+	    if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
+	        model.addAttribute("toastError", "ファイルの形式が正しくありません。CSVファイルを選択してください");
+	        return "assignment/import";
+	    }
+
+	    if (file.getSize() > 5L * 1024 * 1024) {
+	        model.addAttribute("toastError", "ファイルサイズは5MB以内にしてください");
+	        return "assignment/import";
+	    }
+
+	    try {
+	        AssignmentService.ImportResult result = assignmentService.importCsv(file);
+	        model.addAttribute("importResult", result);
+	        if (result.errorCount > 0) {
+	            model.addAttribute("toastError", "一部の行でエラーが発生しました");
+	        } else {
+	            model.addAttribute("toastMessage", result.successCount + "件のインポート処理が完了しました");
+	        }
+	        return "assignment/import";
+	    } catch (MalformedInputException e) {
+	        model.addAttribute("toastError", "UTF-8のCSVファイルを選択してください");
+	        return "assignment/import";
+	    } catch (Exception e) {
+	        model.addAttribute("toastError", "ファイルの読み込みに失敗しました");
+	        return "assignment/import";
+	    }
 	}
 
 	/**

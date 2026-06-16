@@ -322,7 +322,7 @@ public class AssignmentService {
 			}
 
 			if (result.errorCount == 0 && assignmentMapper.countAll() + insertPlan > 500) {
-				result.errors.add(new CsvRowError(0, "-", "登録後の件数が上限に達しています。アサインの登録上限は500件です"));
+				result.errors.add(new CsvRowError(0, "上限", "登録後の件数が上限に達しています。アサインの登録上限は500件です"));
 				result.errorCount++;
 			}
 
