@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Employee;
+import com.assignhub.form.CompanyForm;
 import com.assignhub.form.EmployeeForm;
 import com.assignhub.service.CompanyService;
 import com.assignhub.service.EmployeeService;
@@ -139,6 +140,7 @@ public class EmployeeController {
 		if (!model.containsAttribute("employeeForm")) {
 			Employee emp = employeeService.findById(id);
 			EmployeeForm form = new EmployeeForm();
+			CompanyForm Cform = new CompanyForm();
 			form.setLastName(emp.getLastName());
 			form.setFirstName(emp.getFirstName());
 			form.setLastNameKana(emp.getLastNameKana());
@@ -152,7 +154,7 @@ public class EmployeeController {
 			form.setEmpTel(emp.getEmpTel());
 			form.setEmail(emp.getEmail());
 			form.setEngineerType(emp.getEngineerType());
-			form.setCompanyId(emp.getCompanyId());
+			Cform.setCompanyName(emp.getCompany().getCompanyName());
 			form.setAccountId(emp.getAccountId());
 			form.setDepartment(emp.getDepartment());
 			form.setJobTitle(emp.getJobTitle());
@@ -303,16 +305,20 @@ public class EmployeeController {
 	 * @param model  画面描画用のモデル
 	 * @return エクスポート画面のテンプレートパス
 	 */
-	@GetMapping("/export")
-	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model,
-			RedirectAttributes attributes) {
+	@PostMapping("/export")
+	public String showExport(
+	        @RequestParam(name = "ids", required = false) List<Integer> ids,
+	        Model model , RedirectAttributes attributes) {
+		
 		if (ids == null || ids.isEmpty()) {
-			attributes.addFlashAttribute("toastError", "削除する対象が選択されていません");
+			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
 			return "redirect:/employees";
 		}
-		model.addAttribute("employees", employeeService.findByIds(ids));
-		model.addAttribute("count", employeeService.findByIds(ids).size());
-		return "employee/export";
+	    List<Employee> employees = employeeService.findByIds(ids);
+		model.addAttribute("employees",employees);
+	    model.addAttribute("count", employees.size());
+	    model.addAttribute("ids", ids);
+	    return "employee/export";
 	}
 
 	/**
@@ -321,7 +327,8 @@ public class EmployeeController {
 	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
 	@GetMapping("/export/download")
-	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids) {
+	public ResponseEntity<byte[]> downloadCsv(
+			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Employee> employees = employeeService.findByIds(ids);
 		StringBuilder csvBuilder = new StringBuilder(
 				"社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,"
@@ -333,17 +340,17 @@ public class EmployeeController {
 					.append(emp.getFirstName()).append(",")
 					.append(emp.getLastNameKana()).append(",")
 					.append(emp.getFirstNameKana()).append(",")
-					.append(emp.getHireDate()).append(",")
-					.append(emp.getYearsOfService()).append(",")
-					.append(emp.getBirthDate()).append(",")
+					.append(emp.getHireDate()!= null ? emp.getHireDate(): "").append(",")
+					.append(emp.getYearsOfService()!= null ? emp.getYearsOfService(): "").append(",")
+					.append(emp.getBirthDate()!= null ? emp.getBirthDate(): "").append(",")
 					.append(emp.getZipCode()).append(",")
 					.append(emp.getAddress1()).append(",")
-					.append(emp.getAddress2()).append(",")
+					.append(emp.getAddress2()!= null ? emp.getAddress2() : "").append(",")
 					.append(emp.getEngineerType()).append(",")
-					.append(emp.getAccountId()).append(",")
-					.append(emp.getCompanyId()).append(",")
-					.append(emp.getDepartment()).append(",")
-					.append(emp.getJobTitle()).append(",")
+					.append(emp.getAccount() != null&& emp.getAccount().getLoginId() != null? emp.getAccount().getLoginId(): "").append(",")
+					.append(emp.getCompany() != null ? emp.getCompany().getCompanyName() : "").append(",")
+					.append(emp.getDepartment()!= null ? emp.getDepartment() : "").append(",")
+					.append(emp.getJobTitle()!= null ? emp.getJobTitle() : "").append(",")
 					.append(emp.getEmpTel()).append(",")
 					.append(emp.getEmail()).append("\n");
 		}
