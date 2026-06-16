@@ -30,7 +30,7 @@ public class Assignment {
     private Integer roleId;
 
     /** 削除フラグ */
-    private Boolean deleteFlg;
+    private Integer deleteFlg;
 
     /** 作成日時 */
     private LocalDateTime createdAt;
