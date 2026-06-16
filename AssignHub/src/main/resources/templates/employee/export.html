@@ -1,64 +1,63 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
 	
-<head>
-<meta charset="UTF-8">
-	<title>社員情報エクスポート</title>
-</head>
-
-<body>
-	<div>
-		<h2>社員情報エクスポート</h2>
-	</div>
+	<head>
+		<title>社員情報エクスポート</title>
+	</head>
 	
-	<div>
-		<p>
-			以下の内容でCSVファイルを出力します。<br>
-			よろしければ「エクスポート」ボタンを教えてください。
-		</p>
-		
-		<div>
-			<h4>出力条件の確認</h4>
-			
-			<table>
-				<tr>
-					<td>出力対象件数:</td>
-					<td class="value"><span th:text="${count}">0</span> 件</td>
-				</tr>
-				<tr>
-					<td>文字コード:</td>
-					<td>UTF-8 (BOMあり)</td>
-				</tr>
-			</table>
-			
-			<div>
-				<table>
-					<thead>
-					<tr>
-						<th>社員ID</th>
-						<th>社員名</th>
-						<th>アサイン先企業</th>
-						<th>所属企業</th>
-					</tr>
-					</thead>
-					
-					<tbody>
-						<tr th:each="emp : ${employees}" class="clickable-row">
-							<td th:text="${emp.empId}"></td>
-							<td th:text="${emp.lastName} + ' ' + ${emp.firstName}"></td>
-							<td th:text="${emp.companyNameAssign}"></td>
-							<td th:text="${emp.companyName ?: 'ー'}"></td>
-						</tr>
-					</tbody>
-				</table>
-				<p>※ 詳細情報がエクスポートされます</p>
+	<body>
+		<div layout:fragment="content">
+			<div class="page-title-area">
+				<h2>社員情報エクスポート</h2>
 			</div>
+			<div class="card form-card-wide">
+				<p class="instruction">以下の内容でcsvファイルを出力します。<br>よろしければ「エクスポート」ボタンを教えてください。</p>
 			
-			<a th:href="@{/employees/export/download}">エクスポート</a>
-			<a th:href="@{/employees}">戻る</a>
-			
+			<div class="export-confirm-box">
+				<h4 class="export-confirm-title">出力条件の確認</h4>
+				<table class="export-table">
+					<tr>
+						<td class="label">出力対象件数:</td>
+						<td class="value"><span class="export-count" th:text="${count}">0</span> 件</td>
+					</tr>
+					<tr>
+						<td class="label">文字コード:</td>
+						<td class="value">utf-8 (bomあり)</td>
+					</tr>
+				</table>
+				
+					<div class="table-scroll export-table">
+						<table class="table header-only-table table-dark">
+							<thead>
+								<tr>
+									<th >社員id</th>
+									<th>社員名</th>
+									<th>アサイン先企業</th>
+									<th>所属企業</th>
+								</tr>
+							</thead>
+						
+						<tbody>
+							<tr th:each="emp : ${employees}" class="clickable-row">
+								<td th:text="${emp.empId}"></td>
+								<td th:text="${emp.lastName} + ' ' + ${emp.firstName}"></td>
+								<td th:text="${emp.assignment?.company?.companyName} ?: 'ー'"></td>
+								<td th:text="${emp.company?.companyName} ?: 'ー'"></td>
+							</tr>
+						</tbody>
+					</table>
+					<p class="export-note">※詳細情報がエクスポートされます。</p>
+				
+				<div class="action-area">
+					<form th:action="@{/employees/export/download(ids=${ids})}" method="post">
+						<button type="submit" class="btn-csv">エクスポート</button>
+						<button type="button" id="btn_account_back" class="btn-back"
+									th:onclick="|location.href='@{/employees}'|">戻る</button>
+					</form>
+				</div>
+				
+			</div>
 		</div>
-	</div>
-</body>
-
+	</body>
 </html>
