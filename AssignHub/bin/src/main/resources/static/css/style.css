@@ -267,25 +267,6 @@ a:hover {
 	background-color: #f8d7da;
 }
 
-.common-btn {
-	width: 120px;
-	height: 45px;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 1rem;
-	font-weight: bold;
-	text-decoration: none;
-	box-sizing: border-box;
-}
-
-.form-actions.common-actions {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 90px;
-}
 /* =========================================
    Forms & Validation (入力フォームとエラー)
 ========================================= */
@@ -479,6 +460,26 @@ a:hover {
 	stroke-width: 2;
 }
 
+.detail-btn {
+	width: 120px;
+	height: 45px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1rem;
+	font-weight: bold;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+.form-actions.detail-actions {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 90px;
+}
+
 /* =========================================
    Badges (状態表示用バッジ)
 ========================================= */
@@ -541,6 +542,7 @@ a:hover {
 	gap: 10px;
 	justify-content: center;
 }
+
 /* =========================================
    テーブルスクロール
 ========================================= */
@@ -606,9 +608,7 @@ a:hover {
 	width: 100%;
 	border-spacing: 0 10px;
 	font-size: 0.95rem;
-	max-height: 330px;
 }
-
 
 .export-table td.label {
 	width: 180px;
@@ -645,17 +645,7 @@ a:hover {
 	width: 150px;
 }
 
-.detail-btn {
-	width: 120px;
-	height: 45px;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 1rem;
-	font-weight: bold;
-	text-decoration: none;
-	box-sizing: border-box;
-}
+
 
 
 
@@ -906,7 +896,7 @@ a:hover {
 	line-height: 1.5;
 }
 
-.modal-actions {	
+.modal-actions {
 	display: flex;
 	justify-content: center;
 	gap: 10px;

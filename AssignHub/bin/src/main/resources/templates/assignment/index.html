@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<title>アサイン履歴情報一覧</title>
+	<link rel="stylesheet" th:href="@{/css/assignment.css}">
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="page-title-area">
+			<h2>アサイン履歴情報一覧</h2>
+		</div>
+
+		<div class="card">
+			<form th:action="@{/assignments}" method="get" th:object="${searchForm}" class="search-form" novalidate>
+				<div class="search-row">
+					<div class="form-group form-group-search">
+						<div class="form-group">
+							<label>社員名</label>
+							<input type="text" th:field="*{empName}" maxlength="100" class="form-control"
+								placeholder="例：山田">
+						</div>
+						<div class="form-group">
+							<label>アサイン先企業</label>
+							<input type="text" th:field="*{assignName}" maxlength="50" class="form-control"
+								placeholder="例：株式会社ABC">
+						</div>
+					</div>
+					<div class="form-group form-group-search">
+						<div class="form-group">
+							<label>契約期間</label>
+							<div class="date-range">
+								<input type="date" th:field="*{contractStartDate}" class="form-control">
+								<span class="date-range-sep">～</span>
+								<input type="date" th:field="*{contractEndDate}" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label>所属企業</label>
+							<input type="text" th:field="*{companyName}" maxlength="50" class="form-control"
+								placeholder="例：株式会社ABC">
+						</div>
+					</div>
+				</div>
+				<div class="search-button-area">
+					<button type="submit" class="btn btn-secondary">検索</button>
+				</div>
+			</form>
+		</div>
+
+		<form th:action="@{/assignments/bulk-delete}" method="post" id="listForm">
+			<div class="table-toolbar">
+				<button type="button" class="toolbar-btn toolbar-btn-secondary"
+					th:onclick="|location.href='@{/assignments/import}'|">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="7 10 12 15 17 10"></polyline>
+						<line x1="12" y1="15" x2="12" y2="3"></line>
+					</svg>
+					インポート
+				</button>
+				<button type="submit" th:formaction="@{/assignments/export}" formmethod="post"  class="toolbar-btn toolbar-btn-secondary">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="17 8 12 3 7 8"></polyline>
+						<line x1="12" y1="3" x2="12" y2="15"></line>
+					</svg>
+					エクスポート
+				</button>
+				<button type="button" class="toolbar-btn toolbar-btn-danger" onclick="openBulkDeleteModal()">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="3 6 5 6 21 6"></polyline>
+						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+					</svg>
+					一括削除
+				</button>
+				<button type="button" class="toolbar-btn toolbar-btn-primary"
+					th:onclick="|location.href='@{/assignments/new}'|">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<line x1="12" y1="5" x2="12" y2="19"></line>
+						<line x1="5" y1="12" x2="19" y2="12"></line>
+					</svg>
+					新規登録
+				</button>
+			</div>
+
+			<div class="card">
+				<div class="table-scroll">
+					<table class="table">
+						<thead class="table-dark">
+							<tr>
+								<th class="col-checkbox">
+									<input type="checkbox" id="selectAll">
+								</th>
+								<th>ID</th>
+								<th>社員名</th>
+								<th>アサイン先企業</th>
+								<th>所属企業</th>
+								<th>契約開始日</th>
+								<th>契約終了日</th>
+								<th>単価</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="assign : ${assignments}" class="clickable-row">
+								<td class="col-checkbox">
+									<input type="checkbox" name="ids" th:value="${assign.assignmentId}"
+										class="chk_assign_select row-checkbox">
+								</td>
+								<td th:text="${assign.assignmentId}"></td>
+								<td th:text="${assign.employee.lastName} + ' ' + ${assign.employee.firstName}"></td>
+								<td th:text="${assign.company.companyName}"></td>
+								<td th:text="${assign.employee.company.companyName}"></td>
+								<td th:text="${assign.contractStartDate}"></td>
+								<td th:text="${assign.contractEndDate != null ? assign.contractEndDate : 'ー'}"></td>
+								<td th:text="${assign.unitPrice}"></td>
+								<td>
+									<button type="button" class="btn_assign_detail btn-icon-svg detail" title="詳細"
+										th:onclick="|location.href='@{/assignments/{id}/detail(id=${assign.assignmentId})}'|">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<rect x="2" y="2" width="20" height="20" rx="5"></rect>
+											<path d="M12 16v-4"></path>
+											<path d="M12 8h.01"></path>
+										</svg>
+									</button>
+
+									<button type="button" class="btn_assign_edit btn-icon-svg edit" title="編集"
+										th:onclick="|location.href='@{/assignments/{id}/edit(id=${assign.assignmentId})}'|">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+											<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+										</svg>
+									</button>
+									<button type="button" class="btn_assign_delete btn-icon-svg delete" title="削除"
+										th:onclick="|openDeleteModal(${assign.assignmentId})|">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<polyline points="3 6 5 6 21 6"></polyline>
+											<path
+												d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+											</path>
+										</svg>
+									</button>
+								</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(assignments)}">
+								<td colspan="9" class="text-center">該当するデータがありません。</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>

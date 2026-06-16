@@ -69,6 +69,7 @@ public class AssignmentService {
 		return assignmentMapper.findById(id);
 	}
 	
+
 	/**
 	 * チェックボックスでアサイン履歴IDを取得する。
 	 * @param ids 選択されたチェックボックスの行に対応するアサイン履歴ID
@@ -154,9 +155,13 @@ public class AssignmentService {
 
 		Set<String> seenInCsv = new HashSet<>();
 
+		int assignmentCount = assignmentMapper.countAll();
+		int insertPlan = 0;
+
 		CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
 				.onMalformedInput(CodingErrorAction.REPORT)
 				.onUnmappableCharacter(CodingErrorAction.REPORT);
+
 		try (BufferedReader br = new BufferedReader(
 				new InputStreamReader(file.getInputStream(), decoder))) {
 			String line;
@@ -313,9 +318,8 @@ public class AssignmentService {
 					hasError = true;
 				}
 
-				if (!hasError && (asm.getAssignmentId() == null || asm.getAssignmentId() == 0)) {
-					int assignCount = assignmentMapper.countAll();
-					if ((assignCount + result.successCount + 1) > 500) {
+				if (!hasError && (asm.getAssignmentId() == null)) {
+					if ((assignmentCount + insertPlan ) >= 500) {
 						result.errors.add(new CsvRowError(rowNum, "上限",
 								"登録後の件数が上限に達しています。アサインの登録上限は500件です"));
 						hasError = true;
@@ -324,7 +328,11 @@ public class AssignmentService {
 
 				if (!hasError) {
 					try {
+						boolean isNew = (asm.getAssignmentId() == null);
 						save(asm);
+						if (isNew) {
+							insertPlan++;
+						}
 						result.successCount++;
 					} catch (Exception e) {
 						log.error("CSVインポート中エラー（{}行目）: データの保存に失敗しました。", rowNum, e);

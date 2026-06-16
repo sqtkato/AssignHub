@@ -3,22 +3,24 @@
 	layout:decorate="~{layout/layout}">
 
 <head>
-	<title>アサイン履歴情報登録入力</title>
+	<title>アサイン履歴情報変更</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
-			<h2>アサイン履歴情報登録入力</h2>
+			<h2>アサイン履歴情報変更入力</h2>
 		</div>
 		<div class="card form-card">
-			<form th:action="@{/assignments}" th:object="${assignmentForm}" method="post">
+			<form th:action="@{/assignments/{id}/edit(id=${id})}" th:object="${assignmentForm}" method="post">
+				<input type="hidden" th:field="*{assignmentId}">
+				<input type="hidden" name="fromPage" th:value="${fromPage}" />
 				<div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}">
 					<p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
 				</div>
 				<div class="form-group">
 					<label>社員名 <span class="badge-required">必須</span></label>
-					<select th:field="*{empId}" class="form-control"
+					<select th:field="*{empId}" class="dropdown form-control"
 						th:classappend="${#fields.hasErrors('empId')} ? 'input-error select-error' : ''">
 						<option value="">未選択</option>
 						<option th:each="emp : ${employees}" th:value="${emp.empId}"
@@ -30,7 +32,7 @@
 				</div>
 				<div class="form-group">
 					<label>アサイン先企業 <span class="badge-required">必須</span></label>
-					<select th:field="*{companyId}" class="form-control"
+					<select th:field="*{companyId}" class="dropdown form-control"
 						th:classappend="${#fields.hasErrors('companyId')} ? 'input-error select-error' : ''">
 						<option value="">未選択</option>
 						<option th:each="company : ${companies}" th:value="${company.companyId}"
@@ -62,19 +64,20 @@
 				</div>
 				<div class="form-group">
 					<label>役割 <span class="badge-required">必須</span></label>
-					<select th:field="*{roleId}" class="form-control"
+					<select th:field="*{roleId}" class="dropdown form-control"
 						th:classappend="${#fields.hasErrors('roleId')} ? 'input-error select-error' : ''">
 						<option value="">未選択</option>
-						<option th:each="role : ${role}" th:value="${role.roleId}"
-							th:text="${role.role}" th:selected="${role.roleId == roleId}">
+						<option th:each="role : ${role}" th:value="${role.roleId}" th:text="${role.role}">
 						</option>
 					</select>
 					<div class="error-message" th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}">
 					</div>
 				</div>
-				<div class="form-actions common-actions">
-					<button type="submit" class="btn btn-primary common-btn">登録</button>
-					<a th:href="@{/assignments}" class="btn btn-secondary common-btn">戻る</a>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">更新</button>
+					<a th:if="${fromPage=='detail'}" th:href="@{/assignments/{id}/detail(id=${id})}"
+						class="btn btn-secondary">戻る</a>
+					<a th:if="${fromPage != 'detail'}" th:href="@{/assignments}" class="btn btn-secondary">戻る</a>
 				</div>
 			</form>
 		</div>
