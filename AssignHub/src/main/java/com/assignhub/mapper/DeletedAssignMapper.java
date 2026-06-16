@@ -85,7 +85,7 @@ public interface DeletedAssignMapper {
 	/**
 	 * 指定されたアサインIDに紐づく社員情報(プロパー)をカウントする（単一復元の生存条件チェック用）。
 	 */
-	int countEmployeesproperByAssignId(@Param("ids") Integer id);
+	int countEmployeesproperByAssignId(@Param("id") Integer id);
 
 	/**
 	 * 指定されたアサインIDのいずれかに紐づく社員情報(プロパー)をカウントする（一括復元の生存条件チェック用）。
