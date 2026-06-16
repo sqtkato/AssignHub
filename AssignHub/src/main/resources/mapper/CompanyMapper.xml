@@ -6,35 +6,134 @@
 		type="com.assignhub.entity.Company">
 		<id property="companyId" column="company_id" />
 		<result property="companyName" column="company_name" />
+		<result property="companyAddress1" column="company_address1" />
+		<result property="companyTel" column="company_tel" />	
 		<result property="createdAt" column="created_at" />
 		<result property="updatedAt" column="updated_at" />
 	</resultMap>
 
+    <!-- 一覧表示 -->
 	<select id="findAll" resultMap="companyResultMap">
-		SELECT *
-		FROM m_company
-		<if test="keyword != null and keyword != ''">
-			<where>
-				company_name LIKE CONCAT('%', #{keyword}, '%')
-			</where>
-		</if>
-		ORDER BY ${sort} ${order}
-	</select>
+        SELECT *
+        FROM m_company
+    <where>
+        delete_flg = 0
+    <if test="companyNameSearch != null and companyNameSearch != ''">
+         AND company_name LIKE CONCAT('%', #{companyNameSearch}, '%')
+     </if>
+     <if test="companyTelSearch != null and companyTelSearch != ''">
+         AND company_tel LIKE CONCAT('%', #{companyTelSearch}, '%')
+     </if>
+    </where>
+    </select>
 
+    <!-- 詳細選択 -->
 	<select id="findById" resultMap="companyResultMap">
 		SELECT *
 		FROM m_company
 		WHERE
 		company_id = #{id}
 	</select>
+	
+	<!-- 詳細選択(エクスポート) -->
+	<select id="findByIds" resultMap="companyResultMap">
+        Select * FROM m_company WHERE company_id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")"> #{id} 
+    </foreach>
+    </select>
+	
+	<!-- 重複チェック企業名 -->
+	<select id="existsByCompanyName" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM m_company
+        WHERE company_name = #{companyName}
+    <if test="companyId != null">
+        AND company_id != #{companyId}
+    </if>
+    </select>
+    
+    <!-- 重複チェックTEL -->
+    <select id="existsByCompanyTel" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM m_company
+        WHERE company_tel = #{companyTel}
+    <if test="companyId != null">
+        AND company_id != #{companyId}
+    </if>
+    </select>
+    
+    <!-- 重複チェックFAX -->
+    <select id="existsByCompanyFax" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM m_company
+        WHERE company_fax = #{companyFax}
+    <if test="companyId != null">
+        AND company_id != #{companyId}
+    </if>
+    </select>
+    
+    <!-- 新規登録 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="companyId">
+        INSERT INTO m_company (
+            company_name, company_name_kana,
+            company_zipcode, company_address1, company_address2,
+            company_tel, company_fax, founded_year, employee_count,
+            rep_firstname, rep_lastname, rep_firstname_kana, rep_lastname_kana,
+            delete_flg, created_at, updated_at)
+        VALUES (
+            #{companyName}, #{companyNameKana},
+            #{companyZipCode}, #{companyAddress1}, #{companyAddress2},
+            #{companyTel}, #{fax}, #{foundedYear}, #{employeeCount},
+            #{repFirstName}, #{repLastName}, #{repFirstNameKana}, #{repLastNameKana},
+            0, NOW(), NOW()
+            )
+     </insert>
+     
+     <!-- 変更 -->
+	<update id="update">
+		UPDATE m_company
+		SET company_name = #{companyName},
+		    company_name_kana = #{companyNameKana},
+		    company_zipcode = #{companyZipCode},
+		    company_address1 = #{companyAddress1},
+		    company_address2 = #{companyAddress2},
+		    company_tel = #{companyTel},
+		    company_fax = #{companyFax},
+		    founded_year = #{foundedYear},
+		    employee_count = #{employeeCount},
+		    rep_firstname = #{repFirstName},
+		    rep_lastname = #{repLastName},
+		    rep_firstname_kana = #{repFirstNameKana},
+		    rep_lastname_kana = #{repLastNameKana},
+		    updated_at = NOW()
+		    WHERE company_id = #{companyId}
+	</update>
+	
+	<!-- 1件論理削除 -->
+    <update id="delete">
+        UPDATE m_company
+        SET
+            delete_flg = 1,
+            updated_at = NOW()
+        WHERE company_id = #{companyId}
+    </update>
 
-	<insert id="insert" useGeneratedKeys="true"
-		keyProperty="companyId">
-		INSERT INTO m_company (
-		company_name, created_at,
-		updated_at
-		) VALUES (
-		#{companyName}, NOW(), NOW()
-		)
-	</insert>
+    <!-- 一括論理削除 -->
+    <update id="deleteBulk">
+        UPDATE m_company
+        SET
+            delete_flg = 1,
+            updated_at = NOW()
+        WHERE company_id IN
+    <foreach collection="ids" item="companyId" open="(" separator="," close=")">
+        #{companyId}
+    </foreach>
+    </update>
+    
+    <select id="countAll" resultType="int">
+    SELECT COUNT(*)
+    FROM m_company
+    WHERE delete_flg = 0
+	</select>
+
 </mapper>
