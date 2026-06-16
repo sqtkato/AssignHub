@@ -33,16 +33,19 @@ public interface AccountMapper {
 	 * @param order   ソート順（asc または desc）
 	 * @return アカウントエンティティのリスト
 	 */
+	/** アカウントIDで1件取得（存在チェック・更新前確認用）。 */
+	Account findById(@Param("accountId") Integer accountId);
+
 	List<Account> findByIds(@Param("ids") List<Integer> ids);
 
 	Account findByLoginId(String loginId);
-	
-	void save(Account account);
 
-	boolean isLoginIdDuplicate(@Param("loginId") String loginId);
+	void insert(Account account);
 
-	boolean isLoginIdDuplicateUpdate(@Param("loginId") String loginId, @Param("currentAccountId") int currentAccountId);
-	
+	/** アカウントを更新する（ログインID・パスワード・権限を上書き）。 */
+
+	void update(Account account);
+
 	/**
 	 * アカウントを一件論理削除。
 	 * 
@@ -50,22 +53,14 @@ public interface AccountMapper {
 	 */
 	void delete(Integer id);
 
-	// ===== インポート機能用に追加 =====
-
-	/** アカウントIDで1件取得（存在チェック・更新前確認用）。 */
-	Account findById(@Param("accountId") Integer accountId);
-
-	/** アカウントを更新する（ログインID・パスワード・権限を上書き）。 */
-
-	void update(Account account);
 	/**
 	 * アカウント情報を一括で削除する。
 	 */
 	void deleteBulk(@Param("ids") List<Integer> ids);
-	
-	List<Account> findUnlinkedLoginId();
-	
-	
 
+	int countByLoginId(@Param("loginId") String id, @Param("excludeAccountId") Integer excludeAccountId);
+
+	int countAll();
 	
+	List<Account> findLoginId();
 }

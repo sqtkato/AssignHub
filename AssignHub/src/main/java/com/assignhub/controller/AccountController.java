@@ -165,7 +165,6 @@
 ////		accountService.save(acc);
 ////		return "redirect:/accounts";
 ////	}
-=======
 //	@GetMapping("/new")
 //	public String newAccount(Model model, HttpSession session) {
 //		int currentCount = accountService.findAll("", null).size();
@@ -259,7 +258,7 @@
 //		accountService.save(acc);
 //		return "redirect:/accounts";
 //	}
->>>>>>> stash
+
 //
 //	/**
 //	 * アカウントを一件論理削除

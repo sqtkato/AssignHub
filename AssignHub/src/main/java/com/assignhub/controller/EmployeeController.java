@@ -83,15 +83,14 @@ public class EmployeeController {
 	 * @return 新規登録画面のテンプレートパス
 	 */
 	@GetMapping("/new")
-	public String create(Model model) {
-		int currentCount = employeeService.findAll(null, null, null, null).size();
-		if(currentCount >= 500) {
-			model.addAttribute("toastError","登録件数が上限に達しています");
-			return "redirect:/employees";
+	public String create(Model model,RedirectAttributes attributes) {
+		if (employeeService.isMaxCount()) {
+			attributes.addFlashAttribute("toastError", "登録件数が上限(500件)に達しているため登録できません。");
+			return "redirect:/employees";	
 		}
 		model.addAttribute("employeeForm", new EmployeeForm());
-		model.addAttribute("companies",employeeService.findAllCompany());
-		model.addAttribute("accounts",employeeService.findUnlinkedLoginId());
+		model.addAttribute("companies",companyService.findAll(null,null,null));
+		model.addAttribute("accounts",employeeService.findLoginId());
 		return "employee/create";
 	}
 
@@ -117,8 +116,8 @@ public class EmployeeController {
 			
 			if (result.hasErrors()) {
 				// 新規登録画面（create）を開いたときと同じように、コンボボックスのリストを再セットする
-				model.addAttribute("companies", employeeService.findAllCompany());
-				model.addAttribute("accounts", employeeService.findUnlinkedLoginId());
+				model.addAttribute("companies", companyService.findAll(null, null, null));
+				model.addAttribute("accounts", employeeService.findLoginId());
 				
 			return "employee/create";
 		}
@@ -174,7 +173,7 @@ public class EmployeeController {
 			model.addAttribute("fromPage", from);
 		}
 				model.addAttribute("companies", companyService.findAll(null, "emp_company_name", "asc"));
-				model.addAttribute("accounts", employeeService.findUnlinkedLoginId());
+				model.addAttribute("accounts", employeeService.findLoginId());
 		return "employee/edit";
 	}
 
@@ -199,8 +198,8 @@ public class EmployeeController {
 
 		if (result.hasErrors()) {
 			model.addAttribute("fromPage", fromPage);
-			model.addAttribute("companies", employeeService.findAllCompany());
-			model.addAttribute("accounts", employeeService.findUnlinkedLoginId());
+			model.addAttribute("companies", companyService.findAll(null,null,null));
+			model.addAttribute("accounts", employeeService.findLoginId());
 			return "employee/edit";
 		}
 		if ("detail".equals(fromPage)) {
@@ -258,11 +257,10 @@ public class EmployeeController {
 	 * @return インポート画面のテンプレートパス
 	 */
 	@GetMapping("/import")
-	public String showImport(Model model) {
-		int currentCount = employeeService.findAll(null, null, null, null).size();
-		if(currentCount >= 500) {
-			model.addAttribute("toastError","登録件数が上限に達しています");
-			return "redirect:/employees";
+	public String showImport(Model model,RedirectAttributes attributes) {
+		if (employeeService.isMaxCount()) {
+			attributes.addFlashAttribute("toastError", "登録件数が上限(500件)に達しているため登録できません。");
+			return "redirect:/employees";	
 		}
 		return "employee/import";
 	}

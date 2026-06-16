@@ -441,13 +441,10 @@ public class EmployeeService {
 		return count > 0;
 	}
 	
-	public List<Account> findUnlinkedLoginId() {
-		return accountMapper.findUnlinkedLoginId();
+	public List<Account> findLoginId() {
+		return accountMapper.findLoginId();
 		}	
 	
-	public List<Company> findAllCompany() {
-		return companyMapper.findAll(null,null,null);
-		}	
 	
 	
 	private LocalDate parseDate(String s) {
@@ -458,6 +455,10 @@ public class EmployeeService {
 	        }
 	    }
 	    return null;
+	}
+	
+	public boolean isMaxCount() {
+		return employeeMapper.countAll() >= 500;
 	}
 	
 	}

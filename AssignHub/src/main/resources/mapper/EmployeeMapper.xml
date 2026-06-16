@@ -59,20 +59,13 @@
 
 	<select id="findAll" resultMap="employeeResultMap">
 		SELECT e.*,
-		c.company_name AS emp_company,
-		c2.company_name AS
-		emp_assign_company
+		    c.company_name AS emp_company,
+		    c2.company_name AS
+		    emp_assign_company
 		FROM m_employee e
-		LEFT JOIN m_company c
-		ON
-		e.company_id = c.company_id
-		LEFT JOIN t_assignment a
-		ON a.emp_id =
-		e.emp_id
-		AND a.contract_end_date is null
-		LEFT JOIN m_company c2
-		ON
-		a.company_id = c2.company_id
+		LEFT JOIN m_company c ON e.company_id = c.company_id
+		LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null
+		LEFT JOIN m_company c2 ON a.company_id = c2.company_id
 
 		<where>
 			e.delete_flg = 0
@@ -197,7 +190,7 @@
 
 	<select id="countByEmail" resultType="int">
 		SELECT COUNT(*) FROM m_employee
-		WHERE email = #{email} AND delete_flg = 0;
+		WHERE email = #{email} AND delete_flg = 0
 		<if test="excludeEmpId != null">
 			AND emp_id != #{excludeEmpId}
 		</if>
