@@ -2,6 +2,8 @@ package com.assignhub.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * アカウント情報に関するビジネスロジックを提供するサービスクラス。
- * 
+ *
  * @version 1.00 2026/06/12
  * @author ATO）黒木
  */
@@ -133,6 +135,15 @@ public class AccountService {
 	}
 
 	/**
+	 * アカウント登録数が上限（500件）に達しているかを判定する。
+	 *
+	 * @return 上限に達していればtrue
+	 */
+	public boolean isAccountLimitReached() {
+		return findAll("", null).size() >= 500;
+	}
+	
+	/**
 	 * アップロードされたCSVファイルを解析し、バリデーションおよび一括登録・更新を行う。
 	 * 1行ごとに保存処理を行うが、1件でもエラーがあれば全体をロールバックする。
 	 *
@@ -143,8 +154,12 @@ public class AccountService {
 	public ImportResult importCsv(MultipartFile file) throws Exception {
 		ImportResult result = new ImportResult();
 
+		CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
+				.onMalformedInput(CodingErrorAction.REPORT)
+				.onUnmappableCharacter(CodingErrorAction.REPORT);
+		
 		try (BufferedReader br = new BufferedReader(
-				new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
+				new InputStreamReader(file.getInputStream(),decoder))) {
 			String line;
 			int rowNum = 1;
 			boolean isFirstLine = true;
