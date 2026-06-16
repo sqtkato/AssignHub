@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assignhub.mapper.AccountMapper">
+
+	<resultMap id="accountResultMap"
+		type="com.assignhub.entity.Account">
+		<id property="accountId" column="account_id" />
+		<result property="loginId" column="login_id" />
+		<result property="permission" column="permission" />
+		<result property="passwordHash" column="password_hash" />
+		<result property="createdAt" column="created_at" />
+		<result property="updatedAt" column="updated_at" />
+		<association property="employee"
+			javaType="com.assignhub.entity.Employee">
+			<id property="employeeId" column="employee_id" />
+			<result property="lastName" column="last_name" />
+			<result property="firstName" column="first_name" />
+		</association>
+	</resultMap>
+
+	<select id="findAll" resultMap="accountResultMap">
+		SELECT a.*, e.last_name, e.first_name
+		FROM
+		m_account a
+		left JOIN
+		m_employee e ON
+		a.account_id = e.account_id
+		AND (e.delete_flg = 0 OR
+		e.delete_flg IS NULL)
+
+		<where>
+			a.delete_flg = 0
+
+			<if test="keyword != null and keyword != ''">
+				AND (
+				e.first_name LIKE CONCAT('%', #{keyword}, '%')
+				OR
+				e.last_name
+				LIKE CONCAT('%', #{keyword}, '%')
+
+				)
+			</if>
+			<if test="permission != null">
+				AND permission = #{permission}
+			</if>
+		</where>
+		ORDER BY a.account_id ASC
+	</select>
+
+	<!-- アカウントIDで1件取得（存在チェック用） -->
+	<select id="findById" resultMap="accountResultMap">
+		SELECT * FROM m_account
+		WHERE
+		account_id = #{accountId}
+	</select>
+
+	<select id="findByIds" resultMap="accountResultMap">
+		SELECT
+		a.account_id,
+		a.login_id,
+		a.permission,
+		a.password_hash,
+		a.created_at,
+		a.updated_at,
+		e.emp_id,
+		e.last_name,
+		e.first_name
+		FROM
+		m_account a
+		LEFT JOIN m_employee e
+		ON a.account_id = e.account_id
+		WHERE
+		a.account_id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
+
+	<select id="findByLoginId" resultMap="accountResultMap">
+		SELECT *
+		FROM m_account
+		WHERE login_id = #{loginId}
+		AND delete_flg = 0
+	</select>
+
+	<insert id="insert" parameterType="com.assignhub.entity.Account">
+		INSERT INTO m_account
+		(login_id,
+		password_hash, permission, delete_flg)
+		VALUES (#{loginId},
+		#{passwordHash}, #{permission}, 0)
+	</insert>
+
+
+	<update id="update">
+		UPDATE m_account
+		SET account_Id = #{accountId},
+		login_id =#{loginId},
+		permission= #{permission},
+		password_Hash =
+		#{passwordHash},
+		updated_at = NOW()
+		WHERE account_id =#{accountId}
+	</update>
+
+
+	<update id="delete">
+		UPDATE m_account
+		SET delete_flg = 1
+		WHERE account_id =
+		#{id}
+	</update>
+
+	<update id="deleteBulk">
+		UPDATE m_account
+		SET delete_flg = 1
+		WHERE account_id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</update>
+
+	<select id="countByLoginId" resultType="int">
+		SELECT COUNT(*) FROM m_account
+		WHERE login_id = #{loginId}
+		AND
+		delete_flg=0
+		<if test="excludeAccountId != null">
+			AND account_id != #{excludeAccountId}
+		</if>
+	</select>
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*)
+		FROM m_account
+		WHERE delete_flg = 0
+	</select>
+
+
+</mapper>

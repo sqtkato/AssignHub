@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assignhub.mapper.EmployeeMapper">
+
+	<resultMap id="employeeResultMap"
+		type="com.assignhub.entity.Employee">
+		<id property="empId" column="emp_id" />
+		<result property="empName" column="emp_name" />
+		<result property="hireYear" column="hire_year" />
+		<result property="createdAt" column="created_at" />
+		<result property="updatedAt" column="updated_at" />
+	</resultMap>
+
+	<select id="findAll" resultMap="employeeResultMap">
+		SELECT *
+		FROM m_employee
+		<if test="keyword != null and keyword != ''">
+			<where>
+				emp_name LIKE CONCAT('%', #{keyword}, '%')
+			</where>
+		</if>
+		ORDER BY ${sort} ${order}
+	</select>
+
+	<select id="findById" resultMap="employeeResultMap">
+		SELECT *
+		FROM m_employee
+		WHERE
+		emp_id = #{id}
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="empId">
+		INSERT
+		INTO m_employee (
+		emp_name, hire_year, created_at, updated_at
+		) VALUES (
+		#{empName}, #{hireYear}, NOW(), NOW()
+		)
+	</insert>
+</mapper>

@@ -1,7 +1,11 @@
 package com.assignhub.controller;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.assignhub.entity.Employee;
 import com.assignhub.service.DeletedEmployeeService;
 
 /**
@@ -127,7 +132,7 @@ public class DeletedEmployeeController {
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクト
 	 */
-	@PostMapping("/delete-bulk")
+	@PostMapping("/bulk-delete")
     public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
         if (ids == null || ids.isEmpty()) {
             attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
@@ -143,6 +148,80 @@ public class DeletedEmployeeController {
         deletedEmployeeService.physicalDeleteBulk(ids);
         return "redirect:/deleted-employees";
     }
+	
+	
+	/**
+	 * 社員データのエクスポート画面を表示する。
+	 *
+	 * @param keyword     現在の検索キーワード（状態保持用）
+	 * @param model  画面描画用のモデル
+	 * @return エクスポート画面のテンプレートパス
+	 */
+	@PostMapping("/export")
+	public String showExport(
+	        @RequestParam(name = "ids", required = false) List<Integer> ids,
+	        Model model , RedirectAttributes attributes) {
+		
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
+			return "redirect:/deleted_employees";
+		}
+	    List<Employee> employees = deletedEmployeeService.findByIds(ids);
+		model.addAttribute("employees",employees);
+	    model.addAttribute("count", employees.size());
+	    model.addAttribute("ids", ids);
+	    return "deleted_employee/export";
+	}
+
+	/**
+	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
+	 *
+	 * @return ダウンロード用のCSVファイルバイナリデータ
+	 */
+	@PostMapping("/export/download")
+	public ResponseEntity<byte[]> downloadCsv(
+			@RequestParam(name = "ids", required = false) List<Integer> ids) {
+		List<Employee> employees = deletedEmployeeService.findByIds(ids);
+		StringBuilder csvBuilder = new StringBuilder(
+				"社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,"
+						+ "生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,"
+						+ "所属企業,所属部署,役職,電話番号,メールアドレス\n");
+		for (Employee emp : employees) {
+			csvBuilder.append(emp.getEmpId()).append(",")
+					.append(emp.getLastName()).append(",")
+					.append(emp.getFirstName()).append(",")
+					.append(emp.getLastNameKana()).append(",")
+					.append(emp.getFirstNameKana()).append(",")
+					.append(emp.getHireDate()!= null ? emp.getHireDate(): "").append(",")
+					.append(emp.getYearsOfService()!= null ? emp.getYearsOfService(): "").append(",")
+					.append(emp.getBirthDate()!= null ? emp.getBirthDate(): "").append(",")
+					.append(emp.getZipCode()).append(",")
+					.append(emp.getAddress1()).append(",")
+					.append(emp.getAddress2()!= null ? emp.getAddress2() : "").append(",")
+					.append(emp.getEngineerType()).append(",")
+					.append(emp.getAccount() != null&& emp.getAccount().getLoginId() != null? emp.getAccount().getLoginId(): "").append(",")
+					.append(emp.getCompany() != null ? emp.getCompany().getCompanyName() : "").append(",")
+					.append(emp.getDepartment()!= null ? emp.getDepartment() : "").append(",")
+					.append(emp.getJobTitle()!= null ? emp.getJobTitle() : "").append(",")
+					.append(emp.getEmpTel()).append(",")
+					.append(emp.getEmail()).append("\n");
+		}
+		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
+		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+		byte[] result = new byte[bom.length + csvBytes.length];
+		System.arraycopy(bom, 0, result, 0, bom.length);
+		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=employees.csv");
+		headers.add("Content-Type", "text/csv; charset=UTF-8");
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
+	}
+
+	
+	
+	
+	
 	
 	/**
 	 * 社員データのエクスポート画面を表示する。
