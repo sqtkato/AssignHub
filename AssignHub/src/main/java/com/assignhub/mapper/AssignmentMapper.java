@@ -82,12 +82,14 @@ public interface AssignmentMapper {
      * @return 存在すれば1以上、存在しなければ0
      */
     int existsEmployee(@Param("empId") Integer empId);
+    
     /**
      * 企業名から企業IDを取得する（企業名はUNIQUE）。
      * @param companyName 企業名
      * @return 企業ID。存在しなければnull
      */
     Integer findCompanyIdByName(@Param("companyName") String companyName);
+    
     /**
      * 役割名から役割IDを取得する。
      * @param role 役割名
