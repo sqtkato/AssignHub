@@ -153,17 +153,14 @@ public class AccountService {
 	@Transactional(rollbackFor = Exception.class)
 	public ImportResult importCsv(MultipartFile file) throws Exception {
 		ImportResult result = new ImportResult();
-
 		CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
 				.onMalformedInput(CodingErrorAction.REPORT)
 				.onUnmappableCharacter(CodingErrorAction.REPORT);
-		
 		try (BufferedReader br = new BufferedReader(
 				new InputStreamReader(file.getInputStream(),decoder))) {
 			String line;
 			int rowNum = 1;
 			boolean isFirstLine = true;
-
 			while ((line = br.readLine()) != null) {
 				if (isFirstLine) {
 					isFirstLine = false;
@@ -174,7 +171,6 @@ public class AccountService {
 					rowNum++;
 					continue;
 				}
-
 				line = line.replace("\uFEFF", "");
 				String[] cols = line.split(",", -1);
 
@@ -184,14 +180,11 @@ public class AccountService {
 					rowNum++;
 					continue;
 				}
-
 				boolean hasError = false;
 				Account account = new Account();
-
 				String accountIdStr = cols[0].trim();
 				String loginId = cols[1].trim();
 				String rawPassword = cols[2].trim();
-
 				if (!accountIdStr.isEmpty()) {
 					try {
 						Integer accountId = Integer.parseInt(accountIdStr);
@@ -208,7 +201,6 @@ public class AccountService {
 						hasError = true;
 					}
 				}
-
 				if (loginId.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "ログインID", "ログインIDは必須です"));
 					hasError = true;
@@ -222,7 +214,6 @@ public class AccountService {
 						hasError = true;
 					}
 				}
-
 				if (rawPassword.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "パスワード", "パスワードは必須です"));
 					hasError = true;
@@ -237,13 +228,11 @@ public class AccountService {
 						hasError = true;
 					}
 				}
-
 				if (!hasError) {
 					try {
 						account.setLoginId(loginId);
 						account.setPasswordHash(passwordEncoder.encode(rawPassword));
 						account.setPermission(0);
-
 						save(account);
 						result.successCount++;
 					} catch (Exception e) {
@@ -256,7 +245,6 @@ public class AccountService {
 				}
 				rowNum++;
 			}
-
 			if (result.errorCount > 0) {
 				org.springframework.transaction.interceptor.TransactionAspectSupport.currentTransactionStatus()
 						.setRollbackOnly();
@@ -284,7 +272,6 @@ public class AccountService {
 	 * @param accountId		除外するアカウントID（ログインIDを変更しない場合）
 	 * @return 重複していればtrue
 	 */
-
 	public int countDataRows(MultipartFile file) throws Exception {
 		int count = findAll("", null).size();
 		try (BufferedReader br = new BufferedReader(
@@ -302,7 +289,6 @@ public class AccountService {
 		}
 		return count;
 	}
-
 	public boolean isMaxCount() {
 		return accountMapper.countAll() >= 500;
 
