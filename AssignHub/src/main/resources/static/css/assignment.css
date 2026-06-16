@@ -57,3 +57,7 @@
 .table th:nth-child(5), .table td:nth-child(5) {
       white-space: nowrap;
 }
+
+.table-scroll {
+    max-height: 355px;
+}
