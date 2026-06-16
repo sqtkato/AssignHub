@@ -141,8 +141,6 @@ public class EmployeeService {
 	@Transactional(rollbackFor = Exception.class)
 	public ImportResult importCsv(MultipartFile file) throws Exception {
 		ImportResult result = new ImportResult();
-		
-		 int insertPlan = 0;
 
 		// UTF-8として不正なバイト列を検出したら例外を投げるデコーダ
 		CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
@@ -193,7 +191,7 @@ public class EmployeeService {
 							emp.setEmpId(parsedId);
 						}
 					} catch (Exception e) {
-						result.errors.add(new CsvRowError(rowNum, "社員ID", "数値以外の文字が含まれています"));
+						result.errors.add(new CsvRowError(rowNum, "社員ID", "社員IDに数値以外の文字が含まれています"));
 						hasError = true;
 					}
 				}
@@ -366,17 +364,16 @@ public class EmployeeService {
 				}
 
 				String empTel = cols[16].trim();
-				if (empTel.isEmpty()) {
-				    result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号は必須です"));
-				    hasError = true;
-				} else if (empTel.contains("-")) {
-				    result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号の形式が正しくありません\nハイフンなしで入力してください"));
-				    hasError = true;
-				} else if (empTel.length() != 10 && empTel.length() != 11) {
-				    result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号は10桁または11桁で入力してください"));
-				    hasError = true;
-				} else {
-				    emp.setEmpTel(empTel);
+				if (!empTel.isEmpty()) {
+				    if (empTel.contains("-")) {
+				        result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号の形式が正しくありません\nハイフンなしで入力してください"));
+				        hasError = true;
+				    } else if (empTel.length() != 10 && empTel.length() != 11) {
+				        result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号は10桁または11桁で入力してください"));
+				        hasError = true;
+				    } else {
+				        emp.setEmpTel(empTel);
+				    }
 				}
 
 				String email = cols[17].trim();
@@ -398,11 +395,16 @@ public class EmployeeService {
 				    hasError = true;
 				}
 
+				// 登録上限チェック
+				int employeeCount = employeeMapper.countAll();
+				if (!hasError && (employeeCount + result.successCount + 1) > 500) {
+				    result.errors.add(new CsvRowError(rowNum, "上限",
+				        "登録後の件数が上限に達しています。社員情報の登録上限は500件です。"));
+				    hasError = true;
+				}
+
 				if (!hasError) {
 				    try {
-				        if (emp.getEmpId() == null || emp.getEmpId() == 0) {
-				            insertPlan++;
-				        }
 				        save(emp);
 				        result.successCount++;
 				    } catch (Exception e) {
@@ -415,10 +417,6 @@ public class EmployeeService {
 				rowNum++;
 			}
 			
-			if (result.errorCount == 0 && employeeMapper.countAll() + insertPlan > 500) {
-		        result.errors.add(new CsvRowError(0, "-", "登録後の件数が上限に達しています。社員の登録上限は500件です"));
-		        result.errorCount++;
-		    }
 
 			// エラーが1件でも発生した場合はトランザクションをロールバックする
 			if (result.errorCount > 0) {
