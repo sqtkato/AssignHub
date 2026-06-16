@@ -30,7 +30,7 @@ public class DeletedAssignService {
 	 * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
 	 */
 	public List<Assignment> findAllByIds(List<Integer> ids) {
-		if (ids != null && !ids.isEmpty()) {
+		if (ids != null && ids.isEmpty()) {
 			return deletedAssignMapper.findAllByIds(ids);
 		}
 		return null;
@@ -55,15 +55,15 @@ public class DeletedAssignService {
 		}
 	}
 
-//	public boolean existsDuplicate(Assignment assignment) {
-//		int count = deletedAssignMapper.countDuplicate(
-//				assignment.getAssignmentId(),
-//				assignment.getEmpId(),
-//				assignment.getCompanyId(),
-//				assignment.getContractStartDate(),
-//				assignment.getContractEndDate());
-//		return count > 0;
-//	}
+	public boolean existsDuplicate(Assignment assignment) {
+		int count = deletedAssignMapper.countDuplicate(
+				assignment.getAssignmentId(),
+				assignment.getEmpId(),
+				assignment.getCompanyId(),
+				assignment.getContractStartDate(),
+				assignment.getContractEndDate());
+		return count > 0;
+	}
 
 	/**
 	 * 単一データをデータベースから完全に削除する。
