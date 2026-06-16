@@ -44,7 +44,7 @@ public interface AssignmentMapper {
     
     /**
      * チェックボックスにチェックされたアサイン情報IDを取得する
-     * @Param ids アサイン情報IDのリスト
+     * @param ids エクスポート対象のアサインIDリスト
      * @return アサイン情報エンティティのリスト
      */
     List<Assignment> findByIds(@Param("ids") List<Integer> ids);
