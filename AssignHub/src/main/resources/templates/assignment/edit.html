@@ -74,7 +74,8 @@
 					<button type="submit" class="btn btn-primary common-btn">更新</button>
 					<a th:if="${fromPage=='detail'}" th:href="@{/assignments/{id}/detail(id=${id})}"
 						class="btn btn-secondary common-btn">戻る</a>
-					<a th:if="${fromPage != 'detail'}" th:href="@{/assignments}" class="btn btn-secondary common-btn">戻る</a>
+					<a th:if="${fromPage != 'detail'}" th:href="@{/assignments}"
+						class="btn btn-secondary common-btn">戻る</a>
 				</div>
 			</form>
 		</div>
