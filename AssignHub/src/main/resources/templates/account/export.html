@@ -9,7 +9,7 @@
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
-			<h2>アカウント情報のエクスポート</h2>
+			<h2>アカウント情報エクスポート</h2>
 		</div>
 		<div class="card form-card-wide">
 			<p class="instruction">以下の条件と内容でCSVファイルを出力します。よろしければ「ダウンロード」ボタンを押してください。</p>
@@ -44,18 +44,22 @@
 							<td th:text="${account.accountId}" class="acc_id"></td>
 							<td th:text="${account.loginId}" class="acc_logId"></td>
 							<td th:text="${account.permission == 1 ? '管理' : '一般'}" class="acc_per"></td>
-							<td th:text="${account.employee != null ? account.employee.lastName : '-'}" class="acc_name">社員名(姓)</td>
-							<td th:text="${account.employee != null ? account.employee.firstName : '-'}" class="acc_name">社員名(名)</td>
+							<td th:text="${account.employee != null ? account.employee.lastName : '-'}"
+								class="acc_name">社員名(姓)</td>
+							<td th:text="${account.employee != null ? account.employee.firstName : '-'}"
+								class="acc_name">社員名(名)</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<p class="export-note">※詳細情報がエクスポートされます。</p>
 
-			<div class="action-area">
-					<a th:href="@{/accounts/export/download(ids=${ids})}" class="btn btn-primary btn-wide">ダウンロード</a>
-					<a th:href="@{/accounts}" class="btn btn-secondary btn-wide">戻る</a>
-			</div>
+			<form th:action="@{/accounts/export/download(ids=${ids})}" method="post">
+				<div class="action-area">
+					<button type="submit" class="btn-csv">ダウンロード</button>
+					<button type="button" class="btn-back" th:onclick="|location.href='@{/accounts}'|">戻る</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </body>
