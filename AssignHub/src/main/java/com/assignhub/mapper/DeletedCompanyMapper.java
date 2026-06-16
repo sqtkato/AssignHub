@@ -44,5 +44,10 @@ public interface DeletedCompanyMapper {
 	 * （500件登録上限チェック用）
 	 */
 	int countActiveCompanies();
+	
+	boolean existsByCompanyName(@Param("companyName") String companyName,@Param("companyId") Integer companyId);
+    boolean existsByCompanyTel(@Param("companyTel") String companyTel,@Param("companyId") Integer companyId);
+    boolean existsByCompanyFax(@Param("companyFax") String companyFax,@Param("companyId") Integer companyId);
+
 
 }

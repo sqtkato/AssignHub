@@ -29,13 +29,16 @@
 
 		<form th:action="@{/companies/bulk-delete}" method="post" id="listForm">
 			<div class="table-toolbar">
-				<button type="button" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を復元"onclick="openBulkRestoreModal()">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50" width="100" height="50" fill="none"
-						stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<path d="M 25 25 C -5 5, -5 45, 25 25 C 55 5, 85 5, 75 25 C 65 45, 35 45, 25 25 Z" />
-						<path d="M 16 33 L 12 21 L 24 23" />
-					</svg>
-					一括復元
+				<button type="button" class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元" onclick="openBulkRestoreModal()">
+    				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+        				stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+        				style="width: 1.3rem; height: 1.3rem; vertical-align: middle; margin-right: 4px;">
+        			<path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+        			<polyline points="3 3 3 8 8 8" />
+        			<path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+        			<polyline points="21 21 21 16 16 16" />
+    				</svg>
+				    一括復元
 				</button>
 
 				<button type="submit" formmethod="post" formaction="/deleted-companies/export" class="toolbar-btn" title="チェックした項目をエクスポート">
@@ -60,49 +63,56 @@
 				
 			</div>
 
-				<div class="card">
-								<div class="table-scroll">
-									<table class="table">
-										<thead class="table-dark">
-											<tr>
-												<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
-												<th>企業ID</th>
-												<th>企業名</th>
-												<th>住所1</th>
-												<th>TEL</th>
-												<th class="col-action">操作</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="company : ${companies}" class="clickable-row">
-												<td class="col-checkbox">
-													<input type="checkbox" name="ids" th:value="${company.companyId}" class="row-checkbox">
-												</td>
-												<td th:text="${company.companyId}"></td>
-												<td th:text="${company.companyName}"></td>
-												<td th:text="${company.companyAddress1}"></td>
-												<td th:text="${company.companyTel}"></td>
-												<td class="col-action">
-													<button type="button" th:attr="data-id=${company.companyId}" class="btn-icon-svg" title="復元" onclick="openRestoreModal(this.dataset.id)">
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-			<path d="M 25 25 C -5 5, -5 45, 25 25 C 55 5, 85 5, 75 25 C 65 45, 35 45, 25 25 Z" />
-			<path d="M 16 33 L 12 21 L 24 23" />
-		</svg>
-	</button>
-													<button type="button" th:attr="data-id=${company.companyId}" class="btn-icon-svg delete" title="削除" onclick="openDeleteModal(this.dataset.id)">
-														<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-													</button>
-												</td>
-											</tr>
-											<tr th:if="${#lists.isEmpty(companies)}">
-												<td colspan="6" class="text-center">該当するデータがありません。</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</form>
+			<div class="card">
+				<div class="table-scroll">
+					<table class="table">
+						<thead class="table-dark">
+							<tr>
+								<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
+								<th>企業ID</th>
+								<th>企業名</th>
+								<th>住所1</th>
+								<th>TEL</th>
+								<th class="col-action">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="company : ${companies}" class="clickable-row">
+								<td class="col-checkbox">
+									<input type="checkbox" name="ids" th:value="${company.companyId}" class="row-checkbox">
+								</td>
+								<td th:text="${company.companyId}"></td>
+								<td th:text="${company.companyName}"></td>
+								<td th:text="${company.companyAddress1}"></td>
+								<td th:text="${company.companyTel}"></td>
+								<td class="col-action">
+								<button type="button" th:attr="data-id=${company.companyId}" class="btn-icon-svg" title="復元" onclick="openRestoreModal(this.dataset.id)"style="vertical-align: middle;">		
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+									    stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+									    style="width: 1.8rem; height: 1.8rem; display: block; margin: auto;">
+									    <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+									    <polyline points="3 3 3 8 8 8" /> 
+									    <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+									    <polyline points="21 21 21 16 16 16" />
+									</svg>
+								</button>
+												
+								<button type="button" th:attr="data-id=${company.companyId}" class="btn-icon-svg delete" title="削除" onclick="openDeleteModal(this.dataset.id)"style="vertical-align: middle;">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+									</svg>
+								</button>
+											</td>
+							</tr>
+							
+							<tr th:if="${#lists.isEmpty(companies)}">
+								<td colspan="6" class="text-center">該当するデータがありません。</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</form>
 
-					</div>
-				</body>
-				</html>
+	</div>
+</body>
+</html>

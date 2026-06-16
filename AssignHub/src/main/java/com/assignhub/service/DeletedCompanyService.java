@@ -108,5 +108,15 @@ public class DeletedCompanyService {
 	    // 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
 	    return (currentActiveCount + restoreCount) > 500;
 	}
+	
+	 public boolean isCompanyNameDuplicate(String companyName, Integer excludeCompanyId) {
+	        return deletedCompanyMapper.existsByCompanyName(companyName, excludeCompanyId);
+	    }
+	    public boolean isCompanyTelDuplicate(String companyTel, Integer companyId) {
+	        return deletedCompanyMapper.existsByCompanyTel(companyTel, companyId);
+	    }
+	    public boolean isCompanyFaxDuplicate(String companyFax, Integer companyId) {
+	        return deletedCompanyMapper.existsByCompanyFax(companyFax, companyId);
+	    }
 
 }

@@ -111,5 +111,33 @@
 		FROM m_company
 		WHERE delete_flg = 0
 	</select>
+	
+	<select id="existsByCompanyName" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM m_company
+        WHERE company_name = #{companyName}
+        AND delete_flg = 0
+        <if test="companyId != null">
+            AND company_id != #{companyId}
+        </if>
+    </select>
+    <select id="existsByCompanyTel" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM m_company
+        WHERE company_tel = #{companyTel}
+        AND delete_flg = 0
+        <if test="companyId != null">
+            AND company_id != #{companyId}
+        </if>
+    </select>
+    <select id="existsByCompanyFax" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM m_company
+        WHERE company_fax = #{companyFax}
+        AND delete_flg = 0
+        <if test="companyId != null">
+            AND company_id != #{companyId}
+        </if>
+    </select>
 
 </mapper>

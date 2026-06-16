@@ -26,7 +26,7 @@ public class DeletedCompanyController {
 	public DeletedCompanyController(DeletedCompanyService deletedCompanyService) {
 		this.deletedCompanyService = deletedCompanyService;
 	}
-	
+
 	@GetMapping
 	public String index(@RequestParam(name = "companyName", required = false) String companyName,
 			@RequestParam(name = "companyTel", required = false) String companyTel,
@@ -59,6 +59,7 @@ public class DeletedCompanyController {
 			attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
 			return "redirect:/deleted-companies";
 		}
+		
 		if (deletedCompanyService.isCompanyLimitReachedAfterRestore(ids.size())) {
 			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
 			return "redirect:/deleted-companies";
