@@ -29,6 +29,11 @@
 }
 
 
+.export-contents{
+	width:60%;
+	margin:auto auto;
+}
+
 /* アカウントID（半角3文字） */
 .table-dark th:nth-child(2),
 .table-dark td:nth-child(2){
@@ -74,16 +79,13 @@
 }
 
 .acc_per{
-	width:2em !important;
-}
-
-.acc_name{
-	width:10em !important;
+	width:4em !important;
 }
 
 .acc_pas{
-	width:12em !important;
+	width:8em !important;
 }
+
 
 
 /* =========================================*/

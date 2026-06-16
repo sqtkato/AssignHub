@@ -4,6 +4,7 @@
 
 <head>
 	<title>アカウント情報エクスポート</title>
+	<link rel="stylesheet" th:href="@{/css/account.css}">
 </head>
 
 <body>
@@ -29,30 +30,30 @@
 						<td class="value">UTF-8 (BOMあり)</td>
 					</tr>
 				</table>
+				<div class="export-contents">
+					<div class="table-scroll export-table">
+						<table class="table header-only-table table-dark">
+							<thead>
+								<tr>
+									<th class="acc_id">アカウントID</th>
+									<th class="acc_logId">ログインID</th>
+									<th class="acc_pas">パスワード</th>
+									<th class="acc_per">権限</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="account : ${accounts}">
+									<td th:text="${account.accountId}" class="acc_id"></td>
+									<td th:text="${account.loginId}" class="acc_logId"></td>
+									<td th:text="''" class="acc_pas"></td>
+									<td th:text="${account.permission == 1 ? '管理' : '一般'}" class="acc_per"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<p class="export-note">※詳細情報がエクスポートされます。</p>
+				</div>
 			</div>
-
-			<div class="table-scroll export-table">
-				<table class="table header-only-table table-dark">
-					<thead>
-						<tr>
-							<th class="acc_id">アカウントID</th>
-							<th class="acc_logId">ログインID</th>
-							<th class="acc_logId">パスワード</th>
-							<th class="acc_per">権限</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="account : ${accounts}">
-							<td th:text="${account.accountId}" class="acc_id"></td>
-							<td th:text="${account.loginId}" class="acc_logId"></td>
-							<td th:text="'-'" class="acc_pas"></td>
-							<td th:text="${account.permission == 1 ? '管理' : '一般'}" class="acc_per"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<p class="export-note">※詳細情報がエクスポートされます。</p>
-
 			<form th:action="@{/accounts/export/download(ids=${ids})}" method="post">
 				<div class="action-area">
 					<button type="submit" class="btn-csv">エクスポート</button>
