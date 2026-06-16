@@ -33,17 +33,17 @@ public class DeletedEmployeeController {
 
 	private final DeletedEmployeeService deletedEmployeeService;
 	private final EmployeeService employeeService;
-	
+
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param deletedEmployeeService 論理削除済み社員管理サービス
 	 */
-	public DeletedEmployeeController(DeletedEmployeeService deletedEmployeeService,EmployeeService employeeService ) {
+	public DeletedEmployeeController(DeletedEmployeeService deletedEmployeeService, EmployeeService employeeService) {
 		this.deletedEmployeeService = deletedEmployeeService;
 		this.employeeService = employeeService;
 	}
-	
+
 	/**
 	 * 論理削除済み社員一覧画面を表示する。
 	 *
@@ -60,14 +60,15 @@ public class DeletedEmployeeController {
 			@RequestParam(name = "empEngineerType", required = false) String empEngineerType,
 			@RequestParam(name = "empCompany", required = false) String empCompany,
 			Model model) {
-        model.addAttribute("employees", deletedEmployeeService.findAll(empName, empAssignCompany, empEngineerType, empCompany));
-        model.addAttribute("empName", empName);
-        model.addAttribute("empAssignCompany", empAssignCompany);
+		model.addAttribute("employees",
+				deletedEmployeeService.findAll(empName, empAssignCompany, empEngineerType, empCompany));
+		model.addAttribute("empName", empName);
+		model.addAttribute("empAssignCompany", empAssignCompany);
 		model.addAttribute("empEngineerType", empEngineerType);
 		model.addAttribute("empCompany", empCompany);
 		return "deleted_employee/index";
 	}
-	
+
 	/**
 	 * 一件の論理削除済み社員情報を復元する。
 	 *
@@ -79,21 +80,21 @@ public class DeletedEmployeeController {
 	public String recover(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
 			BindingResult result, RedirectAttributes attributes) {
-		if(deletedEmployeeService.existAccountsByEmpolyeeId(id)) {
-			attributes.addFlashAttribute("toastMessage","紐づくアカウント情報が削除状態のため、復元できません。先にアカウント情報を復元してください。");
+		if (deletedEmployeeService.existAccountsByEmpolyeeId(id)) {
+			attributes.addFlashAttribute("toastMessage", "紐づくアカウント情報が削除状態のため、復元できません。先にアカウント情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
-		if(deletedEmployeeService.existCompaniesByEmpolyeeId(id)) {
-			attributes.addFlashAttribute("toastMessage","所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
+		if (deletedEmployeeService.existCompaniesByEmpolyeeId(id)) {
+			attributes.addFlashAttribute("toastMessage", "所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
 		if (employeeService.isEmailDuplicate(employeeForm.getEmail(), id)) {
 			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
 		}
-        deletedEmployeeService.restore(id);
-        return "redirect:/deleted-employees";
-    }
-	
+		deletedEmployeeService.restore(id);
+		return "redirect:/deleted-employees";
+	}
+
 	/**
 	 * 選択済みのすべての論理削除済み社員情報を復元する。
 	 *
@@ -102,28 +103,34 @@ public class DeletedEmployeeController {
 	 * @return 一覧画面へのリダイレクト
 	 */
 	@PostMapping("/restore-bulk")
-    public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
-    		@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
+	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
+			@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
 			BindingResult result, RedirectAttributes attributes) {
-        if (ids == null || ids.isEmpty()) {
-            attributes.addFlashAttribute("toastError", "復元対象が選択されていません");
-            return "redirect:/deleted-employees";
-        }
-        if(deletedEmployeeService.existAccountsByEmpolyeeIds(ids)) {
-        	attributes.addFlashAttribute("toastError","紐づくアカウント情報が削除状態のため、復元できません。先にアカウント情報を復元してください。");
-        	return "redirect:/deleted-employees";
-        }
-        if(deletedEmployeeService.existCompaniesByEmpolyeeIds(ids)) {
-        	attributes.addFlashAttribute("toastError","所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
-        	return "redirect:/deleted-employees";
-        }
-        if (employeeService.isEmailDuplicate(employeeForm.getEmail(), id)) {
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "復元対象が選択されていません");
+			return "redirect:/deleted-employees";
+		}
+		if (deletedEmployeeService.existAccountsByEmpolyeeIds(ids)) {
+			attributes.addFlashAttribute("toastError", "紐づくアカウント情報が削除状態のため、復元できません。先にアカウント情報を復元してください。");
+			return "redirect:/deleted-employees";
+		}
+		if (deletedEmployeeService.existCompaniesByEmpolyeeIds(ids)) {
+			attributes.addFlashAttribute("toastError", "所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
+			return "redirect:/deleted-employees";
+		}
+		boolean duplicate_flg = false;
+		for (int id : ids) {
+			if(employeeService.isEmailDuplicate(employeeForm.getEmail(), id)) {
+				duplicate_flg = true;
+			}
+		}
+		if (duplicate_flg) {
 			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
-        }
-        deletedEmployeeService.restoreBulk(ids);
-        return "redirect:/deleted-employees";
-    }
-		
+		}
+		deletedEmployeeService.restoreBulk(ids);
+		return "redirect:/deleted-employees";
+	}
+
 	/**
 	 * 社員情報を1件物理削除する。
 	 *
@@ -133,15 +140,15 @@ public class DeletedEmployeeController {
 	 */
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-		if(deletedEmployeeService.existAssignmentsByEmpolyeeId(id)) {
-			attributes.addFlashAttribute("toastMessage","紐づくアサイン履歴情報が存在するため、削除できません。先にアサイン履歴情報を削除してください。");
+		if (deletedEmployeeService.existAssignmentsByEmpolyeeId(id)) {
+			attributes.addFlashAttribute("toastMessage", "紐づくアサイン履歴情報が存在するため、削除できません。先にアサイン履歴情報を削除してください。");
 			return "redirect:/deleted-employees";
 		}
-	
+
 		deletedEmployeeService.physicalDelete(id);
 		return "redirect:/deleted-employees";
 	}
-	
+
 	/**
 	 * 選択された複数の社員情報を一括で物理削除する。
 	 *
@@ -150,23 +157,23 @@ public class DeletedEmployeeController {
 	 * @return 一覧画面へのリダイレクト
 	 */
 	@PostMapping("/bulk-delete")
-    public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
-        if (ids == null || ids.isEmpty()) {
-            attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
-            return "redirect:/deleted-employees";
-        }
-        
-        // Serviceの判定メソッドを使って一括不在条件をチェック
-        if (deletedEmployeeService.existAssignmentsByEmpolyeeIds(ids)) {
-            attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するアカウントが含まれているため、物理削除できません。先にアサイン履歴情報を削除してください。");
-            return "redirect:/deleted-employees";
-        }
-        
-        deletedEmployeeService.physicalDeleteBulk(ids);
-        return "redirect:/deleted-employees";
-    }
-	
-	
+	public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids,
+			RedirectAttributes attributes) {
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
+			return "redirect:/deleted-employees";
+		}
+
+		// Serviceの判定メソッドを使って一括不在条件をチェック
+		if (deletedEmployeeService.existAssignmentsByEmpolyeeIds(ids)) {
+			attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するアカウントが含まれているため、物理削除できません。先にアサイン履歴情報を削除してください。");
+			return "redirect:/deleted-employees";
+		}
+
+		deletedEmployeeService.physicalDeleteBulk(ids);
+		return "redirect:/deleted-employees";
+	}
+
 	/**
 	 * 社員データのエクスポート画面を表示する。
 	 *
@@ -176,18 +183,18 @@ public class DeletedEmployeeController {
 	 */
 	@PostMapping("/export")
 	public String showExport(
-	        @RequestParam(name = "ids", required = false) List<Integer> ids,
-	        Model model , RedirectAttributes attributes) {
-		
+			@RequestParam(name = "ids", required = false) List<Integer> ids,
+			Model model, RedirectAttributes attributes) {
+
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
 			return "redirect:/deleted-employees";
 		}
-	    List<Employee> employees = deletedEmployeeService.findByIds(ids);
-		model.addAttribute("employees",employees);
-	    model.addAttribute("count", employees.size());
-	    model.addAttribute("ids", ids);
-	    return "deleted_employee/export";
+		List<Employee> employees = deletedEmployeeService.findByIds(ids);
+		model.addAttribute("employees", employees);
+		model.addAttribute("count", employees.size());
+		model.addAttribute("ids", ids);
+		return "deleted_employee/export";
 	}
 
 	/**
@@ -209,17 +216,20 @@ public class DeletedEmployeeController {
 					.append(emp.getFirstName()).append(",")
 					.append(emp.getLastNameKana()).append(",")
 					.append(emp.getFirstNameKana()).append(",")
-					.append(emp.getHireDate()!= null ? emp.getHireDate(): "").append(",")
-					.append(emp.getYearsOfService()!= null ? emp.getYearsOfService(): "").append(",")
-					.append(emp.getBirthDate()!= null ? emp.getBirthDate(): "").append(",")
+					.append(emp.getHireDate() != null ? emp.getHireDate() : "").append(",")
+					.append(emp.getYearsOfService() != null ? emp.getYearsOfService() : "").append(",")
+					.append(emp.getBirthDate() != null ? emp.getBirthDate() : "").append(",")
 					.append(emp.getZipCode()).append(",")
 					.append(emp.getAddress1()).append(",")
-					.append(emp.getAddress2()!= null ? emp.getAddress2() : "").append(",")
+					.append(emp.getAddress2() != null ? emp.getAddress2() : "").append(",")
 					.append(emp.getEngineerType()).append(",")
-					.append(emp.getAccount() != null&& emp.getAccount().getLoginId() != null? emp.getAccount().getLoginId(): "").append(",")
+					.append(emp.getAccount() != null && emp.getAccount().getLoginId() != null
+							? emp.getAccount().getLoginId()
+							: "")
+					.append(",")
 					.append(emp.getCompany() != null ? emp.getCompany().getCompanyName() : "").append(",")
-					.append(emp.getDepartment()!= null ? emp.getDepartment() : "").append(",")
-					.append(emp.getJobTitle()!= null ? emp.getJobTitle() : "").append(",")
+					.append(emp.getDepartment() != null ? emp.getDepartment() : "").append(",")
+					.append(emp.getJobTitle() != null ? emp.getJobTitle() : "").append(",")
 					.append(emp.getEmpTel()).append(",")
 					.append(emp.getEmail()).append("\n");
 		}
