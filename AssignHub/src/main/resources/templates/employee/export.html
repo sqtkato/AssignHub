@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
 	
-<head>
-	<meta charset="utf-8">
+	<head>
 		<title>社員情報エクスポート</title>
 	</head>
 	
@@ -19,25 +18,25 @@
 				<h4 class="export-confirm-title">出力条件の確認</h4>
 				<table class="export-table">
 					<tr>
-						<td>出力対象件数:</td>
-						<td><span class="export-count" th:text="${count}">0</span> 件</td>
+						<td class="label">出力対象件数:</td>
+						<td class="value"><span class="export-count" th:text="${count}">0</span> 件</td>
 					</tr>
 					<tr>
-						<td>文字コード:</td>
-						<td>utf-8 (bomあり)</td>
+						<td class="label">文字コード:</td>
+						<td class="value">utf-8 (bomあり)</td>
 					</tr>
 				</table>
 				
-				<div>
-					<table class="export-table">
-						<thead>
-						<tr>
-							<th>社員id</th>
-							<th>社員名</th>
-							<th>アサイン先企業</th>
-							<th>所属企業</th>
-						</tr>
-						</thead>
+					<div class="table-scroll export-table">
+						<table class="table header-only-table table-dark">
+							<thead>
+								<tr>
+									<th >社員id</th>
+									<th>社員名</th>
+									<th>アサイン先企業</th>
+									<th>所属企業</th>
+								</tr>
+							</thead>
 						
 						<tbody>
 							<tr th:each="emp : ${employees}" class="clickable-row">
@@ -48,8 +47,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<p class="export-note">※ 詳細情報がエクスポートされます</p>
-				</div>
+					<p class="export-note">※詳細情報がエクスポートされます。</p>
 				
 				<div class="action-area">
 					<form th:action="@{/employees/export/download(ids=${ids})}" method="post">
