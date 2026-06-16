@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
@@ -17,17 +17,17 @@
 		<h1>AssignHub</h1>
 
 		<ul>
-			<li><a th:href="@{/employees}"> 社員情報</a></li>
+			<li><a th:href="@{/employees}">社員情報</a></li>
 			<li th:if="${session.permission == 1}"><a th:href="@{/companies}">企業情報</a></li>
 			<li th:if="${session.permission == 1}"><a th:href="@{/accounts}">アカウント情報</a></li>
-			<li th:if="${session.permission == 1}"><a th:href="@{/assign-history}">アサイン履歴情報</a></li>
+			<li th:if="${session.permission == 1}"><a th:href="@{/assignments}">アサイン履歴情報</a></li>
 			<li>
 				<span class="menu-title" th:if="${session.permission == 1}">削除・復元一覧</span>
 				<ul class="submenu" th:if="${session.permission == 1}"s>
 					<li><a th:href="@{/deleted/employees}">社員情報</a></li>
 					<li><a th:href="@{/deleted/companies}">企業情報</a></li>
 					<li><a th:href="@{/deleted/accounts}">アカウント情報</a></li>
-					<li><a th:href="@{/deleted/assign-history}">アサイン履歴情報</a></li>
+					<li><a th:href="@{/deleted/assignments}">アサイン履歴情報</a></li>
 				</ul>
 			</li>
 		</ul>
@@ -120,6 +120,64 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- =========================
+		     復元モーダル
+		========================= -->
+		
+		<div id="restoreOverlay" class="modal-overlay" onclick="closeRestoreModal()">
+			<div class="modal-box" onclick="event.stopPropagation()">
+				<div class="modal-icon modal-icon-success">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-linecap="round" stroke-linejoin="round">
+							<path
+								d="M7 16c2.21 0 4-1.79 5-3s2.79-3 5-3a4 4 0 1 1 0 8c-2.21 0-4-1.79-5-3s-2.79-3-5-3a4 4 0 0 0-3.4 1.9" />
+							<polyline points="5.5 10 2 12.5 4.5 16" />
+						</svg>
+				</div>
+
+				<p class="modal-title">復元しますか？</p>
+				<p class="modal-subtitle">削除済みデータを復元します。</p>
+
+				<div class="modal-actions">
+					<form id="restoreForm" method="post">
+						<button type="submit" class="modal-btn modal-btn-success">
+							復元する
+						</button>
+						<button type="button" class="modal-btn modal-btn-cancel"
+							onclick="closeRestoreModal()">
+							キャンセル
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- =========================
+		     一括復元モーダル
+		========================= -->
+		<div id="bulkRestoreOverlay" class="modal-overlay" onclick="closeBulkRestoreModal()">
+			<div class="modal-box" onclick="event.stopPropagation()">
+				<div class="modal-icon modal-icon-success">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-linecap="round" stroke-linejoin="round">
+							<path
+								d="M7 16c2.21 0 4-1.79 5-3s2.79-3 5-3a4 4 0 1 1 0 8c-2.21 0-4-1.79-5-3s-2.79-3-5-3a4 4 0 0 0-3.4 1.9" />
+							<polyline points="5.5 10 2 12.5 4.5 16" />
+						</svg>
+				</div>
+
+				<p class="modal-title">選択した内容を復元しますか？</p>
+				<p class="modal-subtitle">削除済みデータを復元します。</p>
+
+				<div class="modal-actions">
+					<button type="button" class="modal-btn modal-btn-success"
+						onclick="submitBulkRestore()">復元する</button>
+
+					<button type="button" class="modal-btn modal-btn-cancel"
+						onclick="closeBulkRestoreModal()">キャンセル</button>
+				</div>
+			</div>
+		</div>
 </body>
 
 </html>
