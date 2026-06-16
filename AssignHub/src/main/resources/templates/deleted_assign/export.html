@@ -46,8 +46,8 @@
 			</div>
 			<div class="action-area">
 				<form th:action="@{/deleted-assignments/export/download(ids=${ids})}" method="post">
-					<button type="submit" class="btn-csv">エクスポート</button>
-					<button type="button" id="btn_account_back" class="btn-back"
+					<button type="submit" class="btn-csv common-btn">エクスポート</button>
+					<button type="button" id="btn_account_back" class="btn-back common-btn"
 						th:onclick="|location.href='@{/deleted-assignments}'|">戻る</button>
 				</form>
 			</div>
