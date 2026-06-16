@@ -143,6 +143,12 @@
 		</foreach>
 		AND delete_flg = 1
 	</update>
+	
+	<select id="countActiveAssigns" resultType="int">
+		SELECT COUNT(*)
+		FROM m_company
+		WHERE delete_flg = 0
+	</select>
 
 	<select id="countDuplicate" resultType="int">
 		SELECT COUNT(*)

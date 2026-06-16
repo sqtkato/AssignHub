@@ -68,7 +68,15 @@ public class DeletedAssignController {
 	/* 単一復元 */
 	@PostMapping("/{id}/restore")
 	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-		if (deletedAssignService.countcompanysdispatchsByAssignId(id)) {
+		if (deletedAssignService.isAssginLimitReachedAfterRestore(1)) {
+			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
+			return "redirect:/deleted-assignments";
+		}
+
+		if (deletedAssignService.countcompanysdispatchsByAssignId(id))
+
+		{
+
 			attributes.addFlashAttribute("toastError", "紐づく派遣先企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
 			return "redirect:/deleted-assignments";
 		}
@@ -100,6 +108,12 @@ public class DeletedAssignController {
 			attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
 			return "redirect:/deleted-assignments";
 		}
+
+		if (deletedAssignService.isAssginLimitReachedAfterRestore(ids.size())) {
+			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
+			return "redirect:/deleted-assignments";
+		}
+
 		if (deletedAssignService.countcompanysdispatchsByAssignIds(ids)) {
 			attributes.addFlashAttribute("toastError", "紐づく派遣先企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
 			return "redirect:/deleted-assignments";
@@ -120,6 +134,7 @@ public class DeletedAssignController {
 		deletedAssignService.restoreBulk(ids);
 		attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を復元しました");
 		return "redirect:/deleted-assignments";
+
 	}
 
 	// ==========================================

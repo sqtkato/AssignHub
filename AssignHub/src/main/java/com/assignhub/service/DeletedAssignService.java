@@ -82,6 +82,16 @@ public class DeletedAssignService {
 			deletedAssignMapper.physicalDeleteBulk(ids);
 		}
 	}
+	
+	public boolean isAssginLimitReachedAfterRestore(int restoreCount) {
+	    // 1. 現在有効な（削除されていない）企業数を取得する
+	    // ※ 既存のCompanyService等から取得するか、独自に count を取得してください
+	    int currentActiveCount = deletedAssignMapper.countActiveAssigns();
+
+	    // 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
+	    return (currentActiveCount + restoreCount) > 500;
+	}
+	
 
 	// =======================================================
 	// Controllerからのチェック用メソッド（booleanを返す）
