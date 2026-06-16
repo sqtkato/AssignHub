@@ -3,8 +3,6 @@ package com.assignhub.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,7 +69,7 @@ public class AccountController {
 	 * @return アカウント情報新規登録画面のテンプレートパス
 	 */
 	@GetMapping("/new")
-	public String create(Model model, HttpSession session, RedirectAttributes attributes) {
+	public String create(Model model, RedirectAttributes attributes) {
 
 		if (accountService.isMaxCount()) {
 			attributes.addFlashAttribute(
@@ -80,7 +78,6 @@ public class AccountController {
 
 			return "redirect:/accounts";
 		}
-		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
 		model.addAttribute("account", new AccountForm());
 		return "account/create";
 	}
@@ -294,11 +291,9 @@ public class AccountController {
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			Model model, RedirectAttributes attributes) {
-
-		// ★【最優先】まず最初にnullチェックを行う
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
-			return "redirect:/accounts"; // 元の一覧画面に戻す
+			return "redirect:/accounts"; 
 		}
 		List<Account> accounts = accountService.findByIds(ids);
 		model.addAttribute("count", accountService.findByIds(ids).size());
@@ -318,20 +313,19 @@ public class AccountController {
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Account> accounts = accountService.findByIds(ids);
-		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名(姓),社員名(名)\n");
+		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,社員名(姓),社員名(名)\n");
 		for (Account acc : accounts) {
-			String lastName = "-";
-			String firstName = "-";
-			if (acc.getEmployee() != null) {
-				lastName = acc.getEmployee().getLastName();
-				firstName = acc.getEmployee().getFirstName();
+			String Permission = "";
+			if(acc.getPermission() == 0) {
+				Permission = "一般";
 			}
-
+			else {
+				Permission = "管理";
+			}
 			csvBuilder.append(acc.getAccountId()).append(",")
 					.append(acc.getLoginId()).append(",")
-					.append(acc.getPermission()).append(",")
-					.append(lastName).append(",") 
-					.append(firstName).append("\n");
+					.append(",")
+					.append(Permission).append("\n");
 		}
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
