@@ -39,7 +39,6 @@
 			<div class="card result-area" th:if="${importResult != null}">
 				<div class="result-title-row">
 					<h3 class="result-title">処理結果</h3>
-					<!-- 上限エラーはテーブルから分離してタイトル横に表示 -->
 					<span class="result-limit-msg"
 						th:if="${!importResult.errors.isEmpty() and importResult.errors[0].field == '上限'}"
 						th:text="${importResult.errors[0].message}"></span>

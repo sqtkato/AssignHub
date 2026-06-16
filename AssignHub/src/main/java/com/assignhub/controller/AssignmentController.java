@@ -277,7 +277,7 @@ public class AssignmentController {
 	        return "assignment/import";
 	    }
 
-	    if (file.getSize() > 5L * 1024 * 1024) {
+	    if (file.getSize() > 5 * 1024 * 1024) {
 	        model.addAttribute("toastError", "ファイルサイズは5MB以内にしてください");
 	        return "assignment/import";
 	    }
