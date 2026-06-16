@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Employee;
-import com.assignhub.form.CompanyForm;
 import com.assignhub.form.EmployeeForm;
 import com.assignhub.service.CompanyService;
 import com.assignhub.service.EmployeeService;
@@ -151,7 +150,7 @@ public class EmployeeController {
 		if (!model.containsAttribute("employeeForm")) {
 			Employee emp = employeeService.findById(id);
 			EmployeeForm form = new EmployeeForm();
-			CompanyForm Cform = new CompanyForm();
+		
 			form.setLastName(emp.getLastName());
 			form.setFirstName(emp.getFirstName());
 			form.setLastNameKana(emp.getLastNameKana());
@@ -165,7 +164,7 @@ public class EmployeeController {
 			form.setEmpTel(emp.getEmpTel());
 			form.setEmail(emp.getEmail());
 			form.setEngineerType(emp.getEngineerType());
-			Cform.setCompanyName(emp.getCompany().getCompanyName());
+			form.setCompanyId(emp.getCompanyId());
 			form.setAccountId(emp.getAccountId());
 			form.setDepartment(emp.getDepartment());
 			form.setJobTitle(emp.getJobTitle());

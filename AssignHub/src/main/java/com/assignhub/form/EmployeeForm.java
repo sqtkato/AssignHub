@@ -95,7 +95,6 @@ public class EmployeeForm {
 	
 	private Integer companyId;
 	
-	/**ログインID (必須)*/
 
 	
 	

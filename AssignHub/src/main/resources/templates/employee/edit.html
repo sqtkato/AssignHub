@@ -131,13 +131,13 @@
 				<div id="companyArea" style="display: none;">
 					    <label>所属企業</label><br>
 					  
-					<select id="companyName" name="companyName">
+					<select id="companyId" name="companyId">
 						   <option value="">未選択</option>
 						<option th:each="company : ${companies}" th:value="${company.companyId}"
 							th:text="${company.companyName}">
 						</option>
 					</select>
-					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					<div class="error-message" th:if="${#fields.hasErrors('companyId')}" th:errors="*{companyId}">
 					</div>
 				</div>
 
