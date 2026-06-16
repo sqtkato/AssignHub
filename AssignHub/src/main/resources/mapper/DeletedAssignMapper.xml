@@ -5,7 +5,7 @@
 	<resultMap id="assignmentResultMap"
 		type="com.assignhub.entity.Assignment">
 
-		<id property="assignmentId" column="assignment_id" />
+		<id property="assignmentId" column="assignment_id"/>
 
 		<result property="empId" column="emp_id" />
 		<result property="companyId" column="company_id" />
@@ -110,8 +110,7 @@
         </where>
         ORDER BY a.assignment_id
     </select>
-
-<select id="findAllById" resultMap="assignmentResultMap">
+<select id="findAllByIds" resultMap="assignmentResultMap">
 		SELECT
 		a.assignment_id,
 		a.emp_id,
@@ -128,27 +127,23 @@
 		e.last_name_kana,
 		e.first_name_kana,
 		e.engineer_type,
-		c.company_name AS
-		assign_company_name,
+		c.company_name AS assign_company_name,
 		ec.company_id AS ec_company_id,
-		ec.company_name AS
-		emp_company_name,
+		ec.company_name AS emp_company_name,
 		ec.company_name_kana AS emp_company_name_kana,
 		r.role
 		FROM t_assignment a
-		INNER JOIN m_employee e
-		ON a.emp_id = e.emp_id
-		INNER
-		JOIN m_company c
-		ON a.company_id = c.company_id
-		LEFT JOIN m_company ec
-		ON e.company_id = ec.company_id
-		INNER JOIN m_role r
-		ON a.role_id =
-		r.role_id
-		WHERE a.assignment_id = #{id}
-		AND a.delete_flg = 1
+		INNER JOIN m_employee e ON a.emp_id = e.emp_id
+		INNER JOIN m_company c ON a.company_id = c.company_id
+		INNER JOIN m_company ec ON e.company_id = ec.company_id
+		INNER JOIN m_role r ON a.role_id = r.role_id
+		WHERE a.delete_flg = 1
+		AND a.assignment_id IN
+		<foreach item="item" collection="ids" open="(" separator="," close=")">
+			#{item}
+		</foreach>
 	</select>
+
 	<update id="restore">
 		UPDATE t_assignment
 		SET delete_flg = 0
@@ -166,21 +161,22 @@
 		</foreach>
 		AND delete_flg = 1
 	</update>
+
 	<select id="countDuplicate" resultType="int">
-        SELECT COUNT(*)
-        FROM t_assignment
-        WHERE delete_flg = 0
-        AND emp_id = #{empId}
-        AND company_id = #{companyId}
-        AND contract_start_date = #{contractStartDate}
-        AND (
-            contract_end_date = #{contractEndDate}
-            OR (contract_end_date IS NULL AND #{contractEndDate} IS NULL)
-        )
-        <if test="assignmentId != null">
-            AND assignment_id != #{assignmentId}
-        </if>
-    </select>
+		SELECT COUNT(*)
+		FROM t_assignment
+		WHERE delete_flg = 0
+		AND emp_id = #{empId}
+		AND company_id = #{companyId}
+		AND contract_start_date = #{contractStartDate}
+		AND (
+			contract_end_date = #{contractEndDate}
+			OR (contract_end_date IS NULL AND #{contractEndDate} IS NULL)
+		)
+		<if test="assignmentId != null">
+			AND assignment_id != #{assignmentId}
+		</if>
+	</select>
 
 	<delete id="physicalDelete">
 		DELETE FROM t_assignment
