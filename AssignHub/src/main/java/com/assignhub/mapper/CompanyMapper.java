@@ -22,8 +22,12 @@ public interface CompanyMapper {
 	 * @param order   ソート順（asc または desc）
 	 * @return 企業エンティティのリスト
 	 */
-	List<Company> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+	List<Company> findAll(@Param("companyNameSearch") String companyName,@Param("companyTelSearch") String companyTel);
 
+	/**
+	 * エクスポート
+	 */
+	List<Company> findByIds(@Param("ids") List<Integer> ids);
 	/**
 	 * 企業IDを指定して企業情報を1件取得する。
 	 * 論理削除済みのデータは取得対象外とする。
@@ -40,4 +44,48 @@ public interface CompanyMapper {
 	 * @param company 登録する企業エンティティ
 	 */
 	void insert(Company company);
+	
+	/** * 企業情報を更新する。 * * @param  company 企業エンティティ */
+	
+	void update(Company company);
+
+	boolean existsByCompanyName( @Param("companyName") String companyName, 
+		    @Param("companyId") Integer companyId);
+	
+	/**
+	 * 指定されたTELの登録件数を取得する（指定IDを除外）。
+	 *
+	 * @param TEL  重複チェックするTEL
+	 * @param excludecompanyId チェックから除外する自身の企業ID
+	 * @return 一致するTELの件数
+	 */
+	boolean existsByCompanyTel( @Param("companyTel") String companyTel, 
+		    @Param("companyId") Integer companyId);
+	
+	/**
+	 * 指定されたFAXの登録件数を取得する（指定IDを除外）。
+	 *
+	 * @param FAX 重複チェックするFAX
+	 * @param excludecompanyId チェックから除外する自身の企業ID
+	 * @return 一致するFAXの件数
+	 */boolean existsByCompanyFax( @Param("companyFax") String companyFax, 
+			    @Param("companyId") Integer companyId);
+
+/**
+ * 企業情報を論理削除する。
+ *
+ * @param id 企業ID
+ */
+void delete(@Param("companyId") Integer companyId);
+
+/**
+ * 複数のを一括で物理削除する。
+ *
+ * @param ids 削除対象IDリスト
+ */
+void deleteBulk(@Param("ids") List<Integer> ids);
+
+
+int countAll();
+
 }

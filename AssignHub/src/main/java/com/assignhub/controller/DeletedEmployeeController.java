@@ -164,13 +164,13 @@ public class DeletedEmployeeController {
 		
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
-			return "redirect:/deleted_employees";
+			return "redirect:/deleted-employees";
 		}
 	    List<Employee> employees = deletedEmployeeService.findByIds(ids);
 		model.addAttribute("employees",employees);
 	    model.addAttribute("count", employees.size());
 	    model.addAttribute("ids", ids);
-	    return "deleted_employee/export";
+	    return "deleted-employees/export";
 	}
 
 	/**
