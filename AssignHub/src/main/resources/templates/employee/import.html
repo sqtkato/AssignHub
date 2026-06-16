@@ -16,7 +16,6 @@
 			</p>
 			<form th:action="@{/employees/import}" method="post" enctype="multipart/form-data">
 				<div class="upload-zone">
-					<div class="upload-icon">👥</div>
 					<p class="upload-zone-text">社員データCSVを選択してください</p>
 					<p class="upload-zone-sub">対応形式: .csv (UTF-8)/ BOMあり推奨、最大 5MB</p>
 					<input type="file" name="file" accept=".csv" required class="form-control"

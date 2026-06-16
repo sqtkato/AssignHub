@@ -25,12 +25,15 @@ import com.assignhub.form.EmployeeForm;
 import com.assignhub.service.CompanyService;
 import com.assignhub.service.EmployeeService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * エンジニア（社員）管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
  *
  * @version 1.03 2026/06/01
  * @author SQT）チームB
  */
+@Slf4j
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -265,6 +268,7 @@ public class EmployeeController {
 			model.addAttribute("toastError", "ファイルの文字コードが正しくありません。UTF-8で保存してください");
 			return "employee/import";
 		} catch (Exception e) {
+		    log.error("CSVインポート処理に失敗しました", e);
 			model.addAttribute("toastError", "ファイルの読み込みに失敗しました");
 			return "employee/import";
 		}

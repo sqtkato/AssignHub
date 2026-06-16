@@ -61,4 +61,6 @@ public interface EmployeeMapper {
 	 * @return 一致するメールアドレスの件数
 	 */
 	int countByEmail(@Param("email") String email, @Param("excludeEmpId") Integer excludeEmpId);
+	
+	int countAll();
 }

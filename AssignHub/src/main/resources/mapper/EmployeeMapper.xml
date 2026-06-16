@@ -189,5 +189,9 @@
 			AND emp_id != #{excludeEmpId}
 		</if>
 	</select>
+	
+	<select id="countAll" resultType="int">
+    SELECT COUNT(*) FROM m_employee WHERE delete_flg = 0
+</select>
 
 </mapper>
