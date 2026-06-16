@@ -95,4 +95,10 @@ public class DeletedAccountService {
     public boolean countAssignmentsByAccountIds(List<Integer> ids) {
         return deletedAccountMapper.countAssignmentsByAccountIds(ids) > 0;
     }
+    
+    /** 復元時に重複するアカウントが存在するか判定 */
+    public boolean isLoginIdDuplicate(String loginId,Integer excludeAccountId) {
+		int count = deletedAccountMapper.countByLoginId(loginId,excludeAccountId);
+		return count > 0;
+	}
 }

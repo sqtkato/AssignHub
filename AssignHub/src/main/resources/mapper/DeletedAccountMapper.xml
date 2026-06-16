@@ -109,5 +109,15 @@
             #{id}
         </foreach>
     </select>
+    
+    <select id="countByLoginId" resultType="int">
+		SELECT COUNT(*) 
+		FROM m_account
+		WHERE login_id = #{loginId}
+		AND delete_flg=0
+		<if test="excludeAccountId != null">
+			AND account_id != #{excludeAccountId}
+		</if>
+	</select>
 
 </mapper>      
