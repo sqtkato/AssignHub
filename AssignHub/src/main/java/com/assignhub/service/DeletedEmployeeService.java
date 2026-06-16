@@ -28,7 +28,7 @@ public class DeletedEmployeeService {
      * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
      */
     public List<Employee> findByIds(List<Integer> ids) {
-        if (ids != null && ids.isEmpty()) {
+        if (ids != null && !ids.isEmpty()){
         	return deletedEmployeeMapper.findByIds(ids);
         }
         return null;

@@ -3,9 +3,9 @@
 	layout:decorate="~{layout/layout}">
 	
 <head>
+	<title>社員情報エクスポート</title>
 	<meta charset="utf-8">
-		<title>社員情報エクスポート</title>
-	</head>
+</head>
 	
 	<body>
 		<div layout:fragment="content">
@@ -28,11 +28,11 @@
 					</tr>
 				</table>
 				
-				<div>
-					<table class="export-table">
-						<thead>
+				<div class="card">
+					<table class="table">
+						<thead class="table-dark">
 						<tr>
-							<th>社員id</th>
+							<th>社員ID</th>
 							<th>社員名</th>
 							<th>アサイン先企業</th>
 							<th>所属企業</th>
@@ -53,6 +53,7 @@
 				
 				<div class="action-area">
 					<form th:action="@{/deleted-employees/export/download(ids=${ids})}" method="post">
+						<input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">
 						<button type="submit" class="btn-csv">エクスポート</button>
 						<button type="button" id="btn_account_back" class="btn-back"
 									th:onclick="|location.href='@{/deleted-employees}'|">戻る</button>

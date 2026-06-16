@@ -170,7 +170,7 @@ public class DeletedEmployeeController {
 		model.addAttribute("employees",employees);
 	    model.addAttribute("count", employees.size());
 	    model.addAttribute("ids", ids);
-	    return "deleted-employees/export";
+	    return "deleted_employee/export";
 	}
 
 	/**
