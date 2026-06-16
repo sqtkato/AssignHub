@@ -326,7 +326,7 @@ public class EmployeeController {
 	 *
 	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
-	@GetMapping("/export/download")
+	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Employee> employees = employeeService.findByIds(ids);
