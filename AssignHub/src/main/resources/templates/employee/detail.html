@@ -116,7 +116,7 @@
 
 
 				<form th:action="@{/employees/{id}/delete(id=${employee.empId})}" method="post" style="display:inline;">
-					<button type="submit" class="btn btn-danger detail-btn"
+					<button type="button" class="btn btn-danger detail-btn"
 						th:onclick="|openDeleteModal(${employee.empId})|">削除</button>
 				</form>
 
