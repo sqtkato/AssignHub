@@ -49,4 +49,10 @@ public interface EmployeeMapper {
 	void delete(Integer id);
 	
 	void deleteBulk(@Param("ids") List<Integer> ids);
+	
+	void deleteByAccountId(Integer id);
+	
+	void deleteBulkByAccountId(@Param("ids") List<Integer> ids);
+	
+	
 }

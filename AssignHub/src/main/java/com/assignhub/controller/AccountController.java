@@ -3,8 +3,6 @@ package com.assignhub.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +22,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
 import com.assignhub.service.AccountService;
+import com.assignhub.service.AssignmentService;
 import com.assignhub.service.EmployeeService;
+
+import jakarta.servlet.http.HttpSession;
 
 /**
  * アカウント情報管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
@@ -38,15 +39,17 @@ public class AccountController {
 
 	private final AccountService accountService;
 	private final EmployeeService employeeService;
+	private final AssignmentService assignmentService;
 
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param companyService 企業サービス
 	 */
-	public AccountController(AccountService accountService, EmployeeService employeeService) {
+	public AccountController(AccountService accountService, EmployeeService employeeService, AssignmentService assignmentService) {
 		this.accountService = accountService;
 		this.employeeService = employeeService;
+		this.assignmentService = assignmentService;
 	}
 
 	/**
@@ -171,8 +174,10 @@ public class AccountController {
 	 */
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+		
 		accountService.delete(id);
-		employeeService.delete(id);
+		employeeService.deleteByAccountId(id);
+		assignmentService.deleteByAccountId(id);
 		return "redirect:/accounts";
 	}
 
@@ -191,7 +196,8 @@ public class AccountController {
 			return "redirect:/accounts";
 		}
 		accountService.deleteBulk(ids);
-		employeeService.deleteBulk(ids);
+		employeeService.deleteBulkByAccountId(ids);
+		assignmentService.deleteBulkByAccountId(ids);
 		attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を削除しました");
 		return "redirect:/accounts";
 	}
@@ -240,7 +246,6 @@ public class AccountController {
 			decoder.onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT);
 			decoder.decode(java.nio.ByteBuffer.wrap(file.getBytes()));
 		} catch (Exception e) {
-			// UTF-8として読めない → 文字コードが違う
 			model.addAttribute("fileError", "UTF-8のCSVファイルを選択してください。");
 			return "account/import";
 		}
@@ -294,11 +299,9 @@ public class AccountController {
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			Model model, RedirectAttributes attributes) {
-
-		// ★【最優先】まず最初にnullチェックを行う
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
-			return "redirect:/accounts"; // 元の一覧画面に戻す
+			return "redirect:/accounts";
 		}
 		List<Account> accounts = accountService.findByIds(ids);
 		model.addAttribute("count", accountService.findByIds(ids).size());

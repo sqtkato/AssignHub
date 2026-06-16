@@ -78,4 +78,16 @@ public class EmployeeService {
 			employeeMapper.deleteBulk(ids);
 		}
 	}
+	
+	@Transactional
+	public void deleteByAccountId(Integer id) {
+		employeeMapper.deleteByAccountId(id);
+	}
+	
+	@Transactional
+	public void deleteBulkByAccountId(List<Integer> ids) {
+		if (ids != null && !ids.isEmpty()) {
+			employeeMapper.deleteBulk(ids);
+		}
+	}
 }
