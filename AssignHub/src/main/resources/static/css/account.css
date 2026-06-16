@@ -53,9 +53,9 @@
 /* 社員名 */
 .table-dark th:nth-child(5),
 .table-dark td:nth-child(5) {
-    width: 20em;              
-    white-space: normal;    
-    word-break: break-word;  
+    width: 20em;
+    white-space: normal;
+    word-break: break-word;
     overflow-wrap: break-word;
 }
 
@@ -108,7 +108,7 @@
 }
 
 .search-item.button{
-    flex: 0 0 auto;   
+    flex: 0 0 auto;
 }
 
 .form-group {

@@ -837,7 +837,7 @@ a:hover {
 	margin: 0;
 }
 
-/** ========================================= Common Modal(全てのモーダル) ========================================= */
+/* ========================================= Common Modal(全てのモーダル) ========================================= */
 .modal-overlay {
 	display: none;
 	position: fixed;
@@ -894,7 +894,7 @@ a:hover {
 	line-height: 1.5;
 }
 
-.modal-actions {	
+.modal-actions {
 	display: flex;
 	justify-content: center;
 	gap: 10px;
@@ -935,6 +935,7 @@ a:hover {
 .modal-btn-danger:hover {
 	background: #c82333;
 }
+
 /* =========================================
    インポート画面
    ========================================= */

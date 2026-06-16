@@ -78,17 +78,13 @@ public class AccountService {
 	@Transactional
 	public void save(Account account) {
 		account.setPasswordHash(
-			    passwordEncoder.encode(account.getPasswordHash())
-			);
+				passwordEncoder.encode(account.getPasswordHash()));
 		if (account.getAccountId() == null) {
 			accountMapper.insert(account);
 		} else {
 			accountMapper.update(account);
 		}
 	}
-	
-	
-
 
 	/**
 	 * 指定されたアカウントIDのデータを物理削除する。
@@ -111,7 +107,7 @@ public class AccountService {
 			accountMapper.deleteBulk(ids);
 		}
 	}
-	
+
 	/**
 	 * インポート時の各行のエラー内容を保持するクラス。
 	 */
@@ -126,7 +122,7 @@ public class AccountService {
 			this.message = message;
 		}
 	}
-	
+
 	/**
 	 * インポート処理の全体結果（成功数、エラー数、エラー詳細リスト）を保持するクラス。
 	 */
@@ -135,7 +131,7 @@ public class AccountService {
 		public int errorCount = 0;
 		public List<CsvRowError> errors = new ArrayList<>();
 	}
-	
+
 	/**
 	 * アップロードされたCSVファイルを解析し、バリデーションおよび一括登録・更新を行う。
 	 * 1行ごとに保存処理を行うが、1件でもエラーがあれば全体をロールバックする。
@@ -226,7 +222,7 @@ public class AccountService {
 						hasError = true;
 					}
 				}
-				
+
 				if (!hasError) {
 					try {
 						account.setLoginId(loginId);
@@ -261,11 +257,10 @@ public class AccountService {
 	 * @param loginId        チェックするログインID
 	 * @return 重複していればtrue
 	 */
-	public boolean isLoginIdDuplicate(String loginId,Integer excludeAccountId) {
-		int count = accountMapper.countByLoginId(loginId,excludeAccountId);
+	public boolean isLoginIdDuplicate(String loginId, Integer excludeAccountId) {
+		int count = accountMapper.countByLoginId(loginId, excludeAccountId);
 		return count > 0;
 	}
-	
 
 	/**
 	 * ログインIDがすでに登録されているか（重複しているか）を判定する。
@@ -274,10 +269,9 @@ public class AccountService {
 	 * @param accountId		除外するアカウントID（ログインIDを変更しない場合）
 	 * @return 重複していればtrue
 	 */
-	
 
 	public int countDataRows(MultipartFile file) throws Exception {
-		int count = findAll("",null).size();
+		int count = findAll("", null).size();
 		try (BufferedReader br = new BufferedReader(
 				new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
 			String line;
@@ -294,4 +288,8 @@ public class AccountService {
 		return count;
 	}
 
+	public boolean isMaxCount() {
+		return accountMapper.countAll() >= 500;
+
+	}
 }

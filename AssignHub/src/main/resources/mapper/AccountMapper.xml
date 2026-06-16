@@ -65,9 +65,10 @@
 		e.emp_id,
 		e.last_name,
 		e.first_name
-		FROM m_account a
+		FROM
+		m_account a
 		LEFT JOIN m_employee e
-		ON a.account_id = e.emp_id
+		ON a.account_id = e.account_id
 		WHERE
 		a.account_id IN
 		<foreach collection="ids" item="id" open="(" separator=","
@@ -120,14 +121,21 @@
 			#{id}
 		</foreach>
 	</update>
-	
+
 	<select id="countByLoginId" resultType="int">
 		SELECT COUNT(*) FROM m_account
 		WHERE login_id = #{loginId}
-		AND delete_flg=0
+		AND
+		delete_flg=0
 		<if test="excludeAccountId != null">
 			AND account_id != #{excludeAccountId}
 		</if>
 	</select>
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*)
+		FROM　m_account
+		WHERE delete_flg = 0
+	</select>
+
 
 </mapper>
