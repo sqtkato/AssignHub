@@ -69,7 +69,6 @@ public class AssignmentService {
 		return assignmentMapper.findById(id);
 	}
 	
-
 	/**
 	 * チェックボックスでアサイン履歴IDを取得する。
 	 * @param ids 選択されたチェックボックスの行に対応するアサイン履歴ID
@@ -345,10 +344,8 @@ public class AssignmentService {
 				rowNum++;
 			}
 			
-			// エラーが1件でも発生した場合はトランザクションをロールバックする
 			if (result.errorCount > 0) {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				// ロールバックされたため、成功件数を0に戻して画面表示を正す
 				result.successCount = 0;
 			}
 		}
