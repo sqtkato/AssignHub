@@ -3,14 +3,14 @@
 	layout:decorate="~{layout/layout}">
 	
 <head>
-	<title>社員情報エクスポート</title>
+	<title>論理削除社員情報エクスポート</title>
 	<meta charset="utf-8">
 </head>
 	
 	<body>
 		<div layout:fragment="content">
 			<div class="page-title-area">
-				<h2>社員情報エクスポート</h2>
+				<h2>論理削除社員情報エクスポート</h2>
 			</div>
 			<div class="card form-card-wide">
 				<p class="instruction">以下の内容でcsvファイルを出力します。<br>よろしければ「エクスポート」ボタンを教えてください。</p>
@@ -48,9 +48,10 @@
 							</tr>
 						</tbody>
 					</table>
-					<p class="export-note">※ 詳細情報がエクスポートされます</p>
+					
 				</div>
-				
+				<p class="export-note">※ 詳細情報がエクスポートされます</p>
+			</div>
 				<div class="action-area">
 					<form th:action="@{/deleted-employees/export/download(ids=${ids})}" method="post">
 						<input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">
@@ -59,8 +60,6 @@
 									th:onclick="|location.href='@{/deleted-employees}'|">戻る</button>
 					</form>
 				</div>
-				
-			</div>
 		</div>
 	</body>
 </html>

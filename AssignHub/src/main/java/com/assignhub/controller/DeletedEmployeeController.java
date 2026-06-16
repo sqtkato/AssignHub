@@ -8,7 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Employee;
+import com.assignhub.form.EmployeeForm;
 import com.assignhub.service.DeletedEmployeeService;
+import com.assignhub.service.EmployeeService;
 
 /**
  * 社員管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
@@ -27,14 +32,16 @@ import com.assignhub.service.DeletedEmployeeService;
 public class DeletedEmployeeController {
 
 	private final DeletedEmployeeService deletedEmployeeService;
-
+	private final EmployeeService employeeService;
+	
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param deletedEmployeeService 論理削除済み社員管理サービス
 	 */
-	public DeletedEmployeeController(DeletedEmployeeService deletedEmployeeService) {
+	public DeletedEmployeeController(DeletedEmployeeService deletedEmployeeService,EmployeeService employeeService ) {
 		this.deletedEmployeeService = deletedEmployeeService;
+		this.employeeService = employeeService;
 	}
 	
 	/**
@@ -69,7 +76,9 @@ public class DeletedEmployeeController {
 	 * @return 一覧画面へのリダイレクト
 	 */
 	@PostMapping("/{id}/restore")
-	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+	public String recover(@PathVariable("id") Integer id,
+			@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
+			BindingResult result, RedirectAttributes attributes) {
 		if(deletedEmployeeService.existAccountsByEmpolyeeId(id)) {
 			attributes.addFlashAttribute("toastMessage","紐づくアカウント情報が削除状態のため、復元できません。先にアカウント情報を復元してください。");
 			return "redirect:/deleted-employees";
@@ -77,6 +86,9 @@ public class DeletedEmployeeController {
 		if(deletedEmployeeService.existCompaniesByEmpolyeeId(id)) {
 			attributes.addFlashAttribute("toastMessage","所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
 			return "redirect:/deleted-employees";
+		}
+		if (employeeService.isEmailDuplicate(employeeForm.getEmail(), id)) {
+			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
 		}
         deletedEmployeeService.restore(id);
         return "redirect:/deleted-employees";
@@ -90,7 +102,9 @@ public class DeletedEmployeeController {
 	 * @return 一覧画面へのリダイレクト
 	 */
 	@PostMapping("/restore-bulk")
-    public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
+    public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
+    		@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
+			BindingResult result, RedirectAttributes attributes) {
         if (ids == null || ids.isEmpty()) {
             attributes.addFlashAttribute("toastError", "復元対象が選択されていません");
             return "redirect:/deleted-employees";
@@ -102,6 +116,9 @@ public class DeletedEmployeeController {
         if(deletedEmployeeService.existCompaniesByEmpolyeeIds(ids)) {
         	attributes.addFlashAttribute("toastError","所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
         	return "redirect:/deleted-employees";
+        }
+        if (employeeService.isEmailDuplicate(employeeForm.getEmail(), ids)) {
+			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
         }
         deletedEmployeeService.restoreBulk(ids);
         return "redirect:/deleted-employees";
@@ -217,77 +234,4 @@ public class DeletedEmployeeController {
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
-
-	
-	
-	
-	
-	
-	/**
-	 * 社員データのエクスポート画面を表示する。
-	 *
-	 * @param txt_emp_name_keyword 現在の検索キーワード（社員名）（状態保持用）
-	 * @param txt_emp_assign_company_keyword 現在の検索キーワード（アサイン先企業名）（状態保持用）
-	 * @param txt_emp_company_keyword 現在の検索キーワード（所属企業名）（状態保持用）
-	 * @param cmb_engtineer_type_keyword 現在の検索キーワード（エンジニアタイプ）（状態保持用）
-	 * @param model  画面描画用のモデル
-	 * @return エクスポート画面のテンプレートパス
-	 */
-//	@GetMapping("/export")
-//	public String showExport(@RequestParam(name = "txt_emp_name_keyword", required = false) String txt_emp_name_keyword,
-//			@RequestParam(name = "txt_emp_assign_company_keyword", required = false) Integer txt_emp_assign_company_keyword,
-//			@RequestParam(name = "txt_emp_company_keyword", required = false) String txt_emp_company_keyword,
-//			@RequestParam(name = "cmb_engtineer_type_keyword", required = false) String cmb_engtineer_type_keyword,
-//			Model model) {
-//		model.addAttribute("count", deletedEmployeeService.findAll(txt_emp_name_keyword, txt_emp_assign_company_keyword, txt_emp_company_keyword, cmb_engtineer_type_keyword).size());
-//		model.addAttribute("txt_emp_name_keyword", txt_emp_name_keyword);
-//		model.addAttribute("txt_emp_assign_company_keyword", txt_emp_assign_company_keyword);
-//		model.addAttribute("txt_emp_company_keyword", txt_emp_company_keyword);
-//		model.addAttribute("cmb_engtineer_type_keyword", cmb_engtineer_type_keyword);
-//		return "employee/export";
-//	}
-
-	/**
-	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
-	 *
-	 * @param txt_emp_name_keyword 現在の検索キーワード（社員名）（状態保持用）
-	 * @param txt_emp_assign_company_keyword 現在の検索キーワード（アサイン先企業名）（状態保持用）
-	 * @param txt_emp_company_keyword 現在の検索キーワード（所属企業名）（状態保持用）
-	 * @param cmb_engtineer_type_keyword 現在の検索キーワード（エンジニアタイプ）（状態保持用）
-	 * @return ダウンロード用のCSVファイルバイナリデータ
-	 */
-//	@GetMapping("/export/download")
-//	public ResponseEntity<byte[]> downloadCsv(
-//			@RequestParam(name = "txt_emp_name_keyword", required = false) String txt_emp_name_keyword,
-//			@RequestParam(name = "txt_emp_assign_company_keyword", required = false) Integer txt_emp_assign_company_keyword,
-//			@RequestParam(name = "txt_emp_company_keyword", required = false) Integer txt_emp_company_keyword,
-//			@RequestParam(name = "cmb_engtineer_type_keyword", required = false) Integer cmb_engtineer_type_keyword
-//			) {
-//		List<Employee> employees = deletedEmployeeService.findAll(txt_emp_name_keyword, txt_emp_assign_company_keyword, txt_emp_company_keyword, cmb_engtineer_type_keyword);
-//	
-//		StringBuilder csvBuilder = new StringBuilder("社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年,郵便番号,住所,メールアドレス\n");
-//		for (Employee emp : employees) {
-//			csvBuilder.append(emp.getEmpId()).append(",")
-//					.append(emp.getEmpName()).append(",")
-//					.append(emp.getDeptId()).append(",")
-//					.append(emp.getHireYear()).append(",")
-//					.append(emp.getPostalCode() != null ? emp.getPostalCode() : "").append(",")
-//					.append(emp.getAddress() != null ? emp.getAddress() : "").append(",")
-//					.append(emp.getEmail()).append("\n");
-//		}
-//		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
-//		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
-//		byte[] result = new byte[bom.length + csvBytes.length];
-//		System.arraycopy(bom, 0, result, 0, bom.length);
-//		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
-//
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("Content-Disposition", "attachment; filename=employees.csv");
-//		headers.add("Content-Type", "text/csv; charset=UTF-8");
-//		return new ResponseEntity<>(result, headers, HttpStatus.OK);
-//	}
-	
-	
-	
-
 }

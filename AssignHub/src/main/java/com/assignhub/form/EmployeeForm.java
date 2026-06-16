@@ -2,8 +2,6 @@ package com.assignhub.form;
 
 import java.time.LocalDate;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -11,10 +9,21 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
+/**
+ * 社員（エンジニア）登録・編集画面の入力値を受け取るフォームクラス。
+ * 画面からの入力チェック（バリデーション）を担う。
+ *
+ * @version 1.02 2026/06/01
+ * @author SQT）チームB
+ */
 @Data
 public class EmployeeForm {
+
 	/** 社員ID（更新処理の際に対象を特定するために使用、新規登録時はnull） */
 	private Integer empId;
 
@@ -98,4 +107,5 @@ public class EmployeeForm {
 	/**役職任意、最大100文字） */
 	@Size(max = 100, message = "役職は100文字以内で入力してください")
 	private String jobTitle;
+
 }
