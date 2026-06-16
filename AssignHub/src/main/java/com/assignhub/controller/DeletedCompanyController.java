@@ -44,15 +44,23 @@ public class DeletedCompanyController {
 
 	@PostMapping("/{id}/restore")
 	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+		if (deletedCompanyService.isCompanyLimitReachedAfterRestore(1)) {
+			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
+			return "redirect:/deleted-companies";
+		}
 		deletedCompanyService.restore(id);
 		return "redirect:/deleted-companies";
 	}
 
-	@PostMapping("/restore-bulk")
+	@PostMapping("/bulk-restore")
 	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
+			return "redirect:/deleted-companies";
+		}
+		if (deletedCompanyService.isCompanyLimitReachedAfterRestore(ids.size())) {
+			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
 			return "redirect:/deleted-companies";
 		}
 		deletedCompanyService.restoreBulk(ids);
@@ -65,11 +73,11 @@ public class DeletedCompanyController {
 
 	@PostMapping("/{id}/delete")
 	public String deleted(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-		if (deletedCompanyService.countEmployeesByCompanyId(id)) {
+		if (deletedCompanyService.existEmployeesByCompanyId(id)) {
 			attributes.addFlashAttribute("toastError", "紐づく社員情報が存在するため、物理削除できません。");
 			return "redirect:/deleted-companies";
 		}
-		if (deletedCompanyService.countAssignmentsByCompanyId(id)) {
+		if (deletedCompanyService.existAssignmentsByCompanyId(id)) {
 			attributes.addFlashAttribute("toastError", "紐づくアサイン履歴が存在するため、物理削除できません。");
 			return "redirect:/deleted-companies";
 		}
@@ -78,7 +86,7 @@ public class DeletedCompanyController {
 		return "redirect:/deleted-companies";
 	}
 
-	@PostMapping("/delete-bulk")
+	@PostMapping("/bulk-delete")
 	public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
@@ -86,11 +94,11 @@ public class DeletedCompanyController {
 			return "redirect:/deleted-companies";
 		}
 
-		if (deletedCompanyService.countEmployeesByCompanyIds(ids)) {
+		if (deletedCompanyService.existEmployeesByCompanyIds(ids)) {
 			attributes.addFlashAttribute("toastError", "紐づく社員情報が存在する企業が含まれているため、一括削除できません。");
 			return "redirect:/deleted-companies";
 		}
-		if (deletedCompanyService.countAssignmentsByCompanyIds(ids)) {
+		if (deletedCompanyService.existAssignmentsByCompanyIds(ids)) {
 			attributes.addFlashAttribute("toastError", "紐づくアサイン履歴が存在する企業が含まれているため、一括削除できません。");
 			return "redirect:/deleted-companies";
 		}
@@ -103,7 +111,7 @@ public class DeletedCompanyController {
 	// エクスポート処理
 	// ==========================================
 
-	@GetMapping("/export")
+	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model,
 			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
@@ -120,7 +128,7 @@ public class DeletedCompanyController {
 		return "deleted_company/export";
 	}
 
-	@GetMapping("/export/download")
+	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids) {
 
 		List<Company> delCompanies = deletedCompanyService.findByIds(ids);

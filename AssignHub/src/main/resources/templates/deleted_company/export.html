@@ -40,7 +40,7 @@
 							<th>企業ID</th>
 							<th>企業名</th>
 							<th>住所1</th>
-							<th>電話番号</th>
+							<th>TEL</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -55,9 +55,11 @@
 			</div>
 			<p class="export-note">※詳細情報がエクスポートされます</p>
 			<div class="action-area">
-				<a th:href="@{/deleted-companies/export/download(ids=${ids})}"
-					class="btn btn-primary btn-wide">エクスポート</a>
-				<a th:href="@{/deleted-companies}" class="btn btn-secondary btn-wide">戻る</a>
+    			<form th:action="@{/deleted-companies/export/download}" method="post">
+       				 <input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">
+        					<button type="submit" class="btn btn-primary btn-wide">エクスポート</button>
+        				<a th:href="@{/deleted-companies}" class="btn btn-secondary btn-wide">戻る</a>
+    			</form>
 			</div>
 		</div>
 	</div>

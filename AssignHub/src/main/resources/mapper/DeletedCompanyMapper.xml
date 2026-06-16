@@ -75,13 +75,13 @@
 		</foreach>
 	</delete>
 
-	<select id="countEmployeesByCompanyId" resultType="int">
+	<select id="existEmployeesByCompanyId" resultType="int">
 		SELECT COUNT(*)
 		FROM m_employee
 		WHERE company_id = #{id}
 	</select>
 
-	<select id="countEmployeesByCompanyIds" resultType="int">
+	<select id="existEmployeesByCompanyIds" resultType="int">
 		SELECT COUNT(*)
 		FROM m_employee
 		WHERE company_id IN
@@ -90,13 +90,13 @@
 		</foreach>
 	</select>
 
-	<select id="countAssignmentsByCompanyId" resultType="int">
+	<select id="existAssignmentsByCompanyId" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment
 		WHERE company_id = #{id}
 	</select>
 
-	<select id="countAssignmentsByCompanyIds" resultType="int">
+	<select id="existAssignmentsByCompanyIds" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment
 		WHERE company_id IN
@@ -104,6 +104,12 @@
 			close=")">
 			#{id}
 		</foreach>
+	</select>
+	
+	<select id="countActiveCompanies" resultType="int">
+		SELECT COUNT(*)
+		FROM m_company
+		WHERE delete_flg = 0
 	</select>
 
 </mapper>

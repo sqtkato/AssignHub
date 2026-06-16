@@ -30,13 +30,19 @@ public interface DeletedCompanyMapper {
     /**
      * 指定された企業IDを「派遣先」または「所属元」として使用している社員数をカウント。
      */
-    int countEmployeesByCompanyId(@Param("id") Integer id);
-    int countEmployeesByCompanyIds(@Param("ids") List<Integer> ids);
+    int existEmployeesByCompanyId(@Param("id") Integer id);
+    int existEmployeesByCompanyIds(@Param("ids") List<Integer> ids);
     
     /**
      * 指定された企業IDを使用しているアサイン履歴数をカウント。
      */
-    int countAssignmentsByCompanyId(@Param("id") Integer id);
-    int countAssignmentsByCompanyIds(@Param("ids") List<Integer> ids);
+    int existAssignmentsByCompanyId(@Param("id") Integer id);
+    int existAssignmentsByCompanyIds(@Param("ids") List<Integer> ids);
+    
+    /**
+	 * 現在有効な（削除されていない）企業総数をカウントする。
+	 * （500件登録上限チェック用）
+	 */
+	int countActiveCompanies();
 
 }

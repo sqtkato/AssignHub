@@ -73,26 +73,40 @@ public class DeletedCompanyService {
 
     /** * 単一企業に紐づく社員情報（派遣先 または パートナー所属元）が存在するか判定 
      */
-    public boolean countEmployeesByCompanyId(Integer id) {
-        return deletedCompanyMapper.countEmployeesByCompanyId(id) > 0;
+    public boolean existEmployeesByCompanyId(Integer id) {
+        return deletedCompanyMapper.existEmployeesByCompanyId(id) > 0;
     }
 
     /** * 複数企業の中に、紐づく社員情報が存在するものが含まれているか判定 
      */
-    public boolean countEmployeesByCompanyIds(List<Integer> ids) {
-        return deletedCompanyMapper.countEmployeesByCompanyIds(ids) > 0;
+    public boolean existEmployeesByCompanyIds(List<Integer> ids) {
+        return deletedCompanyMapper.existEmployeesByCompanyIds(ids) > 0;
     }
 
     /** * 単一企業に紐づくアサイン履歴（現場）が存在するか判定 
      */
-    public boolean countAssignmentsByCompanyId(Integer id) {
-        return deletedCompanyMapper.countAssignmentsByCompanyId(id) > 0;
+    public boolean existAssignmentsByCompanyId(Integer id) {
+        return deletedCompanyMapper.existAssignmentsByCompanyId(id) > 0;
     }
 
     /** * 複数企業の中に、紐づくアサイン履歴が存在するものが含まれているか判定 
      */
-    public boolean countAssignmentsByCompanyIds(List<Integer> ids) {
-        return deletedCompanyMapper.countAssignmentsByCompanyIds(ids) > 0;
+    public boolean existAssignmentsByCompanyIds(List<Integer> ids) {
+        return deletedCompanyMapper.existAssignmentsByCompanyIds(ids) > 0;
     }
+    
+	/**
+	 * 復元した結果、登録上限（500件）を超えるか判定する
+	 * @param restoreCount 復元しようとしている件数（単一なら1、一括ならリストのサイズ）
+	 * @return 500件を超える場合はtrue
+	 */
+	public boolean isCompanyLimitReachedAfterRestore(int restoreCount) {
+	    // 1. 現在有効な（削除されていない）企業数を取得する
+	    // ※ 既存のCompanyService等から取得するか、独自に count を取得してください
+	    int currentActiveCount = deletedCompanyMapper.countActiveCompanies(); 
+
+	    // 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
+	    return (currentActiveCount + restoreCount) > 500;
+	}
 
 }
