@@ -64,7 +64,7 @@
 					一括復元
 				</button>
 
-				<button type="submit" formmethod="get" formaction="/deleted-assignments/export" class="toolbar-btn"
+				<button type="submit" formmethod="post" formaction="/deleted-assignments/export" class="toolbar-btn"
 					title="チェックした項目をエクスポート">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
@@ -120,6 +120,13 @@
 								<td th:text="${assign.contractEndDate != null ? assign.contractEndDate : 'ー'}"></td>
 								<td th:text="${assign.unitPrice}"></td>
 								<td>
+									<button type="button" th:attr="data-id=${assign.assignmentId}" class="btn-icon-svg"
+										title="復元" onclick="openRestoreModal(this.dataset.id)">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<polyline points="20 6 9 17 4 12"></polyline>
+										</svg>
+									</button>
 									<button type="button" class="btn_assign_delete btn-icon-svg delete" title="削除"
 										th:onclick="|openDeleteModal(${assign.assignmentId})|">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"

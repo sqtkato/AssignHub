@@ -55,6 +55,16 @@ public class DeletedAssignService {
 		}
 	}
 
+	public boolean existsDuplicate(Assignment assignment) {
+		int count = deletedAssignMapper.countDuplicate(
+				assignment.getAssignmentId(),
+				assignment.getEmpId(),
+				assignment.getCompanyId(),
+				assignment.getContractStartDate(),
+				assignment.getContractEndDate());
+		return count > 0;
+	}
+
 	/**
 	 * 単一データをデータベースから完全に削除する。
 	 */

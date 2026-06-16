@@ -1,7 +1,11 @@
 package com.assignhub.controller;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.assignhub.entity.Assignment;
 import com.assignhub.form.SearchForm;
 import com.assignhub.service.DeletedAssignService;
 
@@ -70,7 +75,7 @@ public class DeletedAssignController {
 
 		if (deletedAssignService.countcompanyspartnerByAssignId(id)) {
 			attributes.addFlashAttribute("toastError", "紐づく所属元企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
-			return "redirect:/deleted-assignments"; 
+			return "redirect:/deleted-assignments";
 		}
 
 		if (deletedAssignService.countEmployeesproperByAssignId(id)) {
@@ -143,44 +148,48 @@ public class DeletedAssignController {
 		return "redirect:/deleted-assignments";
 	}
 
-//			エクスポート画面へ遷移	
-			@GetMapping("/export")
-			public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model) {
-				//引数内書き換え
-				model.addAttribute("count", deletedAssignService.findAllByIds(ids));
-				
-				return "deleted_assign/export";
-			}
+	//エクスポート
+	@PostMapping("/export")
+	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
+			Model model, RedirectAttributes attributes) {
+		if (ids == null || ids.isEmpty()) {
+			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
+			return "redirect:/deleted-assignments";
+		}
+		List<Assignment> assignments = deletedAssignService.findAllByIds(ids);
+		model.addAttribute("count", assignments.size());
+		model.addAttribute("assignments", assignments);
+		model.addAttribute("ids", ids);
+		return "deleted_assign/export";
+	}
 
-	//		
-	//	//エクスポートのダウンロード処理
-	//		@GetMapping("/export/download")
-	//		public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids, 
-	//				Model model) {
-	//			List<Assignment> delAccount = deletedAssignService.findAllByIds(ids);
-	//			//引数名書き換え
-	//			StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限,削除フラグ,作成日時,更新日時,社員名\n");
-	//			//括弧内書き換え
-	//			for (Assignment delAcc : delAccount) {
-	//				csvBuilder.append(delAcc.getAssignmentId()).append(",")
-	//						.append(delAcc.getEmpId()).append(",")
-	//						.append(delAcc.getPasswordHash()).append(",")
-	//						.append(delAcc.getPermission()).append(",")
-	//						.append(delAcc.getDeleteFlg()).append(",")
-	//						.append(delAcc.getCreatedAt()).append(",")
-	//						.append(delAcc.getUpdatedAt()).append(",")
-	//						.append(delAcc.getEmpName()).append("\n");
-	//			}
-	//			byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
-	//			byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
-	//			byte[] result = new byte[bom.length + csvBytes.length];
-	//			System.arraycopy(bom, 0, result, 0, bom.length);
-	//			System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
-	//
-	//			HttpHeaders headers = new HttpHeaders();
-	//			//filename変更必要
-	//			headers.add("Content-Disposition", "attachment; filename=deletedAccount.csv");
-	//			headers.add("Content-Type", "text/csv; charset=UTF-8");
-	//			return new ResponseEntity<>(result, headers, HttpStatus.OK);
-	//		}
+	@PostMapping("/export/download")
+	public ResponseEntity<byte[]> downloadCsv(
+			@RequestParam(name = "ids", required = false) List<Integer> ids) {
+		List<Assignment> assignments = deletedAssignService.findAllByIds(ids);
+		StringBuilder csvBuilder = new StringBuilder("アサインID,社員ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n");
+		for (Assignment asn : assignments) {
+			csvBuilder.append(asn.getAssignmentId()).append(",")
+					.append(asn.getEmpId()).append(",")
+					.append(asn.getEmployee().getLastName()).append(",")
+					.append(asn.getEmployee().getFirstName()).append(",")
+					.append(asn.getCompany().getCompanyName()).append(",")
+					.append(asn.getCreatedAt()).append(",")
+					.append(asn.getUpdatedAt()).append(",")
+					.append(asn.getContractStartDate()).append(",")
+					.append(asn.getContractEndDate() != null ? asn.getContractEndDate() : "ー").append(",")
+					.append(asn.getUnitPrice()).append(",")
+					.append(asn.getRole().getRole()).append("\n");
+		}
+		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
+		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+		byte[] result = new byte[bom.length + csvBytes.length];
+		System.arraycopy(bom, 0, result, 0, bom.length);
+		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=assignment.csv");
+		headers.add("Content-Type", "text/csv; charset=UTF-8");
+		return new ResponseEntity<>(result, headers, HttpStatus.OK);
+	}
 }

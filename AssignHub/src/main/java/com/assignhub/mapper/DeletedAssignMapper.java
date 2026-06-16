@@ -1,5 +1,6 @@
 package com.assignhub.mapper;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -32,6 +33,13 @@ public interface DeletedAssignMapper {
 	 * @return 影響を受けた行数（成功時は1、排他エラー時は0）
 	 */
 	int restore(@Param("id") Integer id);
+
+	int countDuplicate(
+			@Param("assignmentId") Integer assignmentId,
+			@Param("empId") Integer empId,
+			@Param("companyId") Integer companyId,
+			@Param("contractStartDate") LocalDate contractStartDate,
+			@Param("contractEndDate") LocalDate contractEndDate);
 
 	/**
 	 * 一括復元（選択された複数データの delete_flg を 0 に更新する）
