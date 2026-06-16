@@ -3,6 +3,8 @@ package com.assignhub.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +25,6 @@ import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
 import com.assignhub.service.AccountService;
 import com.assignhub.service.EmployeeService;
-
-import jakarta.servlet.http.HttpSession;
 
 /**
  * アカウント情報管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
@@ -72,9 +72,12 @@ public class AccountController {
 	 */
 	@GetMapping("/new")
 	public String create(Model model, HttpSession session, RedirectAttributes attributes) {
-		int currentCount = accountService.findAll("", null).size();
-		if (currentCount >= 500) {
-			attributes.addFlashAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
+
+		if (accountService.isMaxCount()) {
+			attributes.addFlashAttribute(
+		            "toastError",
+		            "登録件数が上限(500件)に達しているため登録できません。");
+
 			return "redirect:/accounts";
 		}
 		model.addAttribute("currentLoginId", session.getAttribute("loginId"));
