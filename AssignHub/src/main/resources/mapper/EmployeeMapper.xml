@@ -10,7 +10,7 @@
 		<result property="lastNameKana" column="last_name_kana" />
 		<result property="firstNameKana" column="first_name_kana" />
 		<result property="hireDate" column="hire_date" />
-		<result property="yearsOfService" column="years_of_servise" />
+		<result property="yearsOfService" column="years_of_service" />
 		<result property="birthDate" column="birth_date" />
 		<result property="zipCode" column="zip_code" />
 		<result property="address1" column="address1" />
@@ -135,18 +135,19 @@
 	</select>
     
 	<insert id="insert" useGeneratedKeys="true" keyProperty="empId">
-		INSERT
-		INTO m_employee (
-		last_name, first_name, last_name_kana, first_name_kana,
-		birth_date ,hire_date,zip_code,address1,address2,emp_tel,
-		email,engineer_type,account_id,company_id,
-		department,job_title
-		) VALUES (
-		#{lastName}, #{firstName}, #{lastNameKana}, #{firstNameKana},
-        #{birthDate}, #{hireDate},#{zipCode}, #{address1}, #{address2}, 
-        #{empTel}, #{email}, #{engineerType}, #{accountId}, 
-        #{companyId}, #{department}, #{jobTitle}  
-        )
+    INSERT INTO m_employee (
+    last_name, first_name, last_name_kana, first_name_kana,
+    years_of_service,
+    birth_date, hire_date, zip_code, address1, address2, emp_tel,
+    email, engineer_type, account_id, company_id,
+    department, job_title
+    ) VALUES (
+    #{lastName}, #{firstName}, #{lastNameKana}, #{firstNameKana},
+    #{yearsOfService},
+    #{birthDate}, #{hireDate}, #{zipCode}, #{address1}, #{address2},
+    #{empTel}, #{email}, #{engineerType}, #{accountId},
+    #{companyId}, #{department}, #{jobTitle}
+    )
 </insert>
 	
 
@@ -172,24 +173,26 @@
 
 
 	<update id="update">
-		UPDATE m_employee
-
-		SET last_name = #{lastName},
-		last_name, first_name, last_name_kana, first_name_kana,
-		birth_date ,hire_date,zip_code,address1,address2,emp_tel,
-		email,engineer_type,account_id,company_id,
-		department,job_title
-		) VALUES (
-		#{lastName}, #{firstName}, #{lastNameKana}, #{firstNameKana},
-        #{birthDate}, #{hireDate},#{zipCode}, #{address1}, #{address2}, 
-        #{empTel}, #{email}, #{engineerType}, #{accountId}, 
-        #{companyId}, #{department}, #{jobTitle}  
-        )
-		<where>
-			emp_id = #{empId}
-		</where>
-
-	</update>
+    UPDATE m_employee
+    SET last_name = #{lastName},
+        first_name = #{firstName},
+        last_name_kana = #{lastNameKana},
+        first_name_kana = #{firstNameKana},
+        years_of_service = #{yearsOfService},
+        birth_date = #{birthDate},
+        hire_date = #{hireDate},
+        zip_code = #{zipCode},
+        address1 = #{address1},
+        address2 = #{address2},
+        emp_tel = #{empTel},
+        email = #{email},
+        engineer_type = #{engineerType},
+        account_id = #{accountId},
+        company_id = #{companyId},
+        department = #{department},
+        job_title = #{jobTitle}
+    WHERE emp_id = #{empId}
+</update>
 
 
 	<select id="countByEmail" resultType="int">
