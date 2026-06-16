@@ -67,6 +67,11 @@ public class AssignmentService {
 		return assignmentMapper.findById(id);
 	}
 	
+	/**
+	 * チェックボックスでアサインIDを取得する。
+	 * @param ids 選択されたチェックボックスの行に対応するアサインID
+	 * @return
+	 */
 	public List<Assignment> findByIds(List<Integer> ids) {
 		return assignmentMapper.findByIds(ids);
 	}
@@ -138,7 +143,6 @@ public class AssignmentService {
 		CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
 				.onMalformedInput(CodingErrorAction.REPORT)
 				.onUnmappableCharacter(CodingErrorAction.REPORT);
-
 		try (BufferedReader br = new BufferedReader(
 				new InputStreamReader(file.getInputStream(), decoder))) {
 			String line;
