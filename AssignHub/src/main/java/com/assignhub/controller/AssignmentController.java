@@ -360,7 +360,8 @@ public class AssignmentController {
 	 * @param attributes リダイレクト属性オブジェクト
 	 * @return アサイン履歴情報の一覧画面にリダイレクト
 	 */
-	@GetMapping("/export")
+
+	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			Model model, RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
