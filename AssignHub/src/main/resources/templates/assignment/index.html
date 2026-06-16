@@ -32,9 +32,9 @@
 						<div class="form-group">
 							<label>契約期間</label>
 							<div class="date-range">
-								<input type="date" th:field="*{contractStartDate}" class="form-control">
+								<input type="date" max="9999-12-31" th:field="*{contractStartDate}" class="form-control">
 								<span class="date-range-sep">～</span>
-								<input type="date" th:field="*{contractEndDate}" class="form-control">
+								<input type="date" max="9999-12-31" th:field="*{contractEndDate}" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
