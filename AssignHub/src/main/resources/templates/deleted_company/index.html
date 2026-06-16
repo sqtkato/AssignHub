@@ -13,21 +13,21 @@
 			<h2>企業情報削除/復元一覧</h2>
 		</div>
 
-		<div class="card">
+		<div class="card acc">
 			<form th:action="@{/deleted-companies}" method="get" class="search-form">
-				<div class="form-group form-group-search">
+				<div class="search-item">
 					<label>企業名</label>
 					<input type="text" name="companyName" class="form-control" th:value="${companyName}" placeholder="例：テクノ">
 				</div>
-				<div class="form-group form-group-search">
+				<div class="search-item">
 					<label>電話番号</label>
 					<input type="text" name="companyTel" class="form-control" th:value="${companyTel}" placeholder="例：0901111111">
 				</div>
-				<button type="submit" class="btn btn-secondary">検索</button>
+				<button type="submit" class="btn btn-secondary btn-search">検索</button>
 			</form>
 		</div>
 
-		<form th:action="@{/companies/bulk-delete}" method="post" id="listForm">
+		<form method="post" id="listForm">
 			<div class="table-toolbar">
 				<button type="button" class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元" onclick="openBulkRestoreModal()">
     				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -41,7 +41,7 @@
 				    一括復元
 				</button>
 
-				<button type="submit" formmethod="post" formaction="/deleted-companies/export" class="toolbar-btn" title="チェックした項目をエクスポート">
+				<button type="submit" formaction="/deleted-companies/export" class="toolbar-btn" title="チェックした項目をエクスポート">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>

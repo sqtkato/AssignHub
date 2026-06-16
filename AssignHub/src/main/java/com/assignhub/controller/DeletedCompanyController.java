@@ -31,7 +31,6 @@ public class DeletedCompanyController {
 	public String index(@RequestParam(name = "companyName", required = false) String companyName,
 			@RequestParam(name = "companyTel", required = false) String companyTel,
 			Model model) {
-		// ⭕ 4つの引数をすべてServiceに引き渡します
 		model.addAttribute("companies", deletedCompanyService.findAll(companyName, companyTel));
 		model.addAttribute("companyName", companyName);
 		model.addAttribute("companyTel", companyTel);

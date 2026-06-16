@@ -13,7 +13,7 @@
 			<h2>論理削除企業情報エクスポート</h2>
 		</div>
 		<div class="card form-card-wide">
-			<p class="instruction">以下の条件と内容でCSVファイルを出力します。よろしければ「エクスポート」ボタンを押してください。</p>
+			<p class="instruction">以下の条件と内容でCSVファイルを出力します。<br>よろしければ「エクスポート」ボタンを押してください。</p>
 
 			<div class="export-confirm-box">
 				<h4 class="export-confirm-title">出力条件の確認</h4>
@@ -27,39 +27,36 @@
 						<td class="value">UTF-8 (BOMあり)</td>
 					</tr>
 				</table>
-			</div>
 			
-			<div class="card">
-				<table class="table">					
-					<thead class="table-dark">
-						<tr>
-							<th>企業ID</th>
-							<th>企業名</th>
-							<th>住所1</th>
-							<th>TEL</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="company : ${companies}">
-							<td th:text="${company.companyId}"></td>
-							<td th:text="${company.companyName}"></td>
-							<td th:text="${company.companyAddress1}"></td>						
-							<td th:text="${company.companyTel}"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<p class="export-note">※詳細情報がエクスポートされます</p>
-			<div class="action-area">
-    			<form th:action="@{/deleted-companies/export/download}" method="post">
-       				 <input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">
-        					<button type="submit" class="btn btn-primary btn-wide">エクスポート</button>
-        				<a th:href="@{/deleted-companies}" class="btn btn-secondary btn-wide">戻る</a>
-    			</form>
-			</div>
+				<div class="table-scroll export-table">
+					<table class="table header-only-table table-dark">
+						<thead>
+							<tr>
+								<th>企業ID</th>
+								<th>企業名</th>
+								<th>住所1</th>
+								<th>TEL</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="company : ${companies}" class="clickable-row">
+								<td th:text="${company.companyId}"></td>
+								<td th:text="${company.companyName}"></td>
+								<td th:text="${company.companyAddress1}"></td>						
+								<td th:text="${company.companyTel}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+					<p class="export-note">※詳細情報がエクスポートされます</p>
+			</div>			
+					<div class="action-area">
+		    			<form th:action="@{/deleted-companies/export/download}" method="post">
+		       				 <input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">
+		        					<button type="submit" class="btn btn-primary btn-wide">エクスポート</button>
+		        				<a th:href="@{/deleted-companies}" class="btn btn-secondary btn-wide">戻る</a>
+		    			</form>
+					</div>		
 		</div>
-	</div>
-
 </body>
-
 </html>
