@@ -133,7 +133,7 @@
 	</select>
 	<select id="countAll" resultType="int">
 		SELECT COUNT(*)
-		FROM　m_account
+		FROM m_account
 		WHERE delete_flg = 0
 	</select>
 

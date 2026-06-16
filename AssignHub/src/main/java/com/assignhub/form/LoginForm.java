@@ -16,7 +16,6 @@ public class LoginForm {
              message = "ログインIDは半角英数字のみで入力してください")
     private String loginId;
 
-    // ===== 密码 =====
     @NotBlank(message = "パスワードは必須です")                      
     @Size(min = 8, max = 20,                                        
           message = "パスワードは8文字以上20文字以内で入力してください")

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class RootController {
 
     /**
-     * ルートURLにアクセスされた場合、部署一覧画面（/departments）へ自動転送する。
+     * ルートURLにアクセスされた場合、ログイン画面（/login）へ自動転送する。
      * @return リダイレクト先のパス
      */
     @GetMapping("/")

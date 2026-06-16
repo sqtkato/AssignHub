@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
 <head>
@@ -22,7 +23,10 @@
                 ※既存のアカウントIDと一致する場合は上書き更新、空欄の場合は新規登録されます。
             </p>
 
-				<form th:action="@{/accounts/import}" method="post" enctype="multipart/form-data" id="importForm">
+            <form th:action="@{/accounts/import}"
+                  method="post"
+                  enctype="multipart/form-data"
+                  id="importForm">
 
                 <div class="upload-zone">
 
@@ -35,22 +39,33 @@
                     </p>
 
                     <div class="upload-zone-filebox">
-							<input type="file" id="input_account_file_upload" name="file" accept=".csv" required>
+						<input type="file"
+						       id="input_account_file_upload"
+						       name="file"
+						       accept=".csv"
+						       required>
                     </div>
 
                 </div>
 
                 <div class="template-link-area">
-						<a id="lnk_csv_download" class="template-link" th:href="@{/accounts/import/template}">
+                    <a id="lnk_csv_download"
+                       class="template-link"
+                       th:href="@{/accounts/import/template}">
                         CSVテンプレートダウンロード
                     </a>
                 </div>
 
                 <div class="action-area">
-						<button type="submit" id="btn_account_import" class="btn-csv">
+                    <button type="submit"
+                            id="btn_account_import"
+                            class="btn-csv">
                         インポート
                     </button>
-						<button type="button" id="btn_account_back" class="btn-back"
+
+                    <button type="button"
+                            id="btn_account_back"
+                            class="btn-back"
                             th:onclick="|location.href='@{/accounts}'|">
                         戻る
                     </button>
@@ -60,15 +75,20 @@
 
         </div>
 
-			<div class="card result-area" th:if="${importResult != null or fileError != null or globalError != null}">
+        <div class="card result-area"
+             th:if="${importResult != null or fileError != null or globalError != null}">
 
             <div class="result-title-row">
                 <h3 class="result-title">処理結果</h3>
 
                 <!-- ファイル単位のエラー（処理結果タイトル横に表示） -->
-					<span class="result-limit-msg" th:if="${fileError != null}" th:text="${fileError}"></span>
+                <span class="result-limit-msg"
+                      th:if="${fileError != null}"
+                      th:text="${fileError}"></span>
 
-					<span class="result-limit-msg" th:if="${globalError != null}" th:text="${globalError}"></span>
+                <span class="result-limit-msg"
+                      th:if="${globalError != null}"
+                      th:text="${globalError}"></span>
             </div>
 
             <!-- 行単位の取り込み結果（件数 + エラー一覧） -->
@@ -78,7 +98,8 @@
 
                     <div class="summary-item summary-success">
                         <div class="summary-label">正常取り込み</div>
-							<div id="txt_account_success" class="summary-value"
+                        <div id="txt_account_success"
+                             class="summary-value"
                              th:text="${importResult.successCount} + '件'">
                             0件
                         </div>
@@ -86,7 +107,8 @@
 
                     <div class="summary-item summary-error">
                         <div class="summary-label">エラー</div>
-							<div id="txt_account_failed" class="summary-value"
+                        <div id="txt_account_failed"
+                             class="summary-value"
                              th:text="${importResult.errorCount} + '件'">
                             0件
                         </div>
@@ -132,5 +154,4 @@
 
 </div>
 </body>
-
 </html>

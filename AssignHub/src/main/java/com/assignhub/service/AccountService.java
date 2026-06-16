@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * アカウント情報に関するビジネスロジックを提供するサービスクラス。
- * 
+ *
  * @version 1.00 2026/06/12
  * @author ATO）黒木
  */
