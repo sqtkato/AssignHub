@@ -254,6 +254,7 @@ public class CompanyController {
 	public String delete(
 			@PathVariable("id") Integer id,
 			RedirectAttributes attributes) {
+		companyService.delete(id);
 		employeeService.deleteByCompanyId(id);
 		assignmentService.deleteByCompanyId(id);
 		attributes.addFlashAttribute("toastMessage", "企業情報を削除しました");
