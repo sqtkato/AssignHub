@@ -1,71 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
+
 <head>
 	<title>企業情報エクスポート</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 </head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
 			<h2>企業情報エクスポート</h2>
 		</div>
 		<div class="card form-card-wide">
-			<p class="instruction">以下の内容でCSVファイルを出力します。よろしければ「エクスポート」ボタンを押してください。</p>
-			
+			<p class="instruction">以下の内容でCSVファイルを出力します。
+				<br>よろしければ「エクスポート」ボタンを押してください。
+			</p>
+
 			<div class="export-confirm-box">
 				<h4 class="export-confirm-title">出力条件の確認</h4>
 				<table class="export-table">
-				<tr>
-					<td class="label">出力対象件数:</td>
-					<td class="value"><span class="export-count" th:text="${count}">0</span> 件</td>
-				</tr>
-				<tr>
-					<td class="label">文字コード:</td>
-					<td class="value">UTF-8 (BOMあり)</td>
-				</tr>
+					<tr>
+						<td class="label">出力対象件数:</td>
+						<td class="value"><span class="export-count" th:text="${count}">0</span> 件</td>
+					</tr>
+					<tr>
+						<td class="label">文字コード:</td>
+						<td class="value">UTF-8 (BOMあり)</td>
+					</tr>
 				</table>
-			</div>
-			<div class="card">
-				<table class="table">
-					<thead class="table-dark">
-						<tr>
-							<th>
-								企業ID
-							</th>
-							<th>
-								企業名
-							</th>
-							<th>
-								住所1
-							</th>
-							<th>
-								TEL
-							</th>
+				<div class="table-scroll export-table">
+					<table class="table header-only-table table-dark">
+						<thead>
+							<tr>
+								<th>
+									企業ID
+								</th>
+								<th>
+									企業名
+								</th>
+								<th>
+									住所1
+								</th>
+								<th>
+									電話番号
+								</th>
 							</tr>
-							</thead>
-							<tbody>
-								<tr th:each="comp : ${companies}" class="clickable-row">
-									<td th:text="${comp.companyId}"></td>
-									<td th:text="${comp.companyName}"></td>
-									<td th:text="${comp.companyAddress1}"></td>
-									<td th:text="${comp.companyTel}"></td>
-								</tr>
-								<tr th:if="${#lists.isEmpty(companies)}">
-									<td colspan="5" class="text-center">該当するデータがありません。</td>
-						</tr>
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							<tr th:each="comp : ${companies}" class="clickable-row">
+								<td th:text="${comp.companyId}"></td>
+								<td th:text="${comp.companyName}"></td>
+								<td th:text="${comp.companyAddress1}"></td>
+								<td th:text="${comp.companyTel}"></td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(companies)}">
+								<td colspan="5" class="text-center">該当するデータがありません。</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<p class="export-note">※詳細画面がエクスポートされます</p>
 			</div>
-			<p class="export-note">※詳細画面がエクスポートされます</p>
 			<div class="action-area">
-							<form th:action ="@{/companies/export/download(ids=${ids})}"method="post">
-								<button type = "submit" class="btn-csv">エクスポート</button>
-								<button type="button" id="btn_account_back" class="btn-back"
-								 th:onclick="|location.href='@{/companies}'|">戻る</button>
-							</form>
-						</div>
+				<form th:action="@{/companies/export/download(ids=${ids})}" method="post">
+					<button type="submit" class="btn-csv">エクスポート</button>
+					<button type="button" id="btn_account_back" class="btn-back"
+						th:onclick="|location.href='@{/companies}'|">戻る</button>
+				</form>
+			</div>
+		</div>
 </body>
+
 </html>
