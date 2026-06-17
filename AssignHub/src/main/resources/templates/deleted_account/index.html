@@ -93,7 +93,7 @@
 								<td th:text="${acc.permission == 1 ? '管理' : '一般'}"></td>
 								<td th:text="${acc.employee != null ? acc.employee.lastName + ' ' + acc.employee.firstName : ''}"></td>
 								<td class="col-action">
-									<button type="submit" th:formaction="@{/deleted-accounts/{id}/restore(id=${acc.accountId})}" class="btn-icon-svg" title="復元">
+									<button type="button" th:attr="data-id=${acc.accountId}" class="btn-icon-svg" title="復元" onclick="openRestoreModal(this.dataset.id)"style="vertical-align: middle;">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" 										
 											stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
 										    style="width: 1.3rem; height: 1.3rem; vertical-align: middle; margin-right: 4px;">
