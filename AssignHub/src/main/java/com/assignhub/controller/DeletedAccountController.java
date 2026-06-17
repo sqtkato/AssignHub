@@ -69,7 +69,7 @@ public class DeletedAccountController {
 
     /* 一括復元 */
     @PostMapping("/bulk-restore")
-    public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,BindingResult result, RedirectAttributes attributes) {
+    public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
         if (ids == null || ids.isEmpty()) {
             attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
             return "redirect:/deleted-accounts";
@@ -79,7 +79,7 @@ public class DeletedAccountController {
 			return "redirect:/deleted-accounts";
 		}
         if (accountService.isLoginIdDuplicate(ids)) {
-			result.rejectValue("loginId","error.accountForm", "このログインIDは既に使用されています");
+			attributes.addFlashAttribute("toastError", "このログインIDは既に使用されています");
 			return "redirect:/deleted-accounts";
 		}
         deletedAccountService.restoreBulk(ids);
@@ -103,7 +103,7 @@ public class DeletedAccountController {
     }
 
     /* 一括削除 */
-    @PostMapping("/delete-bulk")
+    @PostMapping("/bulk-delete")
     public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
         if (ids == null || ids.isEmpty()) {
             attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
