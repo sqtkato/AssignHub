@@ -12,7 +12,7 @@
 .table td {
 	border-bottom: 1px solid #ddd;
 	padding: 12px;
-	text-align: left;
+	text-align: center;
 }
 
 .table th {
@@ -28,10 +28,19 @@
 	border-bottom: none;
 }
 
+.export-table .value{
+	text-align: center;
+	transform:translate(-100px, 0);
+	
+}
 
 .export-contents{
 	width:60%;
-	margin:auto auto;
+	margin:20px auto 0;
+}
+
+.table-scroll.export-table {
+	height: 340px;
 }
 
 /* アカウントID（半角3文字） */
@@ -86,14 +95,13 @@
 	width:8em !important;
 }
 
-
-
 /* =========================================*/
 /*   Buttons & Toolbars (ボタンとツールバー)*/
 /*========================================= */
 
 .btn-search-position{
-	transform:translate(70px, 8px);
+	transform:translate(-10px, 15px);
+	padding: 7px 12px;
 }
 /* =========================================
    Forms & Validation (入力フォームとエラー)
@@ -108,17 +116,7 @@
 }
 .search-form{
 	display: flex;
-    align-items: center;
-}
-
-.search-item{
-	width:350px;
-}
-
-.search-item.input{
-    display: flex;
-    flex-direction: column;
-    width: 350px;
+    align-items: flex-end;
 }
 
 .search-item.button{
@@ -129,6 +127,9 @@
     display: flex;
     flex-direction: column;
 	margin-bottom: 15px;
+	width: 100%;
+	align-items: center;
+	padding-bottom: 50px;
 }
 
 .form-group-search {
@@ -136,16 +137,29 @@
     flex-direction: row;
     align-items: end;
     gap: 80px;
+    align-items: center;
+}
+
+.search-form .form-group{
+	padding: 0;
+}
+.search-form .form-control{
+	width: 470px;
+}
+.form-group .error-message{
+	width: 500px;
+	height: 20px;
 }
 
 .form-group label {
 	display: block;
 	margin-bottom: 5px;
 	font-weight: bold;
+	width: 100%;
 }
 
 .form-control {
-	width: 100%;
+	width: 500px;
 	padding: 8px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
