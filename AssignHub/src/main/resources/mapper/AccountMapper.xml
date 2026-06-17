@@ -144,7 +144,7 @@
 			#{excludeAccountId}
 		</foreach>
 		)
-		<if test="excludeAccountId != null">
+		<if test="excludeAccountIds != null">
 			AND account_id NOT IN
 			<foreach item="excludeAccountId" index="index"
 				collection="excludeAccountIds" open="(" separator="," close=")">

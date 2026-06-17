@@ -261,8 +261,8 @@ public class AccountService {
 		return count > 0;
 	}
 	
-	public boolean isLoginIdDuplicate(List<Integer> excludeAccountId) {
-		int count = accountMapper.countByLoginIds(excludeAccountId);
+	public boolean isLoginIdDuplicate(List<Integer> excludeAccountIds) {
+		int count = accountMapper.countByLoginIds(excludeAccountIds);
 		return count > 0;
 	}
 
