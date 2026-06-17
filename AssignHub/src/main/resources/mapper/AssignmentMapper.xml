@@ -283,6 +283,13 @@
 		WHERE emp_id = #{empId}
 		AND delete_flg = 0
 	</select>
+	
+	<select id="existsCompany" resultType="int">
+		SELECT COUNT(*) FROM
+		m_company
+		WHERE company_id = #{companyId}
+		AND delete_flg = 0
+	</select>
 
 	<select id="findCompanyIdByName" resultType="java.lang.Integer">
 		SELECT company_id

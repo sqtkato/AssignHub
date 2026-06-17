@@ -180,7 +180,7 @@ public class AssignmentService {
 				}
 
 				String[] cols = line.split(",", -1);
-				if (cols.length < 11) {
+				if (cols.length < 12) {
 					result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています"));
 					result.errorCount++;
 					rowNum++;
@@ -215,31 +215,34 @@ public class AssignmentService {
 					asm.setEmpId(empId);
 				}
 				
-				if (cols[2].trim().isEmpty()) {
+				String sCompanyId = cols[2].trim();
+				Integer companyId = parseInteger(sCompanyId);
+				if (companyId == null || sCompanyId.length() > 5) {
+					result.errors.add(new CsvRowError(rowNum, "企業ID", "企業IDの形式が正しくありません"));
+					hasError = true;
+				} else if (assignmentMapper.existsCompany(companyId) == 0) {
+					result.errors.add(new CsvRowError(rowNum, "企業ID", "指定された企業IDは存在しません"));
+					hasError = true;
+				} else {
+					asm.setCompanyId(companyId);
+				}
+				
+				if (cols[3].trim().isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "社員姓", "社員姓は必須です"));
 					hasError = true;
 				}
 				
-				if (cols[3].trim().isEmpty()) {
+				if (cols[4].trim().isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "社員名", "社員名は必須です"));
 					hasError = true;
 				}
 
-				String companyName = cols[4].trim();
-				if (companyName.isEmpty()) {
+				if (cols[5].trim().isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "企業名", "企業名は必須です"));
 					hasError = true;
-				} else {
-					Integer companyId = assignmentMapper.findCompanyIdByName(companyName);
-					if (companyId == null) {
-						result.errors.add(new CsvRowError(rowNum, "企業名", "指定された企業は存在しません"));
-						hasError = true;
-					} else {
-						asm.setCompanyId(companyId);
-					}
 				}
 
-				String sStart = cols[7].trim();
+				String sStart = cols[8].trim();
 				if (sStart.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "契約開始日", "契約開始日は必須です"));
 					hasError = true;
@@ -253,7 +256,7 @@ public class AssignmentService {
 					}
 				}
 
-				String sEnd = cols[8].trim();
+				String sEnd = cols[9].trim();
 				if (!sEnd.isEmpty() && !"ー".equals(sEnd) && !"-".equals(sEnd)) {
 					end = parseDate(sEnd);
 					if (end == null) {
@@ -269,7 +272,7 @@ public class AssignmentService {
 					hasError = true;
 				}
 
-				String sPrice = cols[9].trim();
+				String sPrice = cols[10].trim();
 				if (sPrice.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "契約単価", "契約単価は必須です"));
 					hasError = true;
@@ -289,7 +292,7 @@ public class AssignmentService {
 					}
 				}
 
-				String role = cols[10].trim();
+				String role = cols[11].trim();
 				if (role.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "役割", "役割は必須です"));
 					hasError = true;

@@ -84,6 +84,13 @@ public interface AssignmentMapper {
     int existsEmployee(@Param("empId") Integer empId);
     
     /**
+     * 指定した企業IDが有効な社員として存在するか確認する。
+     * @param companyId 企業ID
+     * @return 存在すれば1以上、存在しなければ0
+     */
+    int existsCompany(@Param("companyId") Integer companyId);
+    
+    /**
      * 企業名から企業IDを取得する（企業名はUNIQUE）。
      * @param companyName 企業名
      * @return 企業ID。存在しなければnull
