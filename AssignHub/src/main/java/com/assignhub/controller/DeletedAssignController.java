@@ -86,7 +86,7 @@ public class DeletedAssignController {
 
 		if (deletedAssignService.isDuplicate(id)) {
 			attributes.addFlashAttribute("toastError", "社員ID、企業ID、アサイン開始日、アサイン終了日が重複している履歴があります。");
-			return "assignment/create";
+			return "redirect:/deleted-assignments";
 		}
 		deletedAssignService.restore(id);
 		attributes.addFlashAttribute("toastMessage", "アカウント情報を復元しました");
@@ -119,7 +119,7 @@ public class DeletedAssignController {
 		for (Integer id : ids) {
 			if (deletedAssignService.isDuplicate(id)) {
 				attributes.addFlashAttribute("toastError", "社員ID、企業ID、アサイン開始日、アサイン終了日が重複している履歴があります。");
-				return "/deleted-assignments";
+				return "redirect:/deleted-assignments";
 			}
 		}
 
