@@ -47,7 +47,7 @@
 
 /* export画面用テーブルのスクロール */
 .export-table-scroll {
-	max-height: 340px;
+	max-height: 290px;
 	overflow-y: auto;
 }
 
