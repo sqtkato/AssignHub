@@ -2,56 +2,64 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
 <head>
-<meta charset="UTF-8">
-<title>企業情報インポート</title>
+	<meta charset="UTF-8">
+	<title>企業情報インポート</title>
 </head>
 <body>
 	<div layout:fragment="content">
-		<div class="card form-card-wide">
-			<h2>企業情報インポート</h2>
-			<p class="instructionOverview">CSVファイルを選択して企業情報を一括登録・更新します。</p>
-			<p class="instruction">※既存の企業IDと一致する場合は上書き更新、空欄の場合は新規登録されます。</p>
-			<form th:action="@{/companies/import}" method="post" enctype="multipart/form-data">
-				<div class="upload-zone">
-					<p class="upload-zone-text">企業情報データCSVを選択してください</p>
-					<p class="upload-zone-sub">対応形式: .csv (UTF-8 / BOMあり推奨、最大 5MB)</p>
-					<input type="file" name="file" accept=".csv" required class="form-control"
-						style="margin-top: 15px;">
-				</div>	
-				<div class="template-link-area">
-					<a th:href="@{/companies/import/template}" class="template-link">↓ テンプレート(CSV)をダウンロード</a>
-				</div>
-				<div class="action-area">
-					<button type="submit" class="btn btn-primary btn-wide">インポート</button>
-					<a th:href="@{/companies}" class="btn btn-secondary btn-wide">戻る</a>
-				</div>
-				
-				<p th:if="${errorMessage}" th:text="${errorMessage}" class="errorMessage"></p>
-				
-			
-			
-			</form>
+		<div class="import-container">
+			<div class="page-title-area">
+				<h2>企業履情報インポート</h2>
+			</div>
+			<div class="card">
+				<p class="instruction">CSVファイルを選択して企業情報を一括登録・更新します。<br>
+					※既存の企業IDと一致する場合は上書き更新、空欄の場合は新規登録されます。</p>
 
-			<div class="result-area" th:if="${importResult != null}">
-				<h3 class="result-title">処理結果
-    				<span th:if="${importResult.errors != null and !importResult.errors.isEmpty()and importResult.errors[0].field == '上限'}"
-          			th:text="${importResult.errors[0].message}"
-          			class="result-error-message">
-    				</span>
-				</h3>
+				<form th:action="@{/companies/import}" method="post" enctype="multipart/form-data" id="importForm">
+					<div class="upload-zone">
+						<p class="upload-zone-title">企業情報CSVを選択してください</p>
+						<p class="upload-zone-format">対応形式: .csv (UTF-8) / BOMあり推奨、最大5MB</p>
+						<div class="upload-zone-filebox">
+							<input type="file" id="input_company_file_upload" name="input_company_file_upload"
+								accept=".csv" required>
+						</div>
+					</div>
+					<div class="template-link-area">
+						<a id="lnk_csv_download" class="template-link"
+							th:href="@{/companies/import/template}">CSVテンプレートダウンロード</a>
+					</div>
+					<div class="action-area">
+						<button type="submit" class="btn-csv">インポート</button>
+						<button type="button" id="btn_company_back" class="btn-back"
+							th:onclick="|location.href='@{/companies}'|">戻る</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="card result-area" th:if="${importResult != null}">
+				<div class="result-title-row">
+					<h3 class="result-title">処理結果</h3>
+					<span class="result-limit-msg"
+						th:if="${importResult.limitMessage != null}"
+						th:text="${importResult.limitMessage}"></span>
+				</div>
 				<div class="summary-box">
 					<div class="summary-item summary-success">
-						正常取り込み
-						<span class="summary-value" th:text="${importResult.successCount} + ' 件'"></span>
+						<div class="summary-label">正常取り込み</div>
+						<div id="txt_company_success" class="summary-value"
+							th:text="${importResult.successCount} + '件'">0件</div>
 					</div>
 					<div class="summary-item summary-error">
-						エラー
-						<span class="summary-value" th:text="${importResult.errorCount} + ' 件'"></span>
+						<div class="summary-label">エラー</div>
+						<div id="txt_company_faild" class="summary-value"
+							th:text="${importResult.errorCount} + '件'">0件</div>
 					</div>
 				</div>
 				<div th:if="${importResult.errorCount > 0}">
-					<p class="error-table-msg">以下の行でエラーが発生したため、取り込みをキャンセルしました。</p>
-					<p class="error-table-msg">内容を修正して再アップロードしてください。</p>
+					<p class="error-table-msg">
+						以下の行でエラーが発生したため、取り込みをキャンセルしました。<br>
+						内容を修正して再アップロードしてください。
+					</p>
 					<table class="table">
 						<thead class="table-dark">
 							<tr>
@@ -61,10 +69,11 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="error : ${importResult.errors}"  th:if="${error.field != '上限'}" class="error-row">
-								<td th:text="${error.rowNum} + '行目'"></td>
-								<td th:text="${error.field}"></td>
-								<td th:text="${error.message}"></td>
+							<tr th:each="err : ${importResult.errors}" th:if="${err.field != '上限'}"
+								class="error-row">
+								<td th:text="${err.rowNum} + '行目'"></td>
+								<td th:text="${err.field}"></td>
+								<td th:text="${err.message}"></td>
 							</tr>
 						</tbody>
 					</table>
