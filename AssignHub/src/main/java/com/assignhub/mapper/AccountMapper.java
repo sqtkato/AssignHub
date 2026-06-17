@@ -60,5 +60,7 @@ public interface AccountMapper {
 
 	int countByLoginId(@Param("loginId") String id, @Param("excludeAccountId") Integer excludeAccountId);
 
+	int countByLoginIds(@Param("excludeAccountId") List<Integer> excludeAccountId);
+	
 	int countAll();
 }

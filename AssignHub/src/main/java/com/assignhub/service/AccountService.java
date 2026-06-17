@@ -260,6 +260,11 @@ public class AccountService {
 		int count = accountMapper.countByLoginId(loginId, excludeAccountId);
 		return count > 0;
 	}
+	
+	public boolean isLoginIdDuplicate(List<Integer> excludeAccountId) {
+		int count = accountMapper.countByLoginIds(excludeAccountId);
+		return count > 0;
+	}
 
 	/**
 	 * ログインIDがすでに登録されているか（重複しているか）を判定する。
