@@ -131,6 +131,20 @@
 	width: 50%;
 }
 
+.edit-form{
+	width: 800px;
+}
+.edit-form input,
+.edit-form select{
+	margin: auto;
+	width: 400px;
+	text-align: left;
+}
+
+.edit-form label{
+	padding-left: 100px;
+}
+
 .form-group {
     display: flex;
     flex-direction: column;
@@ -150,13 +164,14 @@
 
 .search-form .form-group{
 	padding: 0;
-	    width: 100%;
+	width: 100%;
 }
 .search-item{
 	width: 300px;
 }
+
 .form-group .error-message{
-	width: 500px;
+	width: 400px;
 	height: 20px;
 }
 
