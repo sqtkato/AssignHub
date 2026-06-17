@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+
+<body>
+<main class="login-page">
+    <section class="login-card">
+        <h1 class="login-title">Assain Hub</h1>
+        <div class="title-line"></div>
+
+        <form th:action="@{/login}"
+              th:object="${loginForm}"
+              method="post"
+              novalidate
+              autocomplete="off">
+
+            <div class="form-group">
+                <label for="txt_account_login_id" class="form-label">ログインID</label>
+                <span class="required-badge">必須</span>
+
+                <input type="text"
+                       id="txt_account_login_id"
+                       class="form-input"
+                       th:field="*{loginId}"
+                       maxlength="12"
+                       autocomplete="off">
+
+                <div class="error-area">
+                    <p th:each="error : ${#fields.errors('loginId')}"
+                       th:text="${error}"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="txt_account_password" class="form-label">パスワード</label>
+                <span class="required-badge">必須</span>
+
+                <input type="password"
+                       id="txt_account_password"
+                       class="form-input"
+                       th:field="*{password}"
+                       maxlength="20"
+                       autocomplete="new-password">
+
+                <div class="error-area">
+                    <p th:each="error : ${#fields.errors('password')}"
+                       th:text="${error}"></p>
+                </div>
+            </div>
+
+            <p class="login-error"
+               th:if="${loginError != null}"
+               th:text="${loginError}"></p>
+
+            <div class="button-area">
+                <button type="submit"
+                        id="btn_account_login"
+                        class="login-button">
+                    ログイン
+                </button>
+            </div>
+
+        </form>
+    </section>
+</main>
+</body>
+</html>
