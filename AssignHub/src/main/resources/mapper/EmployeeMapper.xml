@@ -203,8 +203,13 @@
 	<select id="countByEmails" resultType="int">
 		SELECT COUNT(*) FROM m_employee
 		WHERE email = #{email} AND delete_flg = 0
-		<if test="excludeEmpId != null">
-			AND emp_id != #{excludeEmpId}
+		<if test="excludeEmpIds != null">
+			AND emp_id NOT IN
+			<foreach item="excludeEmpId" index="index" collection="excludeEmpIds" 
+				open="(" separator="," close=")">
+				#{excludeEmpId}
+			</foreach>
+			 
 		</if>
 	</select>
 	
