@@ -1,228 +1,181 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
 
 <head>
-	<meta charset="UTF-8">
 	<script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
 	<title>社員情報変更入力</title>
 </head>
 
 <body>
-
-	<h2>社員情報変更入力</h2>
-
-	<form th:action="@{/employees/{id}/edit(id=${id})}" th:object="${employeeForm}" method="post" class="h-adr">
-
-		<label>社員ID</label>
-		<div th:text="*{empId}"></div>
-		<input type="hidden" th:field="*{empId}">
-		<div>
-
-			<label>社員姓</label>
-			<div></div>
-			<input type="text" th:field="*{lastName}" th:classappend="${#fields.hasErrors('lastName')} ? 'input-error'">
-			<div class="error-message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+	<div layout:fragment="content">
+		<div class="page-title-area">
+			<h2>社員情報変更入力</h2>
 		</div>
-		<div>
-			<label>社員名</label>
-			<div></div>
-			<input type="text" th:field="*{firstName}"
-				th:classappend="${#fields.hasErrors('firstName')} ? 'input-error'">
-			<div class="error-message" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
-		</div>
-		<div>
-			<label>社員姓カナ</label>
-			<div></div>
-			<input type="text" th:field="*{lastNameKana}"
-				th:classappend="${#fields.hasErrors('lastNameKana')} ? 'input-error'">
-			<div class="error-message" th:if="${#fields.hasErrors('lastNameKana')}" th:errors="*{lastNameKana}"></div>
-		</div>
-		<div>
-			<label>社員名カナ</label>
-			<div></div>
-			<input type="text" th:field="*{firstNameKana}"
-				th:classappend="${#fields.hasErrors('firstNameKana')} ? 'input-error'">
-			<div class="error-message" th:if="${#fields.hasErrors('firstNameKana')}" th:errors="*{firstNameKana}"></div>
-		</div>
-		<div>
-			<label>生年月日</label>
-			<div></div>
-			<input type="date" max="9999-12-31" th:field="*{birthDate}"
-				th:classappend="${#fields.hasErrors('birthDate')} ? 'input-error'">
-			<div class="error-message" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
-		</div>
-
-		<div>
-			<label>入社年月</label>
-			<div></div>
-			<input type="date"id="hireDate"  max="9999-12-31" th:field="*{hireDate}"
-				th:classappend="${#fields.hasErrors('hireDate')} ? 'input-error'">
-			<div class="error-message" th:if="${#fields.hasErrors('hireDate')}" th:errors="*{hireDate}"></div>
-		</div>
-		<div>
-			<label>勤続年数</label>
-			<div></div>
-			<input type="text" id="yearsOfService" th:field="*{yearsOfService}"
-				th:classappend="${#fields.hasErrors('yearsOfService')} ? 'input-error'">
-			<div class="error-message" th:if="${#fields.hasErrors('yearsOfService')}" th:errors="*{yearsOfService}">
-			</div>
-		</div>
-
-		<input type="hidden" class="p-country-name" value="Japan">
-		<label>郵便番号<span class="badge-required">必須</span></label><br>
-		<input type="text" th:field="*{zipCode}" 
-					th:classappend="${#fields.hasErrors('zipCode')} ? 'form-control p-postal-code input-error' : 'form-control p-postal-code'">
-				<div class="error-message" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}">
+		<div class="card form-card">
+			<form th:action="@{/employees/{id}/edit(id=${id})}" th:object="${employeeForm}" method="post" class="h-adr">
+				<input type="hidden" th:field="*{empId}">
+				<input type="hidden" name="fromPage"th:value="${fromPage}" />
+				<div class="form-group">
+					<label>社員姓<span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{lastName}" class="form-control"
+						th:classappend="${#fields.hasErrors('lastName')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
 				</div>
-
-		<div>
-			<label>住所1(自動入力されます) 必須</label><br>
-			<input type="text" th:field="*{address1}" 
-							th:classappend="${#fields.hasErrors('address1')} ? 'form-control p-region p-locality p-street-address p-extended-address input-error' : 'form-control p-region p-locality p-street-address p-extended-address'">
-						<div class="error-message" th:if="${#fields.hasErrors('address1')}" th:errors="*{address1}">
-						</div> 
-
-			<div>
-				<label>住所２</label>
-				<div></div>
-				<input type="text" th:field="*{address2}"
-					th:classappend="${#fields.hasErrors('address2')} ? 'input-error'">
-				<div class="error-message" th:if="${#fields.hasErrors('address2')}" th:errors="*{address2}"></div>
-			</div>
-			<div>
-				<label>電話番号</label>
-				<div></div>
-				<input type="text" th:field="*{empTel}" th:classappend="${#fields.hasErrors('empTel')} ? 'input-error'">
-				<div class="error-message" th:if="${#fields.hasErrors('empTel')}" th:errors="*{empTel}"></div>
-			</div>
-			<div>
-				<label>メールアドレス</label>
-				<div></div>
-				<input type="text" th:field="*{email}" th:classappend="${#fields.hasErrors('email')} ? 'input-error'">
-				<div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-			</div>
-			<div>
-
-				<!-- エンジニアタイプ -->
-				<label>エンジニアタイプ</label>
-				<div></div>
-				<select id="engineerType" name="engineerType" th:field="*{engineerType}" th:classappend="${#fields.hasErrors('engineerType')} ? 'input-error'">
-					    <option value="">未選択</option>
-					    <option value="プロパー">プロパー</option>
-					    <option value="パートナー">パートナー</option>
-				</select>
-				<div class="error-message" th:if="${#fields.hasErrors('engineerType')}" th:errors="*{engineerType}">
-				</div>
-
-				<!-- ログインID（プロパーのときだけ表示） -->
-				<div id="loginIdArea" style="display: none;">
-					    <label>ログインID</label><br>
-					  
-					<select id="loginId" name="loginId">
-						    <option value="">未選択</option>
-						<option th:each="account : ${accounts}" th:value="${account.accountId}"
-							th:text="${account.loginId}">
-						</option>
-					</select>
-					<div class="error-message" th:if="${#fields.hasErrors('accountId')}" th:errors="*{accountId}"></div>
-				</div>
-
-				<!-- 所属企業（パートナーのときだけ表示） -->
-				<div id="companyArea" style="display: none;">
-					    <label>所属企業</label><br>
-					  
-					<select id="companyId" name="companyId">
-						   <option value="">未選択</option>
-						<option th:each="company : ${companies}" th:value="${company.companyId}"
-							th:text="${company.companyName}">
-						</option>
-					</select>
-					<div class="error-message" th:if="${#fields.hasErrors('companyId')}" th:errors="*{companyId}">
+					<div class="form-group">
+						<label>社員名<span class="badge-required">必須</span></label>
+						<input type="text" th:field="*{firstName}"class="form-control"
+							th:classappend="${#fields.hasErrors('firstName')} ? 'input-error'">
+						<div class="error-message" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
 					</div>
-				</div>
-
-				<script>
-					
-					function calculateYearsOfService() {
-							const hireDateInput = document.getElementById('hireDate');
-							const yearsInput = document.getElementById('yearsOfService');
-							
-							if (!hireDateInput.value) {
-								yearsInput.value = ''; // 入社年月が空なら空にする
-								return;
-							}
-							
-							const hireDate = new Date(hireDateInput.value);
-									const today = new Date();
-
-									// 年数の差分を計算
-									let years = today.getFullYear() - hireDate.getFullYear();
-									const monthDiff = today.getMonth() - hireDate.getMonth();
-									
-									// 今年の入社月日にまだ達していない場合は1年引く（満年齢と同じ計算）
-									if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < hireDate.getDate())) {
-										years--;
-									}
-
-									// 計算結果がマイナス（未来の日付）の場合は0にする
-									yearsInput.value = years >= 0 ? years : 0;
-								}
-								
-								// 3. イベントを設定（★新しく追加）
-									// 入社年月が手動で変更されたときに計算する
-									document.getElementById('hireDate').addEventListener('change', calculateYearsOfService);
-
-									// 編集画面を開いた瞬間に、すでに登録されている日付から初期値を自動計算する
-									window.addEventListener('DOMContentLoaded', calculateYearsOfService);
-
-					
-					
-					document.getElementById('engineerType').addEventListener('change', function () {
-						const loginIdArea = document.getElementById('loginIdArea');
-						const companyArea = document.getElementById('companyArea');
-
-						if (this.value === 'プロパー') {
-							loginIdArea.style.display = 'block';
-							companyArea.style.display = 'none';
-						} else if (this.value === 'パートナー') {
-							loginIdArea.style.display = 'none';
-							companyArea.style.display = 'block';
-						} else {
-							loginIdArea.style.display = 'none';
-							companyArea.style.display = 'none';
-						}
-					});
-				</script>
-
-
-				<div>
-					<label>所属部署</label>
-					<div></div>
-					<input type="text" th:field="*{department}"
-						th:classappend="${#fields.hasErrors('department')} ? 'input-error'">
-					<div class="error-message" th:if="${#fields.hasErrors('department')}" th:errors="*{department}">
+					 <div class="form-group">
+						<label>社員姓カナ<span class="badge-required">必須</span></label>
+						<input type="text" th:field="*{lastNameKana}"class="form-control"
+							th:classappend="${#fields.hasErrors('lastNameKana')} ? 'input-error'">
+						<div class="error-message" th:if="${#fields.hasErrors('lastNameKana')}"	th:errors="*{lastNameKana}"></div>
 					</div>
-				</div>
-				<div>
-					<label>役職</label>
-					<div></div>
-					<input type="text" th:field="*{jobTitle}"
-						th:classappend="${#fields.hasErrors('jobTitle')} ? 'input-error'">
-					<div class="error-message" th:if="${#fields.hasErrors('jobTitle')}" th:errors="*{jobTitle}">
+					 <div class="form-group">
+						<label>社員名カナ<span class="badge-required">必須</span></label>
+						<input type="text" th:field="*{firstNameKana}"class="form-control"
+							th:classappend="${#fields.hasErrors('firstNameKana')} ? 'input-error'">
+						<div class="error-message" th:if="${#fields.hasErrors('firstNameKana')}"th:errors="*{firstNameKana}"></div>
 					</div>
-				</div>
-				<div>
-
-					<div>
-						<input type="hidden" name="fromPage" th:value="${fromPage}" />
-						<button type="submit">変更</button>
-						<a th:if="${fromPage == 'detail'}" th:href="@{/employees/{id}/detail(id=${id})}"
-							class="btn btn-secondary">戻る</a>
-						<a th:if="${fromPage != 'detail'}" th:href="@{/employees}" class="btn btn-secondary">戻る</a>
+					<div class="form-group">
+						<label>生年月日</label>
+						<input type="date" max="9999-12-31" th:field="*{birthDate}"class="form-control"
+							th:classappend="${#fields.hasErrors('birthDate')} ? 'input-error'">
+						<div class="error-message" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">
+						</div>
 					</div>
-	</form>
+					<div class="form-group">
+						<label>入社年月</label>
+						<input type="date" id="hireDate" max="9999-12-31" th:field="*{hireDate}"class="form-control"
+							th:classappend="${#fields.hasErrors('hireDate')} ? 'input-error'">
+						<div class="error-message" th:if="${#fields.hasErrors('hireDate')}" th:errors="*{hireDate}"></div>
+					</div>
+					<div class="form-group">
+						<label>勤続年数</label>
+						<input type="text" id="yearsOfService" th:field="*{yearsOfService}"class="form-control"
+							th:classappend="${#fields.hasErrors('yearsOfService')} ? 'input-error'">
+						<div class="error-message" th:if="${#fields.hasErrors('yearsOfService')}"th:errors="*{yearsOfService}"></div>
+					</div>
+					<div class="form-group">
+						<input type="hidden" class="p-country-name" value="Japan">
+						<label>郵便番号<span class="badge-required">必須</span></label>
+						<input type="text" th:field="*{zipCode}"class="form-control"
+							th:classappend="${#fields.hasErrors('zipCode')} ? 'form-control p-postal-code input-error' : 'form-control p-postal-code'">
+						<div class="error-message" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}">
+						</div>
+						<div class="form-group">
+							<label>住所1(自動入力されます) <span class="badge-required">必須</span></label>
+							<input type="text" th:field="*{address1}"class="form-control"
+								th:classappend="${#fields.hasErrors('address1')} ? 'form-control p-region p-locality p-street-address p-extended-address input-error' : 'form-control p-region p-locality p-street-address p-extended-address'">
+							<div class="error-message" th:if="${#fields.hasErrors('address1')}" th:errors="*{address1}"></div>
+							</div>
+								<div class="form-group">
+									<label>住所２</label>
+									<input type="text" th:field="*{address2}"class="form-control"
+										th:classappend="${#fields.hasErrors('address2')} ? 'input-error'">
+									<div class="error-message" th:if="${#fields.hasErrors('address2')}"th:errors="*{address2}"></div>
+								</div>
+								<div class="form-group">
+									<label>電話番号<span class="badge-required">必須</span></label>
+									<input type="text" th:field="*{empTel}"class="form-control"
+										th:classappend="${#fields.hasErrors('empTel')} ? 'input-error'">
+									<div class="error-message" th:if="${#fields.hasErrors('empTel')}"th:errors="*{empTel}"></div>
+								</div>
+								<div class="form-group">
+									<label>メールアドレス<span class="badge-required">必須</span></label>
+									<input type="text" th:field="*{email}"class="form-control"
+										th:classappend="${#fields.hasErrors('email')} ? 'input-error'">
+									<div class="error-message" th:if="${#fields.hasErrors('email')}"th:errors="*{email}"></div>
+								</div>
+								<div class="form-group">
+									<label>エンジニアタイプ<span class="badge-required">必須</span></label>
+									<select id="engineerType" name="engineerType" th:field="*{engineerType}"class="dropdown form-control"
+										th:classappend="${#fields.hasErrors('engineerType')} ? 'input-error'">
+										    <option value="">未選択</option>
+										    <option value="プロパー">プロパー</option>
+										    <option value="パートナー">パートナー</option>
+									</select>
+									<div class="error-message" th:if="${#fields.hasErrors('engineerType')}"	th:errors="*{engineerType}"></div>
+										</div>
+									<div class="form-group">
+										<div id="loginIdArea" style="display: none;">
+											    <label>ログインID<span class="badge-required">必須</span></label>
+											<select id="loginId" th:field="*{accountId}"class="dropdown form-control">
+												    <option value="">未選択</option>
+												<option th:each="account : ${accounts}" th:value="${account.accountId}"
+													th:text="${account.loginId}">
+												</option>
+											</select>
+											<div class="error-message" th:if="${#fields.hasErrors('accountId')}"th:errors="*{accountId}"></div>
+										</div>
+										<div class="form-group">
+											<div id="companyArea" style="display: none;">
+												    <label>所属企業<span class="badge-required">必須</span></label>
+												<select id="companyId" th:field="*{companyId}"class="dropdown form-control">
+													   <option value="">未選択</option>
+													<option th:each="company : ${companies}"th:value="${company.companyId}"
+														th:text="${company.companyName}">
+													</option>
+												</select>
+												<div class="error-message" th:if="${#fields.hasErrors('companyId')}"th:errors="*{companyId}"></div>
+											</div>
+											<script>
+												function toggleEngineerAreas() {
+													const engineerTypeSelect = document.getElementById('engineerType');
+													const loginIdArea = document.getElementById('loginIdArea');
+													const companyArea = document.getElementById('companyArea');
 
-	</div>
-</body>
+													// セレクトボックスが存在しない場合は処理しない
+													if (!engineerTypeSelect) return;
 
-</html>	
+													const currentType = engineerTypeSelect.value;
+
+													// 現在選択されている値（初期値）に応じて、表示・非表示を切り替える
+													if (currentType === 'プロパー') {
+														loginIdArea.style.display = 'block';
+														companyArea.style.display = 'none';
+													} else if (currentType === 'パートナー') {
+														loginIdArea.style.display = 'none';
+														companyArea.style.display = 'block';
+													} else {
+														// 未選択などの初期状態
+														loginIdArea.style.display = 'none';
+														companyArea.style.display = 'none';
+													}
+												}
+
+												// 【コンボボックス連動】イベントの登録
+												// ① 画面上でエンジニアタイプを手動で切り替えたとき
+												document.getElementById('engineerType').addEventListener('change', toggleEngineerAreas);
+												// ② 編集画面が開いた瞬間に、現在登録されているタイプに合わせて該当のコンボボックスを最初から表示
+												window.addEventListener('DOMContentLoaded', toggleEngineerAreas);
+											</script>
+
+											<div class="form-group">
+
+												<div>
+													<label>所属部署</label>
+													<input type="text" th:field="*{department}"class="form-control"
+														th:classappend="${#fields.hasErrors('department')} ? 'input-error'">
+													<div class="error-message"th:if="${#fields.hasErrors('department')}"th:errors="*{department}"></div>
+												</div>
+													<div class="form-group">
+														<label>役職</label>
+														<input type="text" th:field="*{jobTitle}"class="form-control"
+															th:classappend="${#fields.hasErrors('jobTitle')} ? 'input-error'">
+														<div class="error-message"th:if="${#fields.hasErrors('jobTitle')}"th:errors="*{jobTitle}"></div>
+													</div>
+													<div class="form-actions common-actions">
+															<button type="submit"class="btn btn-primary common-btn">変更</button>
+															<a th:if="${fromPage == 'detail'}"th:href="@{/employees/{id}/detail(id=${id})}"
+																class="btn btn-secondary common-btn">戻る</a>
+															<a th:if="${fromPage != 'detail'}" th:href="@{/employees}"
+																class="btn btn-secondary common-btn">戻る</a>
+														</div>
+                                        			</form>
+		                                        </div>
+                                             </body>
+										</html>

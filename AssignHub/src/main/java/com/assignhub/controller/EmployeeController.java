@@ -45,10 +45,10 @@ public class EmployeeController {
 	 *
 	 * @param employeeService 社員サービス
 	 */
-	public EmployeeController(EmployeeService employeeService,CompanyService companyService) {
+	public EmployeeController(EmployeeService employeeService, CompanyService companyService) {
 		this.employeeService = employeeService;
 		this.companyService = companyService;
-		
+
 	}
 
 	/**
@@ -82,14 +82,14 @@ public class EmployeeController {
 	 * @return 新規登録画面のテンプレートパス
 	 */
 	@GetMapping("/new")
-	public String create(Model model,RedirectAttributes attributes) {
+	public String create(Model model, RedirectAttributes attributes) {
 		if (employeeService.isMaxCount()) {
 			attributes.addFlashAttribute("toastError", "登録件数が上限(500件)に達しているため登録できません。");
-			return "redirect:/employees";	
+			return "redirect:/employees";
 		}
 		model.addAttribute("employeeForm", new EmployeeForm());
-		model.addAttribute("companies",companyService.findAll(null,null,null));
-		model.addAttribute("accounts",employeeService.findLoginId());
+		model.addAttribute("companies", companyService.findAll(null, null, null));
+		model.addAttribute("accounts", employeeService.findLoginId());
 		return "employee/create";
 	}
 
@@ -103,21 +103,20 @@ public class EmployeeController {
 	 */
 	@PostMapping
 	public String store(@Validated @ModelAttribute("employeeForm") EmployeeForm form, BindingResult result,
-			RedirectAttributes attributes,Model model) {
-		
-			
-			if ("プロパー".equals(form.getEngineerType()) && form.getAccountId() == null) {
-				result.rejectValue("accountId", "error.employeeForm", "ログインIDは必須です");
-			}
-			if ("パートナー".equals(form.getEngineerType()) && form.getCompanyId() == null) {
-				result.rejectValue("companyId", "error.employeeForm", "所属企業は必須です");
-			}
-			
-			if (result.hasErrors()) {
-				// 新規登録画面（create）を開いたときと同じように、コンボボックスのリストを再セットする
-				model.addAttribute("companies", companyService.findAll(null, null, null));
-				model.addAttribute("accounts", employeeService.findLoginId());
-				
+			RedirectAttributes attributes, Model model) {
+
+		if ("プロパー".equals(form.getEngineerType()) && form.getAccountId() == null) {
+			result.rejectValue("accountId", "error.employeeForm", "ログインIDは必須です");
+		}
+		if ("パートナー".equals(form.getEngineerType()) && form.getCompanyId() == null) {
+			result.rejectValue("companyId", "error.employeeForm", "所属企業は必須です");
+		}
+
+		if (result.hasErrors()) {
+			// 新規登録画面（create）を開いたときと同じように、コンボボックスのリストを再セットする
+			model.addAttribute("companies", companyService.findAll(null, null, null));
+			model.addAttribute("accounts", employeeService.findLoginId());
+
 			return "employee/create";
 		}
 		Employee employee = new Employee();
@@ -136,6 +135,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("{id}/detail")
 	public String detail(@PathVariable("id") Integer id, Model model) {
+		// 1. 社員情報を取得（アサイン情報、部署情報も一緒にロード）
 		Employee emp = employeeService.findById(id);
 		model.addAttribute("employee", emp);
 
@@ -149,7 +149,7 @@ public class EmployeeController {
 		if (!model.containsAttribute("employeeForm")) {
 			Employee emp = employeeService.findById(id);
 			EmployeeForm form = new EmployeeForm();
-		
+
 			form.setLastName(emp.getLastName());
 			form.setFirstName(emp.getFirstName());
 			form.setLastNameKana(emp.getLastNameKana());
@@ -167,11 +167,11 @@ public class EmployeeController {
 			form.setAccountId(emp.getAccountId());
 			form.setDepartment(emp.getDepartment());
 			form.setJobTitle(emp.getJobTitle());
-			model.addAttribute("employeeForm", form);	
+			model.addAttribute("employeeForm", form);
 			model.addAttribute("fromPage", from);
 		}
-				model.addAttribute("companies", companyService.findAll(null, "emp_company_name", "asc"));
-				model.addAttribute("accounts", employeeService.findLoginId());
+		model.addAttribute("companies", companyService.findAll(null, "emp_company_name", "asc"));
+		model.addAttribute("accounts", employeeService.findLoginId());
 		return "employee/edit";
 	}
 
@@ -180,39 +180,43 @@ public class EmployeeController {
 			@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
 			BindingResult result, RedirectAttributes attributes,
 			@RequestParam(value = "fromPage", required = false) String fromPage, Model model) {
-		
+
+		if ("プロパー".equals(employeeForm.getEngineerType())) {
+			employeeForm.setCompanyId(null); // プロパーなら、企業の選択状態に関わらず必ずクリア
+		} else if ("パートナー".equals(employeeForm.getEngineerType())) {
+			employeeForm.setAccountId(null); // パートナーなら、アカウントの選択状態に関わらず必ずクリア
+		}
 
 		if ("プロパー".equals(employeeForm.getEngineerType()) && employeeForm.getAccountId() == null) {
+
 			result.rejectValue("accountId", "error.employeeForm", "ログインIDは必須です");
 		}
 		if ("パートナー".equals(employeeForm.getEngineerType()) && employeeForm.getCompanyId() == null) {
+
 			result.rejectValue("companyId", "error.employeeForm", "所属企業は必須です");
 		}
-		
+
 		if (employeeService.isEmailDuplicate(employeeForm.getEmail(), id)) {
 			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
 		}
-		
 
 		if (result.hasErrors()) {
 			model.addAttribute("fromPage", fromPage);
-			model.addAttribute("companies", companyService.findAll(null,null,null));
+			model.addAttribute("companies", companyService.findAll(null, null, null));
 			model.addAttribute("accounts", employeeService.findLoginId());
 			return "employee/edit";
 		}
-		if ("detail".equals(fromPage)) {
-			return "redirect:/employee/" + employeeForm.getEmpId();
-			}
+		
 
 		Employee emp = new Employee();
 		emp.setEmpId(id);
 		copyFormToEntity(employeeForm, emp);
 		employeeService.save(emp);
 		attributes.addFlashAttribute("toastMessage", "社員情報を更新しました");
-		
+
 		if ("detail".equals(fromPage)) {
-			return "redirect:/employees/" + id +"/detail";
-			}
+			return "redirect:/employees/" + id + "/detail";
+		}
 		return "redirect:/employees";
 	}
 
@@ -255,10 +259,10 @@ public class EmployeeController {
 	 * @return インポート画面のテンプレートパス
 	 */
 	@GetMapping("/import")
-	public String showImport(Model model,RedirectAttributes attributes) {
+	public String showImport(Model model, RedirectAttributes attributes) {
 		if (employeeService.isMaxCount()) {
 			attributes.addFlashAttribute("toastError", "登録件数が上限(500件)に達しているため登録できません。");
-			return "redirect:/employees";	
+			return "redirect:/employees";
 		}
 		return "employee/import";
 	}
@@ -272,33 +276,33 @@ public class EmployeeController {
 	 */
 	@PostMapping("/import")
 	public String importCsv(@RequestParam("file") MultipartFile file, Model model) throws Exception {
-	    // ファイル未選択
-	    if (file.isEmpty()) {
-	    	model.addAttribute("toastError", "ファイルが選択されていません");
-	        return "employee/import";
-	    }
+		// ファイル未選択
+		if (file.isEmpty()) {
+			model.addAttribute("toastError", "ファイルが選択されていません");
+			return "employee/import";
+		}
 
-	    // CSV以外のファイル
-	    String filename = file.getOriginalFilename();
-	    if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
-	        model.addAttribute("errorMessage", "ファイル形式が正しくありません。CSVファイルを選択してください");
-	        return "employee/import";
-	    }
+		// CSV以外のファイル
+		String filename = file.getOriginalFilename();
+		if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
+			model.addAttribute("errorMessage", "ファイル形式が正しくありません。CSVファイルを選択してください");
+			return "employee/import";
+		}
 
-	    // 容量チェック（5MB）
-	    if (file.getSize() > 5 * 1024 * 1024) {
-	        model.addAttribute("errorMessage", "ファイルサイズは5MB以内にしてください");
-	        return "employee/import";
-	    }
+		// 容量チェック（5MB）
+		if (file.getSize() > 5 * 1024 * 1024) {
+			model.addAttribute("errorMessage", "ファイルサイズは5MB以内にしてください");
+			return "employee/import";
+		}
 
-	    try {
-	        EmployeeService.ImportResult result = employeeService.importCsv(file);
-	        model.addAttribute("importResult", result);
-	        return "employee/import";
-	    } catch (java.nio.charset.MalformedInputException e) {
-	        model.addAttribute("errorMessage", "UTF-8のCSVファイルを選択してください");
-	        return "employee/import";
-	    }
+		try {
+			EmployeeService.ImportResult result = employeeService.importCsv(file);
+			model.addAttribute("importResult", result);
+			return "employee/import";
+		} catch (java.nio.charset.MalformedInputException e) {
+			model.addAttribute("errorMessage", "UTF-8のCSVファイルを選択してください");
+			return "employee/import";
+		}
 	}
 
 	/**
@@ -309,8 +313,8 @@ public class EmployeeController {
 	@GetMapping("/import/template")
 	public ResponseEntity<byte[]> downloadTemplate() {
 		String csvContent = "社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,"
-		        + "生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,"
-		        + "所属企業,所属部署,役職,電話番号,メールアドレス\n";
+				+ "生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,"
+				+ "所属企業,所属部署,役職,電話番号,メールアドレス\n";
 		byte[] csvBytes = csvContent.getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
 		byte[] result = new byte[bom.length + csvBytes.length];
@@ -332,18 +336,18 @@ public class EmployeeController {
 	 */
 	@PostMapping("/export")
 	public String showExport(
-	        @RequestParam(name = "ids", required = false) List<Integer> ids,
-	        Model model , RedirectAttributes attributes) {
-		
+			@RequestParam(name = "ids", required = false) List<Integer> ids,
+			Model model, RedirectAttributes attributes) {
+
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません");
 			return "redirect:/employees";
 		}
-	    List<Employee> employees = employeeService.findByIds(ids);
-		model.addAttribute("employees",employees);
-	    model.addAttribute("count", employees.size());
-	    model.addAttribute("ids", ids);
-	    return "employee/export";
+		List<Employee> employees = employeeService.findByIds(ids);
+		model.addAttribute("employees", employees);
+		model.addAttribute("count", employees.size());
+		model.addAttribute("ids", ids);
+		return "employee/export";
 	}
 
 	/**
@@ -365,17 +369,20 @@ public class EmployeeController {
 					.append(emp.getFirstName()).append(",")
 					.append(emp.getLastNameKana()).append(",")
 					.append(emp.getFirstNameKana()).append(",")
-					.append(emp.getHireDate()!= null ? emp.getHireDate(): "").append(",")
-					.append(emp.getYearsOfService()!= null ? emp.getYearsOfService(): "").append(",")
-					.append(emp.getBirthDate()!= null ? emp.getBirthDate(): "").append(",")
+					.append(emp.getHireDate() != null ? emp.getHireDate() : "").append(",")
+					.append(emp.getYearsOfService() != null ? emp.getYearsOfService() : "").append(",")
+					.append(emp.getBirthDate() != null ? emp.getBirthDate() : "").append(",")
 					.append(emp.getZipCode()).append(",")
 					.append(emp.getAddress1()).append(",")
-					.append(emp.getAddress2()!= null ? emp.getAddress2() : "").append(",")
+					.append(emp.getAddress2() != null ? emp.getAddress2() : "").append(",")
 					.append(emp.getEngineerType()).append(",")
-					.append(emp.getAccount() != null&& emp.getAccount().getLoginId() != null? emp.getAccount().getLoginId(): "").append(",")
+					.append(emp.getAccount() != null && emp.getAccount().getLoginId() != null
+							? emp.getAccount().getLoginId()
+							: "")
+					.append(",")
 					.append(emp.getCompany() != null ? emp.getCompany().getCompanyName() : "").append(",")
-					.append(emp.getDepartment()!= null ? emp.getDepartment() : "").append(",")
-					.append(emp.getJobTitle()!= null ? emp.getJobTitle() : "").append(",")
+					.append(emp.getDepartment() != null ? emp.getDepartment() : "").append(",")
+					.append(emp.getJobTitle() != null ? emp.getJobTitle() : "").append(",")
 					.append(emp.getEmpTel()).append(",")
 					.append(emp.getEmail()).append("\n");
 		}
