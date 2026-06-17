@@ -5,6 +5,7 @@
 <head>
 	<title>論理削除社員情報エクスポート</title>
 	<meta charset="utf-8">
+	<link rel="stylesheet" th:href="@{/css/employee.css}">
 </head>
 	
 	<body>
@@ -14,7 +15,6 @@
 			</div>
 			<div class="card form-card-wide">
 				<p class="instruction">以下の内容でcsvファイルを出力します。<br>よろしければ「エクスポート」ボタンを教えてください。</p>
-			
 			<div class="export-confirm-box">
 				<h4 class="export-confirm-title">出力条件の確認</h4>
 				<table class="export-table">
@@ -24,13 +24,12 @@
 					</tr>
 					<tr>
 						<td>文字コード:</td>
-						<td>utf-8 (bomあり)</td>
+						<td>UTF-8 (BOMあり)</td>
 					</tr>
 				</table>
-				
-				<div class="card">
-					<table class="table">
-						<thead class="table-dark">
+				<div class="table-scroll export-table">
+					<table class="table header-only-table table-dark">
+						<thead>
 						<tr>
 							<th>社員ID</th>
 							<th>社員名</th>
@@ -52,14 +51,14 @@
 				</div>
 				<p class="export-note">※ 詳細情報がエクスポートされます</p>
 			</div>
-				<div class="action-area">
-					<form th:action="@{/deleted-employees/export/download(ids=${ids})}" method="post">
-						<input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">
-						<button type="submit" class="btn-csv">エクスポート</button>
-						<button type="button" id="btn_account_back" class="btn-back"
-									th:onclick="|location.href='@{/deleted-employees}'|">戻る</button>
-					</form>
-				</div>
+			<div class="action-area">
+				<form th:action="@{/deleted-employees/export/download(ids=${ids})}" method="post">
+					<input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">
+					<button type="submit" class="btn-csv">エクスポート</button>
+					<button type="button" id="btn_account_back" class="btn-back"
+								th:onclick="|location.href='@{/deleted-employees}'|">戻る</button>
+				</form>
+			</div>
 		</div>
 	</body>
 </html>
