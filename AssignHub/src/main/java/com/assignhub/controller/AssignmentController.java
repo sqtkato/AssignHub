@@ -393,10 +393,11 @@ public class AssignmentController {
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Assignment> assignments = assignmentService.findByIds(ids);
-		StringBuilder csvBuilder = new StringBuilder("アサインID,社員ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n");
+		StringBuilder csvBuilder = new StringBuilder("アサインID,社員ID,アサイン先企業ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n");
 		for (Assignment asn : assignments) {
 			csvBuilder.append(asn.getAssignmentId()).append(",")
 					.append(asn.getEmpId()).append(",")
+					.append(asn.getCompanyId()).append(",")
 					.append(asn.getEmployee().getLastName()).append(",")
 					.append(asn.getEmployee().getFirstName()).append(",")
 					.append(asn.getCompany().getCompanyName()).append(",")

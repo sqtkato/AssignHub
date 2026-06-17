@@ -163,6 +163,7 @@
 		SELECT
 		a.assignment_id,
 		a.emp_id,
+		a.company_id,
 		a.contract_start_date,
 		a.contract_end_date,
 		a.unit_price,
