@@ -136,7 +136,6 @@ public class EmployeeController {
 	 */
 	@GetMapping("{id}/detail")
 	public String detail(@PathVariable("id") Integer id, Model model) {
-		// 1. 社員情報を取得（アサイン情報、部署情報も一緒にロード）
 		Employee emp = employeeService.findById(id);
 		model.addAttribute("employee", emp);
 
@@ -149,6 +148,7 @@ public class EmployeeController {
 			Model model) {
 		if (!model.containsAttribute("employeeForm")) {
 			Employee emp = employeeService.findById(id);
+			model.addAttribute("employee", emp);
 			EmployeeForm form = new EmployeeForm();
 
 			form.setLastName(emp.getLastName());
