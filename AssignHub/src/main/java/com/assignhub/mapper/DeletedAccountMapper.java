@@ -68,16 +68,6 @@ public interface DeletedAccountMapper {
 	int existEmployeesByAccountIds(@Param("ids") List<Integer> ids);
 	
 	/**
-	 * 指定されたアカウントIDに紐づくアサイン履歴数をカウントする（単一物理削除の不在条件チェック用）。
-	 */
-	int existAssignmentsByAccountId(@Param("id") Integer id);
-
-	/**
-	 * 指定されたアカウントIDリストのいずれかに紐づくアサイン履歴数をカウントする（一括物理削除の不在条件チェック用）。
-	 */
-	int existAssignmentsByAccountIds(@Param("ids") List<Integer> ids);
-	
-	/**
 	 * 復元時に重複するアカウントが存在するか判定
 	 */
 	int existByLoginId(@Param("loginId") String id, @Param("excludeAccountId") Integer excludeAccountId);

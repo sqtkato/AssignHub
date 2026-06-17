@@ -10,7 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
+import com.assignhub.form.AccountForm;
 import com.assignhub.service.DeletedAccountService;
 
 @Controller
@@ -48,10 +52,14 @@ public class DeletedAccountController {
     
     /* 単一復元 */
     @PostMapping("/{id}/restore") 
-    public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+    public String recover(@PathVariable("id") Integer id, @Validated @ModelAttribute("accountForm") AccountForm accountForm,BindingResult result, RedirectAttributes attributes) {
     	if (deletedAccountService.isCompanyLimitReachedAfterRestore(1)) {
 			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
 			return "redirect:/deleted-companies";
+		}
+    	if (deletedAccountService.isLoginIdDuplicate(accountForm.getLoginId(), id)) {
+			result.rejectValue("loginId","error.accountForm", "このログインIDは既に使用されています");
+			return "redirect:/deleted-accounts";
 		}
         deletedAccountService.restore(id);
         return "redirect:/deleted-accounts"; 
@@ -127,20 +135,19 @@ public class DeletedAccountController {
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Account> accounts = deletedAccountService.findByIds(ids);
-		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,権限,社員名(姓),社員名(名)\n");
+		StringBuilder csvBuilder = new StringBuilder("アカウントID,ログインID,パスワード,権限\n");
 		for (Account acc : accounts) {
-			String lastName = "-";
-			String firstName = "-";
-			if (acc.getEmployee() != null) {
-				lastName = acc.getEmployee().getLastName();
-				firstName = acc.getEmployee().getFirstName();
+			String Permission = "";
+			if(acc.getPermission() == 0) {
+				Permission = "一般";
 			}
-
+			else {
+				Permission = "管理";
+			}
 			csvBuilder.append(acc.getAccountId()).append(",")
 					.append(acc.getLoginId()).append(",")
-					.append(acc.getPermission()).append(",")
-					.append(lastName).append(",")
-					.append(firstName).append("\n");
+					.append(",")
+					.append(Permission).append("\n");
 		}
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };

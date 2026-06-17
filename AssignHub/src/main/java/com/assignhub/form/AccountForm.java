@@ -3,6 +3,7 @@ package com.assignhub.form;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
 import lombok.Data;
 
 @Data
@@ -20,5 +21,5 @@ public class AccountForm {
     private Integer permission;
     
     private Integer accountId;
-
+    
 }

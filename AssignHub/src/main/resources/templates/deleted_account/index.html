@@ -4,14 +4,14 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>論理削除アカウント情報一覧</title>
+	<title>アカウント情報削除/復元一覧</title>
 	<link rel="stylesheet" href="/css/popup.css">
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
-			<h2>論理削除アカウント情報一覧</h2>
+			<h2>アカウント情報削除/復元一覧</h2>
 		</div>
 
 		<div class="card acc">
@@ -89,7 +89,7 @@
 								<td th:text="${acc.accountId}"></td>
 								<td th:text="${acc.loginId}"></td>
 								<td th:text="${acc.permission == 1 ? '管理' : '一般'}"></td>
-								<td th:text="${acc.employee != null ? acc.employee.lastName + ' ' + acc.employee.firstName : '未紐づけ'}"></td>
+								<td th:text="${acc.employee != null ? acc.employee.lastName + ' ' + acc.employee.firstName : ''}"></td>
 								<td class="col-action">
 									<button type="submit" th:formaction="@{/deleted-accounts/{id}/restore(id=${acc.accountId})}" class="btn-icon-svg" title="復元">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-linecap="round" stroke-linejoin="round"><path d="M7 16c2.21 0 4-1.79 5-3s2.79-3 5-3a4 4 0 1 1 0 8c-2.21 0-4-1.79-5-3s-2.79-3-5-3a4 4 0 0 0-3.4 1.9" /><polyline points="5.5 10 2 12.5 4.5 16" /></svg>
