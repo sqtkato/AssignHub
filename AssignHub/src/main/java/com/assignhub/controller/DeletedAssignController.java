@@ -127,7 +127,7 @@ public class DeletedAssignController {
 			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報（プロパー）を復元してください。");
 			return "redirect:/deleted-assignments";
 		}
-		if (deletedAssignService.existEmployeePartnersByAssignIds(ids)) {
+		if (deletedAssignService.existEmployeePartnerByAssignIds(ids)) {
 			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報（パートナー）を復元してください。");
 			return "redirect:/deleted-assignments";
 		}

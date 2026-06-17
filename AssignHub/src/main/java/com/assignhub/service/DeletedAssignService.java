@@ -133,7 +133,7 @@ public class DeletedAssignService {
 	}
 
 	//    一括復元の生存条件
-	public boolean existEmployeePartnersByAssignIds(List<Integer> ids) {
-		return deletedAssignMapper.existEmployeePartnersByAssignIds(ids) > 0;
+	public boolean existEmployeePartnerByAssignIds(List<Integer> ids) {
+		return deletedAssignMapper.existEmployeePartnerByAssignIds(ids) > 0;
 	}
 }

@@ -179,7 +179,7 @@
 		</foreach>
 	</delete>
 
-	<select id="existCompanysDispatchsByAssignId" resultType="int">
+	<select id="existCompanyDispatchsByAssignId" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment a
 		INNER JOIN m_company c ON a.company_id = c.company_id
@@ -187,7 +187,7 @@
 		AND c.delete_flg = 1
 	</select>
 
-	<select id="existCompanysDispatchsByAssignIds" resultType="int">
+	<select id="existCompanyDispatchsByAssignIds" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment a
 		INNER JOIN m_company c ON a.company_id = c.company_id
@@ -240,7 +240,7 @@
 		</foreach>
 	</select>
 
-	<select id="countEmployeePartnerByAssignId" resultType="int">
+	<select id="existEmployeePartnerByAssignId" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment a
 		INNER JOIN m_employee e ON a.emp_id = e.emp_id
@@ -249,7 +249,7 @@
 		AND e.delete_flg = 1
 	</select>
 
-	<select id="countEmployeePartnersByAssignIds" resultType="int">
+	<select id="existEmployeePartnerByAssignIds" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment a
 		INNER JOIN m_employee e ON a.emp_id = e.emp_id

@@ -101,6 +101,6 @@ public interface DeletedAssignMapper {
 	/**
 	 * 指定されたアサインIDのいずれかに紐づく社員情報(パートナー)をカウントする（一括復元の生存条件チェック用）。
 	 */
-	int existEmployeePartnersByAssignIds(@Param("ids") List<Integer> ids);
+	int existEmployeePartnerByAssignIds(@Param("ids") List<Integer> ids);
 
 }
