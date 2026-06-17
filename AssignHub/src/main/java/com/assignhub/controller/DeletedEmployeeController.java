@@ -80,6 +80,10 @@ public class DeletedEmployeeController {
 	public String recover(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
 			BindingResult result, RedirectAttributes attributes) {
+		if (deletedEmployeeService.isEmployeeLimitReachedAfterRestore(1)) {
+			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
+			return "redirect:/deleted-employees";
+		}
 		if (deletedEmployeeService.existAccountsByEmployeeId(id)) {
 			attributes.addFlashAttribute("toastMessage", "紐づくアカウント情報が削除状態のため、復元できません。先にアカウント情報を復元してください。");
 			return "redirect:/deleted-employees";
@@ -107,6 +111,10 @@ public class DeletedEmployeeController {
 			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "復元対象が選択されていません");
+			return "redirect:/deleted-employees";
+		}
+		if (deletedEmployeeService.isEmployeeLimitReachedAfterRestore(ids.size())) {
+			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
 			return "redirect:/deleted-employees";
 		}
 		if (deletedEmployeeService.existAccountsByEmployeeIds(ids)) {

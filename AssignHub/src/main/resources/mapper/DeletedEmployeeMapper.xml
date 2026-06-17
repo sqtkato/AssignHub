@@ -171,8 +171,8 @@
 			close=")">
 			#{id}
 		</foreach>
-		AND (c.delete_flg = 0
-		OR e.company_id IS NULL)
+		AND (a.delete_flg = 0
+		OR e.account_id IS NULL)
 	</select>
 
 	<select id="existCompaniesByEmployeeId" resultType="int">
@@ -217,7 +217,7 @@
 		</foreach>
 	</select>
 
-	<select id="countActiveCompanies" resultType="int">
+	<select id="countActiveEmployees" resultType="int">
 		SELECT COUNT(*)
 		FROM m_employee
 		WHERE delete_flg = 0

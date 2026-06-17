@@ -59,7 +59,7 @@ public class DeletedAccountController {
 			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
 			return "redirect:/deleted-accounts";
 		}
-    	if (deletedAccountService.isLoginIdDuplicate(accountForm.getLoginId(), id)) {
+    	if (accountService.isLoginIdDuplicate(accountForm.getLoginId(), id)) {
 			result.rejectValue("loginId","error.accountForm", "このログインIDは既に使用されています");
 			return "redirect:/deleted-accounts";
 		}
