@@ -123,9 +123,12 @@ public class DeletedAssignService {
 	 * @param id 復元するアサイン履歴のid
 	 * @return 重複していればtrue
 	 */
+	// DeletedAssignService.java 内
 	public boolean isDuplicate(Integer id) {
-		int count = deletedAssignMapper.isDuplicate(id);
-		return count > 0;
+	    // 1件ずつの id を渡す（Mapper側で自動的に "ids" に翻訳されてXMLへ届きます）
+	    int count = deletedAssignMapper.isDuplicate(id);
+	    return count > 0;
 	}
+	
 	
 }

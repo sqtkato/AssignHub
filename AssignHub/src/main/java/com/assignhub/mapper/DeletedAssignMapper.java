@@ -62,8 +62,13 @@ public interface DeletedAssignMapper {
 	 */
 	int physicalDeleteBulk(@Param("ids") List<Integer> ids);
 
+
+	// DeletedAssignMapper.java の中に追記するコード
+
+	/**
+	 * 現在有効な（delete_flg = 0 の）アサイン履歴件数を取得する
+	 */
 	int countActiveAssigns();
-	
 	
 	/**
 	 * 指定されたアサインIDに紐づく企業数(派遣先)をカウントする（単一復元の生存チェック用）。
