@@ -54,7 +54,7 @@
 			<id property="accountId" column="account_id" />
 			<result property="loginId" column="login_id" />
 		</association>
-		
+
 	</resultMap>
 
 	<select id="findAll" resultMap="employeeResultMap">
@@ -99,56 +99,62 @@
 	</select>
 
 	<select id="findById" resultMap="employeeResultMap">
-        SELECT
-            e.*,
-            c.company_name AS emp_company,
-            a.assignment_id AS assignment_id,
-            a.contract_start_date AS contract_start_date_assign,
-            a.contract_end_date AS contract_end_date_assign,
-            a.unit_price AS unit_price_assign,
-            a.company_id AS assign_company_id,
-            c2.company_name AS emp_assign_company,
-            ac.login_id AS login_id
-        FROM m_employee e
-        LEFT JOIN m_company c ON e.company_id = c.company_id
-        LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date IS NULL
-        LEFT JOIN m_company c2 ON a.company_id = c2.company_id
-        LEFT JOIN m_account ac ON e.account_id = ac.account_id
-        WHERE e.emp_id = #{id}
-    </select>
+		SELECT
+		e.*,
+		c.company_name AS emp_company,
+		a.assignment_id AS assignment_id,
+		a.contract_start_date AS contract_start_date_assign,
+		a.contract_end_date AS contract_end_date_assign,
+		a.unit_price AS unit_price_assign,
+		a.company_id AS assign_company_id,
+		c2.company_name AS emp_assign_company,
+		ac.login_id AS login_id
+		FROM m_employee e
+		LEFT JOIN m_company c ON e.company_id = c.company_id
+		LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date IS
+		NULL
+		LEFT JOIN m_company c2 ON a.company_id = c2.company_id
+		LEFT JOIN m_account ac ON e.account_id = ac.account_id
+		WHERE e.emp_id = #{id}
+	</select>
 
 	<select id="findByIds" resultMap="employeeResultMap">
-	    SELECT
-	        e.*,
-	        c.company_name AS emp_company,
-	        c2.company_name AS emp_assign_company,
-	        ac.login_id AS login_id
-	    FROM m_employee e
-	    LEFT JOIN m_company c ON e.company_id = c.company_id
-	    LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date IS NULL
-	    LEFT JOIN m_company c2 ON a.company_id = c2.company_id
-	    LEFT JOIN m_account ac ON e.account_id = ac.account_id
-	    WHERE e.emp_id IN
-	    <foreach collection="ids" item="id" open="(" separator="," close=")">
-	        #{id}
-	    </foreach>
+		SELECT
+		e.*,
+		c.company_name AS emp_company,
+		c2.company_name AS emp_assign_company,
+		ac.login_id AS login_id
+		FROM m_employee e
+		LEFT JOIN m_company c ON e.company_id = c.company_id
+		LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date IS
+		NULL
+		LEFT JOIN m_company c2 ON a.company_id = c2.company_id
+		LEFT JOIN m_account ac ON e.account_id = ac.account_id
+		WHERE e.emp_id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
 	</select>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="empId">
 		INSERT
 		INTO m_employee (
-		last_name, first_name, last_name_kana, first_name_kana,
-		birth_date ,hire_date,zip_code,address1,address2,emp_tel,
+		last_name, first_name, last_name_kana,
+		first_name_kana,
+		birth_date
+		,hire_date,zip_code,address1,address2,emp_tel,
 		email,engineer_type,account_id,company_id,
 		department,job_title
-		) VALUES (
+		) VALUES
+		(
 		#{lastName}, #{firstName}, #{lastNameKana}, #{firstNameKana},
-        #{birthDate}, #{hireDate},#{zipCode}, #{address1}, #{address2},
-        #{empTel}, #{email}, #{engineerType}, #{accountId},
-        #{companyId}, #{department}, #{jobTitle}
-        )
-</insert>
-	
+		#{birthDate}, #{hireDate},#{zipCode}, #{address1}, #{address2},
+		#{empTel}, #{email}, #{engineerType}, #{accountId},
+		#{companyId}, #{department}, #{jobTitle}
+		)
+	</insert>
+
 
 
 	<update id="delete">
@@ -175,16 +181,19 @@
 		UPDATE m_employee
 
 		SET last_name = #{lastName},
-		last_name, first_name, last_name_kana, first_name_kana,
-		birth_date ,hire_date,zip_code,address1,address2,emp_tel,
+		last_name, first_name,
+		last_name_kana, first_name_kana,
+		birth_date
+		,hire_date,zip_code,address1,address2,emp_tel,
 		email,engineer_type,account_id,company_id,
 		department,job_title
-		) VALUES (
+		) VALUES
+		(
 		#{lastName}, #{firstName}, #{lastNameKana}, #{firstNameKana},
-        #{birthDate}, #{hireDate},#{zipCode}, #{address1}, #{address2},
-        #{empTel}, #{email}, #{engineerType}, #{accountId},
-        #{companyId}, #{department}, #{jobTitle}
-        )
+		#{birthDate}, #{hireDate},#{zipCode}, #{address1}, #{address2},
+		#{empTel}, #{email}, #{engineerType}, #{accountId},
+		#{companyId}, #{department}, #{jobTitle}
+		)
 		<where>
 			emp_id = #{empId}
 		</where>
@@ -194,36 +203,37 @@
 
 	<select id="countByEmail" resultType="int">
 		SELECT COUNT(*) FROM m_employee
-		WHERE email = #{email} AND delete_flg = 0
+		WHERE email = #{email} AND delete_flg =
+		0
 		<if test="excludeEmpId != null">
 			AND emp_id != #{excludeEmpId}
 		</if>
 	</select>
-	
+
 	<select id="countByEmails" resultType="int">
 		SELECT COUNT(*) FROM m_employee
 		WHERE delete_flg = 0
-		AND	emai IN (
-		SELECT  email
+		AND email IN (
+		SELECT email
 		FROM m_employee
 		WHERE emp_id IN
-		<foreach item="excludeEmpId" index="index" collection="excludeEmpIds" 
-				open="(" separator="," close=")">
-				#{excludeEmpId}
+		<foreach item="excludeEmpId" index="index"
+			collection="excludeEmpIds" open="(" separator="," close=")">
+			#{excludeEmpId}
 		</foreach>
-		) 
+		)
 		<if test="excludeEmpIds != null">
 			AND emp_id NOT IN
-			<foreach item="excludeEmpId" index="index" collection="excludeEmpIds" 
-				open="(" separator="," close=")">
+			<foreach item="excludeEmpId" index="index"
+				collection="excludeEmpIds" open="(" separator="," close=")">
 				#{excludeEmpId}
 			</foreach>
-			 
+
 		</if>
 	</select>
-	
+
 	<select id="countAll" resultType="int">
-    SELECT COUNT(*) FROM m_employee WHERE delete_flg = 0
-</select>
+		SELECT COUNT(*) FROM m_employee WHERE delete_flg = 0
+	</select>
 
 </mapper>

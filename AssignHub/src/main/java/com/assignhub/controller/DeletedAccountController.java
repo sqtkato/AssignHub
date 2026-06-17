@@ -22,20 +22,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
 import com.assignhub.form.AccountForm;
+import com.assignhub.service.AccountService;
 import com.assignhub.service.DeletedAccountService;
 
 @Controller
 @RequestMapping("/deleted-accounts")
 public class DeletedAccountController {
 	private final DeletedAccountService deletedAccountService;
-
+	private final AccountService accountService;
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param DeletedAccountService 企業サービス
 	 */
-	public DeletedAccountController(DeletedAccountService deletedAccountService) {
+	public DeletedAccountController(DeletedAccountService deletedAccountService,AccountService accountService) {
 		this.deletedAccountService = deletedAccountService;
+		this.accountService = accountService;
 	}
 
 	@GetMapping
@@ -67,13 +69,17 @@ public class DeletedAccountController {
 
     /* 一括復元 */
     @PostMapping("/bulk-restore")
-    public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
+    public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,BindingResult result, RedirectAttributes attributes) {
         if (ids == null || ids.isEmpty()) {
             attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
             return "redirect:/deleted-accounts";
         }
         if (deletedAccountService.isCompanyLimitReachedAfterRestore(ids.size())) {
 			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
+			return "redirect:/deleted-accounts";
+		}
+        if (accountService.isLoginIdDuplicate(ids)) {
+			result.rejectValue("loginId","error.accountForm", "このログインIDは既に使用されています");
 			return "redirect:/deleted-accounts";
 		}
         deletedAccountService.restoreBulk(ids);
