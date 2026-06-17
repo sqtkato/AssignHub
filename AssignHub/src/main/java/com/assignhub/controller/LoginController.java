@@ -37,7 +37,7 @@ public class LoginController {
 		return "login";
 	}
 
-	@PostMapping("/accounts/login")
+	@PostMapping("/login")
 	public String login(@Valid @ModelAttribute("loginForm") LoginForm loginForm,
 			BindingResult bindingResult,
 			HttpSession session,
