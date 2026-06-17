@@ -40,8 +40,8 @@
 				<div class="result-title-row">
 					<h3 class="result-title">処理結果</h3>
 					<span class="result-limit-msg"
-						th:if="${!importResult.errors.isEmpty() and importResult.errors[0].field == '上限'}"
-						th:text="${importResult.errors[0].message}"></span>
+						th:if="${importResult.limitMessage != null}"
+						th:text="${importResult.limitMessage}"></span>
 				</div>
 				<div class="summary-box">
 					<div class="summary-item summary-success">
