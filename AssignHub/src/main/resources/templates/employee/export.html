@@ -28,11 +28,11 @@
 					</tr>
 				</table>
 				
-				<div class="export-table-scroll export-table">
-					<table class="table header-only-table table-dark">
+				<div class="export-table-scroll">
+					<table class="table export-table header-only-table table-dark">
 						<thead>
 							<tr>
-								<th >社員id</th>
+								<th>社員id</th>
 								<th>社員名</th>
 								<th>アサイン先企業</th>
 								<th>所属企業</th>
@@ -50,11 +50,10 @@
 			</div>
 			<p class="export-note">※詳細情報がエクスポートされます。</p>
 		</div>
-		<div class="action-area">
-			<form th:action="@{/employees/export/download(ids=${ids})}" method="post">
-				<button type="submit" class="btn btn-export btn-export:hover">エクスポート</button>
-				<button type="button" id="btn_account_back" class="btn-back btn-back:hover"
-							th:onclick="|location.href='@{/employees}'|">戻る</button>
+		<div>
+			<form th:action="@{/employees/export/download(ids=${ids})}" method="post" class="action-area action-area-wide">
+				<button type="submit" class="btn-export">エクスポート</button>
+				<button type="button" class="btn-back" th:onclick="|location.href='@{/employees}'|">戻る</button>
 			</form>
 		</div>
 	</body>
