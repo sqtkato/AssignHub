@@ -91,20 +91,21 @@
 				<div class="table-scroll">
 					<table class="table">
 						<thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
-							<tr>
-								<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
-								<input type="checkbox" class="select-all">
-								</th>
-								<th>ID</th>
-								<th>社員名</th>
-								<th>アサイン先企業</th>
-								<th>所属企業</th>
-								<th>契約開始日</th>
-								<th>契約終了日</th>
-								<th>単価</th>
-								<th>操作</th>
-							</tr>
-						</thead>
+							<thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
+								<tr>
+									<th class="col-checkbox">
+										<input type="checkbox" class="select-all">
+									</th>
+									<th>ID</th>
+									<th>社員名</th>
+									<th>アサイン先企業</th>
+									<th>所属企業</th>
+									<th>契約開始日</th>
+									<th>契約終了日</th>
+									<th>単価</th>
+									<th>操作</th>
+								</tr>
+							</thead>
 						<tbody>
 							<tr th:each="assign : ${assignments}" class="clickable-row">
 								<td class="col-checkbox">
