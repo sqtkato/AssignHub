@@ -104,7 +104,7 @@ public class DeletedEmployeeController {
 	 */
 	@PostMapping("/bulk-restore")
 	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
-			BindingResult result, RedirectAttributes attributes) {
+			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "復元対象が選択されていません");
 			return "redirect:/deleted-employees";
@@ -118,7 +118,7 @@ public class DeletedEmployeeController {
 			return "redirect:/deleted-employees";
 		}
 		if(employeeService.isEmailDuplicate(ids)) {
-			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
+			attributes.addFlashAttribute("toastError", "このメールアドレスは既に使用されています");
 		}
 		deletedEmployeeService.restoreBulk(ids);
 		return "redirect:/deleted-employees";
