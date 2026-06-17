@@ -285,13 +285,13 @@ public class EmployeeController {
 		// CSV以外のファイル
 		String filename = file.getOriginalFilename();
 		if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
-			model.addAttribute("errorMessage", "ファイル形式が正しくありません。CSVファイルを選択してください");
+			model.addAttribute("toastError", "ファイル形式が正しくありません。CSVファイルを選択してください");
 			return "employee/import";
 		}
 
 		// 容量チェック（5MB）
 		if (file.getSize() > 5 * 1024 * 1024) {
-			model.addAttribute("errorMessage", "ファイルサイズは5MB以内にしてください");
+			model.addAttribute("toastError", "ファイルサイズは5MB以内にしてください");
 			return "employee/import";
 		}
 
@@ -300,7 +300,7 @@ public class EmployeeController {
 			model.addAttribute("importResult", result);
 			return "employee/import";
 		} catch (java.nio.charset.MalformedInputException e) {
-			model.addAttribute("errorMessage", "UTF-8のCSVファイルを選択してください");
+			model.addAttribute("toastError", "UTF-8のCSVファイルを選択してください");
 			return "employee/import";
 		}
 	}

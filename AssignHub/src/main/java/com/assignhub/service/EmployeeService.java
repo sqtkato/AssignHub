@@ -327,24 +327,33 @@ public class EmployeeService {
 				}
 
 				String loginId = cols[12].trim();
-				if (!loginId.isEmpty()) {
-				    Account account = accountService.findByLoginId(loginId);
-				    if (account == null) {
-				        result.errors.add(new CsvRowError(rowNum, "ログインID", "指定されたログインIDは存在しません"));
-				        hasError = true;
-				    } else {
-				        emp.setAccountId(account.getAccountId());
-				    }
-				}
-
 				String companyName = cols[13].trim();
-				if (!companyName.isEmpty()) {
-				    Company company = companyService.findByCompanyName(companyName);
-				    if (company == null) {
-				        result.errors.add(new CsvRowError(rowNum, "所属企業", "指定された所属企業は存在しません"));
+
+				if (engineerType.equals("プロパー")) {
+				    if (loginId.isEmpty()) {
+				        result.errors.add(new CsvRowError(rowNum, "ログインID", "プロパーの場合、ログインIDは必須です"));
 				        hasError = true;
 				    } else {
-				        emp.setCompanyId(company.getCompanyId());
+				        Account account = accountService.findByLoginId(loginId);
+				        if (account == null) {
+				            result.errors.add(new CsvRowError(rowNum, "ログインID", "指定されたログインIDは存在しません"));
+				            hasError = true;
+				        } else {
+				            emp.setAccountId(account.getAccountId());
+				        }
+				    }
+				} else if (engineerType.equals("パートナー")) {	
+				    if (companyName.isEmpty()) {
+				        result.errors.add(new CsvRowError(rowNum, "所属企業", "パートナーの場合、所属企業は必須です"));
+				        hasError = true;
+				    } else {
+				        Company company = companyService.findByCompanyName(companyName);
+				        if (company == null) {
+				            result.errors.add(new CsvRowError(rowNum, "所属企業", "指定された所属企業は存在しません"));
+				            hasError = true;
+				        } else {
+				            emp.setCompanyId(company.getCompanyId());
+				        }
 				    }
 				}
 
