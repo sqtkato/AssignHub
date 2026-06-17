@@ -221,6 +221,7 @@ public class AssignmentController {
 			@RequestParam(value = "fromPage", required = false) String fromPage, Model model) {
 		Assignment assignment = new Assignment();
 		copyFormToEntity(form, assignment);
+		assignment.setAssignmentId(id);
 		if (assignment.getContractEndDate() != null
 				&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
 			result.rejectValue(
@@ -242,9 +243,8 @@ public class AssignmentController {
 			model.addAttribute("employees", employeeService.findAll(null, null, null, null));
 			model.addAttribute("companies", companyService.findAll(null, null));
 			model.addAttribute("role", roleService.findAll());
-			return "assignment/create";
+			return "assignment/edit";
 		}
-		assignment.setAssignmentId(id);
 		assignmentService.save(assignment);
 		attributes.addFlashAttribute("toastMessage", "アサイン履歴情報を更新しました");
 		if ("detail".equals(fromPage)) {
