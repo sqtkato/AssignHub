@@ -82,6 +82,10 @@ public class CompanyService {
 	public boolean isCompanyNameDuplicate(String companyName, Integer companyId) {
 		return companyMapper.existsByCompanyName(companyName, companyId);
 	}
+	
+	public boolean isCompanyNamesDuplicate(String companyName, List<Integer> companyIds) {
+		return companyMapper.existsByCompanyNames(companyName, companyIds);
+	}
 
 	public void delete(Integer id) {
 		companyMapper.delete(id);
@@ -110,6 +114,10 @@ public class CompanyService {
 		return companyMapper.existsByCompanyTel(companyTel, companyId);
 	}
 	
+	public boolean isCompanyTelsDuplicate(String companyTel,List<Integer> companyIds ) {
+		return companyMapper.existsByCompanyTels(companyTel, companyIds);
+	}
+	
 	/**
 	 * FAXがすでに登録されているか（重複しているか）を判定する。
 	 *
@@ -119,6 +127,10 @@ public class CompanyService {
 	 */
 	public boolean isCompanyFaxDuplicate(String companyFax,Integer companyId ) {
 		return companyMapper.existsByCompanyFax(companyFax, companyId);
+	}
+	
+	public boolean isCompanyFaxsDuplicate(String companyFax,List<Integer> companyIds ) {
+		return companyMapper.existsByCompanyFaxs(companyFax, companyIds);
 	}
 
 	/**

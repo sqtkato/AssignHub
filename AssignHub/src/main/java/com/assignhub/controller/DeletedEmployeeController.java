@@ -102,9 +102,8 @@ public class DeletedEmployeeController {
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクト
 	 */
-	@PostMapping("/restore-bulk")
+	@PostMapping("/bulk-restore")
 	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
-			@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
 			BindingResult result, RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "復元対象が選択されていません");
@@ -118,7 +117,7 @@ public class DeletedEmployeeController {
 			attributes.addFlashAttribute("toastError", "所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
-		if(employeeService.isEmailDuplicate(employeeForm.getEmail(), ids)) {
+		if(employeeService.isEmailDuplicate(ids)) {
 			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
 		}
 		deletedEmployeeService.restoreBulk(ids);

@@ -433,8 +433,8 @@ public class EmployeeService {
 		return count > 0;
 	}
 	
-	public boolean isEmailDuplicate(String email, List<Integer> excludeEmpIds) {
-		int count = employeeMapper.countByEmails(email, excludeEmpIds);
+	public boolean isEmailDuplicate(List<Integer> excludeEmpIds) {
+		int count = employeeMapper.countByEmails(excludeEmpIds);
 		return count > 0;
 	}
 	

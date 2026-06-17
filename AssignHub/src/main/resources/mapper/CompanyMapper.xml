@@ -52,6 +52,20 @@
     </if>
     </select>
     
+    
+    <select id="existsByCompanyNames" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM m_company
+        WHERE company_name = #{companyName}
+    <if test="companyIds != null">
+        AND company_id NOT IN 
+        <foreach item="companyId" index="index" collection="companyIds" 
+			open="(" separator="," close=")">
+			#{companyId}
+		</foreach>
+    </if>
+    </select>
+    
     <!-- 重複チェックTEL -->
     <select id="existsByCompanyTel" resultType="boolean">
         SELECT COUNT(*) > 0
@@ -62,6 +76,19 @@
     </if>
     </select>
     
+    <select id="existsByCompanyTels" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM m_company
+        WHERE company_tel = #{companyTel}
+    <if test="companyIds != null">
+        AND company_id NOT IN 
+        <foreach item="companyId" index="index" collection="companyIds" 
+				open="(" separator="," close=")">
+			#{companyId}
+		</foreach>
+    </if>
+    </select>
+    
     <!-- 重複チェックFAX -->
     <select id="existsByCompanyFax" resultType="boolean">
         SELECT COUNT(*) > 0
@@ -69,6 +96,19 @@
         WHERE company_fax = #{companyFax}
     <if test="companyId != null">
         AND company_id != #{companyId}
+    </if>
+    </select>
+    
+    <select id="existsByCompanyFaxs" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM m_company
+        WHERE company_fax = #{companyFax}
+    <if test="companyIds != null">
+        AND company_id NOT IN 
+        <foreach item="companyId" index="index" collection="companyIds" 
+				open="(" separator="," close=")">
+			#{companyId}
+		</foreach>
     </if>
     </select>
     

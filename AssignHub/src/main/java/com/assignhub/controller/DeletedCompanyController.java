@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Company;
 import com.assignhub.form.CompanyForm;
+import com.assignhub.service.CompanyService;
 import com.assignhub.service.DeletedCompanyService;
 
 /**
@@ -31,14 +32,16 @@ import com.assignhub.service.DeletedCompanyService;
 public class DeletedCompanyController {
 	
 	private final DeletedCompanyService deletedCompanyService;
+	private final CompanyService companyService;
 	
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param deletedCompanyService 論理削除済み企業管理サービス
 	 */
-	public DeletedCompanyController(DeletedCompanyService deletedCompanyService) {
+	public DeletedCompanyController(DeletedCompanyService deletedCompanyService,CompanyService companyService) {
 		this.deletedCompanyService = deletedCompanyService;
+		this.companyService = companyService;
 	}
 
 	/**
@@ -72,13 +75,13 @@ public class DeletedCompanyController {
 			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
 			return "redirect:/deleted-companies";
 		}
-		if (deletedCompanyService.isCompanyNameDuplicate(companyForm.getCompanyName(), id)) {
+		if (companyService.isCompanyNameDuplicate(companyForm.getCompanyName(), id)) {
             result.rejectValue("companyName", "error.companyForm", "この企業名はすでに使用されています");
         }
-        if (deletedCompanyService.isCompanyTelDuplicate(companyForm.getCompanyTel(), id)) {
+        if (companyService.isCompanyTelDuplicate(companyForm.getCompanyTel(), id)) {
             result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に登録されています");
         }
-        if (deletedCompanyService.isCompanyFaxDuplicate(companyForm.getCompanyFax(), id)) {
+        if (companyService.isCompanyFaxDuplicate(companyForm.getCompanyFax(), id)) {
             result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に登録されています");
         }
 		deletedCompanyService.restore(id);
@@ -86,8 +89,8 @@ public class DeletedCompanyController {
 	}
 
 	@PostMapping("/bulk-restore")
-	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
-			RedirectAttributes attributes) {
+	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,@Validated @ModelAttribute("companyForm") CompanyForm companyForm,
+			BindingResult result,RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
 			return "redirect:/deleted-companies";
@@ -97,6 +100,15 @@ public class DeletedCompanyController {
 			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
 			return "redirect:/deleted-companies";
 		}
+		if (companyService.isCompanyNamesDuplicate(companyForm.getCompanyName(), ids)) {
+            result.rejectValue("companyName", "error.companyForm", "この企業名はすでに使用されています");
+        }
+        if (companyService.isCompanyTelsDuplicate(companyForm.getCompanyTel(), ids)) {
+            result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に登録されています");
+        }
+        if (companyService.isCompanyFaxsDuplicate(companyForm.getCompanyFax(), ids)) {
+            result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に登録されています");
+        }
 		deletedCompanyService.restoreBulk(ids);
 		return "redirect:/deleted-companies";
 	}

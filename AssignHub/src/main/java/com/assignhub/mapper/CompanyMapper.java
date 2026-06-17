@@ -52,6 +52,9 @@ public interface CompanyMapper {
 	boolean existsByCompanyName( @Param("companyName") String companyName, 
 		    @Param("companyId") Integer companyId);
 	
+	boolean existsByCompanyNames( @Param("companyName") String companyName, 
+		    @Param("companyIds") List<Integer> companyIds);
+	
 	/**
 	 * 指定されたTELの登録件数を取得する（指定IDを除外）。
 	 *
@@ -62,14 +65,21 @@ public interface CompanyMapper {
 	boolean existsByCompanyTel( @Param("companyTel") String companyTel, 
 		    @Param("companyId") Integer companyId);
 	
+	boolean existsByCompanyTels( @Param("companyTel") String companyTel, 
+		    @Param("companyIds") List<Integer> companyIds);
+	
 	/**
 	 * 指定されたFAXの登録件数を取得する（指定IDを除外）。
 	 *
 	 * @param FAX 重複チェックするFAX
 	 * @param excludecompanyId チェックから除外する自身の企業ID
 	 * @return 一致するFAXの件数
-	 */boolean existsByCompanyFax( @Param("companyFax") String companyFax, 
+	 */
+	boolean existsByCompanyFax( @Param("companyFax") String companyFax, 
 			    @Param("companyId") Integer companyId);
+
+	boolean existsByCompanyFaxs( @Param("companyFax") String companyFax, 
+		    @Param("companyIds") List<Integer> companyIds);
 
 /**
  * 企業情報を論理削除する。

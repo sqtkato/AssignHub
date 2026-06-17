@@ -202,7 +202,16 @@
 	
 	<select id="countByEmails" resultType="int">
 		SELECT COUNT(*) FROM m_employee
-		WHERE email = #{email} AND delete_flg = 0
+		WHERE delete_flg = 0
+		AND	emai IN (
+		SELECT  email
+		FROM m_employee
+		WHERE emp_id IN
+		<foreach item="excludeEmpId" index="index" collection="excludeEmpIds" 
+				open="(" separator="," close=")">
+				#{excludeEmpId}
+		</foreach>
+		) 
 		<if test="excludeEmpIds != null">
 			AND emp_id NOT IN
 			<foreach item="excludeEmpId" index="index" collection="excludeEmpIds" 

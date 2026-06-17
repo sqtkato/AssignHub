@@ -61,7 +61,7 @@ public interface EmployeeMapper {
 	 */
 	int countByEmail(@Param("email") String email, @Param("excludeEmpId") Integer excludeEmpId);
 	
-	int countByEmails(@Param("email") String email, @Param("excludeEmpIds") List<Integer> excludeEmpIds);
+	int countByEmails(@Param("excludeEmpIds") List<Integer> excludeEmpIds);
 
 	
 	int countAll();
