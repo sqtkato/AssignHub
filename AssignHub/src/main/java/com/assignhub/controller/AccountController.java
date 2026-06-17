@@ -267,8 +267,7 @@ public class AccountController {
 	 */
 	@GetMapping("/import/template")
 	public ResponseEntity<byte[]> downloadTemplate() {
-		String csv = "アカウントID,ログインID,パスワード\n"
-				+ ",user001,pass1234\n";
+		String csv = "アカウントID,ログインID,パスワード,権限\n";
 
 		byte[] csvBytes = csv.getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
