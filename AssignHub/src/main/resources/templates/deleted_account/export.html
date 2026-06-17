@@ -4,6 +4,7 @@
 
 <head>
 	<title>論理削除アカウント情報エクスポート</title>
+	<meta charset="UTF-8">
 </head>
 
 <body>
@@ -27,37 +28,35 @@
 					</tr>
 				</table>
 			
-
-			<div class="table-scroll export-table">
-				<table class="table header-only-table table-dark">
-				<thead>
-					<tr>
-						<th class="acc_id">アカウントID</th>
-						<th class="acc_logId">ログインID</th>
-						<th class="acc_pas">パスワード</th>
-						<th class="acc_per">権限</th>
-						
-						</tr>
-					</thead>
-				<tbody>
-						<tr th:each="account : ${accounts}">
-							<td th:text="${account.accountId}"class="acc_id"></td>
-							<td th:text="${account.loginId}"class="acc_logId"></td>
-							<td th:text="''" class="acc_pas"></td>
-							<td th:text="${account.permission == 1 ? '管理' : '一般'}"class="acc_per"></td>						
-
-						</tr>
-					</tbody>
-				</table>
-			</div>
-				<p class="export-note">※詳細情報がエクスポートされます。</p>
+				<div class="table-scroll export-table">
+					<table class="table header-only-table table-dark">
+						<thead>
+							<tr>
+								<th class="acc_id">アカウントID</th>
+								<th class="acc_logId">ログインID</th>
+								<th class="acc_pas">パスワード</th>
+								<th class="acc_per">権限</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="account : ${accounts}">
+								<td th:text="${account.accountId}"class="acc_id"></td>
+								<td th:text="${account.loginId}"class="acc_logId"></td>
+								<td th:text="''" class="acc_pas"></td>
+								<td th:text="${account.permission == 1 ? '管理' : '一般'}"class="acc_per"></td>						
+							</tr>
+						</tbody>
+					</table>
+				</div>
+					<p class="export-note">※詳細情報がエクスポートされます。</p>
 			</div>
 			</div>
 			<div class="action-area">
     			<form th:action="@{/deleted-accounts/export/download}" method="post">
 							<input type="hidden" name="ids" th:value="${id}" th:each="id : ${ids}">
         					<button type="submit" class="btn btn-primary common-btn">エクスポート</button>
-							<a th:href="@{/deleted-accounts}" class="btn btn-secondary common-btn">戻る</a>
+							<button type="button" id="btn_account_back" class="btn-back"
+									th:onclick="|location.href='@{/deleted-accounts}'|">戻る</button>
 				</form>
 			</div>
 		</div>
