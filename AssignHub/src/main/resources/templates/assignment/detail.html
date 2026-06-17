@@ -51,12 +51,12 @@
 
 					<tr>
 						<th>所属企業</th>
-						<td th:text="${assignment.employee.company.companyName}"></td>
+						<td th:text="${assignment.employee.company != null ? assignment.employee.company.companyName : 'ー'}"></td>
 					</tr>
 
 					<tr>
 						<th>所属企業カナ</th>
-						<td th:text="${assignment.employee.company.companyNameKana}"></td>
+						<td th:text="${assignment.employee.company != null ? assignment.employee.company.companyNameKana : 'ー'}"></td>
 					</tr>
 
 					<tr>
