@@ -14,7 +14,7 @@
 			<h2>アカウント情報変更入力</h2>
 		</div>
 		<div class="card form-card">
-			<form th:action="@{/accounts/{id}/edit(id=${id})}" th:object="${accountForm}" method="post">
+			<form th:action="@{/accounts/{id}/edit(id=${id})}" th:object="${accountForm}" method="post" class="edit-form">
 				<input type="hidden" th:field="*{accountId}" />
 
 				<div class="form-group">
