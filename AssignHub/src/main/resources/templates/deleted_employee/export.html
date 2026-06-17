@@ -1,20 +1,20 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
-	
+
 <head>
 	<title>論理削除社員情報エクスポート</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" th:href="@{/css/employee.css}">
 </head>
-	
-	<body>
-		<div layout:fragment="content">
-			<div class="page-title-area">
-				<h2>論理削除社員情報エクスポート</h2>
-			</div>
-			<div class="card form-card-wide">
-				<p class="instruction">以下の内容でcsvファイルを出力します。<br>よろしければ「エクスポート」ボタンを教えてください。</p>
+
+<body>
+	<div layout:fragment="content">
+		<div class="page-title-area">
+			<h2>論理削除社員情報エクスポート</h2>
+		</div>
+		<div class="card form-card-wide">
+			<p class="instruction">以下の内容でcsvファイルを出力します。<br>よろしければ「エクスポート」ボタンを教えてください。</p>
 			<div class="export-confirm-box">
 				<h4 class="export-confirm-title">出力条件の確認</h4>
 				<table class="export-table">
@@ -30,14 +30,14 @@
 				<div class="table-scroll export-table">
 					<table class="table header-only-table table-dark">
 						<thead>
-						<tr>
-							<th>社員ID</th>
-							<th>社員名</th>
-							<th>アサイン先企業</th>
-							<th>所属企業</th>
-						</tr>
+							<tr>
+								<th>社員ID</th>
+								<th>社員名</th>
+								<th>アサイン先企業</th>
+								<th>所属企業</th>
+							</tr>
 						</thead>
-						
+
 						<tbody>
 							<tr th:each="emp : ${employees}" class="clickable-row">
 								<td th:text="${emp.empId}"></td>
@@ -47,7 +47,6 @@
 							</tr>
 						</tbody>
 					</table>
-					
 				</div>
 				<p class="export-note">※ 詳細情報がエクスポートされます</p>
 			</div>
@@ -56,9 +55,11 @@
 					<input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">
 					<button type="submit" class="btn-csv">エクスポート</button>
 					<button type="button" id="btn_account_back" class="btn-back"
-								th:onclick="|location.href='@{/deleted-employees}'|">戻る</button>
+						th:onclick="|location.href='@{/deleted-employees}'|">戻る</button>
 				</form>
 			</div>
 		</div>
-	</body>
+	</div>
+</body>
+
 </html>
