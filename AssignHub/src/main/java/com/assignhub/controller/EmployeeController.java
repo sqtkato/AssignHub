@@ -1,5 +1,6 @@
 package com.assignhub.controller;
 
+import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -274,35 +275,50 @@ public class EmployeeController {
 	 * @param model 画面描画用のモデル
 	 * @return インポート画面のテンプレートパス
 	 */
+	/**
+	 * CSVファイルを用いた社員情報の一括インポート処理を実行する。
+	 *
+	 * @param file  アップロードされたCSVファイル
+	 * @param model 画面描画用のモデル
+	 * @return インポート画面のテンプレートパス
+	 */
 	@PostMapping("/import")
-	public String importCsv(@RequestParam("file") MultipartFile file, Model model) throws Exception {
-		// ファイル未選択
-		if (file.isEmpty()) {
-			model.addAttribute("toastError", "ファイルが選択されていません");
-			return "employee/import";
-		}
+	public String importCsv(
+	        @RequestParam(name = "file", required = false) MultipartFile file,
+	        Model model) {
 
-		// CSV以外のファイル
-		String filename = file.getOriginalFilename();
-		if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
-			model.addAttribute("toastError", "ファイル形式が正しくありません。CSVファイルを選択してください");
-			return "employee/import";
-		}
+	    if (file == null || file.isEmpty()) {
+	        model.addAttribute("toastError", "ファイルを選択してください");
+	        return "employee/import";
+	    }
 
-		// 容量チェック（5MB）
-		if (file.getSize() > 5 * 1024 * 1024) {
-			model.addAttribute("toastError", "ファイルサイズは5MB以内にしてください");
-			return "employee/import";
-		}
+	    String filename = file.getOriginalFilename();
+	    if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
+	        model.addAttribute("toastError", "ファイルの形式が正しくありません。CSVファイルを選択してください");
+	        return "employee/import";
+	    }
 
-		try {
-			EmployeeService.ImportResult result = employeeService.importCsv(file);
-			model.addAttribute("importResult", result);
-			return "employee/import";
-		} catch (java.nio.charset.MalformedInputException e) {
-			model.addAttribute("toastError", "UTF-8のCSVファイルを選択してください");
-			return "employee/import";
-		}
+	    if (file.getSize() > 5 * 1024 * 1024) {
+	        model.addAttribute("toastError", "ファイルサイズは5MB以内にしてください");
+	        return "employee/import";
+	    }
+
+	    try {
+	        EmployeeService.ImportResult result = employeeService.importCsv(file);
+	        model.addAttribute("importResult", result);
+	        if (result.errorCount > 0) {
+	            model.addAttribute("toastError", "一部の行でエラーが発生しました");
+	        } else {
+	            model.addAttribute("toastMessage", result.successCount + "件のインポート処理が完了しました");
+	        }
+	        return "employee/import";
+	    } catch (MalformedInputException e) {
+	        model.addAttribute("toastError", "UTF-8のCSVファイルを選択してください");
+	        return "employee/import";
+	    } catch (Exception e) {
+	        model.addAttribute("toastError", "ファイルの読み込みに失敗しました");
+	        return "employee/import";
+	    }
 	}
 
 	/**
