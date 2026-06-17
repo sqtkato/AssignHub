@@ -3,6 +3,7 @@ package com.assignhub.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,9 +53,12 @@ public class AccountController {
 		this.assignmentService = assignmentService;
 	}
 
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+	    binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+	}
 	/**
-	 * アカウント一覧画面を表示する。検索・ソート条件に応じたデータを取得する。
-	 *
+	 * アカウント一覧画面を表示する。検索・ソート条件に応じたデータを取得する
 	 * @param keywordEmpName 社員名検索キーワード（任意）
 	 * @param model 画面描画用モデル
 	 * @return 一覧画面のテンプレートパス
@@ -98,7 +104,9 @@ public class AccountController {
 	 */
 	@PostMapping("/create")
 	public String store(@Validated @ModelAttribute("account") AccountForm form,
-			BindingResult result, Model model) {
+			BindingResult result,RedirectAttributes attributes, Model model) {
+		Account account = new Account();
+		copyFormToEntity(form, account);
 		if (result.hasErrors()) {
 			return "account/create";
 		}
@@ -106,9 +114,9 @@ public class AccountController {
 			model.addAttribute("loginIdError", "このログインIDは既に使用されています");
 			return "account/create";
 		}
-		Account account = new Account();
-		copyFormToEntity(form, account);
+		
 		accountService.save(account);
+		attributes.addFlashAttribute("toastMessage", "アカウント情報を登録しました");
 
 		return "redirect:/accounts";
 	}
@@ -147,7 +155,7 @@ public class AccountController {
 	@PostMapping("/{id}/edit")
 	public String update(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
-			BindingResult result, Model model) {
+			BindingResult result,RedirectAttributes attributes,Model model) {
 
 		if (result.hasErrors()) {
 			return "account/edit";
@@ -162,6 +170,7 @@ public class AccountController {
 		acc.setAccountId(id);
 		copyFormToEntity(accountForm, acc);
 		accountService.save(acc);
+		attributes.addFlashAttribute("toastMessage", "アカウント情報を更新しました");
 		return "redirect:/accounts";
 	}
 
@@ -177,6 +186,7 @@ public class AccountController {
 		accountService.delete(id);
 		employeeService.deleteByAccountId(id);
 		assignmentService.deleteByAccountId(id);
+		attributes.addFlashAttribute("toastMessage", "アカウント情報を削除しました");
 		return "redirect:/accounts";
 	}
 
