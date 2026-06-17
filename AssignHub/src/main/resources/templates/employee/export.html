@@ -4,6 +4,7 @@
 	
 	<head>
 		<title>社員情報エクスポート</title>
+		<link rel="stylesheet" th:href="@{/css/employee.css}">
 	</head>
 	
 	<body>
@@ -27,7 +28,7 @@
 					</tr>
 				</table>
 				
-				<div class="table-scroll export-table">
+				<div class="export-table-scroll export-table">
 					<table class="table header-only-table table-dark">
 						<thead>
 							<tr>
@@ -51,8 +52,8 @@
 		</div>
 		<div class="action-area">
 			<form th:action="@{/employees/export/download(ids=${ids})}" method="post">
-				<button type="submit" class="btn-csv">エクスポート</button>
-				<button type="button" id="btn_account_back" class="btn-back"
+				<button type="submit" class="btn btn-export btn-export:hover">エクスポート</button>
+				<button type="button" id="btn_account_back" class="btn-back btn-back:hover"
 							th:onclick="|location.href='@{/employees}'|">戻る</button>
 			</form>
 		</div>
