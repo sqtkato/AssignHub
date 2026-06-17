@@ -108,7 +108,7 @@
 						<div id="loginIdArea" style="display: none;">
 							    <label>ログインID<span class="badge-required">必須</span></label>
 							<select id="loginId" th:field="*{accountId}" class="dropdown form-control fixed-all30">
-									<option value="" th:text="${employee.account?.loginId} ?: '未選択'"></option>
+									<option value="" th:text="${employee?.account?.loginId ?: '未選択'}"></option>>
 								<option th:each="account : ${accounts}" th:value="${account.accountId}"
 									th:text="${account.loginId}">
 								</option>
