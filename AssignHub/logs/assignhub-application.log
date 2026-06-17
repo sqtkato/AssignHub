@@ -897,3 +897,63 @@
 2026-06-17T14:14:15.275+09:00 DEBUG 25320 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
 2026-06-17T14:14:15.275+09:00 DEBUG 25320 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
 2026-06-17T14:14:15.307+09:00 DEBUG 25320 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : <==      Total: 1
+2026-06-17T14:18:30.859+09:00  INFO 25320 --- [RMI TCP Connection(69)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-17T14:18:30.860+09:00  INFO 25320 --- [RMI TCP Connection(69)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T14:18:30.998+09:00  INFO 25320 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-17T14:18:31.000+09:00  INFO 25320 --- [RMI TCP Connection(69)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-06-17T14:18:31.003+09:00  INFO 25320 --- [RMI TCP Connection(69)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-06-17T14:18:33.494+09:00  INFO 19560 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 19560 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:18:33.499+09:00  INFO 19560 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:18:33.787+09:00  INFO 19560 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-17T14:18:33.788+09:00  INFO 19560 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-17T14:18:35.074+09:00  INFO 19560 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:18:35.091+09:00  INFO 19560 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:18:35.091+09:00  INFO 19560 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:18:35.138+09:00  INFO 19560 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1349 ms
+2026-06-17T14:18:36.996+09:00  INFO 19560 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-17T14:18:37.035+09:00  INFO 19560 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 4.063 seconds (process running for 4.781)
+2026-06-17T14:18:37.373+09:00  INFO 19560 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-17T14:18:37.373+09:00  INFO 19560 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-17T14:18:37.378+09:00  INFO 19560 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2026-06-17T14:18:46.293+09:00  INFO 19560 --- [http-nio-8080-exec-3] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-17T14:18:46.587+09:00  INFO 19560 --- [http-nio-8080-exec-3] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@488d41d6
+2026-06-17T14:18:46.591+09:00  INFO 19560 --- [http-nio-8080-exec-3] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-17T14:18:46.609+09:00 DEBUG 19560 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-17T14:18:46.671+09:00 DEBUG 19560 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: nagashima(String)
+2026-06-17T14:18:46.726+09:00 DEBUG 19560 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-17T14:18:46.978+09:00 DEBUG 19560 --- [http-nio-8080-exec-4] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-17T14:18:46.981+09:00 DEBUG 19560 --- [http-nio-8080-exec-4] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-17T14:18:46.986+09:00 DEBUG 19560 --- [http-nio-8080-exec-4] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 0
+2026-06-17T14:18:51.572+09:00 DEBUG 19560 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T14:18:51.574+09:00 DEBUG 19560 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T14:18:51.579+09:00 DEBUG 19560 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findAll         : <==      Total: 1
+2026-06-17T14:19:23.533+09:00 DEBUG 19560 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-17T14:19:23.535+09:00 DEBUG 19560 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-17T14:19:23.545+09:00 DEBUG 19560 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-17T14:19:25.620+09:00 DEBUG 19560 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T14:19:25.622+09:00 DEBUG 19560 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T14:19:25.639+09:00 DEBUG 19560 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : <==      Total: 1
+2026-06-17T14:19:31.420+09:00 DEBUG 19560 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.findById        : ==>  Preparing: SELECT * FROM m_account WHERE account_id = ?
+2026-06-17T14:19:31.425+09:00 DEBUG 19560 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.findById        : ==> Parameters: 30(Integer)
+2026-06-17T14:19:31.434+09:00 DEBUG 19560 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.findById        : <==      Total: 1
+2026-06-17T14:19:33.093+09:00 DEBUG 19560 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T14:19:33.095+09:00 DEBUG 19560 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T14:19:33.103+09:00 DEBUG 19560 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : <==      Total: 1
+2026-06-17T14:19:38.685+09:00 DEBUG 19560 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T14:19:38.686+09:00 DEBUG 19560 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T14:19:38.695+09:00 DEBUG 19560 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findAll         : <==      Total: 1
+2026-06-17T14:19:41.000+09:00 DEBUG 19560 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T14:19:41.002+09:00 DEBUG 19560 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T14:19:41.016+09:00 DEBUG 19560 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : <==      Total: 1
+2026-06-17T14:19:42.282+09:00 DEBUG 19560 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T14:19:42.285+09:00 DEBUG 19560 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T14:19:42.296+09:00 DEBUG 19560 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findAll         : <==      Total: 1
+2026-06-17T14:19:43.630+09:00 DEBUG 19560 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findByIds       : ==>  Preparing: SELECT a.account_id, a.login_id, a.permission, a.password_hash, a.created_at, a.updated_at, e.emp_id, e.last_name, e.first_name FROM m_account a LEFT JOIN m_employee e ON a.account_id = e.account_id WHERE a.account_id IN ( ? )
+2026-06-17T14:19:43.632+09:00 DEBUG 19560 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findByIds       : ==> Parameters: 30(Integer)
+2026-06-17T14:19:43.640+09:00 DEBUG 19560 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findByIds       : <==      Total: 1
+2026-06-17T14:19:43.642+09:00 DEBUG 19560 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findByIds       : ==>  Preparing: SELECT a.account_id, a.login_id, a.permission, a.password_hash, a.created_at, a.updated_at, e.emp_id, e.last_name, e.first_name FROM m_account a LEFT JOIN m_employee e ON a.account_id = e.account_id WHERE a.account_id IN ( ? )
+2026-06-17T14:19:43.643+09:00 DEBUG 19560 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findByIds       : ==> Parameters: 30(Integer)
+2026-06-17T14:19:43.648+09:00 DEBUG 19560 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findByIds       : <==      Total: 1
+2026-06-17T14:19:55.415+09:00 DEBUG 19560 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T14:19:55.416+09:00 DEBUG 19560 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T14:19:55.422+09:00 DEBUG 19560 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : <==      Total: 1

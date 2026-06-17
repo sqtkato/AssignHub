@@ -33,13 +33,15 @@
 	
 }
 
-.export-contents{
-	width:60%;
-	margin:20px auto 0;
+.export-contents p{
+	width: 700px;
+	margin:20px auto 0;	
 }
 
 .table-scroll.export-table {
 	max-height: 340px;
+	width: 700px;
+	margin:20px auto 0;
 }
 
 /* アカウントID（半角3文字） */
