@@ -384,7 +384,7 @@ public class AssignmentController {
 	}
 
 	/**
-	 * 検索条件に合致するアサイン履歴データをCSV形式でダウンロードする。
+	 * 選択されたアサイン履歴情報をCSV形式でエクスポートするする。
 	 * 
 	 * @param ids エクスポート対象のアサインIDリスト
 	 * @return CSVファイルのバイナリデータを含むHTTPレスポンスエンティティ
