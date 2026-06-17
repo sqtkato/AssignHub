@@ -2,6 +2,8 @@ package com.assignhub.form;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -9,9 +11,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.Data;
 
 /**
@@ -49,12 +48,12 @@ public class EmployeeForm {
 
 	/** 生年月日(任意) */
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@PastOrPresent(message = "入力された年月日は存在しません") 
+	@PastOrPresent(message = "入力された年月日は存在しません")
 	private LocalDate birthDate;
-	
+
 	/** 入社年月(任意) */
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@PastOrPresent(message = "入力された年月日は存在しません") 
+	@PastOrPresent(message = "入力された年月日は存在しません")
 	private LocalDate hireDate;
 
 	/**勤続年数（任意、最大３桁） */
@@ -95,7 +94,7 @@ public class EmployeeForm {
 	/**所属企業 (必須)*/
 	@NotBlank(message = "所属企業は必須です")
 	private String companyName;
-	
+
 	/**ログインID (必須)*/
 	@NotNull(message = "ログインIDは必須です")
 	private Integer accountId;

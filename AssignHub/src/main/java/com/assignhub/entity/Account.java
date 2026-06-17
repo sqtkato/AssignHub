@@ -11,13 +11,13 @@ public class Account {
 
 	/** ログインID */
 	private String loginId;
-	
+
 	/** パスワード */
 	private String passwordHash;
-	
+
 	/** 権限 */
 	private Integer permission;
-	
+
 	/** 削除フラグ */
 	private String deleteFlg;
 
@@ -26,7 +26,7 @@ public class Account {
 
 	/** 更新日時 */
 	private LocalDateTime updatedAt;
-	
+
 	/** 社員情報（外部DBから取得）*/
 	private Employee Employee;
 }

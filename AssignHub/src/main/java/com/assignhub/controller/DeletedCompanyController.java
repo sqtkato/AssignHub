@@ -44,16 +44,6 @@ public class DeletedCompanyController {
 		this.companyService = companyService;
 	}
 
-	/**
-	 * 論理削除済み企業削除/復元一覧画面を表示する。
-	 *
-	 * @param txt_emp_name_keyword 検索キーワード（社員名）
-	 * @param txt_emp_assign_company_keyword 検索キーワード（アサイン先企業名）
-	 * @param txt_emp_company_keyword 検索キーワード（所属企業名）
-	 * @param cmb_engtineer_type_keyword 検索キーワード（エンジニアタイプ）
-	 * @param model   画面描画用のモデル
-	 * @return 一覧画面のテンプレートパス
-	 */
 	@GetMapping
 	public String index(@RequestParam(name = "companyName", required = false) String companyName,
 			@RequestParam(name = "companyTel", required = false) String companyTel,
@@ -156,7 +146,6 @@ public class DeletedCompanyController {
 	// ==========================================
 	// エクスポート処理
 	// ==========================================
-
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model,
 			RedirectAttributes attributes) {
