@@ -55,9 +55,6 @@ public class EmployeeController {
 	/**
 	 * 社員一覧画面を表示する。検索・ソート条件に応じたデータを取得する。
 	 *
-	 * @param keyword 検索キーワード（任意）
-	 * @param sort ソート対象のカラム名（デフォルト: emp_id）
-	 * @param order ソート順（デフォルト: asc）
 	 * @param model 画面描画用モデル
 	 * @return 一覧画面のテンプレートパス
 	 */
@@ -129,7 +126,7 @@ public class EmployeeController {
 
 	/**
 	 * 社員の社員詳細画面を表示する。
-	 *
+	 * 
 	 * @param id    社員一覧で詳細選択した社員ID
 	 * @param model 画面描画用のモデル
 	 * @return 社員情報詳細画面のテンプレートパス
@@ -269,13 +266,6 @@ public class EmployeeController {
 	}
 
 	/**
-	 * CSVファイルを用いた社員データの一括インポート処理を実行する。
-	 *
-	 * @param file  アップロードされたCSVファイル
-	 * @param model 画面描画用のモデル
-	 * @return インポート画面のテンプレートパス
-	 */
-	/**
 	 * CSVファイルを用いた社員情報の一括インポート処理を実行する。
 	 *
 	 * @param file  アップロードされたCSVファイル
@@ -346,7 +336,7 @@ public class EmployeeController {
 	/**
 	 * 社員データのエクスポート画面を表示する。
 	 *
-	 * @param keyword     現在の検索キーワード（状態保持用）
+	 * @param ids   削除対象となる社員IDのリスト
 	 * @param model  画面描画用のモデル
 	 * @return エクスポート画面のテンプレートパス
 	 */
