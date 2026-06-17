@@ -55,7 +55,7 @@ public class DeletedAccountController {
     public String recover(@PathVariable("id") Integer id, @Validated @ModelAttribute("accountForm") AccountForm accountForm,BindingResult result, RedirectAttributes attributes) {
     	if (deletedAccountService.isCompanyLimitReachedAfterRestore(1)) {
 			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
-			return "redirect:/deleted-companies";
+			return "redirect:/deleted-accounts";
 		}
     	if (deletedAccountService.isLoginIdDuplicate(accountForm.getLoginId(), id)) {
 			result.rejectValue("loginId","error.accountForm", "このログインIDは既に使用されています");
@@ -74,7 +74,7 @@ public class DeletedAccountController {
         }
         if (deletedAccountService.isCompanyLimitReachedAfterRestore(ids.size())) {
 			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
-			return "redirect:/deleted-companies";
+			return "redirect:/deleted-accounts";
 		}
         deletedAccountService.restoreBulk(ids);
         return "redirect:/deleted-accounts";
