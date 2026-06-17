@@ -8,7 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,17 +19,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Company;
+import com.assignhub.form.CompanyForm;
 import com.assignhub.service.DeletedCompanyService;
 
+/**
+ * 論理削除された企業情報の管理、復元、物理削除、エクスポートを処理するコントローラー。
+ * @author USYS) 北田
+ */
 @Controller
 @RequestMapping("/deleted-companies")
 public class DeletedCompanyController {
+	
 	private final DeletedCompanyService deletedCompanyService;
-
+	
+	/**
+	 * コンストラクタによる依存性の注入。
+	 *
+	 * @param deletedCompanyService 論理削除済み企業管理サービス
+	 */
 	public DeletedCompanyController(DeletedCompanyService deletedCompanyService) {
 		this.deletedCompanyService = deletedCompanyService;
 	}
 
+	/**
+	 * 論理削除済み企業削除/復元一覧画面を表示する。
+	 *
+	 * @param txt_emp_name_keyword 検索キーワード（社員名）
+	 * @param txt_emp_assign_company_keyword 検索キーワード（アサイン先企業名）
+	 * @param txt_emp_company_keyword 検索キーワード（所属企業名）
+	 * @param cmb_engtineer_type_keyword 検索キーワード（エンジニアタイプ）
+	 * @param model   画面描画用のモデル
+	 * @return 一覧画面のテンプレートパス
+	 */
 	@GetMapping
 	public String index(@RequestParam(name = "companyName", required = false) String companyName,
 			@RequestParam(name = "companyTel", required = false) String companyTel,
@@ -42,11 +66,21 @@ public class DeletedCompanyController {
 	// ==========================================
 
 	@PostMapping("/{id}/restore")
-	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+	public String recover(@PathVariable("id") Integer id,@Validated @ModelAttribute("companyForm") CompanyForm companyForm,
+			BindingResult result, RedirectAttributes attributes) {
 		if (deletedCompanyService.isCompanyLimitReachedAfterRestore(1)) {
 			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
 			return "redirect:/deleted-companies";
 		}
+		if (deletedCompanyService.isCompanyNameDuplicate(companyForm.getCompanyName(), id)) {
+            result.rejectValue("companyName", "error.companyForm", "この企業名はすでに使用されています");
+        }
+        if (deletedCompanyService.isCompanyTelDuplicate(companyForm.getCompanyTel(), id)) {
+            result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に登録されています");
+        }
+        if (deletedCompanyService.isCompanyFaxDuplicate(companyForm.getCompanyFax(), id)) {
+            result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に登録されています");
+        }
 		deletedCompanyService.restore(id);
 		return "redirect:/deleted-companies";
 	}
