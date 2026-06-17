@@ -63,4 +63,18 @@ public class EmployeeService {
 	public void save(Employee employee) {
 		employeeMapper.insert(employee);
 	}
+	
+	@Transactional
+	public void deleteByCompanyId(Integer id) {
+		employeeMapper.deleteByCompanyId(id);
+	}
+	
+	@Transactional
+	public void deleteBulkByCompanyId(List<Integer> ids) {
+		if (ids != null && !ids.isEmpty()) {
+			employeeMapper.deleteBulkByCompanyId(ids);
+		}
+	}
+	
+	
 }

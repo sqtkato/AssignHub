@@ -43,8 +43,8 @@ public class CompanyService {
 	 * @param order   昇順（asc）または降順（desc）
 	 * @return 企業エンティティのリスト
 	 */
-	public List<Company> findAll(String companyNameSearch,String companyTelSearch) {
-		return companyMapper.findAll(companyNameSearch,companyTelSearch);
+	public List<Company> findAll(String companyName, String companyTel) {
+		return companyMapper.findAll(companyName,companyTel);
 	}
 	
 	public List<Company> findByIds(List<Integer> ids) {

@@ -38,4 +38,8 @@ public interface EmployeeMapper {
 	 * @param employee 社員エンティティ
 	 */
 	void insert(Employee employee);
+	
+	void deleteByCompanyId(Integer id);
+	
+	void deleteBulkByCompanyId(@Param("ids") List<Integer> ids);
 }

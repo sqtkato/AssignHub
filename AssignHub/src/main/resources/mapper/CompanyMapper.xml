@@ -24,18 +24,18 @@
 
     <!-- 一覧表示 -->
 	<select id="findAll" resultMap="companyResultMap">
-        SELECT *
-        FROM m_company
-    <where>
-        delete_flg = 0
-    <if test="companyNameSearch != null and companyNameSearch != ''">
-         AND company_name LIKE CONCAT('%', #{companyNameSearch}, '%')
-     </if>
-     <if test="companyTelSearch != null and companyTelSearch != ''">
-         AND company_tel LIKE CONCAT('%', #{companyTelSearch}, '%')
-     </if>
-    </where>
-    </select>
+		SELECT *FROM m_company
+		<where>
+		delete_flg=0 
+		<if test="companyName != null and companyName != ''">
+			AND company_name LIKE CONCAT('%', #{companyName}, '%')
+		</if>
+		<if test ="companyTel != null and companyTel != ''">
+			AND company_tel LIKE CONCAT('%', #{companyTel}, '%')
+		</if>
+		</where>
+		ORDER BY company_id ASC
+	</select>
 
     <!-- 詳細選択 -->
 	<select id="findById" resultMap="companyResultMap">

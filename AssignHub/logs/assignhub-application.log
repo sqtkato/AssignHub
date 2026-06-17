@@ -3101,3 +3101,582 @@ Action:
 
 Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
 
+2026-06-17T14:12:07.211+09:00  INFO 17712 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 17712 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:12:07.221+09:00  INFO 17712 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:12:07.957+09:00  INFO 17712 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-17T14:12:07.958+09:00  INFO 17712 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-17T14:12:10.260+09:00  INFO 17712 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:12:10.299+09:00  INFO 17712 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:12:10.300+09:00  INFO 17712 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:12:10.397+09:00  INFO 17712 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2437 ms
+2026-06-17T14:12:12.514+09:00  INFO 17712 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-17T14:12:12.536+09:00  INFO 17712 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 6.365 seconds (process running for 8.27)
+2026-06-17T14:12:17.925+09:00  INFO 17712 --- [RMI TCP Connection(8)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-17T14:12:17.932+09:00  INFO 17712 --- [RMI TCP Connection(8)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T14:12:18.430+09:00  INFO 17712 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-17T14:16:57.946+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 23196 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:16:57.953+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:16:58.449+09:00  INFO 23196 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-17T14:16:58.450+09:00  INFO 23196 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-17T14:17:00.230+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:17:00.253+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:17:00.254+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:17:00.345+09:00  INFO 23196 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1894 ms
+2026-06-17T14:17:01.858+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-17T14:17:01.875+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 4.783 seconds (process running for 6.18)
+2026-06-17T14:17:17.595+09:00  INFO 23196 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-17T14:17:17.597+09:00  INFO 23196 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-17T14:17:17.605+09:00  INFO 23196 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2026-06-17T14:17:17.981+09:00  INFO 23196 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-17T14:17:18.725+09:00  INFO 23196 --- [http-nio-8080-exec-2] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@401b20c8
+2026-06-17T14:17:18.735+09:00  INFO 23196 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-17T14:17:18.770+09:00 DEBUG 23196 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT * FROM m_employee ORDER BY emp_id asc
+2026-06-17T14:17:18.871+09:00 DEBUG 23196 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-17T14:17:18.992+09:00 DEBUG 23196 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 0
+2026-06-17T14:17:24.015+09:00  WARN 23196 --- [http-nio-8080-exec-6] c.a.controller.GlobalExceptionHandler    : 静的リソースが見つかりません: /favicon.ico
+2026-06-17T14:17:25.806+09:00 DEBUG 23196 --- [http-nio-8080-exec-5] c.a.mapper.CompanyMapper.findAll         : ==>  Preparing: SELECT * FROM m_company WHERE delete_flg = 0
+2026-06-17T14:17:25.808+09:00 DEBUG 23196 --- [http-nio-8080-exec-5] c.a.mapper.CompanyMapper.findAll         : ==> Parameters: 
+2026-06-17T14:17:25.841+09:00 DEBUG 23196 --- [http-nio-8080-exec-5] c.a.mapper.CompanyMapper.findAll         : <==      Total: 3
+2026-06-17T14:17:44.179+09:00 DEBUG 23196 --- [http-nio-8080-exec-9] c.a.mapper.CompanyMapper.findAll         : ==>  Preparing: SELECT * FROM m_company WHERE delete_flg = 0 AND company_name LIKE CONCAT('%', ?, '%')
+2026-06-17T14:17:44.185+09:00 DEBUG 23196 --- [http-nio-8080-exec-9] c.a.mapper.CompanyMapper.findAll         : ==> Parameters: 株式会社(String)
+2026-06-17T14:17:44.207+09:00 DEBUG 23196 --- [http-nio-8080-exec-9] c.a.mapper.CompanyMapper.findAll         : <==      Total: 3
+2026-06-17T14:17:51.027+09:00 DEBUG 23196 --- [http-nio-8080-exec-2] c.a.mapper.CompanyMapper.findAll         : ==>  Preparing: SELECT * FROM m_company WHERE delete_flg = 0 AND company_name LIKE CONCAT('%', ?, '%') AND company_tel LIKE CONCAT('%', ?, '%')
+2026-06-17T14:17:51.029+09:00 DEBUG 23196 --- [http-nio-8080-exec-2] c.a.mapper.CompanyMapper.findAll         : ==> Parameters: 株式会社(String), 0120(String)
+2026-06-17T14:17:51.045+09:00 DEBUG 23196 --- [http-nio-8080-exec-2] c.a.mapper.CompanyMapper.findAll         : <==      Total: 3
+2026-06-17T14:17:52.375+09:00 DEBUG 23196 --- [http-nio-8080-exec-6] c.a.mapper.CompanyMapper.findAll         : ==>  Preparing: SELECT * FROM m_company WHERE delete_flg = 0 AND company_name LIKE CONCAT('%', ?, '%') AND company_tel LIKE CONCAT('%', ?, '%')
+2026-06-17T14:17:52.377+09:00 DEBUG 23196 --- [http-nio-8080-exec-6] c.a.mapper.CompanyMapper.findAll         : ==> Parameters: 株式会社(String), 0120(String)
+2026-06-17T14:17:52.394+09:00 DEBUG 23196 --- [http-nio-8080-exec-6] c.a.mapper.CompanyMapper.findAll         : <==      Total: 3
+2026-06-17T14:17:55.613+09:00 DEBUG 23196 --- [http-nio-8080-exec-8] c.a.mapper.CompanyMapper.findAll         : ==>  Preparing: SELECT * FROM m_company WHERE delete_flg = 0 AND company_name LIKE CONCAT('%', ?, '%') AND company_tel LIKE CONCAT('%', ?, '%')
+2026-06-17T14:17:55.615+09:00 DEBUG 23196 --- [http-nio-8080-exec-8] c.a.mapper.CompanyMapper.findAll         : ==> Parameters: 株式会社(String), 01200(String)
+2026-06-17T14:17:55.627+09:00 DEBUG 23196 --- [http-nio-8080-exec-8] c.a.mapper.CompanyMapper.findAll         : <==      Total: 1
+2026-06-17T14:20:29.768+09:00  INFO 23196 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-17T14:20:29.781+09:00  INFO 23196 --- [Thread-1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T14:20:30.501+09:00  INFO 23196 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-17T14:20:30.513+09:00  INFO 23196 --- [Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-17T14:20:30.540+09:00  INFO 23196 --- [Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-17T14:20:30.690+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 23196 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:20:30.691+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:20:31.111+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:20:31.114+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:20:31.115+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:20:31.148+09:00  INFO 23196 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 451 ms
+2026-06-17T14:20:31.177+09:00  WARN 23196 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'companyController': Resolution of declared constructors on bean Class [com.assignhub.controller.CompanyController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@2d857a] failed
+2026-06-17T14:20:31.178+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-17T14:20:31.187+09:00  INFO 23196 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-17T14:20:31.219+09:00 ERROR 23196 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'companyController': Resolution of declared constructors on bean Class [com.assignhub.controller.CompanyController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@2d857a] failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:368) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1321) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+Caused by: java.lang.NoClassDefFoundError: AssignmentService
+	at java.base/java.lang.Class.getDeclaredConstructors0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredConstructors(Class.java:3373) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructors(Class.java:2555) ~[na:na]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:363) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 25 common frames omitted
+Caused by: java.lang.ClassNotFoundException: AssignmentService
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:123) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525) ~[na:na]
+	... 29 common frames omitted
+
+2026-06-17T14:20:57.087+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 23196 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:20:57.088+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:20:57.467+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:20:57.469+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:20:57.469+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:20:57.512+09:00  INFO 23196 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 419 ms
+2026-06-17T14:20:57.534+09:00  WARN 23196 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'companyController': Resolution of declared constructors on bean Class [com.assignhub.controller.CompanyController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@dd3790f] failed
+2026-06-17T14:20:57.535+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-17T14:20:57.541+09:00  INFO 23196 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-17T14:20:57.547+09:00 ERROR 23196 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'companyController': Resolution of declared constructors on bean Class [com.assignhub.controller.CompanyController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@dd3790f] failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:368) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1321) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+Caused by: java.lang.NoClassDefFoundError: EmployeeService
+	at java.base/java.lang.Class.getDeclaredConstructors0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredConstructors(Class.java:3373) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructors(Class.java:2555) ~[na:na]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:363) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 25 common frames omitted
+Caused by: java.lang.ClassNotFoundException: EmployeeService
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:123) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525) ~[na:na]
+	... 29 common frames omitted
+
+2026-06-17T14:21:02.166+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 23196 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:21:02.167+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:21:02.503+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:21:02.505+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:21:02.505+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:21:02.536+09:00  INFO 23196 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 366 ms
+2026-06-17T14:21:02.886+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-17T14:21:02.892+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.765 seconds (process running for 247.197)
+2026-06-17T14:21:02.897+09:00  INFO 23196 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-17T14:23:32.172+09:00  INFO 23196 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2026-06-17T14:23:32.174+09:00  INFO 23196 --- [Thread-5] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T14:23:32.617+09:00  INFO 23196 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-17T14:23:32.766+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 23196 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:23:32.766+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:23:33.099+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:23:33.101+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:23:33.102+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:23:33.132+09:00  INFO 23196 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 363 ms
+2026-06-17T14:23:33.426+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-17T14:23:33.429+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.703 seconds (process running for 397.735)
+2026-06-17T14:23:33.432+09:00  INFO 23196 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-17T14:23:51.363+09:00  INFO 23196 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-17T14:23:51.365+09:00  INFO 23196 --- [Thread-15] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T14:23:51.818+09:00  INFO 23196 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-17T14:23:51.945+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 23196 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:23:51.946+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:23:52.235+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:23:52.237+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:23:52.238+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:23:52.265+09:00  INFO 23196 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 316 ms
+2026-06-17T14:23:52.529+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-17T14:23:52.534+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.625 seconds (process running for 416.839)
+2026-06-17T14:23:52.537+09:00  INFO 23196 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-17T14:24:36.988+09:00  INFO 23196 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-17T14:24:36.988+09:00  INFO 23196 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-17T14:24:36.993+09:00  INFO 23196 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-06-17T14:24:37.001+09:00  INFO 23196 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-06-17T14:24:37.044+09:00  INFO 23196 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@30faf30b
+2026-06-17T14:24:37.045+09:00  INFO 23196 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-06-17T14:24:37.046+09:00 DEBUG 23196 --- [http-nio-8080-exec-1] c.a.mapper.CompanyMapper.findAll         : ==>  Preparing: SELECT * FROM m_company WHERE delete_flg = 0 AND company_name LIKE CONCAT('%', ?, '%') AND company_tel LIKE CONCAT('%', ?, '%')
+2026-06-17T14:24:37.048+09:00 DEBUG 23196 --- [http-nio-8080-exec-1] c.a.mapper.CompanyMapper.findAll         : ==> Parameters: 株式会社(String), 01200(String)
+2026-06-17T14:24:37.062+09:00 DEBUG 23196 --- [http-nio-8080-exec-1] c.a.mapper.CompanyMapper.findAll         : <==      Total: 1
+2026-06-17T14:24:40.488+09:00 DEBUG 23196 --- [http-nio-8080-exec-3] c.a.mapper.CompanyMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_company WHERE delete_flg = 0
+2026-06-17T14:24:40.489+09:00 DEBUG 23196 --- [http-nio-8080-exec-3] c.a.mapper.CompanyMapper.countAll        : ==> Parameters: 
+2026-06-17T14:24:40.504+09:00 DEBUG 23196 --- [http-nio-8080-exec-3] c.a.mapper.CompanyMapper.countAll        : <==      Total: 1
+2026-06-17T14:24:54.939+09:00  INFO 23196 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-17T14:24:54.941+09:00  INFO 23196 --- [Thread-19] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T14:24:55.436+09:00  INFO 23196 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-17T14:24:55.440+09:00  INFO 23196 --- [Thread-19] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-06-17T14:24:55.446+09:00  INFO 23196 --- [Thread-19] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-06-17T14:24:55.577+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 23196 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:24:55.578+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:24:55.869+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:24:55.870+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:24:55.871+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:24:55.894+09:00  INFO 23196 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 312 ms
+2026-06-17T14:24:56.174+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-17T14:24:56.180+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.639 seconds (process running for 480.486)
+2026-06-17T14:24:56.183+09:00  INFO 23196 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-17T14:25:26.322+09:00  INFO 23196 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2026-06-17T14:25:26.324+09:00  INFO 23196 --- [Thread-23] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T14:25:26.853+09:00  INFO 23196 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-17T14:25:26.993+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 23196 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:25:26.993+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:25:27.293+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:25:27.294+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:25:27.294+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:25:27.323+09:00  INFO 23196 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 327 ms
+2026-06-17T14:25:27.582+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-17T14:25:27.586+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.622 seconds (process running for 511.892)
+2026-06-17T14:25:27.587+09:00  INFO 23196 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-17T14:25:52.003+09:00  INFO 23196 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-17T14:25:52.004+09:00  INFO 23196 --- [Thread-27] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T14:25:52.461+09:00  INFO 23196 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-17T14:25:52.607+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 23196 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:25:52.607+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:25:52.883+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:25:52.884+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:25:52.885+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:25:52.907+09:00  INFO 23196 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 296 ms
+2026-06-17T14:25:53.135+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-17T14:25:53.138+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.568 seconds (process running for 537.444)
+2026-06-17T14:25:53.140+09:00  INFO 23196 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-17T14:27:15.040+09:00  INFO 23196 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2026-06-17T14:27:15.043+09:00  INFO 23196 --- [Thread-31] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T14:27:15.576+09:00  INFO 23196 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-17T14:27:15.702+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 23196 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:27:15.704+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:27:16.070+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:27:16.072+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:27:16.073+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:27:16.109+09:00  INFO 23196 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 403 ms
+2026-06-17T14:27:16.198+09:00  WARN 23196 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'companyController' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\controller\CompanyController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'companyService' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\service\CompanyService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'companyMapper' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\mapper\CompanyMapper.class]: Cannot resolve reference to bean 'sqlSessionTemplate' while setting bean property 'sqlSessionTemplate'
+2026-06-17T14:27:16.200+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-17T14:27:16.207+09:00  INFO 23196 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-17T14:27:16.213+09:00 ERROR 23196 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'companyController' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\controller\CompanyController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'companyService' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\service\CompanyService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'companyMapper' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\mapper\CompanyMapper.class]: Cannot resolve reference to bean 'sqlSessionTemplate' while setting bean property 'sqlSessionTemplate'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1382) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1221) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'companyService' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\service\CompanyService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'companyMapper' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\mapper\CompanyMapper.class]: Cannot resolve reference to bean 'sqlSessionTemplate' while setting bean property 'sqlSessionTemplate'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1382) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1221) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1225) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1704) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1651) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 26 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'companyMapper' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\mapper\CompanyMapper.class]: Cannot resolve reference to bean 'sqlSessionTemplate' while setting bean property 'sqlSessionTemplate'
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1712) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1461) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:602) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1225) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1704) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1651) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 40 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionTemplate' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionTemplate' parameter 0: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception with message: Failed to parse mapping resource: 'file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:546) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1362) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1194) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 54 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception with message: Failed to parse mapping resource: 'file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1362) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1194) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1225) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1704) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1651) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 64 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception with message: Failed to parse mapping resource: 'file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:183) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:72) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:152) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 78 common frames omitted
+Caused by: java.io.IOException: Failed to parse mapping resource: 'file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:695) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.SqlSessionFactoryBean.afterPropertiesSet(SqlSessionFactoryBean.java:572) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.SqlSessionFactoryBean.getObject(SqlSessionFactoryBean.java:712) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration.sqlSessionFactory(MybatisAutoConfiguration.java:189) ~[mybatis-spring-boot-autoconfigure-4.0.1.jar:4.0.1]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:155) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 81 common frames omitted
+Caused by: org.apache.ibatis.builder.BuilderException: Error creating document instance.  Cause: org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 39; 途中でファイルの末尾に達しました。
+	at org.apache.ibatis.parsing.XPathParser.createDocument(XPathParser.java:262) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.parsing.XPathParser.<init>(XPathParser.java:127) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.<init>(XMLMapperBuilder.java:83) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:692) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	... 89 common frames omitted
+Caused by: org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 39; 途中でファイルの末尾に達しました。
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(ErrorHandlerWrapper.java:178) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:400) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLScanner.reportFatalError(XMLScanner.java:1465) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:1013) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:605) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:542) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:889) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:825) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:247) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342) ~[na:na]
+	at org.apache.ibatis.parsing.XPathParser.createDocument(XPathParser.java:260) ~[mybatis-3.5.19.jar:3.5.19]
+	... 92 common frames omitted
+
+2026-06-17T14:28:39.947+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 23196 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:28:39.947+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:28:40.273+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:28:40.275+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:28:40.275+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:28:40.303+09:00  INFO 23196 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 354 ms
+2026-06-17T14:28:40.366+09:00  WARN 23196 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'companyController' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\controller\CompanyController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'companyService' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\service\CompanyService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'companyMapper' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\mapper\CompanyMapper.class]: Cannot resolve reference to bean 'sqlSessionTemplate' while setting bean property 'sqlSessionTemplate'
+2026-06-17T14:28:40.366+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-17T14:28:40.372+09:00  INFO 23196 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-17T14:28:40.377+09:00 ERROR 23196 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'companyController' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\controller\CompanyController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'companyService' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\service\CompanyService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'companyMapper' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\mapper\CompanyMapper.class]: Cannot resolve reference to bean 'sqlSessionTemplate' while setting bean property 'sqlSessionTemplate'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1382) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1221) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'companyService' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\service\CompanyService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'companyMapper' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\mapper\CompanyMapper.class]: Cannot resolve reference to bean 'sqlSessionTemplate' while setting bean property 'sqlSessionTemplate'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1382) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1221) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1225) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1704) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1651) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 26 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'companyMapper' defined in file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\com\assignhub\mapper\CompanyMapper.class]: Cannot resolve reference to bean 'sqlSessionTemplate' while setting bean property 'sqlSessionTemplate'
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1712) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1461) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:602) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1225) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1704) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1651) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 40 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionTemplate' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionTemplate' parameter 0: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception with message: Failed to parse mapping resource: 'file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:546) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1362) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1194) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 54 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception with message: Failed to parse mapping resource: 'file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1362) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1194) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1225) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1704) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1651) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 64 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception with message: Failed to parse mapping resource: 'file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:183) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:72) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:152) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 78 common frames omitted
+Caused by: java.io.IOException: Failed to parse mapping resource: 'file [C:\Users\ff_us\git\AssignHub\AssignHub\target\classes\mapper\AssignmentMapper.xml]'
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:695) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.SqlSessionFactoryBean.afterPropertiesSet(SqlSessionFactoryBean.java:572) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.SqlSessionFactoryBean.getObject(SqlSessionFactoryBean.java:712) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration.sqlSessionFactory(MybatisAutoConfiguration.java:189) ~[mybatis-spring-boot-autoconfigure-4.0.1.jar:4.0.1]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:155) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 81 common frames omitted
+Caused by: org.apache.ibatis.builder.BuilderException: Error creating document instance.  Cause: org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 39; 途中でファイルの末尾に達しました。
+	at org.apache.ibatis.parsing.XPathParser.createDocument(XPathParser.java:262) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.parsing.XPathParser.<init>(XPathParser.java:127) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.<init>(XMLMapperBuilder.java:83) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:692) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	... 89 common frames omitted
+Caused by: org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 39; 途中でファイルの末尾に達しました。
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:204) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(ErrorHandlerWrapper.java:178) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:400) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:327) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLScanner.reportFatalError(XMLScanner.java:1465) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:1013) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:605) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:542) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:889) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:825) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:247) ~[na:na]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342) ~[na:na]
+	at org.apache.ibatis.parsing.XPathParser.createDocument(XPathParser.java:260) ~[mybatis-3.5.19.jar:3.5.19]
+	... 92 common frames omitted
+
+2026-06-17T14:29:32.819+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 23196 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:29:32.819+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:29:33.139+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:29:33.141+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:29:33.141+09:00  INFO 23196 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:29:33.171+09:00  INFO 23196 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 349 ms
+2026-06-17T14:29:33.432+09:00  INFO 23196 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-17T14:29:33.439+09:00  INFO 23196 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.656 seconds (process running for 757.745)
+2026-06-17T14:29:33.442+09:00  INFO 23196 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-17T14:30:35.298+09:00  INFO 23196 --- [RMI TCP Connection(41)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-17T14:30:35.300+09:00  INFO 23196 --- [RMI TCP Connection(41)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T14:30:35.769+09:00  INFO 23196 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-17T14:30:54.224+09:00  INFO 14876 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 14876 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-17T14:30:54.233+09:00  INFO 14876 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T14:30:54.810+09:00  INFO 14876 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-17T14:30:54.810+09:00  INFO 14876 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-17T14:30:56.660+09:00  INFO 14876 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T14:30:56.702+09:00  INFO 14876 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T14:30:56.703+09:00  INFO 14876 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T14:30:56.803+09:00  INFO 14876 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1992 ms
+2026-06-17T14:30:58.454+09:00  INFO 14876 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-17T14:30:58.467+09:00  INFO 14876 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 5.059 seconds (process running for 6.353)
+2026-06-17T14:31:05.133+09:00  INFO 14876 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-17T14:31:05.135+09:00  INFO 14876 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-17T14:31:05.139+09:00  INFO 14876 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-06-17T14:31:05.431+09:00  INFO 14876 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-17T14:31:06.113+09:00  INFO 14876 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1e84e2d2
+2026-06-17T14:31:06.117+09:00  INFO 14876 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-17T14:31:06.152+09:00 DEBUG 14876 --- [http-nio-8080-exec-1] c.a.mapper.CompanyMapper.findAll         : ==>  Preparing: SELECT * FROM m_company WHERE delete_flg = 0
+2026-06-17T14:31:06.267+09:00 DEBUG 14876 --- [http-nio-8080-exec-1] c.a.mapper.CompanyMapper.findAll         : ==> Parameters: 
+2026-06-17T14:31:06.394+09:00 DEBUG 14876 --- [http-nio-8080-exec-1] c.a.mapper.CompanyMapper.findAll         : <==      Total: 3
+2026-06-17T14:36:10.897+09:00  WARN 14876 --- [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m4s629ms908µs900ns).
+2026-06-17T14:38:10.863+09:00  WARN 14876 --- [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=59s913ms748µs300ns).
+2026-06-17T14:44:35.829+09:00  INFO 14876 --- [RMI TCP Connection(21)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-17T14:44:35.836+09:00  INFO 14876 --- [RMI TCP Connection(21)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T14:44:36.317+09:00  INFO 14876 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-17T14:44:36.327+09:00  INFO 14876 --- [RMI TCP Connection(21)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-17T14:44:36.346+09:00  INFO 14876 --- [RMI TCP Connection(21)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
