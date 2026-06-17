@@ -27,37 +27,34 @@
 					</tr>
 				</table>
 				
-					<div class="table-scroll export-table">
-						<table class="table header-only-table table-dark">
-							<thead>
-								<tr>
-									<th >社員id</th>
-									<th>社員名</th>
-									<th>アサイン先企業</th>
-									<th>所属企業</th>
-								</tr>
-							</thead>
-						
-						<tbody>
-							<tr th:each="emp : ${employees}" class="clickable-row">
-								<td th:text="${emp.empId}"></td>
-								<td th:text="${emp.lastName} + ' ' + ${emp.firstName}"></td>
-								<td th:text="${emp.assignment?.company?.companyName} ?: 'ー'"></td>
-								<td th:text="${emp.company?.companyName} ?: 'ー'"></td>
+				<div class="table-scroll export-table">
+					<table class="table header-only-table table-dark">
+						<thead>
+							<tr>
+								<th >社員id</th>
+								<th>社員名</th>
+								<th>アサイン先企業</th>
+								<th>所属企業</th>
 							</tr>
-						</tbody>
-					</table>
-					<p class="export-note">※詳細情報がエクスポートされます。</p>
-				
-				<div class="action-area">
-					<form th:action="@{/employees/export/download(ids=${ids})}" method="post">
-						<button type="submit" class="btn-csv">エクスポート</button>
-						<button type="button" id="btn_account_back" class="btn-back"
-									th:onclick="|location.href='@{/employees}'|">戻る</button>
-					</form>
-				</div>
-				
+						</thead>
+					<tbody>
+						<tr th:each="emp : ${employees}" class="clickable-row">
+							<td th:text="${emp.empId}"></td>
+							<td th:text="${emp.lastName} + ' ' + ${emp.firstName}"></td>
+							<td th:text="${emp.assignment?.company?.companyName} ?: 'ー'"></td>
+							<td th:text="${emp.company?.companyName} ?: 'ー'"></td>
+						</tr>
+					</tbody>
+				</table>		
 			</div>
+			<p class="export-note">※詳細情報がエクスポートされます。</p>
+		</div>
+		<div class="action-area">
+			<form th:action="@{/employees/export/download(ids=${ids})}" method="post">
+				<button type="submit" class="btn-csv">エクスポート</button>
+				<button type="button" id="btn_account_back" class="btn-back"
+							th:onclick="|location.href='@{/employees}'|">戻る</button>
+			</form>
 		</div>
 	</body>
 </html>
