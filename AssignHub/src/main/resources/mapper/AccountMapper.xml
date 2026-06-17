@@ -83,8 +83,7 @@
 	</insert>
 	<update id="update">
 		UPDATE m_account
-		SET account_Id = #{accountId},
-		login_id =#{loginId},
+		SET login_id =#{loginId},
 		permission= #{permission},
 		password_Hash =
 		#{passwordHash},

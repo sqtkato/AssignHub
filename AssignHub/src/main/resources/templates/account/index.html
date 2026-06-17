@@ -20,7 +20,7 @@
 				<div class="form-group form-group-search">
 
 					<div class="search-item">
-						<label>権限</label>
+						<label>権限検索</label>
 						<select name="permission" class="form-control">
 							<option value="" th:selected="${permission == null}" class="">未選択</option>
 							<option value="0" th:selected="${permission != null and permission == 0}">一般</option>
@@ -28,13 +28,13 @@
 						</select>
 					</div>
 					<div class="search-item">
-						<label>社員名検索</label>
+						<label>社員検索</label>
 						<input type="text" name="empName" class="form-control" th:value="${empName}"
 							placeholder="例：山田 太郎">
 					</div>
 
 				</div>
-				<button type="submit" class="btn-search">検索</button>
+				<button type="submit" class="btn-search btn-search-position">検索</button>
 			</form>
 		</div>
 

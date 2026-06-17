@@ -29,7 +29,7 @@ a:hover {
 	background-color: #2c3e50;
 	color: #fff;
 	padding: 20px 0;
-	min-height: 100vh;
+	min-height: 95vh;
 	display: flex;
 	flex-direction: column;
 }
@@ -123,7 +123,10 @@ a:hover {
 	text-align: center;
 }
 
-
+.table td.text-center {
+	text-align: center;
+	margin: auto;
+}
 
 .table-dark th {
 	background-color: #2c3e50;
@@ -208,14 +211,14 @@ a:hover {
 	margin-bottom: 40px;
 }
 
-.form-actions-area-wide {
-	justify-content: center;
-	gap: 90px;
-}
-
 .form-actions a{
 	display: block;
 	text-align: center;
+}
+
+.form-actions-area-wide {
+	justify-content: center;
+	gap: 90px;
 }
 
 .form-actions-area-wide form {
@@ -780,12 +783,12 @@ a:hover {
 	font-weight: bold;
 	cursor: pointer;
 	transition: background-color 0.2s;
-	background-color: #4a78c8;
+	background-color: #0056b3;
 	color: #fff;
 }
 
 .btn-import:hover {
-	background-color: #3a68b8;
+	background-color:#004494;
 }
 
 .btn-export {
@@ -797,12 +800,12 @@ a:hover {
 	font-weight: bold;
 	cursor: pointer;
 	transition: background-color 0.2s;
-	background-color: #4a78c8;
+	background-color: #0056b3;
 	color: #fff;
 }
 
 .btn-export:hover {
-	background-color: #3a68b8;
+	background-color: #004494;
 }
 
 .btn-back {
@@ -814,12 +817,12 @@ a:hover {
 	font-weight: bold;
 	cursor: pointer;
 	transition: background-color 0.2s;
-	background-color: #cfcfcf;
+	background-color: #6c757d;
 	color: #fff;
 }
 
 .btn-back:hover {
-	background-color: #bfbfbf;
+	background-color: #5a6268;
 }
 .btn-detail {
 	width: 120px;
