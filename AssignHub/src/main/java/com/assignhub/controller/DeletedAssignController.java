@@ -67,7 +67,7 @@ public class DeletedAssignController {
 
 	/* 単一復元 */
 	@PostMapping("/{id}/restore")
-	public String recover(@PathVariable("id") Integer id, BindingResult result, RedirectAttributes attributes) {
+	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		
 		if (deletedAssignService.isAssginLimitReachedAfterRestore(1)) {
 			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
