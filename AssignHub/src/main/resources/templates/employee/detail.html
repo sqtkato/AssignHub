@@ -18,11 +18,11 @@
 			<table class="table detail-table">
 				<tr>
 					<th>作成日時</th>
-					<td th:text="${#temporals.format(employee.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					<td th:text="${#temporals.format(employee.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
 				</tr>
 				<tr>
 					<th>更新日時</th>
-					<td th:text="${#temporals.format(employee.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					<td th:text="${#temporals.format(employee.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
 				</tr>
 				<tr>
 					<th>社員ID</th>
@@ -46,15 +46,15 @@
 				</tr>
 				<tr>
 					<th>生年月日</th>
-					<td th:text="${employee.BirthDate}"></td>
+					<td th:text="${#temporals.format(employee.birthDate,'yyyy/MM/YY')}"></td>
 				</tr>
 				<tr>
 					<th>入社年月</th>
-					<td th:text="${employee.hireDate}"></td>
+					<td th:text="${#temporals.format(employee.hireDate,'yyyy/MM/YY')}"></td>
 				</tr>
 				<tr>
 					<th>勤続年数</th>
-					<td th:text="${employee.yearsOfService}"></td>
+					<td th:text="${employee.yearsOfService != null} ? |${employee.yearsOfService}年| : 'ー'"></td>
 				</tr>
 				<tr>
 					<th>郵便番号</th>
@@ -85,6 +85,10 @@
 					<td th:text="${employee.company?.companyName} ?: 'ー'"></td>
 				</tr>
 				<tr>
+					<th>所属部署</th>
+					<td th:text="${employee.department} ?: 'ー'"></td>
+				</tr>
+				<tr>
 					<th>役職</th>
 					<td th:text="${employee.jobTitle}"></td>
 				</tr>
@@ -98,29 +102,35 @@
 				</tr>
 				<tr>
 					<th>契約開始日</th>
-					<td th:text="${employee.assignment?.contractStartDate} ?: 'ー'"></td>
+					<td
+						th:text="${employee.assignment?.contractStartDate} ? ${#temporals.format(employee.assignment.contractStartDate, 'yyyy/MM/dd')} : 'ー'">
+					</td>
 				</tr>
 				<tr>
 					<th>契約終了日</th>
-					<td th:text="${employee.assignment?.contractEndDate} ?: 'ー'"></td>
+					<td
+						th:text="${employee.assignment?.contractEndDate} ? ${#temporals.format(employee.assignment.contractEndDate, 'yyyy/MM/dd')} : 'ー'">
+					</td>
 				</tr>
 				<tr>
 					<th>契約単価</th>
-					<td th:text="${employee.assignment?.unitPrice} != null ? ${#numbers.formatInteger(employee.assignment.unitPrice, 3, 'COMMA') + ' 円'} : 'ー'"></td>
+					<td
+						th:text="${employee.assignment?.unitPrice} != null ? ${#numbers.formatInteger(employee.assignment.unitPrice, 3, 'COMMA') + ' 円'} : 'ー'">
+					</td>
 				</tr>
 			</table>
 
-			<div class="form-actions common-actions">
+			<div class="form-actions form-actions-area-wide">
 				<a th:href="@{/employees/{id}/edit(id=${employee.empId},from='detail')}"
-					class="btn btn-primary common-btn">変更</a>
+					class="btn btn-primary ">変更</a>
 
 
 				<form th:action="@{/employees/{id}/delete(id=${employee.empId})}" method="post" style="display:inline;">
-					<button type="button" class="btn btn-danger common-btn"
+					<button type="button" class="btn btn-danger "
 						th:onclick="|openDeleteModal(${employee.empId})|">削除</button>
 				</form>
 
-				<a th:href="@{/employees}" class="btn btn-secondary common-btn">戻る</a>
+				<a th:href="@{/employees}" class="btn btn-secondary ">戻る</a>
 			</div>
 		</div>
 	</div>
