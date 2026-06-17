@@ -143,7 +143,6 @@ public class EmployeeService {
 		ImportResult result = new ImportResult();
 		int insertPlan = 0;
 
-		// UTF-8として不正なバイト列を検出したら例外を投げるデコーダ
 		CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
 				.onMalformedInput(CodingErrorAction.REPORT)
 				.onUnmappableCharacter(CodingErrorAction.REPORT);
