@@ -13,14 +13,12 @@
 			 <h2>社員情報インポート</h2>
 			</div>
 			<div class="card form-card-wide">
-			<p class="instruction">CSVファイルを選択して社員情報を一括登録・更新します。
-				<br>※既存の社員IDと一致する場合は上書き更新、空欄の場合は新規登録されます。
-				<br>※エンジニアタイプにより、登録される項目が異なります。
-			</p>
-			<ul class="instruction">
-			    <li>プロパー … ログインIDのみ登録（所属企業は登録されません）</li>
-			    <li>パートナー … 所属企業のみ登録（ログインIDは登録されません）</li>
-			</ul>
+				<p class="instruction">CSVファイルを選択して社員情報を一括登録・更新します。
+					<br>※既存の社員IDと一致する場合は上書き更新、空欄の場合は新規登録されます。
+					<br>※エンジニアタイプにより、登録される項目が異なります。
+					<br>・プロパー … ログインIDのみ登録（所属企業は登録されません）
+					<br>・パートナー … 所属企業のみ登録（ログインIDは登録されません）
+				</p>
 			<form th:action="@{/employees/import}" method="post" enctype="multipart/form-data">
 				<div class="upload-zone">
 					<p class="upload-zone-text">社員情報データCSVを選択してください</p>

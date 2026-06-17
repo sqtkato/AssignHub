@@ -227,7 +227,7 @@ public class EmployeeService {
 				    result.errors.add(new CsvRowError(rowNum, "社員姓カナ", "社員姓カナは50文字以内で入力してください"));
 				    hasError = true;
 				} else if (!lastNameKana.matches("^[ァ-ヶー]+$")) {
-				    result.errors.add(new CsvRowError(rowNum, "社員姓カナ", "社員姓カナは全角カタカナで入力してください"));
+				    result.errors.add(new CsvRowError(rowNum, "社員姓カナ", "社員姓カナは全角カナで入力してください"));
 				    hasError = true;
 				} else {
 				    emp.setLastNameKana(lastNameKana);
@@ -241,7 +241,7 @@ public class EmployeeService {
 				    result.errors.add(new CsvRowError(rowNum, "社員名カナ", "社員名カナは50文字以内で入力してください"));
 				    hasError = true;
 				} else if (!firstNameKana.matches("^[ァ-ヶー]+$")) {
-				    result.errors.add(new CsvRowError(rowNum, "社員名カナ", "社員名カナは全角カタカナで入力してください"));
+				    result.errors.add(new CsvRowError(rowNum, "社員名カナ", "社員名カナは全角カナで入力してください"));
 				    hasError = true;
 				} else {
 				    emp.setFirstNameKana(firstNameKana);
