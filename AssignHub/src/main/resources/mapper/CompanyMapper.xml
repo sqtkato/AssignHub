@@ -140,10 +140,10 @@
     </foreach>
     </update>
     
-    <select id="countAll" resultType="int">
-    SELECT COUNT(*)
-    FROM m_company
-    WHERE delete_flg = 0
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*)
+		FROM m_company
+		WHERE delete_flg = 0
 	</select>
 
 </mapper>
