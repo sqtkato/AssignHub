@@ -136,4 +136,15 @@ public class DeletedAssignService {
 	public boolean existEmployeePartnerByAssignIds(List<Integer> ids) {
 		return deletedAssignMapper.existEmployeePartnerByAssignIds(ids) > 0;
 	}
+	/**
+	 * アサイン履歴がすでに登録されているか（重複しているか）を判定する。
+	 *
+	 * @param id 復元するアサイン履歴のid
+	 * @return 重複していればtrue
+	 */
+	public boolean isDuplicate(Integer id) {
+		int count = deletedAssignMapper.isDuplicate(id);
+		return count > 0;
+	}
+	
 }

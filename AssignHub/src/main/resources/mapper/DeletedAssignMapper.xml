@@ -221,26 +221,6 @@
 		</foreach>
 	</select>
 
-	<select id="existEmployeeProperByAssignId" resultType="int">
-		SELECT COUNT(*)
-		FROM t_assignment a
-		INNER JOIN m_employee e ON a.emp_id = e.emp_id
-		WHERE a.assignment_id = #{id}
-		AND e.engineer_type = 0
-		AND e.delete_flg = 1
-	</select>
-
-	<select id="existEmployeeProperByAssignIds" resultType="int">
-		SELECT COUNT(*)
-		FROM t_assignment a
-		INNER JOIN m_employee e ON a.emp_id = e.emp_id
-		WHERE e.delete_flg = 1
-		AND e.engineer_type = 0
-		AND a.assignment_id IN
-		<foreach item="id" collection="ids" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</select>
 
 	<select id="existEmployeePartnerByAssignId" resultType="int">
 		SELECT COUNT(*)
@@ -262,5 +242,21 @@
 			#{id}
 		</foreach>
 	</select>
+	
+	<select id="isDuplicate" resultType="int">
+		SELECT COUNT(*)
+		FROM t_assignment a, (
+			SELECT emp_id, company_id, contract_start_date, contract_end_date
+			FROM t_assignment ta
+			WHERE a.assignment_id = #{id}
+		) a2
+		WHERE a.emp_id = a2.emp_id
+		AND a.company_id = a2.company_id
+		AND a.contract_start_date = a2.contract_start_date
+		AND a.contract_end_date = a2.contract_end_date
+		AND e.delete_flg = 0
+	</select>
+	
+	
 
 </mapper>
