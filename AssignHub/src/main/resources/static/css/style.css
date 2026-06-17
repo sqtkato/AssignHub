@@ -204,8 +204,8 @@ a:hover {
 	display: flex;
 	justify-content: center;
 	gap: 10px;
-	margin-top: 8px;
-	margin-bottom: 40px;
+	margin-top: 35px;
+	margin-bottom: 30px;
 }
 
 .form-actions-area-wide {
@@ -465,6 +465,7 @@ a:hover {
 	color: #dc3545;
 	font-size: 0.85rem;
 	margin-top: 5px;
+	font-weight: 700; 
 }
 
 /* =========================================
