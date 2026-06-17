@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /* =========================================
-   Base Styles (全体リセットと基本設定)
+   共通ベース(基本設定)
 ========================================= */
 body {
 	margin: 0;
@@ -22,7 +22,7 @@ a:hover {
 }
 
 /* =========================================
-   Layout (サイドバーとメインコンテンツ)
+   共通レイアウト(サイドバーとメインコンテンツ)
 ========================================= */
 .sidebar {
 	width: 220px;
@@ -32,12 +32,6 @@ a:hover {
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
-}
-
-.sidebar-footer {
-	margin-top: auto;
-	padding: 20px;
-	text-align: center;
 }
 
 .sidebar h1 {
@@ -65,6 +59,12 @@ a:hover {
 	text-decoration: none;
 }
 
+.sidebar-footer {
+	margin-top: auto;
+	padding: 20px;
+	text-align: center;
+}
+
 .main-content {
 	flex: 1;
 	padding: 30px;
@@ -78,8 +78,12 @@ a:hover {
 	font-weight: bold;
 }
 
+.submenu li a {
+	padding-left: 40px;
+}
+
 /* =========================================
-   Components (カード、テーブル)
+   共通カード、テーブル(列幅指定は除く)
 ========================================= */
 .card {
 	background-color: #fff;
@@ -87,30 +91,6 @@ a:hover {
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 	padding: 20px;
 	margin-bottom: 20px;
-}
-
-.table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-.table th,
-.table td {
-	border-bottom: 1px solid #ddd;
-	padding: 12px;
-	text-align: center;
-}
-
-.table th {
-	background-color: #f8f9fa;
-	font-weight: bold;
-}
-
-
-.table-dark th {
-	background-color: #2c3e50;
-	color: white;
-	border-bottom: none;
 }
 
 .page-title-area {
@@ -125,6 +105,32 @@ a:hover {
 	border-bottom: 2px solid #2c3e50;
 }
 
+/*情報一覧テーブル(列幅指定は除く)*/
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table th {
+	background-color: #f8f9fa;
+	font-weight: bold;
+}
+
+.table th,
+.table td {
+	border-bottom: 1px solid #ddd;
+	padding: 12px;
+	text-align: center;
+}
+
+
+
+.table-dark th {
+	background-color: #2c3e50;
+	color: white;
+	border-bottom: none;
+}
+
 /* チェックボックスのセル幅固定 */
 .table th.col-checkbox,
 .table td.col-checkbox {
@@ -132,62 +138,91 @@ a:hover {
 	text-align: center;
 }
 
+/* テーブル行の操作性(UI) */
+.clickable-row {
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
 
+.clickable-row.row-selected {
+	background-color: #e2e3e5 !important;
+}
+
+/*詳細情報テーブル(列幅指定は除く)*/
 .detail-table {
-    border: 1px solid #333;
-    border-collapse: collapse;
+	border: 1px solid #333;
+	border-collapse: collapse;
 }
+
 .detail-table th {
-    background-color: #2c3e50;
-    color: #fff;
-    width: 200px;
-    font-weight: bold;
-    text-align: center;
+	background-color: #2c3e50;
+	color: #fff;
+	width: 40px;
+	font-weight: bold;
+	text-align: center;
 }
+
 .detail-table td {
-    background-color: #fff;
-    text-align: left;
-    padding-left: 20px;
+	background-color: #fff;
+	text-align: left;
+	padding-left: 20px;
 }
+
 .detail-table th,
 .detail-table td {
-    border: 1px solid #333;
-    padding: 12px;
+	border: 1px solid #333;
+	padding: 12px;
 }
 
+/* テーブルのスクロール */
+.table-scroll {
+	max-height: 400px;
+	overflow-y: auto;
+}
 
-/* ========================================= Buttons & Toolbars (ボタンとツールバー) ========================================= */
-
-
-
-
+.table thead th {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+}
 
 /* =========================================
-   Buttons & Toolbars (ボタンとツールバー)
+   共通ボタン
 ========================================= */
-.table-toolbar {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	gap: 10px;
-	margin-bottom: 15px;
-}
-
 .btn {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	gap: 6px;
-	padding: 8px 16px;
-	border: 1px solid transparent;
+	width: 160px;
+	padding: 14px 0;
+	border: none;
 	border-radius: 4px;
+	font-size: 1.1rem;
+	font-weight: bold;
 	cursor: pointer;
-	font-size: 0.9rem;
-	transition: all 0.2s;
-	text-decoration: none;
+	transition: background-color 0.2s;
 }
 
-.btn-primary {
+.form-actions {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-top: 8px;
+	margin-bottom: 40px;
+}
+
+.form-actions-area-wide {
+	justify-content: center;
+	gap: 90px;
+}
+
+.form-actions a{
+	display: block;
+	text-align: center;
+}
+
+.form-actions-area-wide form {
+	margin: 0;
+}
+
+.btn-primary {	
 	background-color: #0056b3;
 	color: white;
 }
@@ -203,6 +238,27 @@ a:hover {
 }
 
 .btn-secondary:hover {
+	background-color: #5a6268;
+	text-decoration: none;
+}
+
+.btn-search {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	padding: 4px 10px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 0.9rem;
+	transition: all 0.2s;
+	text-decoration: none;
+	background-color: #6c757d;
+	color: white;
+}
+
+.btn-search:hover {
 	background-color: #5a6268;
 	text-decoration: none;
 }
@@ -269,32 +325,109 @@ a:hover {
 	background-color: #f8d7da;
 }
 
+.table-toolbar {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 15px;
+}
 
-.common-btn {
-	width: 120px;
-	height: 45px;
+.toolbar-btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 1rem;
+	gap: 6px;
+	padding: 8px 16px;
+	border-radius: 6px;
+	font-size: 0.95rem;
 	font-weight: bold;
 	text-decoration: none;
-	box-sizing: border-box;
+	transition: all 0.2s ease-in-out;
+	border: 1px solid #CBD5E1;
+	background-color: #F8FAFC;
+	color: #475569;
+	cursor: pointer;
+	min-width: 150px;
 }
-.form-actions.common-actions {
-	width: 100%;
-	display: flex;
-	justify-content: center;
+
+.toolbar-btn:hover {
+	background-color: #e2e8f0;
+	color: #0f172a;
+	text-decoration: none;
+}
+
+.toolbar-btn svg {
+	width: 18px;
+	height: 18px;
+	stroke-width: 2;
+}
+
+.toolbar-btn-primary {
+	background-color: #0078d4;
+	color: #ffffff;
+	border-color: #0078d4;
+}
+
+.toolbar-btn-primary:hover {
+	background-color: #005a9e;
+	color: #ffffff;
+}
+
+.toolbar-btn-danger {
+	color: #dc2626;
+	border-color: #fca5a5;
+	background-color: #fef2f2;
+}
+
+.toolbar-btn-danger:hover {
+	background-color: #fee2e2;
+	color: #b91c1c;
+}
+
+.btn-icon-svg {
+	display: inline-flex;
 	align-items: center;
-	gap: 90px;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	background: transparent;
+	border: none;
+	color: #64748b;
+	cursor: pointer;
+	transition: all 0.2s;
 }
 
-/* ========================================= Forms & Validation (入力フォームとエラー) ========================================= */
+.btn-icon-svg svg {
+	width: 18px;
+	height: 18px;
+	stroke-width: 2;
+}
 
+.btn-icon-svg:hover {
+	background-color: #f1f5f9;
+	color: #0f172a;
+}
 
+.btn-icon-svg.delete:hover {
+	background-color: #fef2f2;
+	color: #dc2626;
+}
+
+/*ログアウトボタン*/
+.btn-logout {
+	display: block;
+	margin: 0 auto;
+	padding: 4px 16px;
+	font-size: 1rem;
+	font-weight: 700;
+	min-width: 140px;
+	border-radius: 8px;
+}
 
 /* =========================================
-   Forms & Validation (入力フォームとエラー)
+   共通フォーム(入力フォームとエラー)
 ========================================= */
 .form-group {
 	margin-bottom: 15px;
@@ -335,7 +468,7 @@ a:hover {
 }
 
 /* =========================================
-   Toast Notification (フラッシュメッセージ)
+   共通メッセージ(トースト)
 ========================================= */
 .toast {
 	visibility: hidden;
@@ -354,29 +487,34 @@ a:hover {
 	transition: opacity 0.5s, top 0.5s;
 }
 
-.toast-error {
-	background-color: #dc3545;
-}
-
 .toast.show {
 	visibility: visible;
 	opacity: 1;
 }
 
-/* =========================================
-   Clickable Rows (行選択UX)
-========================================= */
-.clickable-row {
-	cursor: pointer;
-	transition: background-color 0.2s;
+.toast-error {
+	background-color: #dc3545;
 }
 
-.clickable-row.row-selected {
-	background-color: #e2e3e5 !important;
+.alert {
+	padding: 12px 16px;
+	border-radius: 6px;
+	margin-bottom: 15px;
+	font-weight: bold;
+}
+
+.alert-danger {
+	background-color: #fef2f2;
+	color: #dc2626;
+	border: 1px solid #fca5a5;
+}
+
+.alert p {
+	margin: 0;
 }
 
 /* =========================================
-   Sortable Table Headers (ソート機能付き見出し)
+   共通ソート(ソート機能付き見出し)
 ========================================= */
 .sortable-header {
 	color: inherit;
@@ -402,92 +540,7 @@ a:hover {
 }
 
 /* =========================================
-   モダンツールバー＆アイコンボタン
-   ========================================= */
-.toolbar-btn {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	gap: 6px;
-	padding: 8px 16px;
-	border-radius: 6px;
-	font-size: 0.95rem;
-	font-weight: bold;
-	text-decoration: none;
-	transition: all 0.2s ease-in-out;
-	border: 1px solid #CBD5E1;
-	background-color: #F8FAFC;
-	color: #475569;
-	cursor: pointer;
-	min-width: 150px;
-}
-
-.toolbar-btn:hover {
-	background-color: #e2e8f0;
-	color: #0f172a;
-	text-decoration: none;
-}
-
-.toolbar-btn svg {
-	width: 18px;
-	height: 18px;
-	stroke-width: 2;
-}
-
-.toolbar-btn-danger {
-	color: #dc2626;
-	border-color: #fca5a5;
-	background-color: #fef2f2;
-}
-
-.toolbar-btn-danger:hover {
-	background-color: #fee2e2;
-	color: #b91c1c;
-}
-
-.toolbar-btn-primary {
-	background-color: #0078d4;
-	color: #ffffff;
-	border-color: #0078d4;
-}
-
-.toolbar-btn-primary:hover {
-	background-color: #005a9e;
-	color: #ffffff;
-}
-
-.btn-icon-svg {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 32px;
-	height: 32px;
-	border-radius: 4px;
-	background: transparent;
-	border: none;
-	color: #64748b;
-	cursor: pointer;
-	transition: all 0.2s;
-}
-
-.btn-icon-svg:hover {
-	background-color: #f1f5f9;
-	color: #0f172a;
-}
-
-.btn-icon-svg.delete:hover {
-	background-color: #fef2f2;
-	color: #dc2626;
-}
-
-.btn-icon-svg svg {
-	width: 18px;
-	height: 18px;
-	stroke-width: 2;
-}
-
-/* =========================================
-   Badges (状態表示用バッジ)
+   共通バッジ(状態表示用バッジ)
 ========================================= */
 .badge {
 	padding: 4px 8px;
@@ -511,153 +564,9 @@ a:hover {
 }
 
 /* =========================================
-   Forms (フォーム用追加スタイル)
+   共通インポートエクスポート
 ========================================= */
-.form-card {
-	max-width: 800px;
-	margin: 0 auto;
-}
-
-.alert {
-	padding: 12px 16px;
-	border-radius: 6px;
-	margin-bottom: 15px;
-	font-weight: bold;
-}
-
-.alert-danger {
-	background-color: #fef2f2;
-	color: #dc2626;
-	border: 1px solid #fca5a5;
-}
-
-.alert p {
-	margin: 0;
-}
-
-.form-help-text {
-	font-size: 0.85rem;
-	color: #64748b;
-	margin-top: 0;
-	margin-bottom: 8px;
-}
-
-.form-actions {
-	margin-top: 25px;
-	display: flex;
-	gap: 10px;
-	justify-content: center;
-}
-/* =========================================
-   テーブルスクロール
-========================================= */
-
-.table-scroll {
-	max-height: 400px;
-	overflow-y: auto;
-}
-
-.table thead th {
-	position: sticky;
-	top: 0;
-	z-index: 10;
-}
-
-/*ログアウトボタン*/
-.btn-logout {
-	display: block;
-	margin: 0 auto;
-	padding: 12px 24px;
-	font-size: 1rem;
-	font-weight: 700;
-	min-width: 140px;
-	border-radius: 8px;
-}
-
-.submenu li a {
-	padding-left: 40px;
-}
-
-.btn-logout {
-	display: block;
-	margin: 0 auto;
-}
-
-.search-row {
-	display: flex;
-	gap: 20px;
-}
-
-.search-row .form-group {
-	flex: 1;
-}
-
-/* =========================================
-    export用スタイル
-========================================= */
-.export-confirm-box {
-	background-color: #f8fafc;
-	padding: 25px;
-	border-radius: 8px;
-	margin-bottom: 30px;
-	border-left: 5px solid #2c3e50;
-}
-
-.export-confirm-title {
-	margin-top: 0;
-	color: #0f2c4c;
-	margin-bottom: 15px;
-}
-
-.export-table {
-	width: 100%;
-	border-spacing: 0 10px;
-	font-size: 0.95rem;
-}
-
-.export-table td.label {
-	width: 180px;
-	color: #666;
-}
-
-.export-table td.value {
-	font-weight: bold;
-	text-align: center;
-}
-
-.export-count {
-	font-size: 2rem;
-	color: #0078d4;
-	font-weight: bold;
-}
-
-.export-note {
-	margin-top: 20px;
-	font-size: 0.85rem;
-	color: #999;
-	text-align: center;
-}
-
-.export_action-area {
-	text-align: center;
-}
-
-.btn_assign_export {
-	width: 150px;
-}
-
-.btn_assign_back {
-	width: 150px;
-}
-
-
-
-
-
-/* =========================================
-   import用スタイル
-   ========================================= */
-
+/* 共通インポート */
 .import-container {
 	max-width: 100%;
 }
@@ -715,47 +624,7 @@ a:hover {
 	font-size: 0.95rem;
 }
 
-.action-area {
-	display: flex;
-	justify-content: center;
-	gap: 10px;
-	margin-top: 8px;
-	margin-bottom: 40px;
-}
-
-.btn-csv,
-.btn-back {
-	width: 160px;
-	padding: 14px 0;
-	border: none;
-	border-radius: 4px;
-	font-size: 1.1rem;
-	font-weight: bold;
-	cursor: pointer;
-	transition: background-color 0.2s;
-}
-
-.btn-csv {
-	background-color: #4a78c8;
-	color: #fff;
-}
-
-.btn-csv:hover {
-	background-color: #3a68b8;
-}
-
-.btn-back {
-	background-color: #cfcfcf;
-	color: #333;
-}
-
-.btn-back:hover {
-	background-color: #bfbfbf;
-}
-
-/* =========================================
-   インポート処理結果
-   ========================================= */
+/* =インポート処理結果 */
 .result-area {
 	border-top: 1px solid #e5e7eb;
 	padding-top: 30px;
@@ -839,13 +708,139 @@ a:hover {
 	color: #c00;
 }
 
+/* 共通エクスポート */
+.export-confirm-box {
+	background-color: #f8fafc;
+	padding: 25px;
+	border-radius: 8px;
+	margin-bottom: 30px;
+	border-left: 5px solid #2c3e50;
+}
 
+.export-confirm-title {
+	margin-top: 0;
+	color: #0f2c4c;
+	margin-bottom: 15px;
+}
+
+.export-table {
+	width: 100%;
+	border-spacing: 0 10px;
+	font-size: 0.95rem;
+}
+
+.export-table td.label {
+	width: 180px;
+	color: #666;
+}
+
+.export-table td.value {
+	font-weight: bold;
+	text-align: center;
+}
+
+.export-count {
+	font-size: 2rem;
+	color: #0078d4;
+	font-weight: bold;
+}
+
+.export-note {
+	margin-top: 20px;
+	font-size: 0.85rem;
+	color: #999;
+	text-align: left;
+}
+
+/* インポート・エクスポート共通アクション */
+.action-area {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-top: 8px;
+	margin-bottom: 40px;
+}
+
+.action-area-wide {
+	justify-content: center;
+	gap: 90px;
+}
+
+.action-area-wide form {
+	margin: 0;
+}
+
+/* インポート・エクスポート共通ボタン*/
+.btn-import {
+	width: 160px;
+	padding: 14px 0;
+	border: none;
+	border-radius: 4px;
+	font-size: 1.1rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	background-color: #4a78c8;
+	color: #fff;
+}
+
+.btn-import:hover {
+	background-color: #3a68b8;
+}
+
+.btn-export {
+	width: 160px;
+	padding: 14px 0;
+	border: none;
+	border-radius: 4px;
+	font-size: 1.1rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	background-color: #4a78c8;
+	color: #fff;
+}
+
+.btn-export:hover {
+	background-color: #3a68b8;
+}
+
+.btn-back {
+	width: 160px;
+	padding: 14px 0;
+	border: none;
+	border-radius: 4px;
+	font-size: 1.1rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	background-color: #cfcfcf;
+	color: #fff;
+}
+
+.btn-back:hover {
+	background-color: #bfbfbf;
+}
+.btn-detail {
+	width: 120px;
+	height: 45px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1rem;
+	font-weight: bold;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+/* 共通エラーメッセージ */
 .select-error {
 	color: #dc3545;
 }
 
-
-/* ========================================= Common Modal(全てのモーダル) ========================================= */
+/* ========================================= 
+     共通ポップアップ(モーダル)
+========================================= */
 .modal-overlay {
 	display: none;
 	position: fixed;
@@ -855,9 +850,6 @@ a:hover {
 	align-items: center;
 	justify-content: center;
 }
-
-
-
 
 .modal-overlay.show {
 	display: flex;
@@ -946,4 +938,3 @@ a:hover {
 .modal-btn-danger:hover {
 	background: #c82333;
 }
-
