@@ -213,7 +213,7 @@ a:hover {
 	gap: 90px;
 }
 
-.form-actions a{
+.form-actions a {
 	display: block;
 	text-align: center;
 }
@@ -222,7 +222,7 @@ a:hover {
 	margin: 0;
 }
 
-.btn-primary {	
+.btn-primary {
 	background-color: #0056b3;
 	color: white;
 }
@@ -465,7 +465,7 @@ a:hover {
 	color: #dc3545;
 	font-size: 0.85rem;
 	margin-top: 5px;
-	font-weight: 700; 
+	font-weight: 700;
 }
 
 /* =========================================
@@ -822,6 +822,7 @@ a:hover {
 .btn-back:hover {
 	background-color: #bfbfbf;
 }
+
 .btn-detail {
 	width: 120px;
 	height: 45px;
@@ -898,7 +899,7 @@ a:hover {
 	line-height: 1.5;
 }
 
-.modal-actions {	
+.modal-actions {
 	display: flex;
 	justify-content: center;
 	gap: 10px;

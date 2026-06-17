@@ -68,14 +68,13 @@ public class DeletedAssignController {
 	/* 単一復元 */
 	@PostMapping("/{id}/restore")
 	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-		
+
 		if (deletedAssignService.isAssginLimitReachedAfterRestore(1)) {
 			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
 			return "redirect:/deleted-assignments";
 		}
 
-		if (deletedAssignService.existCompanyDispatchsByAssignId(id))
-		{
+		if (deletedAssignService.existCompanyDispatchsByAssignId(id)) {
 			attributes.addFlashAttribute("toastError", "紐づく派遣先企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
 			return "redirect:/deleted-assignments";
 		}
@@ -95,7 +94,7 @@ public class DeletedAssignController {
 	}
 
 	/* 一括復元 */
-	@PostMapping("/restore-bulk")
+	@PostMapping("/bulk-restore")
 	public String bulkRestore(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
@@ -112,18 +111,18 @@ public class DeletedAssignController {
 			attributes.addFlashAttribute("toastError", "紐づく派遣先企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
 			return "redirect:/deleted-assignments";
 		}
-		
+
 		if (deletedAssignService.existEmployeeByAssignIds(ids)) {
 			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報を復元してください。");
 			return "redirect:/deleted-assignments";
 		}
-		for (int id: ids) {
+		for (int id : ids) {
 			if (deletedAssignService.isDuplicate(id)) {
 				attributes.addFlashAttribute("toastError", "社員ID、企業ID、アサイン開始日、アサイン終了日が重複している履歴があります。");
 				return "assignment/create";
 			}
 		}
-		
+
 		deletedAssignService.restoreBulk(ids);
 		attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を復元しました");
 		return "redirect:/deleted-assignments";
@@ -175,7 +174,8 @@ public class DeletedAssignController {
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Assignment> assignments = deletedAssignService.findAllByIds(ids);
-		StringBuilder csvBuilder = new StringBuilder("アサインID,社員ID,企業ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n");
+		StringBuilder csvBuilder = new StringBuilder(
+				"アサインID,社員ID,企業ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n");
 		for (Assignment asn : assignments) {
 			csvBuilder.append(asn.getAssignmentId()).append(",")
 					.append(asn.getEmpId()).append(",")

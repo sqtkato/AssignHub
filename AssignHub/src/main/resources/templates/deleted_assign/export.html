@@ -3,12 +3,13 @@
 	layout:decorate="~{layout/layout}">
 
 <head>
-	<title>アサイン履歴情報削除/復元エクスポート</title>
+	<title>論理削除アサイン履歴情報エクスポート</title>
 </head>
+
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
-			<h2>アサイン履歴情報削除/復元エクスポート</h2>
+			<h2>論理削除アサイン履歴情報エクスポート</h2>
 		</div>
 		<div class="card form-card-wide">
 			<p class="instruction">以下の条件と内容でCSVファイルを出力します。<br>よろしければ「エクスポート」ボタンを押してください。</p>
@@ -21,7 +22,7 @@
 					</tr>
 					<tr>
 						<td class="label">文字コード:</td>
-						<td class="value">UTF-8</td>
+						<td class="value">UTF-8(BOMあり)</td>
 					</tr>
 				</table>
 				<div class="table-scroll">

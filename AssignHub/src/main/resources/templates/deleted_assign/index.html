@@ -51,9 +51,8 @@
 
 		<form method="post" id="listForm">
 			<div class="table-toolbar">
-				<button type="submit" formaction="/deleted-assignments/restore-bulk"
-					class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元"
-					onclick="return confirm('選択した項目を一括復元しますか？');">
+				<button type="button" class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元"
+					onclick="openBulkRestoreModal()">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
 						style="width: 1.3rem; height: 1.3rem; vertical-align: middle; margin-right: 4px;">
@@ -64,7 +63,8 @@
 					</svg>
 					一括復元
 				</button>
-				<button type="submit" formmethod="post" formaction="/deleted-assignments/export" class="toolbar-btn"
+
+				<button type="submit" formaction="/deleted-assignments/export" class="toolbar-btn"
 					title="チェックした項目をエクスポート">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
@@ -74,38 +74,36 @@
 					</svg>
 					エクスポート
 				</button>
-				<button type="submit" formaction="/deleted-assignments/delete-bulk"
-					class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
-					onclick="return confirm('選択した項目を一括削除しますか？');">
+
+				<button type="button" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
+					onclick="openBulkDeleteModal()">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<polyline points="3 6 5 6 21 6"></polyline>
-						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+						</path>
 					</svg>
 					一括削除
 				</button>
-			</div>
 
+			</div>
 
 			<div class="card">
 				<div class="table-scroll">
 					<table class="table">
 						<thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
-							<thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
-								<tr>
-									<th class="col-checkbox">
-										<input type="checkbox" class="select-all">
-									</th>
-									<th>ID</th>
-									<th>社員名</th>
-									<th>アサイン先企業</th>
-									<th>所属企業</th>
-									<th>契約開始日</th>
-									<th>契約終了日</th>
-									<th>単価</th>
-									<th>操作</th>
-								</tr>
-							</thead>
+							<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
+							</th>
+							<th>ID</th>
+							<th>社員名</th>
+							<th>アサイン先企業</th>
+							<th>所属企業</th>
+							<th>契約開始日</th>
+							<th>契約終了日</th>
+							<th>単価</th>
+							<th>操作</th>
+							</tr>
+						</thead>
 						<tbody>
 							<tr th:each="assign : ${assignments}" class="clickable-row">
 								<td class="col-checkbox">
