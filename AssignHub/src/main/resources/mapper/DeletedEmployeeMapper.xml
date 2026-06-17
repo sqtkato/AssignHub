@@ -150,60 +150,64 @@
 		</foreach>
 	</delete>
 
-	<select id="existAccountsByEmpolyeeId" resultType="int">
+	<select id="existAccountsByEmployeeId" resultType="int">
 		SELECT
 		COUNT(*)
 		FROM m_employee e
-		INNER JOIN m_account a
+		LEFT JOIN m_account a
 		ON e.account_id = a.account_id
 		WHERE e.emp_id = #{id}
-		AND a.delete_flg = 0
+		AND (a.delete_flg = 0
+		OR e.account_id IS NULL)
 	</select>
 
-	<select id="existAccountsByEmpolyeeIds" resultType="int">
+	<select id="existAccountsByEmployeeIds" resultType="int">
 		SELECT COUNT(*)
 		FROM m_employee e
-		INNER JOIN m_account a
+		LEFT JOIN m_account a
 		ON e.account_id = a.account_id
 		WHERE e.emp_id IN
 		<foreach item="id" collection="ids" open="(" separator=","
 			close=")">
 			#{id}
 		</foreach>
-		AND a.delete_flg = 0
+		AND (c.delete_flg = 0
+		OR e.company_id IS NULL)
 	</select>
 
-	<select id="existCompaniesByEmpolyeeId" resultType="int">
+	<select id="existCompaniesByEmployeeId" resultType="int">
 		SELECT
 		COUNT(*)
 		FROM m_employee e
-		INNER JOIN m_company c
+		LEFT JOIN m_company c
 		ON e.company_id = c.company_id
 		WHERE e.emp_id = #{id}
-		AND c.delete_flg = 0
+		AND (c.delete_flg = 0
+		OR e.company_id IS NULL)
 	</select>
 
-	<select id="existCompaniesByEmpolyeeIds" resultType="int">
+	<select id="existCompaniesByEmployeeIds" resultType="int">
 		SELECT COUNT(*)
 		FROM m_employee e
-		INNER JOIN m_company c
+		LEFT JOIN m_company c
 		ON e.company_id = c.company_id
 		WHERE e.emp_id IN
 		<foreach item="id" collection="ids" open="(" separator=","
 			close=")">
 			#{id}
 		</foreach>
-		AND c.delete_flg = 0
+		AND (c.delete_flg = 0
+		OR e.company_id IS NULL)
 	</select>
 
-	<select id="existAssignmentsByEmpolyeeId" resultType="int">
+	<select id="existAssignmentsByEmployeeId" resultType="int">
 		SELECT
 		COUNT(*)
 		FROM t_assignment
 		WHERE emp_id = #{id}
 	</select>
 
-	<select id="existAssignmentsByEmpolyeeIds" resultType="int">
+	<select id="existAssignmentsByEmployeeIds" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment a
 		WHERE emp_id IN
@@ -213,4 +217,10 @@
 		</foreach>
 	</select>
 
+	<select id="countActiveCompanies" resultType="int">
+		SELECT COUNT(*)
+		FROM m_employee
+		WHERE delete_flg = 0
+	</select>
+	
 </mapper>      

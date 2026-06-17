@@ -433,6 +433,11 @@ public class EmployeeService {
 		return count > 0;
 	}
 	
+	public boolean isEmailDuplicate(String email, List<Integer> excludeEmpIds) {
+		int count = employeeMapper.countByEmails(email, excludeEmpIds);
+		return count > 0;
+	}
+	
 //	public List<Account> findUnlinkedLoginId() {
 //		return accountMapper.findUnlinkedLoginId();
 //		}	

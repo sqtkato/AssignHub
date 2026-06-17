@@ -80,11 +80,11 @@ public class DeletedEmployeeController {
 	public String recover(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
 			BindingResult result, RedirectAttributes attributes) {
-		if (deletedEmployeeService.existAccountsByEmpolyeeId(id)) {
+		if (deletedEmployeeService.existAccountsByEmployeeId(id)) {
 			attributes.addFlashAttribute("toastMessage", "紐づくアカウント情報が削除状態のため、復元できません。先にアカウント情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
-		if (deletedEmployeeService.existCompaniesByEmpolyeeId(id)) {
+		if (deletedEmployeeService.existCompaniesByEmployeeId(id)) {
 			attributes.addFlashAttribute("toastMessage", "所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
@@ -110,21 +110,15 @@ public class DeletedEmployeeController {
 			attributes.addFlashAttribute("toastError", "復元対象が選択されていません");
 			return "redirect:/deleted-employees";
 		}
-		if (deletedEmployeeService.existAccountsByEmpolyeeIds(ids)) {
+		if (deletedEmployeeService.existAccountsByEmployeeIds(ids)) {
 			attributes.addFlashAttribute("toastError", "紐づくアカウント情報が削除状態のため、復元できません。先にアカウント情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
-		if (deletedEmployeeService.existCompaniesByEmpolyeeIds(ids)) {
+		if (deletedEmployeeService.existCompaniesByEmployeeIds(ids)) {
 			attributes.addFlashAttribute("toastError", "所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
-		boolean duplicate_flg = false;
-		for (int id : ids) {
-			if(employeeService.isEmailDuplicate(employeeForm.getEmail(), id)) {
-				duplicate_flg = true;
-			}
-		}
-		if (duplicate_flg) {
+		if(employeeService.isEmailDuplicate(employeeForm.getEmail(), ids)) {
 			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
 		}
 		deletedEmployeeService.restoreBulk(ids);
@@ -140,7 +134,7 @@ public class DeletedEmployeeController {
 	 */
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-		if (deletedEmployeeService.existAssignmentsByEmpolyeeId(id)) {
+		if (deletedEmployeeService.existAssignmentsByEmployeeId(id)) {
 			attributes.addFlashAttribute("toastMessage", "紐づくアサイン履歴情報が存在するため、削除できません。先にアサイン履歴情報を削除してください。");
 			return "redirect:/deleted-employees";
 		}
@@ -165,7 +159,7 @@ public class DeletedEmployeeController {
 		}
 
 		// Serviceの判定メソッドを使って一括不在条件をチェック
-		if (deletedEmployeeService.existAssignmentsByEmpolyeeIds(ids)) {
+		if (deletedEmployeeService.existAssignmentsByEmployeeIds(ids)) {
 			attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するアカウントが含まれているため、物理削除できません。先にアサイン履歴情報を削除してください。");
 			return "redirect:/deleted-employees";
 		}

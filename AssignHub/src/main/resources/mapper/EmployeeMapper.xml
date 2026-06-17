@@ -194,7 +194,15 @@
 
 	<select id="countByEmail" resultType="int">
 		SELECT COUNT(*) FROM m_employee
-		WHERE email = #{email} AND delete_flg = 0;
+		WHERE email = #{email} AND delete_flg = 0
+		<if test="excludeEmpId != null">
+			AND emp_id != #{excludeEmpId}
+		</if>
+	</select>
+	
+	<select id="countByEmails" resultType="int">
+		SELECT COUNT(*) FROM m_employee
+		WHERE email = #{email} AND delete_flg = 0
 		<if test="excludeEmpId != null">
 			AND emp_id != #{excludeEmpId}
 		</if>

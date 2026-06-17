@@ -77,34 +77,47 @@ public class DeletedEmployeeService {
     // =======================================================
 
     /** 単一社員情報に紐づくアカウントが存在するか判定 生存*/
-    public boolean existAccountsByEmpolyeeId(Integer id) {
-        return deletedEmployeeMapper.existAccountsByEmpolyeeId(id) < 1;
+    public boolean existAccountsByEmployeeId(Integer id) {
+        return deletedEmployeeMapper.existAccountsByEmployeeId(id) < 1;
     }
 
     /** 複数社員情報の中に、紐づくアカウントが存在するものが含まれているか判定 生存*/
-    public boolean existAccountsByEmpolyeeIds(List<Integer> ids) {
-        return deletedEmployeeMapper.existAccountsByEmpolyeeIds(ids) < ids.size();
+    public boolean existAccountsByEmployeeIds(List<Integer> ids) {
+        return deletedEmployeeMapper.existAccountsByEmployeeIds(ids) < ids.size();
     }
 
     /** 単一社員情報に紐づく企業情報（パートナー所属）が存在するか判定 生存*/
-    public boolean existCompaniesByEmpolyeeId(Integer id) {
-        return deletedEmployeeMapper.existCompaniesByEmpolyeeId(id) < 1;
+    public boolean existCompaniesByEmployeeId(Integer id) {
+        return deletedEmployeeMapper.existCompaniesByEmployeeId(id) < 1;
     }
 
     /** 複数社員情報の中に、企業情報（パートナー所属）が存在するものが含まれているか判定 生存*/
-    public boolean existCompaniesByEmpolyeeIds(List<Integer> ids) {
-        return deletedEmployeeMapper.existCompaniesByEmpolyeeIds(ids) < ids.size();
+    public boolean existCompaniesByEmployeeIds(List<Integer> ids) {
+        return deletedEmployeeMapper.existCompaniesByEmployeeIds(ids) < ids.size();
     }
     
     
     /** 単一社員情報に紐づくアサイン情報が存在するか判定 不在*/
-    public boolean existAssignmentsByEmpolyeeId(Integer id) {
-        return deletedEmployeeMapper.existAssignmentsByEmpolyeeId(id) > 0;
+    public boolean existAssignmentsByEmployeeId(Integer id) {
+        return deletedEmployeeMapper.existAssignmentsByEmployeeId(id) > 0;
     }
 
     /** 複数社員情報の中に、アサイン情報が存在するものが含まれているか判定 不在*/
-    public boolean existAssignmentsByEmpolyeeIds(List<Integer> ids) {
-        return deletedEmployeeMapper.existAssignmentsByEmpolyeeIds(ids) > 0;
+    public boolean existAssignmentsByEmployeeIds(List<Integer> ids) {
+        return deletedEmployeeMapper.existAssignmentsByEmployeeIds(ids) > 0;
     }
-    
+
+    /**
+	 * 復元した結果、登録上限（500件）を超えるか判定する
+	 * @param restoreCount 復元しようとしている件数（単一なら1、一括ならリストのサイズ）
+	 * @return 500件を超える場合はtrue
+	 */
+	public boolean isCompanyLimitReachedAfterRestore(int restoreCount) {
+	    // 1. 現在有効な（削除されていない）企業数を取得する
+	    // ※ 既存のCompanyService等から取得するか、独自に count を取得してください
+	    int currentActiveCount = deletedEmployeeMapper.countActiveEmployees();
+
+	    // 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
+	    return (currentActiveCount + restoreCount) > 500;
+	}
 }

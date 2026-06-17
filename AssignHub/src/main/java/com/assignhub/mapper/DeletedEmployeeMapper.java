@@ -60,31 +60,38 @@ public interface DeletedEmployeeMapper {
 	/**
 	 * 指定された社員IDに紐づく社員数をカウントする（単一物理削除の不在条件チェック用）。
 	 */
-	int existAccountsByEmpolyeeId(@Param("id") Integer id);
+	int existAccountsByEmployeeId(@Param("id") Integer id);
 
 	/**
 	 * 指定された社員IDリストのいずれかに紐づくアカウントをカウントする（一括物理削除の不在条件チェック用）。
 	 */
-	int existAccountsByEmpolyeeIds(@Param("ids") List<Integer> ids);
+	int existAccountsByEmployeeIds(@Param("ids") List<Integer> ids);
 
 	/**
 	 * 指定された社員IDに紐づく企業情報数をカウントする（単一物理削除の不在条件チェック用）。
 	 */
-	int existCompaniesByEmpolyeeId(@Param("id") Integer id);
+	int existCompaniesByEmployeeId(@Param("id") Integer id);
 
 	/**
 	 * 指定された社員IDリストのいずれかに紐づく企業情報数をカウントする（一括物理削除の不在条件チェック用）。
 	 */
-	int existCompaniesByEmpolyeeIds(@Param("ids") List<Integer> ids);
+	int existCompaniesByEmployeeIds(@Param("ids") List<Integer> ids);
 
 	/**
 	 * 指定された社員IDに紐づくアサイン履歴数をカウントする（単一物理削除の不在条件チェック用）。
 	 */
-	int existAssignmentsByEmpolyeeId(@Param("id") Integer id);
+	int existAssignmentsByEmployeeId(@Param("id") Integer id);
 
 	/**
 	 * 指定された社員IDリストのいずれかに紐づくアサイン履歴数をカウントする（一括物理削除の不在条件チェック用）。
 	 */
-	int existAssignmentsByEmpolyeeIds(@Param("ids") List<Integer> ids);
+	int existAssignmentsByEmployeeIds(@Param("ids") List<Integer> ids);
+	
+	
+	/**
+	 * 現在有効な（削除されていない）企業総数をカウントする。
+	 * （500件登録上限チェック用）
+	 */
+	int countActiveEmployees();
 
 }
