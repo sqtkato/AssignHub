@@ -178,6 +178,19 @@
 			#{id}
 		</foreach>
 	</delete>
+	
+	<select id="findById" resultMap="assignmentResultMap">
+    SELECT 
+        assignment_id,
+        emp_id,
+        company_id,
+        contract_start_date,
+        contract_end_date,
+        role_id,
+        delete_flg
+    FROM t_assignment
+    WHERE assignment_id = #{id}
+</select>
 
 	<select id="existCompanyDispatchsByAssignId" resultType="int">
 		SELECT COUNT(*)

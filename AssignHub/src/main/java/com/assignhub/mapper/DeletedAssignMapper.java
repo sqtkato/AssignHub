@@ -63,6 +63,8 @@ public interface DeletedAssignMapper {
 	int physicalDeleteBulk(@Param("ids") List<Integer> ids);
 
 	int countActiveAssigns();
+	
+	
 	/**
 	 * 指定されたアサインIDに紐づく企業数(派遣先)をカウントする（単一復元の生存チェック用）。
 	 */
