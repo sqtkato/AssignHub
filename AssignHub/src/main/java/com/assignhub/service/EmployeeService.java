@@ -410,7 +410,6 @@ public class EmployeeService {
 				    hasError = true;
 				}
 
-				// 登録上限チェック（新規登録のときだけ）
 				if (!hasError && (emp.getEmpId() == null)) {
 				    int employeeCount = employeeMapper.countAll();
 				    if ((employeeCount + insertPlan) >= 500) {
