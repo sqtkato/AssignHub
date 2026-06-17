@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<title>社員情報削除/復元一覧</title>
 	<link rel="stylesheet" href="/css/popup.css">
+	<link rel="stylesheet" href="/css/employee.css">
 </head>
 
 <body>
@@ -13,30 +14,33 @@
 			<h2>社員情報削除/復元一覧</h2>
 		</div>
 
-		<div class="card acc">
-			<form th:action="@{/deleted-employees}" method="get" class="search-form">
-				<div class="form-group form-group-search">
-					<label>社員名</label>
-					<input type="text" name="empName" class="form-control" th:value="${empName}" placeholder="例：山田 太郎">
-				</div>
-				<div class="form-group form-group-search">
-					<label>アサイン先企業</label>
-					<input type="text" name="empAssignCompany" class="form-control" th:value="${empAssignCompany}" placeholder="例：株式会社システム">
-				</div>
-				<div class="form-group form-group-search">
-					<label>所属企業</label>
-					<input type="text" name="empCompany" class="form-control" th:value="${empCompany}" placeholder="例：株式会社システム">
-				</div>
-				<div class="form-group form-group-search">
-					<label>エンジニアタイプ</label>
-					<select name="empEngineerType" class="form-control">
-					    <option value>未選択</option>
-					    <option value="プロパー" th:selected="${empEngineerType == 'プロパー'}">プロパー</option>
-					    <option value="パートナー" th:selected="${empEngineerType == 'パートナー'}">パートナー</option>
-						</select>
-				</div>
-				<button type="submit" class="btn btn-secondary">検索</button>
-			</form>
+		<div class="card">
+		<form th:action="@{/employees}" method="get" class="search-form">
+			<div class="form-group form-group-search">
+				
+			    <div class="search-item">
+				    <label>社員名</label>
+				    <input type="text" name="empName" class="form-control" th:value="${empName}" placeholder="例：山田 太郎">
+			    </div>
+		        <div class="search-item">
+				    <label>アサイン先企業</label>
+				    <input type="text" name="empAssignCompany" class="form-control" th:value="${empAssignCompany}" placeholder="例：株式会社システム">
+			    </div>
+			    <div class="search-item">
+				    <label>所属企業</label>
+				    <input type="text" name="empCompany" class="form-control" th:value="${empCompany}" placeholder="例：株式会社システム">
+			    </div>
+			    <div class="search-item">
+				    <label>エンジニアタイプ</label>
+				    <select name="empEngineerType" class="form-control">
+				        <option value>未選択</option>
+				        <option value="プロパー" th:selected="${empEngineerType == 'プロパー'}">プロパー</option>
+				        <option value="パートナー" th:selected="${empEngineerType == 'パートナー'}">パートナー</option>
+				    </select>
+			    </div>
+			</div>
+		    <button type="submit" class="btn-search btn-search-position">検索</button>
+		</form>
 		</div>
 
 		<form method="post" id="listForm">
