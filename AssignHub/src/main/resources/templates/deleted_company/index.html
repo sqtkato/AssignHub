@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
+
 <head>
 	<meta charset="UTF-8">
 	<title>企業情報削除/復元一覧</title>
@@ -17,11 +18,13 @@
 			<form th:action="@{/deleted-companies}" method="get" class="search-form">
 				<div class="search-item">
 					<label>企業名</label>
-					<input type="text" name="companyName" class="form-control" th:value="${companyName}" placeholder="例：テクノ">
+					<input type="text" name="companyName" class="form-control" th:value="${companyName}"
+						placeholder="例：テクノ">
 				</div>
 				<div class="search-item">
 					<label>電話番号</label>
-					<input type="text" name="companyTel" class="form-control" th:value="${companyTel}" placeholder="例：0901111111">
+					<input type="text" name="companyTel" class="form-control" th:value="${companyTel}"
+						placeholder="例：0901111111">
 				</div>
 				<button type="submit" class="btn btn-secondary btn-search">検索</button>
 			</form>
@@ -29,19 +32,20 @@
 
 		<form method="post" id="listForm">
 			<div class="table-toolbar">
-				<button type="button" class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元" onclick="openBulkRestoreModal()">
-    				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-        				stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
-        				style="width: 1.3rem; height: 1.3rem; vertical-align: middle; margin-right: 4px;">
-        			<path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-        			<polyline points="3 3 3 8 8 8" />
-        			<path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
-        			<polyline points="21 21 21 16 16 16" />
-    				</svg>
-				    一括復元
+				<button type="button" class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元"
+					onclick="openBulkRestoreModal()">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+						style="width: 1.3rem; height: 1.3rem; vertical-align: middle; margin-right: 4px;">
+						<path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+						<polyline points="3 3 3 8 8 8" />
+						<path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+						<polyline points="21 21 21 16 16 16" />
+					</svg>
+					一括復元
 				</button>
 
-				<button type="submit" formaction="/deleted-companies/export" class="toolbar-btn" 
+				<button type="submit" formaction="/deleted-companies/export" class="toolbar-btn"
 					title="チェックした項目をエクスポート">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
@@ -52,8 +56,8 @@
 					エクスポート
 				</button>
 
-				 <button type="button" class="toolbar-btn toolbar-btn-danger" 
-				 	title="チェックした項目を削除"onclick="openBulkDeleteModal()">
+				<button type="button" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
+					onclick="openBulkDeleteModal()">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<polyline points="3 6 5 6 21 6"></polyline>
@@ -62,7 +66,7 @@
 					</svg>
 					一括削除
 				</button>
-				
+
 			</div>
 
 			<div class="card">
@@ -81,31 +85,42 @@
 						<tbody>
 							<tr th:each="company : ${companies}" class="clickable-row">
 								<td class="col-checkbox">
-									<input type="checkbox" name="ids" th:value="${company.companyId}" class="row-checkbox">
+									<input type="checkbox" name="ids" th:value="${company.companyId}"
+										class="row-checkbox">
 								</td>
 								<td th:text="${company.companyId}"></td>
 								<td th:text="${company.companyName}"></td>
 								<td th:text="${company.companyAddress1}"></td>
 								<td th:text="${company.companyTel}"></td>
 								<td class="col-action">
-								<button type="button" th:attr="data-id=${company.companyId}" class="btn-icon-svg" title="復元" onclick="openRestoreModal(this.dataset.id)"style="vertical-align: middle;">		
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-									    stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
-									    style="width: 1.8rem; height: 1.8rem; display: block; margin: auto;">
-									    <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-									    <polyline points="3 3 3 8 8 8" /> 
-									    <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
-									    <polyline points="21 21 21 16 16 16" />
-									</svg>
-								</button>
-												
-								<button type="button" th:attr="data-id=${company.companyId}" class="btn-icon-svg delete" title="削除" onclick="openDeleteModal(this.dataset.id)"style="vertical-align: middle;">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-									</svg>
-								</button>
+									<button type="button" th:attr="data-id=${company.companyId}" class="btn-icon-svg"
+										title="復元" onclick="openRestoreModal(this.dataset.id)"
+										style="vertical-align: middle;">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-width="3" stroke-linecap="round"
+											stroke-linejoin="round"
+											style="width: 1.8rem; height: 1.8rem; display: block; margin: auto;">
+											<path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+											<polyline points="3 3 3 8 8 8" />
+											<path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+											<polyline points="21 21 21 16 16 16" />
+										</svg>
+									</button>
+
+									<button type="button" th:attr="data-id=${company.companyId}"
+										class="btn-icon-svg delete" title="削除"
+										onclick="openDeleteModal(this.dataset.id)" style="vertical-align: middle;">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<polyline points="3 6 5 6 21 6"></polyline>
+											<path
+												d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+											</path>
+										</svg>
+									</button>
 								</td>
 							</tr>
-							
+
 							<tr th:if="${#lists.isEmpty(companies)}">
 								<td colspan="6" class="text-center">該当するデータがありません。</td>
 							</tr>
@@ -117,4 +132,5 @@
 
 	</div>
 </body>
+
 </html>

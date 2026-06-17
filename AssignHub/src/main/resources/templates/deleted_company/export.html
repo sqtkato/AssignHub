@@ -27,7 +27,7 @@
 						<td class="value">UTF-8 (BOMあり)</td>
 					</tr>
 				</table>
-			
+
 				<div class="table-scroll export-table">
 					<table class="table header-only-table table-dark">
 						<thead>
@@ -42,22 +42,24 @@
 							<tr th:each="company : ${companies}" class="clickable-row">
 								<td th:text="${company.companyId}"></td>
 								<td th:text="${company.companyName}"></td>
-								<td th:text="${company.companyAddress1}"></td>						
+								<td th:text="${company.companyAddress1}"></td>
 								<td th:text="${company.companyTel}"></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-					<p class="export-note">※詳細情報がエクスポートされます</p>
-			</div>			
-					<div class="action-area">
-		    			<form th:action="@{/deleted-companies/export/download}" method="post">
-			       			<input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">
-			        		<button type="submit" class="btn-csv">エクスポート</button>
-							<button type="button" id="btn_account_back" class="btn-back"
-									th:onclick="|location.href='@{/deleted-companies}'|">戻る</button>
-		    			</form>
-					</div>		
+				<p class="export-note">※詳細情報がエクスポートされます</p>
+			</div>
+			<div class="action-area">
+				<form th:action="@{/deleted-companies/export/download}" method="post">
+					<input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">
+					<button type="submit" class="btn-csv">エクスポート</button>
+					<button type="button" id="btn_account_back" class="btn-back"
+						th:onclick="|location.href='@{/deleted-companies}'|">戻る</button>
+				</form>
+			</div>
 		</div>
+	</div>
 </body>
+
 </html>
