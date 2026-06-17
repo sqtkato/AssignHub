@@ -174,7 +174,7 @@ public class AccountService {
 				line = line.replace("\uFEFF", "");
 				String[] cols = line.split(",", -1);
 
-				if (cols.length < 3) {
+				if (cols.length < 4) {
 					result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています"));
 					result.errorCount++;
 					rowNum++;
@@ -185,6 +185,19 @@ public class AccountService {
 				String accountIdStr = cols[0].trim();
 				String loginId = cols[1].trim();
 				String rawPassword = cols[2].trim();
+				String permissionStr = cols[3].trim(); 
+				
+				// ★追加:権限のチェック(「一般」→0, 「管理」→1, それ以外・空白はエラー)
+				int permission = 0;
+				if (permissionStr.equals("一般")) {
+				    permission = 0;
+				} else if (permissionStr.equals("管理")) {
+				    permission = 1;
+				} else {
+				    result.errors.add(new CsvRowError(rowNum, "権限", "権限は一般または管理で入力してください。"));
+				    hasError = true;
+				}
+				
 				if (!accountIdStr.isEmpty()) {
 					try {
 						Integer accountId = Integer.parseInt(accountIdStr);
@@ -232,7 +245,7 @@ public class AccountService {
 					try {
 						account.setLoginId(loginId);
 						account.setPasswordHash(passwordEncoder.encode(rawPassword));
-						account.setPermission(0);
+						account.setPermission(permission);
 						save(account);
 						result.successCount++;
 					} catch (Exception e) {

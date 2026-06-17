@@ -18,10 +18,11 @@
 
         <div class="card">
 
-            <p class="instruction">
-                CSVファイルを選択してアカウント情報を一括登録・更新します。<br>
-                ※既存のアカウントIDと一致する場合は上書き更新、空欄の場合は新規登録されます。
-            </p>
+			<p class="instruction">
+			    CSVファイルを選択してアカウント情報を一括登録・更新します。<br>
+			    ※既存のアカウントIDと一致する場合は上書き更新、空欄の場合は新規登録されます。<br>
+			    ※権限は一般または管理で入力してください。
+			</p>
 
             <form th:action="@{/accounts/import}"
                   method="post"
