@@ -102,17 +102,18 @@ public class CompanyController {
 			BindingResult result,
 			RedirectAttributes attributes) {
 
+		// 設立年度チェック
+
+		Integer year = parseOrNull(companyForm.getFoundedYear());
+		if (year != null && year > java.time.Year.now().getValue()) {
+			result.rejectValue("foundedYear", "error", "設立年度は現在年度以前を入力してください");
+		}
+
 		// 企業名重複チェック
 		if (companyService.isCompanyNameDuplicate(companyForm.getCompanyName(), null)) {
 			result.rejectValue("companyName", "error.companyForm", "この企業名は既に使用されています");
 		}
-		// 設立年度チェック
-		if (companyForm.getFoundedYear() != null) {
-			int currentYear = java.time.Year.now().getValue();
-			if (companyForm.getFoundedYear() > currentYear) {
-				result.rejectValue("foundedYear", "error", "設立年度は現在年度以前を入力してください");
-			}
-		}
+
 		// TEL重複チェック
 		if (companyService.isCompanyTelDuplicate(companyForm.getCompanyTel(), null)) {
 			result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に使用されています");
@@ -156,8 +157,8 @@ public class CompanyController {
 			form.setCompanyAddress2(comp.getCompanyAddress2());
 			form.setCompanyTel(comp.getCompanyTel());
 			form.setCompanyFax(comp.getCompanyFax());
-			form.setFoundedYear(comp.getFoundedYear());
-			form.setEmployeeCount(comp.getEmployeeCount());
+			form.setFoundedYear(comp.getFoundedYear() != null ? String.valueOf(comp.getFoundedYear()) : null);
+			form.setEmployeeCount(comp.getEmployeeCount() != null ? String.valueOf(comp.getEmployeeCount()) : null);
 			form.setRepLastName(comp.getRepLastName());
 			form.setRepLastNameKana(comp.getRepLastNameKana());
 			form.setRepFirstName(comp.getRepFirstName());
@@ -187,6 +188,13 @@ public class CompanyController {
 			RedirectAttributes attributes,
 			@RequestParam(value = "fromPage", required = false) String fromPage,
 			Model model) {
+
+		// 設立年度チェック
+
+		Integer year = parseOrNull(companyForm.getFoundedYear());
+		if (year != null && year > java.time.Year.now().getValue()) {
+			result.rejectValue("foundedYear", "error", "設立年度は現在年度以前を入力してください");
+		}
 
 		// 企業名重複チェック
 		if (companyService.isCompanyNameDuplicate(companyForm.getCompanyName(), companyId)) {
@@ -423,11 +431,21 @@ public class CompanyController {
 		e.setCompanyAddress2(f.getCompanyAddress2());
 		e.setCompanyTel(f.getCompanyTel());
 		e.setCompanyFax(f.getCompanyFax());
-		e.setFoundedYear(f.getFoundedYear());
-		e.setEmployeeCount(f.getEmployeeCount());
+		e.setFoundedYear(parseOrNull(f.getFoundedYear()));
+		e.setEmployeeCount(parseOrNull(f.getEmployeeCount()));
 		e.setRepFirstName(f.getRepFirstName());
 		e.setRepLastName(f.getRepLastName());
 		e.setRepFirstNameKana(f.getRepFirstNameKana());
 		e.setRepLastNameKana(f.getRepLastNameKana());
+	}
+
+	private Integer parseOrNull(String value) {
+		if (value == null || value.isEmpty())
+			return null;
+		try {
+			return Integer.parseInt(value);
+		} catch (NumberFormatException e) {
+			return null;
+		}
 	}
 }
