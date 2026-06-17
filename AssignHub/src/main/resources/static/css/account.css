@@ -92,12 +92,20 @@
 /*   Buttons & Toolbars (ボタンとツールバー)*/
 /*========================================= */
 
-.btn-search{
-	transform:translate(80px, 8px);
+.btn-search-position{
+	transform:translate(70px, 8px);
 }
 /* =========================================
    Forms & Validation (入力フォームとエラー)
 ========================================= */
+.search-row {
+	display: flex;
+	gap: 20px;
+}
+
+.search-row .form-group {
+	flex: 1;
+}
 .search-form{
 	display: flex;
     align-items: center;
@@ -142,4 +150,23 @@
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;
+}
+
+.form-card {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.form-help-text {
+	font-size: 0.85rem;
+	color: #64748b;
+	margin-top: 0;
+	margin-bottom: 8px;
+}
+
+.form-actions {
+	margin-top: 25px;
+	display: flex;
+	gap: 10px;
+	justify-content: center;
 }
