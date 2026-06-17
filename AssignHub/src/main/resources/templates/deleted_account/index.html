@@ -36,13 +36,15 @@
 
 		<form method="post" id="listForm">
 			<div class="table-toolbar">
-	<button type="submit" formaction="/deleted-accounts/restore-bulk" class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元"
-		onclick="return confirm('選択した項目を一括復元しますか？');">
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-			stroke-linecap="round" stroke-linejoin="round">
-			<path d="M7 16c2.21 0 4-1.79 5-3s2.79-3 5-3a4 4 0 1 1 0 8c-2.21 0-4-1.79-5-3s-2.79-3-5-3a4 4 0 0 0-3.4 1.9" />
-			<polyline points="5.5 10 2 12.5 4.5 16" />
-			</svg>
+			<button type="button" class="toolbar-btn toolbar-btn-primary" title="チェックした項目を復元" onclick="openBulkRestoreModal()">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+		    stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+		    style="width: 1.3rem; height: 1.3rem; vertical-align: middle; margin-right: 4px;">
+		<path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+		<polyline points="3 3 3 8 8 8" />
+		<path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+		<polyline points="21 21 21 16 16 16" />
+		</svg>
 		一括復元
 	</button>
 
@@ -92,8 +94,14 @@
 								<td th:text="${acc.employee != null ? acc.employee.lastName + ' ' + acc.employee.firstName : ''}"></td>
 								<td class="col-action">
 									<button type="submit" th:formaction="@{/deleted-accounts/{id}/restore(id=${acc.accountId})}" class="btn-icon-svg" title="復元">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"stroke-linecap="round" stroke-linejoin="round"><path d="M7 16c2.21 0 4-1.79 5-3s2.79-3 5-3a4 4 0 1 1 0 8c-2.21 0-4-1.79-5-3s-2.79-3-5-3a4 4 0 0 0-3.4 1.9" /><polyline points="5.5 10 2 12.5 4.5 16" /></svg>
-									</button>
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" 										
+											stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+										    style="width: 1.3rem; height: 1.3rem; vertical-align: middle; margin-right: 4px;">
+										    <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+										        			<polyline points="3 3 3 8 8 8" />
+										        			<path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+										        			<polyline points="21 21 21 16 16 16" />
+										    				</svg>
 									<button type="button" th:attr="data-id=${acc.accountId}" class="btn-icon-svg delete" title="削除" onclick="openDeleteModal(this.dataset.id)">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
 									</button>

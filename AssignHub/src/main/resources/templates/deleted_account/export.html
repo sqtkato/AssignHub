@@ -3,13 +3,13 @@
 	layout:decorate="~{layout/layout}">
 
 <head>
-	<title>削除アカウント情報エクスポート</title>
+	<title>論理削除アカウント情報エクスポート</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<div class="page-title-area">
-			<h2>削除アカウント情報エクスポート</h2>
+			<h2>論理削除アカウント情報エクスポート</h2>
 		</div>
 		<div class="card form-card-wide">
 			<p class="instruction">以下の条件と内容でCSVファイルを出力します。よろしければ「エクスポート」ボタンを押してください。</p>
@@ -26,7 +26,7 @@
 						<td class="value">UTF-8 (BOMあり)</td>
 					</tr>
 				</table>
-			</div>
+			
 
 			<div class="table-scroll export-table">
 				<table class="table header-only-table table-dark">
@@ -50,16 +50,16 @@
 					</tbody>
 				</table>
 			</div>
-
+				<p class="export-note">※詳細情報がエクスポートされます。</p>
+			</div>
+			</div>
 			<div class="action-area">
     			<form th:action="@{/deleted-accounts/export/download}" method="post">
 							<input type="hidden" name="ids" th:value="${id}" th:each="id : ${ids}">
         					<button type="submit" class="btn btn-primary common-btn">エクスポート</button>
 							<a th:href="@{/deleted-accounts}" class="btn btn-secondary common-btn">戻る</a>
-							</form>
+				</form>
 			</div>
-			<p class="export-note">※詳細情報がエクスポートされます。</p>
 		</div>
-	</div>
 </body>
 </html>
