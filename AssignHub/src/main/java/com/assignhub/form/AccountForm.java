@@ -1,8 +1,8 @@
 package com.assignhub.form; 
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern; // 追加
-import jakarta.validation.constraints.Size;    // 追加
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import lombok.Data;
 
