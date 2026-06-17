@@ -103,7 +103,7 @@
 										<label>エンジニアタイプ<span class="badge-required ">必須</span></label>
 										<select id="engineerType" name="engineerType" th:field="*{engineerType}"
 											class="dropdown form-control fixed-all30"
-											th:classappend="${#fields.hasErrors('engineerType')} ? 'input-error'">
+											th:classappend="${#fields.hasErrors('engineerType')} ? 'input-error select-error' : ''">
 											    <option value="">未選択</option>
 											    <option value="プロパー">プロパー</option>
 											    <option value="パートナー">パートナー</option>
@@ -116,7 +116,8 @@
 											<div id="loginIdArea" style="display: none;">
 												    <label>ログインID<span class="badge-required">必須</span></label>
 												<select id="loginId" th:field="*{accountId}"
-													class="dropdown form-control fixed-all30">
+													class="dropdown form-control fixed-all30"
+													th:classappend="${#fields.hasErrors('accountId')} ? 'input-error select-error' : ''">
 													    <option value="">未選択</option>
 													<option th:each="account : ${accounts}"
 														th:value="${account.accountId}" th:text="${account.loginId}">
@@ -130,7 +131,8 @@
 												<div id="companyArea" style="display: none;">
 													    <label>所属企業<span class="badge-required">必須</span></label>
 													<select id="companyId" th:field="*{companyId}"
-														class="dropdown form-control fixed-all30">
+														class="dropdown form-control fixed-all30"
+														th:classappend="${#fields.hasErrors('companyId')} ? 'input-error select-error' : ''">
 														<option value="">未選択</option>
 														<option th:each="company : ${companies}"
 															th:value="${company.companyId}"
@@ -171,31 +173,30 @@
 				const yearsInput = document.getElementById('yearsOfService');
 
 				if (!hireDateInput.value) {
-					yearsInput.value = ''; // 入社年月が空なら空にする
+					yearsInput.value = ''; 
 					return;
 				}
 
 				const hireDate = new Date(hireDateInput.value);
 				const today = new Date();
 
-				// 年数の差分を計算
+				
 				let years = today.getFullYear() - hireDate.getFullYear();
 				const monthDiff = today.getMonth() - hireDate.getMonth();
 
-				// 今年の入社月日にまだ達していない場合は1年引く（満年齢と同じ計算）
+				
 				if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < hireDate.getDate())) {
 					years--;
 				}
 
-				// 計算結果がマイナス（未来の日付）の場合は0にする
+				
 				yearsInput.value = years >= 0 ? years : 0;
 			}
 
-			// 3. イベントを設定（★新しく追加）
-			// 入社年月が手動で変更されたときに計算する
+			
 			document.getElementById('hireDate').addEventListener('change', calculateYearsOfService);
 
-			// 編集画面を開いた瞬間に、すでに登録されている日付から初期値を自動計算する
+			
 			window.addEventListener('DOMContentLoaded', calculateYearsOfService);
 
 			document.getElementById('engineerType').addEventListener('change', function () {
