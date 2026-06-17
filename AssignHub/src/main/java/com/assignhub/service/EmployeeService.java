@@ -157,7 +157,7 @@ public class EmployeeService {
 			while ((line = br.readLine()) != null) {
 				if (isFirstLine) {
 					isFirstLine = false;
-					// 先頭行のBOM（\uFEFF）を除去する
+					
 					if (line.startsWith("\uFEFF")) {
 						line = line.substring(1);
 					}
@@ -226,6 +226,9 @@ public class EmployeeService {
 				} else if (lastNameKana.length() > 50) {
 				    result.errors.add(new CsvRowError(rowNum, "社員姓カナ", "社員姓カナは50文字以内で入力してください"));
 				    hasError = true;
+				} else if (!lastNameKana.matches("^[ァ-ヶー]+$")) {
+				    result.errors.add(new CsvRowError(rowNum, "社員姓カナ", "社員姓カナは全角カタカナで入力してください"));
+				    hasError = true;
 				} else {
 				    emp.setLastNameKana(lastNameKana);
 				}
@@ -236,6 +239,9 @@ public class EmployeeService {
 				    hasError = true;
 				} else if (firstNameKana.length() > 50) {
 				    result.errors.add(new CsvRowError(rowNum, "社員名カナ", "社員名カナは50文字以内で入力してください"));
+				    hasError = true;
+				} else if (!firstNameKana.matches("^[ァ-ヶー]+$")) {
+				    result.errors.add(new CsvRowError(rowNum, "社員名カナ", "社員名カナは全角カタカナで入力してください"));
 				    hasError = true;
 				} else {
 				    emp.setFirstNameKana(firstNameKana);

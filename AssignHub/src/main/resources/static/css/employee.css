@@ -37,7 +37,11 @@
 	padding: 6px 8px;
 }
 
-
+/* export画面用テーブルのスクロール */
+.export-table-scroll {
+	max-height: 340px;
+	overflow-y: auto;
+}
 
 
 

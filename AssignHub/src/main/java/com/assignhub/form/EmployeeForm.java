@@ -39,11 +39,13 @@ public class EmployeeForm {
 	/** 社員姓カナ（必須、最大50文字） */
 	@NotBlank(message = "社員姓カナは必須です")
 	@Size(max = 50, message = "社員姓カナは50文字以内で入力してください")
+	@Pattern(regexp = "^[ァ-ヶー]*$", message = "全角カタカナで入力してください")
 	private String lastNameKana;
 
 	/** 社員名カナ（必須、最大50文字） */
 	@NotBlank(message = "社員名カナは必須です")
 	@Size(max = 50, message = "社員名カナは50文字以内で入力してください")
+	@Pattern(regexp = "^[ァ-ヶー]*$", message = "全角カタカナで入力してください")
 	private String firstNameKana;
 
 	/** 生年月日(任意) */
