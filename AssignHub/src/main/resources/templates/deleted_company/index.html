@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
-
 <head>
+	<meta charset="UTF-8">
 	<title>企業情報削除/復元一覧</title>
 	<link rel="stylesheet" href="/css/popup.css">
 </head>
@@ -41,7 +41,8 @@
 				    一括復元
 				</button>
 
-				<button type="submit" formaction="/deleted-companies/export" class="toolbar-btn" title="チェックした項目をエクスポート">
+				<button type="submit" formaction="/deleted-companies/export" class="toolbar-btn" 
+					title="チェックした項目をエクスポート">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -51,7 +52,8 @@
 					エクスポート
 				</button>
 
-				 <button type="button" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"onclick="openBulkDeleteModal()">
+				 <button type="button" class="toolbar-btn toolbar-btn-danger" 
+				 	title="チェックした項目を削除"onclick="openBulkDeleteModal()">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<polyline points="3 6 5 6 21 6"></polyline>
@@ -101,7 +103,7 @@
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
 									</svg>
 								</button>
-											</td>
+								</td>
 							</tr>
 							
 							<tr th:if="${#lists.isEmpty(companies)}">
