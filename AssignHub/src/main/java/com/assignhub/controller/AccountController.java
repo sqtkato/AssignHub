@@ -211,13 +211,9 @@ public class AccountController {
 		return "redirect:/accounts";
 	}
 
-	/**
-	 * アカウント情報インポート画面を表示する。
-	 */
 	@GetMapping("/import")
 	public String showImport(Model model, RedirectAttributes attributes) {
-		int currentCount = accountService.findAll("", null).size();
-		if (currentCount >= 500) {
+		if (accountService.isAccountLimitReached()) {
 			attributes.addFlashAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
 			return "redirect:/accounts";
 		}
@@ -281,8 +277,7 @@ public class AccountController {
 	 */
 	@GetMapping("/import/template")
 	public ResponseEntity<byte[]> downloadTemplate() {
-		String csv = "アカウントID,ログインID,パスワード\n"
-				+ ",user001,pass1234\n";
+		String csv = "アカウントID,ログインID,パスワード,権限\n";
 
 		byte[] csvBytes = csv.getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
