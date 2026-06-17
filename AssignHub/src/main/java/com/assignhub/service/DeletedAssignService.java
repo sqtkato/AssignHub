@@ -108,34 +108,15 @@ public class DeletedAssignService {
 	}
 
 	//    単一復元の生存条件
-	public boolean existCompanyPartnerByAssignId(Integer id) {
-		return deletedAssignMapper.existCompanyPartnerByAssignId(id) > 0;
+	public boolean existEmployeeByAssignId(Integer id) {
+		return deletedAssignMapper.existEmployeeByAssignId(id) > 0;
 	}
 
 	//    一括復元の生存条件
-	public boolean existCompanyPartnerByAssignIds(List<Integer> ids) {
-		return deletedAssignMapper.existCompanyPartnerByAssignIds(ids) > 0;
+	public boolean existEmployeeByAssignIds(List<Integer> ids) {
+		return deletedAssignMapper.existEmployeeByAssignIds(ids) > 0;
 	}
 
-	//    単一復元の生存条件
-	public boolean existEmployeeProperByAssignId(Integer id) {
-		return deletedAssignMapper.existEmployeeProperByAssignId(id) > 0;
-	}
-
-	//    一括復元の生存条件
-	public boolean existEmployeeProperByAssignIds(List<Integer> ids) {
-		return deletedAssignMapper.existEmployeeProperByAssignIds(ids) > 0;
-	}
-
-	//    単一復元の生存条件
-	public boolean existEmployeePartnerByAssignId(Integer id) {
-		return deletedAssignMapper.existEmployeePartnerByAssignId(id) > 0;
-	}
-
-	//    一括復元の生存条件
-	public boolean existEmployeePartnerByAssignIds(List<Integer> ids) {
-		return deletedAssignMapper.existEmployeePartnerByAssignIds(ids) > 0;
-	}
 	/**
 	 * アサイン履歴がすでに登録されているか（重複しているか）を判定する。
 	 *

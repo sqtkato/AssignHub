@@ -200,43 +200,20 @@
 		</foreach>
 	</select>
 
-	<select id="existCompanyPartnerByAssignId" resultType="int">
-		SELECT COUNT(*)
-		FROM t_assignment a
-		INNER JOIN m_employee e ON a.emp_id = e.emp_id
-		INNER JOIN m_company ec ON e.company_id = ec.company_id
-		WHERE a.assignment_id = #{id}
-		AND ec.delete_flg = 1
-	</select>
 
-	<select id="existCompanyPartnerByAssignIds" resultType="int">
-		SELECT COUNT(*)
-		FROM t_assignment a
-		INNER JOIN m_employee e ON a.emp_id = e.emp_id
-		INNER JOIN m_company ec ON e.company_id = ec.company_id
-		WHERE ec.delete_flg = 1
-		AND a.assignment_id IN
-		<foreach item="id" collection="ids" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</select>
-
-
-	<select id="existEmployeePartnerByAssignId" resultType="int">
+	<select id="existEmployeeByAssignId" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment a
 		INNER JOIN m_employee e ON a.emp_id = e.emp_id
 		WHERE a.assignment_id = #{id}
-		AND e.engineer_type = 1
 		AND e.delete_flg = 1
 	</select>
 
-	<select id="existEmployeePartnerByAssignIds" resultType="int">
+	<select id="existEmployeeByAssignIds" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment a
 		INNER JOIN m_employee e ON a.emp_id = e.emp_id
 		WHERE e.delete_flg = 1
-		AND e.engineer_type = 1
 		AND a.assignment_id IN
 		<foreach item="id" collection="ids" open="(" separator="," close=")">
 			#{id}

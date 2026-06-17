@@ -80,21 +80,11 @@ public class DeletedAssignController {
 			return "redirect:/deleted-assignments";
 		}
 
-		if (deletedAssignService.existCompanyPartnerByAssignId(id)) {
-			attributes.addFlashAttribute("toastError", "紐づく所属元企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
+		if (deletedAssignService.existEmployeeByAssignId(id)) {
+			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報を復元してください。");
 			return "redirect:/deleted-assignments";
 		}
 
-		if (deletedAssignService.existEmployeeProperByAssignId(id)) {
-			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報（プロパー）を復元してください。");
-			return "redirect:/deleted-assignments";
-		}
-
-		if (deletedAssignService.existEmployeePartnerByAssignId(id)) {
-			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報（パートナー）を復元してください。");
-			return "redirect:/deleted-assignments";
-		}
-		
 		if (deletedAssignService.isDuplicate(id)) {
 			attributes.addFlashAttribute("toastError", "社員ID、企業ID、アサイン開始日、アサイン終了日が重複している履歴があります。");
 			return "assignment/create";
@@ -122,17 +112,9 @@ public class DeletedAssignController {
 			attributes.addFlashAttribute("toastError", "紐づく派遣先企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
 			return "redirect:/deleted-assignments";
 		}
-
-		if (deletedAssignService.existCompanyPartnerByAssignIds(ids)) {
-			attributes.addFlashAttribute("toastError", "紐づく所属元企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
-			return "redirect:/deleted-assignments";
-		}
-		if (deletedAssignService.existEmployeeProperByAssignIds(ids)) {
-			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報（プロパー）を復元してください。");
-			return "redirect:/deleted-assignments";
-		}
-		if (deletedAssignService.existEmployeePartnerByAssignIds(ids)) {
-			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報（パートナー）を復元してください。");
+		
+		if (deletedAssignService.existEmployeeByAssignIds(ids)) {
+			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報を復元してください。");
 			return "redirect:/deleted-assignments";
 		}
 		for (int id: ids) {
