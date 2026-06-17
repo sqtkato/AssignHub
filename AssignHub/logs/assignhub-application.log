@@ -255,3 +255,449 @@
 2026-06-17T12:16:02.542+09:00 DEBUG 8352 --- [http-nio-8080-exec-5] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
 2026-06-17T12:16:02.543+09:00 DEBUG 8352 --- [http-nio-8080-exec-5] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
 2026-06-17T12:16:02.552+09:00 DEBUG 8352 --- [http-nio-8080-exec-5] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 0
+2026-06-17T12:30:50.005+09:00  INFO 27864 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-17T12:30:50.005+09:00  INFO 27864 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-17T12:30:50.006+09:00  INFO 27864 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-17T12:30:50.008+09:00  INFO 27864 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2026-06-17T12:30:50.023+09:00  INFO 27864 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@83962c0
+2026-06-17T12:30:50.024+09:00  INFO 27864 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2026-06-17T12:30:50.024+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T12:30:50.024+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T12:30:50.033+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : <==      Total: 21
+2026-06-17T12:30:52.172+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-17T12:30:52.172+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-17T12:30:52.174+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-17T12:30:53.197+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T12:30:53.198+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T12:30:53.201+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : <==      Total: 21
+2026-06-17T12:30:54.744+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findById        : ==>  Preparing: SELECT * FROM m_account WHERE account_id = ?
+2026-06-17T12:30:54.745+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findById        : ==> Parameters: 2(Integer)
+2026-06-17T12:30:54.747+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findById        : <==      Total: 1
+2026-06-17T12:30:56.151+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T12:30:56.151+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T12:30:56.154+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : <==      Total: 21
+2026-06-17T12:30:56.964+09:00 DEBUG 27864 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-17T12:30:56.965+09:00 DEBUG 27864 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-17T12:30:56.966+09:00 DEBUG 27864 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-17T12:48:43.516+09:00  WARN 27864 --- [HikariPool-4:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Thread starvation or clock leap detected (housekeeper delta=10m53s297ms699µs).
+2026-06-17T12:53:05.271+09:00  WARN 27864 --- [HikariPool-4:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Thread starvation or clock leap detected (housekeeper delta=3m21s752ms36µs400ns).
+2026-06-17T12:55:01.548+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-17T12:55:01.549+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: koizumi219(String)
+2026-06-17T12:55:01.552+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-17T12:55:01.669+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-17T12:55:01.669+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-17T12:55:01.676+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 2
+2026-06-17T12:55:08.345+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T12:55:08.345+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T12:55:08.349+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : <==      Total: 21
+2026-06-17T12:55:10.036+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-17T12:55:10.036+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-17T12:55:10.038+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-17T12:55:22.171+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.countByLoginId  : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE login_id = ? AND delete_flg=0
+2026-06-17T12:55:22.172+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.countByLoginId  : ==> Parameters: 424432532(String)
+2026-06-17T12:55:22.174+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.countByLoginId  : <==      Total: 1
+2026-06-17T12:55:22.274+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.assignhub.mapper.AccountMapper.insert  : ==>  Preparing: INSERT INTO m_account (login_id, password_hash, permission, delete_flg) VALUES (?, ?, ?, 0)
+2026-06-17T12:55:22.274+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.assignhub.mapper.AccountMapper.insert  : ==> Parameters: 424432532(String), $2a$10$qGK9udq.WgGNEhi3jZ22peKWLepAYPQPVS/LclPR3HnoQLqdFsjS.(String), 0(Integer)
+2026-06-17T12:55:22.296+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.assignhub.mapper.AccountMapper.insert  : <==    Updates: 1
+2026-06-17T12:55:22.332+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T12:55:22.332+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T12:55:22.336+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T12:55:25.751+09:00 DEBUG 27864 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findById        : ==>  Preparing: SELECT * FROM m_account WHERE account_id = ?
+2026-06-17T12:55:25.752+09:00 DEBUG 27864 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findById        : ==> Parameters: 29(Integer)
+2026-06-17T12:55:25.754+09:00 DEBUG 27864 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findById        : <==      Total: 1
+2026-06-17T12:55:30.370+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.countByLoginId  : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE login_id = ? AND delete_flg=0 AND account_id != ?
+2026-06-17T12:55:30.371+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.countByLoginId  : ==> Parameters: 0000000000(String), 29(Integer)
+2026-06-17T12:55:30.373+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.countByLoginId  : <==      Total: 1
+2026-06-17T12:55:30.476+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.assignhub.mapper.AccountMapper.update  : ==>  Preparing: UPDATE m_account SET login_id =?, permission= ?, password_Hash = ?, updated_at = NOW() WHERE account_id =?
+2026-06-17T12:55:30.477+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.assignhub.mapper.AccountMapper.update  : ==> Parameters: 0000000000(String), 1(Integer), $2a$10$0Nql/64ZET8skdAC8qWzYu5cjnNGW9VL77GIK5CotWVHuE.1JIHiq(String), 29(Integer)
+2026-06-17T12:55:30.483+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.assignhub.mapper.AccountMapper.update  : <==    Updates: 1
+2026-06-17T12:55:30.498+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T12:55:30.499+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T12:55:30.503+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T12:56:12.811+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-17T12:56:12.812+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-17T12:56:12.814+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-17T12:56:24.922+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T12:56:24.923+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T12:56:24.926+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T12:56:39.429+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findById        : ==>  Preparing: SELECT * FROM m_account WHERE account_id = ?
+2026-06-17T12:56:39.429+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findById        : ==> Parameters: 2(Integer)
+2026-06-17T12:56:39.431+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findById        : <==      Total: 1
+2026-06-17T12:56:52.794+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T12:56:52.795+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T12:56:52.798+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T12:56:53.836+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-17T12:56:53.837+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-17T12:56:53.838+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-17T12:57:00.329+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T12:57:00.329+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T12:57:00.333+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T12:57:03.273+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-17T12:57:03.273+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-17T12:57:03.276+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-17T12:57:07.321+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T12:57:07.321+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T12:57:07.324+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T12:57:09.088+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findById        : ==>  Preparing: SELECT * FROM m_account WHERE account_id = ?
+2026-06-17T12:57:09.089+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findById        : ==> Parameters: 2(Integer)
+2026-06-17T12:57:09.091+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findById        : <==      Total: 1
+2026-06-17T12:57:10.142+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T12:57:10.143+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T12:57:10.146+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T12:59:48.326+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T12:59:48.327+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T12:59:48.331+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T13:02:26.144+09:00 DEBUG 27864 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-17T13:02:26.144+09:00 DEBUG 27864 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: koizumi219(String)
+2026-06-17T13:02:26.152+09:00 DEBUG 27864 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-17T13:02:26.255+09:00 DEBUG 27864 --- [http-nio-8080-exec-9] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-17T13:02:26.264+09:00 DEBUG 27864 --- [http-nio-8080-exec-9] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-17T13:02:26.271+09:00 DEBUG 27864 --- [http-nio-8080-exec-9] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 2
+2026-06-17T13:03:00.008+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==>  Preparing: SELECT a.assignment_id, a.emp_id, a.company_id, a.contract_start_date, a.contract_end_date, a.unit_price, a.role_id, a.delete_flg, a.created_at, a.updated_at, e.last_name, e.first_name, e.last_name_kana, e.first_name_kana, e.engineer_type, c.company_name AS assign_company_name, ec.company_id AS ec_company_id, ec.company_name AS emp_company_name, ec.company_name_kana AS emp_company_name_kana, r.role FROM t_assignment a INNER JOIN m_employee e ON a.emp_id = e.emp_id INNER JOIN m_company c ON a.company_id = c.company_id LEFT JOIN m_company ec ON e.company_id = ec.company_id INNER JOIN m_role r ON a.role_id = r.role_id WHERE a.delete_flg = 0 AND e.delete_flg = 0 AND c.delete_flg = 0 AND (ec.delete_flg = 0 OR e.company_id IS NULL) ORDER BY a.assignment_id
+2026-06-17T13:03:00.009+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.findAll      : ==> Parameters: 
+2026-06-17T13:03:00.020+09:00 ERROR 27864 --- [http-nio-8080-exec-3] c.a.controller.GlobalExceptionHandler    : 【システムエラー】予期せぬ例外が発生しました。
+
+org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'c.delete_flg' in 'where clause'
+### The error may exist in file [C:\Users\お客様\git\AssignHub\AssignHub\target\classes\mapper\Assignment.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT   a.assignment_id,   a.emp_id,   a.company_id,   a.contract_start_date,   a.contract_end_date,   a.unit_price,   a.role_id,   a.delete_flg,   a.created_at,   a.updated_at,   e.last_name,   e.first_name,   e.last_name_kana,   e.first_name_kana,   e.engineer_type,   c.company_name AS   assign_company_name,   ec.company_id AS   ec_company_id,   ec.company_name AS   emp_company_name,   ec.company_name_kana AS emp_company_name_kana,   r.role   FROM   t_assignment a   INNER JOIN m_employee e ON a.emp_id = e.emp_id   INNER   JOIN m_company c   ON a.company_id = c.company_id   LEFT JOIN m_company ec   ON e.company_id   = ec.company_id   INNER JOIN m_role r ON a.role_id =   r.role_id    WHERE a.delete_flg = 0    AND e.delete_flg = 0    AND c.delete_flg = 0    AND    (ec.delete_flg = 0 OR e.company_id IS NULL)    ORDER BY a.assignment_id
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'c.delete_flg' in 'where clause'
+; bad SQL grammar []
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:244) ~[spring-jdbc-7.0.7.jar:7.0.7]
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:102) ~[spring-jdbc-7.0.7.jar:7.0.7]
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:95) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:362) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at jdk.proxy2/jdk.proxy2.$Proxy73.selectList(Unknown Source) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:209) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:147) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:80) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:141) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:86) ~[mybatis-3.5.19.jar:3.5.19]
+	at jdk.proxy8/jdk.proxy8.$Proxy117.findAll(Unknown Source) ~[na:na]
+	at com.assignhub.service.AssignmentService.findAll(AssignmentService.java:58) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-7.0.7.jar:7.0.7]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:715) ~[spring-aop-7.0.7.jar:7.0.7]
+	at com.assignhub.service.AssignmentService$$SpringCGLIB$$0.findAll(<generated>) ~[classes/:na]
+	at com.assignhub.controller.AssignmentController.index(AssignmentController.java:89) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'c.delete_flg' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:383) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at jdk.internal.reflect.GeneratedMethodAccessor66.invoke(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58) ~[mybatis-3.5.19.jar:3.5.19]
+	at jdk.proxy4/jdk.proxy4.$Proxy96.execute(Unknown Source) ~[na:na]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:80) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:65) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:336) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:158) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:110) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:90) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:154) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:142) ~[mybatis-3.5.19.jar:3.5.19]
+	at jdk.internal.reflect.GeneratedMethodAccessor126.invoke(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:348) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	... 61 common frames omitted
+
+2026-06-17T13:03:00.028+09:00 ERROR 27864 --- [http-nio-8080-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'c.delete_flg' in 'where clause'
+### The error may exist in file [C:\Users\お客様\git\AssignHub\AssignHub\target\classes\mapper\Assignment.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT   a.assignment_id,   a.emp_id,   a.company_id,   a.contract_start_date,   a.contract_end_date,   a.unit_price,   a.role_id,   a.delete_flg,   a.created_at,   a.updated_at,   e.last_name,   e.first_name,   e.last_name_kana,   e.first_name_kana,   e.engineer_type,   c.company_name AS   assign_company_name,   ec.company_id AS   ec_company_id,   ec.company_name AS   emp_company_name,   ec.company_name_kana AS emp_company_name_kana,   r.role   FROM   t_assignment a   INNER JOIN m_employee e ON a.emp_id = e.emp_id   INNER   JOIN m_company c   ON a.company_id = c.company_id   LEFT JOIN m_company ec   ON e.company_id   = ec.company_id   INNER JOIN m_role r ON a.role_id =   r.role_id    WHERE a.delete_flg = 0    AND e.delete_flg = 0    AND c.delete_flg = 0    AND    (ec.delete_flg = 0 OR e.company_id IS NULL)    ORDER BY a.assignment_id
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'c.delete_flg' in 'where clause'
+; bad SQL grammar []] with root cause
+
+java.sql.SQLSyntaxErrorException: Unknown column 'c.delete_flg' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:383) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at jdk.internal.reflect.GeneratedMethodAccessor66.invoke(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58) ~[mybatis-3.5.19.jar:3.5.19]
+	at jdk.proxy4/jdk.proxy4.$Proxy96.execute(Unknown Source) ~[na:na]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:80) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:65) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:336) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:158) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:110) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:90) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:154) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:142) ~[mybatis-3.5.19.jar:3.5.19]
+	at jdk.internal.reflect.GeneratedMethodAccessor126.invoke(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:348) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at jdk.proxy2/jdk.proxy2.$Proxy73.selectList(Unknown Source) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:209) ~[mybatis-spring-4.0.0.jar:4.0.0]
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:147) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:80) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:141) ~[mybatis-3.5.19.jar:3.5.19]
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:86) ~[mybatis-3.5.19.jar:3.5.19]
+	at jdk.proxy8/jdk.proxy8.$Proxy117.findAll(Unknown Source) ~[na:na]
+	at com.assignhub.service.AssignmentService.findAll(AssignmentService.java:58) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-7.0.7.jar:7.0.7]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:715) ~[spring-aop-7.0.7.jar:7.0.7]
+	at com.assignhub.service.AssignmentService$$SpringCGLIB$$0.findAll(<generated>) ~[classes/:na]
+	at com.assignhub.controller.AssignmentController.index(AssignmentController.java:89) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2026-06-17T13:03:03.301+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T13:03:03.303+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T13:03:03.306+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T13:04:27.829+09:00  WARN 27864 --- [http-nio-8080-exec-3] c.a.controller.GlobalExceptionHandler    : 静的リソースが見つかりません: /.well-known/appspecific/com.chrome.devtools.json
+2026-06-17T13:04:48.082+09:00  WARN 27864 --- [http-nio-8080-exec-7] c.a.controller.GlobalExceptionHandler    : 静的リソースが見つかりません: /.well-known/appspecific/com.chrome.devtools.json
+2026-06-17T13:05:02.664+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T13:05:02.665+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T13:05:02.667+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T13:05:02.753+09:00  WARN 27864 --- [http-nio-8080-exec-6] c.a.controller.GlobalExceptionHandler    : 静的リソースが見つかりません: /.well-known/appspecific/com.chrome.devtools.json
+2026-06-17T13:06:42.533+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 AND permission = ? ORDER BY a.account_id ASC
+2026-06-17T13:06:42.534+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 0(Integer)
+2026-06-17T13:06:42.537+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-17T13:06:43.261+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 AND permission = ? ORDER BY a.account_id ASC
+2026-06-17T13:06:43.261+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 0(Integer)
+2026-06-17T13:06:43.264+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-17T13:06:43.534+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 AND permission = ? ORDER BY a.account_id ASC
+2026-06-17T13:06:43.534+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 0(Integer)
+2026-06-17T13:06:43.542+09:00 DEBUG 27864 --- [http-nio-8080-exec-5] c.a.mapper.AccountMapper.findAll         : <==      Total: 18
+2026-06-17T13:06:47.467+09:00 DEBUG 27864 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 AND ( e.first_name LIKE CONCAT('%', ?, '%') OR e.last_name LIKE CONCAT('%', ?, '%') ) AND permission = ? ORDER BY a.account_id ASC
+2026-06-17T13:06:47.468+09:00 DEBUG 27864 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 鈴木　梨(String), 鈴木　梨(String), 0(Integer)
+2026-06-17T13:06:47.478+09:00 DEBUG 27864 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findAll         : <==      Total: 0
+2026-06-17T13:07:00.529+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T13:07:00.530+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T13:07:00.534+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T13:11:36.255+09:00 DEBUG 27864 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-17T13:11:36.255+09:00 DEBUG 27864 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: koizumi219(String)
+2026-06-17T13:11:36.258+09:00 DEBUG 27864 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-17T13:11:36.365+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-17T13:11:36.365+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-17T13:11:36.371+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 2
+2026-06-17T13:11:44.645+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T13:11:44.646+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T13:11:44.649+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T13:11:46.540+09:00 DEBUG 27864 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-17T13:11:46.542+09:00 DEBUG 27864 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-17T13:11:46.544+09:00 DEBUG 27864 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-17T13:11:57.648+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T13:11:57.649+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T13:11:57.652+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T13:15:45.797+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T13:15:45.798+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T13:15:45.801+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T13:15:47.077+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T13:15:47.078+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T13:15:47.081+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T13:37:08.254+09:00  WARN 27864 --- [HikariPool-4:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Thread starvation or clock leap detected (housekeeper delta=2m32s347ms650µs600ns).
+2026-06-17T13:38:46.338+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-17T13:38:46.338+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: bdvubsi(String)
+2026-06-17T13:38:46.347+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 0
+2026-06-17T13:39:01.596+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-17T13:39:01.597+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: bdvubsi(String)
+2026-06-17T13:39:01.600+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 0
+2026-06-17T13:39:24.370+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-17T13:39:24.371+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: bdvubsi(String)
+2026-06-17T13:39:24.373+09:00 DEBUG 27864 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 0
+2026-06-17T13:39:36.348+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-17T13:39:36.349+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: koizumi219(String)
+2026-06-17T13:39:36.351+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-17T13:39:36.451+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-17T13:39:36.451+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-17T13:39:36.475+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 2
+2026-06-17T13:39:42.321+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T13:39:42.321+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T13:39:42.324+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : <==      Total: 22
+2026-06-17T13:39:43.577+09:00 DEBUG 27864 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-17T13:39:43.578+09:00 DEBUG 27864 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-17T13:39:43.579+09:00 DEBUG 27864 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-17T13:39:56.663+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.countByLoginId  : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE login_id = ? AND delete_flg=0
+2026-06-17T13:39:56.664+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.countByLoginId  : ==> Parameters: jakusonn(String)
+2026-06-17T13:39:56.666+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.countByLoginId  : <==      Total: 1
+2026-06-17T13:39:56.760+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.assignhub.mapper.AccountMapper.insert  : ==>  Preparing: INSERT INTO m_account (login_id, password_hash, permission, delete_flg) VALUES (?, ?, ?, 0)
+2026-06-17T13:39:56.760+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.assignhub.mapper.AccountMapper.insert  : ==> Parameters: jakusonn(String), $2a$10$6jCLefstcCVfv7hE7ZNRsu.ruWL8LkaqgtGzsF/v2OtnQeWBFvZP6(String), 0(Integer)
+2026-06-17T13:39:56.785+09:00 DEBUG 27864 --- [http-nio-8080-exec-10] c.assignhub.mapper.AccountMapper.insert  : <==    Updates: 1
+2026-06-17T13:39:56.803+09:00 DEBUG 27864 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-17T13:39:56.803+09:00 DEBUG 27864 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-17T13:39:56.807+09:00 DEBUG 27864 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findAll         : <==      Total: 23
+2026-06-17T13:40:16.344+09:00 DEBUG 27864 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-17T13:40:16.345+09:00 DEBUG 27864 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: jaction(String)
+2026-06-17T13:40:16.347+09:00 DEBUG 27864 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 0
+2026-06-17T13:50:43.316+09:00  INFO 27864 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-17T13:50:43.320+09:00  INFO 27864 --- [Thread-16] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-17T13:50:43.502+09:00  INFO 27864 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-17T13:50:43.506+09:00  INFO 27864 --- [Thread-16] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2026-06-17T13:50:43.509+09:00  INFO 27864 --- [Thread-16] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2026-06-17T13:50:43.602+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 27864 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-17T13:50:43.603+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-17T13:50:43.757+09:00  INFO 27864 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-17T13:50:43.758+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-17T13:50:43.758+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-17T13:50:43.770+09:00  INFO 27864 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 163 ms
+2026-06-17T13:50:43.783+09:00  WARN 27864 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'accountController': Lookup method resolution failed
+2026-06-17T13:50:43.784+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-06-17T13:50:43.785+09:00  INFO 27864 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-17T13:50:43.787+09:00 ERROR 27864 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'accountController': Lookup method resolution failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:482) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:352) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1321) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at com.assignhub.AssignHubApplication.main(AssignHubApplication.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.assignhub.controller.AccountController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@2f82616c]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:483) ~[spring-core-7.0.7.jar:7.0.7]
+	at org.springframework.util.ReflectionUtils.doWithLocalMethods(ReflectionUtils.java:320) ~[spring-core-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:460) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 26 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: tring
+	at java.base/java.lang.Class.getDeclaredMethods0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredMethods(Class.java:3402) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredMethods(Class.java:2504) ~[na:na]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:465) ~[spring-core-7.0.7.jar:7.0.7]
+	... 28 common frames omitted
+Caused by: java.lang.ClassNotFoundException: tring
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:123) ~[spring-boot-devtools-4.0.6.jar:4.0.6]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525) ~[na:na]
+	... 32 common frames omitted
+
