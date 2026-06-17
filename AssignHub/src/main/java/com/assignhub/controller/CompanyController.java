@@ -78,7 +78,7 @@ public class CompanyController {
 			attributes.addFlashAttribute(
 					"toastError",
 					"登録件数が上限（500件）に達しています");
-			return "redirect:/assignments";
+			return "redirect:/companies";
 		}
 		return "company/create";
 	}
@@ -101,7 +101,6 @@ public class CompanyController {
         if (companyService.isCompanyNameDuplicate(companyForm.getCompanyName(), null)) {
             result.rejectValue("companyName", "error.companyForm", "この企業名は既に使用されています");
         }
-
         // 設立年度チェック
         if (companyForm.getFoundedYear() != null) {
             int currentYear = java.time.Year.now().getValue();
@@ -109,42 +108,14 @@ public class CompanyController {
                 result.rejectValue("foundedYear", "error", "設立年度は現在年度以前を入力してください");
             }
         }
-
-        // 郵便番号形式チェック
-        if (companyForm.getCompanyZipCode() != null && !companyForm.getCompanyZipCode().isEmpty()) {
-            if (!companyForm.getCompanyZipCode().matches("^[0-9]*$")) {
-                result.rejectValue("companyZipCode", "error", "郵便番号の形式が正しくありません ハイフンなしで入力してください");
-            } else if (companyForm.getCompanyZipCode().length() != 7) {
-                result.rejectValue("companyZipCode", "error.companyForm", "郵便番号は7桁以内で入力してください");
-            }
-        }
-
         // TEL重複チェック
         if (companyService.isCompanyTelDuplicate(companyForm.getCompanyTel(), null)) {
             result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に使用されています");
         }
-
-        // TEL形式・桁数チェック
-        if (companyForm.getCompanyTel() != null && !companyForm.getCompanyTel().isEmpty()) {
-            if (!companyForm.getCompanyTel().matches("^[0-9]*$")) {
-                result.rejectValue("companyTel", "error", "電話番号の形式が正しくありません ハイフンなしで入力してください");
-            } else if (companyForm.getCompanyTel().length() < 10 || companyForm.getCompanyTel().length() > 11) {
-                result.rejectValue("companyTel", "error.companyForm", "電話番号10桁または11桁で入力してください");
-            }
-        }
-
         // FAX重複チェック
         if (companyService.isCompanyFaxDuplicate(companyForm.getCompanyFax(), null)) {
             result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
         }
-
-        // FAX形式チェック
-        if (companyForm.getCompanyFax() != null && !companyForm.getCompanyFax().isEmpty()) {
-            if (!companyForm.getCompanyFax().matches("^[0-9]*$")) {
-                result.rejectValue("companyFax", "error", "FAX番号の形式が正しくありません ハイフンなしで入力してください");
-            }
-        }
-
         if (result.hasErrors()) {
             return "company/create";
         }
@@ -339,11 +310,13 @@ public class CompanyController {
         }
         try {
             CompanyService.ImportResult result = companyService.importCsv(file);
-            if (result.errorCount > 0) {
-                model.addAttribute("importResult", result);
+            model.addAttribute("importResult", result);
+			if (result.errorCount > 0) {
+				model.addAttribute("toastError", "一部の行でエラーが発生しました");
+			} else {
+				model.addAttribute("toastMessage", result.successCount + "件のインポート処理が完了しました");
+			}
                 return "company/import";
-            }
-            return "redirect:/companies";
         } catch (java.nio.charset.MalformedInputException e) {
             model.addAttribute("errorMessage", "UTF-8のCSVファイルを選択してください");
             return "company/import";
