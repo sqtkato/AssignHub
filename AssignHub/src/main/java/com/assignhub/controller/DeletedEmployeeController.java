@@ -234,7 +234,7 @@ public class DeletedEmployeeController {
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment; filename=employees.csv");
+		headers.add("Content-Disposition", "attachment; filename=deleted-employees.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
