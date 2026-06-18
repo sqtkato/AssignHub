@@ -25,9 +25,7 @@ import com.assignhub.service.DeletedCompanyService;
 @Controller
 @RequestMapping("/deleted-companies")
 public class DeletedCompanyController {
-
 	private final DeletedCompanyService deletedCompanyService;
-
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
@@ -36,7 +34,14 @@ public class DeletedCompanyController {
 	public DeletedCompanyController(DeletedCompanyService deletedCompanyService) {
 		this.deletedCompanyService = deletedCompanyService;
 	}
-
+	
+	/**
+	 * 論理削除済み企業一覧画面を表示する。検索条件に応じたデータを取得する
+	 * @param companyName 企業名検索キーワード（任意）
+	 * @param companyTel 電話番号検索キーワード（任意）
+	 * @param model   画面描画用モデル
+	 * @return 一覧画面のテンプレートパス
+	 */
 	@GetMapping
 	public String index(@RequestParam(name = "companyName", required = false) String companyName,
 			@RequestParam(name = "companyTel", required = false) String companyTel,
@@ -50,7 +55,12 @@ public class DeletedCompanyController {
 	// ==========================================
 	// 復元処理
 	// ==========================================
-
+	/**
+	 * 論理削除済み企業を一件復元する。
+	 *
+	 * @param id 復元対象の企業ID
+	 * @return 一覧画面へのリダイレクトパス
+	 */
 	@PostMapping("/{id}/restore")
 	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		if (deletedCompanyService.isCompanyLimitReachedAfterRestore(1)) {
@@ -64,7 +74,13 @@ public class DeletedCompanyController {
 		deletedCompanyService.restore(id);
 		return "redirect:/deleted-companies";
 	}
-
+	/**
+	 * 選択された複数の論理削除済み企業情報を一括で復元する。
+	 *
+	 * @param ids        復元対象となる企業IDのリスト
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @return 一覧画面へのリダイレクトパス
+	 */
 	@PostMapping("/bulk-restore")
 	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			 RedirectAttributes attributes) {
@@ -89,7 +105,12 @@ public class DeletedCompanyController {
 	// ==========================================
 	// 物理削除処理
 	// ==========================================
-
+	/**
+	 * 論理削除済み企業を一件物理削除する。
+	 *
+	 * @param id 削除対象の企業ID
+	 * @return 一覧画面へのリダイレクトパス
+	 */
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		if (deletedCompanyService.existEmployeesByCompanyId(id)) {
@@ -104,7 +125,14 @@ public class DeletedCompanyController {
 		deletedCompanyService.physicalDelete(id);
 		return "redirect:/deleted-companies";
 	}
-
+	
+	/**
+	 * 選択された複数の論理削除済み企業情報を一括で物理削除する。
+	 *
+	 * @param ids        削除対象となる企業IDのリスト
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @return 一覧画面へのリダイレクトパス
+	 */
 	@PostMapping("/bulk-delete")
 	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			RedirectAttributes attributes) {
@@ -129,6 +157,14 @@ public class DeletedCompanyController {
 	// ==========================================
 	// エクスポート処理
 	// ==========================================
+	
+	 /**
+	 * 論理削除済み企業情報のエクスポート画面を表示する。
+	 *
+	 * @param ids    エクスポート対象となる企業IDのリスト 
+	 * @param model  画面描画用のモデル
+	 * @return エクスポート画面のテンプレートパス
+	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model,
 			RedirectAttributes attributes) {
@@ -145,7 +181,12 @@ public class DeletedCompanyController {
 
 		return "deleted_company/export";
 	}
-
+	/**
+	 * 検索条件に合致する論理削除済み企業情報をCSV形式でダウンロードする。
+	 *
+	 * @param ids    エクスポート対象となる企業IDのリスト 
+	 * @return ダウンロード用のCSVファイルバイナリデータ
+	 */
 	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(@RequestParam(name = "ids", required = false) List<Integer> ids) {
 

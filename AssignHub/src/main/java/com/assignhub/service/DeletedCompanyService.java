@@ -96,32 +96,6 @@ public class DeletedCompanyService {
 	}
 
 	/**
-	 * 復元した結果、登録上限（500件）を超えるか判定する
-	 * @param restoreCount 復元しようとしている件数（単一なら1、一括ならリストのサイズ）
-	 * @return 500件を超える場合はtrue
-	 */
-	public boolean isCompanyLimitReachedAfterRestore(int restoreCount) {
-		// 1. 現在有効な（削除されていない）企業数を取得する
-		// ※ 既存のCompanyService等から取得するか、独自に count を取得してください
-		int currentActiveCount = deletedCompanyMapper.countActiveCompanies();
-
-		// 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
-		return (currentActiveCount + restoreCount) > 500;
-	}
-
-	public boolean isCompanyNameDuplicate(String companyName, Integer excludeCompanyId) {
-		return deletedCompanyMapper.existsByCompanyName(companyName, excludeCompanyId);
-	}
-
-	public boolean isCompanyTelDuplicate(String companyTel, Integer companyId) {
-		return deletedCompanyMapper.existsByCompanyTel(companyTel, companyId);
-	}
-
-	public boolean isCompanyFaxDuplicate(String companyFax, Integer companyId) {
-		return deletedCompanyMapper.existsByCompanyFax(companyFax, companyId);
-	}
-
-	/**
 	 * アサイン履歴がすでに登録されているか（重複しているか）を判定する。
 	 *
 	 * @param id 復元するアサイン履歴のid
@@ -136,6 +110,19 @@ public class DeletedCompanyService {
 	public boolean isCompanyIdDuplicate(List<Integer> excludeCompanyIds) {
 		int count = deletedCompanyMapper.countByCompanyIds(excludeCompanyIds);
 		return count > 0;
+	}
+	/**
+	 * 復元した結果、登録上限（500件）を超えるか判定する
+	 * @param restoreCount 復元しようとしている件数（単一なら1、一括ならリストのサイズ）
+	 * @return 500件を超える場合はtrue
+	 */
+	public boolean isCompanyLimitReachedAfterRestore(int restoreCount) {
+		// 1. 現在有効な（削除されていない）企業数を取得する
+		// ※ 既存のCompanyService等から取得するか、独自に count を取得してください
+		int currentActiveCount = deletedCompanyMapper.countActiveCompanies();
+
+		// 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
+		return (currentActiveCount + restoreCount) > 500;
 	}
 
 }
