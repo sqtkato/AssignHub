@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .form-group-search{
-	width: 150ch;
+	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	column-gap: 70px; 
