@@ -84,12 +84,11 @@ public class DeletedAssignController {
 			return "redirect:/deleted-assignments";
 		}
 
-		if (deletedAssignService.isDuplicate(id)) {
+		if (deletedAssignService.isAssignIdDuplicate(id)) {
 			attributes.addFlashAttribute("toastError", "社員ID、企業ID、アサイン開始日、アサイン終了日が重複している履歴があります。");
 			return "redirect:/deleted-assignments";
 		}
 		deletedAssignService.restore(id);
-		attributes.addFlashAttribute("toastMessage", "アカウント情報を復元しました");
 		return "redirect:/deleted-assignments";
 	}
 
@@ -116,17 +115,12 @@ public class DeletedAssignController {
 			attributes.addFlashAttribute("toastError", "紐づく社員情報が削除状態のため、復元できません。先に該当する社員情報を復元してください。");
 			return "redirect:/deleted-assignments";
 		}
-		for (Integer id : ids) {
-			if (deletedAssignService.isDuplicate(id)) {
-				attributes.addFlashAttribute("toastError", "社員ID、企業ID、アサイン開始日、アサイン終了日が重複している履歴があります。");
-				return "redirect:/deleted-assignments";
-			}
+		if (deletedAssignService.isAssignIdsDuplicate(ids)) {
+			attributes.addFlashAttribute("toastError", "社員ID、企業ID、アサイン開始日、アサイン終了日が重複している履歴があります。");
+			return "redirect:/deleted-assignments";
 		}
-
 		deletedAssignService.restoreBulk(ids);
-		attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を復元しました");
 		return "redirect:/deleted-assignments";
-
 	}
 
 	// ==========================================

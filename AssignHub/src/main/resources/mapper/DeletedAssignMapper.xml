@@ -246,18 +246,42 @@
 		</foreach>
 	</select>
 
-	<select id="isDuplicate" resultType="int">
+	<select id="countByAssignId" resultType="int">
 		SELECT COUNT(*)
 		FROM t_assignment a
 		INNER JOIN (
 			SELECT emp_id, company_id, contract_start_date, contract_end_date
 			FROM t_assignment
-			WHERE assignment_id = #{id}  ) a2 ON a.emp_id = a2.emp_id 
+			WHERE assignment_id = #{excludeAssignId}  ) a2 ON a.emp_id = a2.emp_id 
 		    AND a.company_id = a2.company_id 
 		    AND a.contract_start_date = a2.contract_start_date 
 		    AND (a.contract_end_date = a2.contract_end_date OR (a.contract_end_date IS NULL AND a2.contract_end_date IS NULL))
 		WHERE a.delete_flg = 0
 	</select>
+
+	<select id="countByAssignIds" resultType="int">
+    SELECT COUNT(*)
+    FROM t_assignment a
+    INNER JOIN (
+        SELECT emp_id, company_id, contract_start_date, contract_end_date
+        FROM t_assignment
+        WHERE assignment_id IN
+        <foreach item="excludeAssignId" index="index" collection="excludeAssignIds" open="(" separator="," close=")">
+            #{excludeAssignId}
+        </foreach>
+    ) a2 ON a.emp_id = a2.emp_id 
+        AND a.company_id = a2.company_id 
+        AND a.contract_start_date = a2.contract_start_date 
+        AND (a.contract_end_date = a2.contract_end_date OR (a.contract_end_date IS NULL AND a2.contract_end_date IS NULL))
+    WHERE a.delete_flg = 0
+    <if test="excludeAssignIds != null and !excludeAssignIds.isEmpty()">
+        AND a.assignment_id NOT IN
+        <foreach item="excludeAssignId" index="index" collection="excludeAssignIds" open="(" separator="," close=")">
+            #{excludeAssignId}
+        </foreach>
+    </if>
+</select>
+	
 
 
 </mapper>

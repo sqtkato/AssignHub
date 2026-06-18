@@ -82,16 +82,15 @@ public class DeletedAssignService {
 			deletedAssignMapper.physicalDeleteBulk(ids);
 		}
 	}
-	
-	public boolean isAssginLimitReachedAfterRestore(int restoreCount) {
-	    // 1. 現在有効な（削除されていない）企業数を取得する
-	    // ※ 既存のCompanyService等から取得するか、独自に count を取得してください
-	    int currentActiveCount = deletedAssignMapper.countActiveAssigns();
 
-	    // 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
-	    return (currentActiveCount + restoreCount) > 500;
+	public boolean isAssginLimitReachedAfterRestore(int restoreCount) {
+		// 1. 現在有効な（削除されていない）企業数を取得する
+		// ※ 既存のCompanyService等から取得するか、独自に count を取得してください
+		int currentActiveCount = deletedAssignMapper.countActiveAssigns();
+
+		// 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
+		return (currentActiveCount + restoreCount) > 500;
 	}
-	
 
 	// =======================================================
 	// Controllerからのチェック用メソッド（booleanを返す）
@@ -118,17 +117,19 @@ public class DeletedAssignService {
 	}
 
 	/**
-	 * アサイン履歴がすでに登録されているか（重複しているか）を判定する。
+	 * ログインIDがすでに登録されているか（重複しているか）を判定する。
 	 *
-	 * @param id 復元するアサイン履歴のid
+	 * @param loginId        チェックするログインID
 	 * @return 重複していればtrue
 	 */
-	// DeletedAssignService.java 内
-	public boolean isDuplicate(Integer id) {
-	    // 1件ずつの id を渡す（Mapper側で自動的に "ids" に翻訳されてXMLへ届きます）
-	    int count = deletedAssignMapper.isDuplicate(id);
-	    return count > 0;
+	public boolean isAssignIdDuplicate(Integer excludeAssignId) {
+		int count = deletedAssignMapper.countByAssignId(excludeAssignId);
+		return count > 0;
 	}
-	
-	
+
+	public boolean isAssignIdsDuplicate(List<Integer> excludeAssignIds) {
+		int count = deletedAssignMapper.countByAssignIds(excludeAssignIds);
+		return count > 0;
+	}
+
 }

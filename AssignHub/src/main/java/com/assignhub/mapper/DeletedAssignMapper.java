@@ -61,14 +61,13 @@ public interface DeletedAssignMapper {
 	 */
 	int physicalDeleteBulk(@Param("ids") List<Integer> ids);
 
-
 	// DeletedAssignMapper.java の中に追記するコード
 
 	/**
 	 * 現在有効な（delete_flg = 0 の）アサイン履歴件数を取得する
 	 */
 	int countActiveAssigns();
-	
+
 	/**
 	 * 指定されたアサインIDに紐づく企業数(派遣先)をカウントする（単一復元の生存チェック用）。
 	 */
@@ -89,10 +88,11 @@ public interface DeletedAssignMapper {
 	 */
 	int existEmployeeByAssignIds(@Param("ids") List<Integer> ids);
 
-	
 	/**
-	 * 指定されたIDのレコードがすでに存在しているか確認（重複チェック）。
+	 * 復元時に重複するアカウントが存在するか判定
 	 */
-	int isDuplicate(@Param("id") Integer id);
+	int countByAssignId(@Param("excludeAssignId") Integer excludeAssignId);
+
+	int countByAssignIds(@Param("excludeAssignIds") List<Integer> excludeAssignIds);
 
 }
