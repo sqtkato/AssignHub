@@ -38,11 +38,10 @@ public class CompanyService {
 	}
 
 	/**
-	 * 企業一覧画面を表示する。検索条件に応じたデータを取得する。
 	 * 
+	 * 企業一覧画面を表示する。検索条件に応じたデータを取得する。
 	 * @param companyName 企業名検索キーワード（任意）
 	 * @param companyTel TEL検索キーワード（任意）
-	 * @param model 画面描画用モデル
 	 * @return 企業エンティティリスト
 	 */
 	public List<Company> findAll(String companyName, String companyTel) {
@@ -50,10 +49,9 @@ public class CompanyService {
 	}
 
 	/**
+	 * 
 	 * 選択された複数の企業情報を表示する。
-	 *
 	 * @param ids 取得対象の企業IDリスト
-	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 企業エンティティリスト
 	 */
 	public List<Company> findByIds(List<Integer> ids) {
@@ -61,8 +59,8 @@ public class CompanyService {
 	}
 
 	/**
+	 * 
 	 * 企業IDを指定して、企業情報を1件取得する。
-	 *
 	 * @param id 取得対象の企業ID
 	 * @return 該当する企業エンティティ（存在しない、または論理削除済みの場合はnull）
 	 */
@@ -75,9 +73,9 @@ public class CompanyService {
 	}
 
 	/**
+	 * 
 	 * 企業情報を保存する。
 	 * 企業IDが存在しない場合（nullまたは0）は新規登録（INSERT）、存在する場合は更新（UPDATE）を行う。
-	 *
 	 * @param company 登録または更新する企業エンティティ
 	 */
 	@Transactional(rollbackFor = Exception.class)
@@ -90,8 +88,8 @@ public class CompanyService {
 	}
 
 	/**
+	 * 
 	 * 企業名、電話番号、FAX、企業IDがすでに登録されているか（重複しているか）を判定する。
-	 *
 	 * @param companyName チェックする企業名
 	 * @param companyTel チェックする電話番号
 	 * @param companyFax チェックするFAX
@@ -103,8 +101,8 @@ public class CompanyService {
 	}
 
 	/**
+	 * 
 	 * 企業情報を1件論理削除する。
-	 *
 	 * @param id 削除対象の企業ID
 	 */
 	public void delete(Integer id) {
@@ -113,8 +111,8 @@ public class CompanyService {
 	}
 
 	/**
+	 * 
 	 * 指定された複数の企業IDのデータを一括で論理削除する。
-	 *
 	 * @param ids 削除対象となる企業IDのリスト
 	 */
 	@Transactional
@@ -150,9 +148,9 @@ public class CompanyService {
 	}
 
 	/**
+	 * 
 	 * アップロードされたCSVファイルを解析し、バリデーションおよび一括登録・更新を行う。
 	 * 1行ごとに保存処理を行うが、1件でもエラーがあれば全体をロールバックする。
-	 *
 	 * @param file アップロードされたマルチパート形式のCSVファイル
 	 * @return インポート処理の結果オブジェクト（成功・エラー件数および詳細）
 	 * @throws Exception ファイル読み込み時やパース時に発生する例外
