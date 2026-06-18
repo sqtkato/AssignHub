@@ -76,11 +76,11 @@ public class DeletedEmployeeController {
 			return "redirect:/deleted-employees";
 		}
 		if (deletedEmployeeService.existAccountsByEmployeeId(id)) {
-			attributes.addFlashAttribute("toastMessage", "紐づくアカウント情報が削除状態のため、復元できません。先にアカウント情報を復元してください。");
+			attributes.addFlashAttribute("toastError", "紐づくアカウント情報が削除状態のため、復元できません。先にアカウント情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
 		if (deletedEmployeeService.existCompaniesByEmployeeId(id)) {
-			attributes.addFlashAttribute("toastMessage", "所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
+			attributes.addFlashAttribute("toastError", "所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
 		if (deletedEmployeeService.isEmailDuplicate(id)) {
@@ -135,7 +135,7 @@ public class DeletedEmployeeController {
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		if (deletedEmployeeService.existAssignmentsByEmployeeId(id)) {
-			attributes.addFlashAttribute("toastMessage", "紐づくアサイン履歴情報が存在するため、削除できません。先にアサイン履歴情報を削除してください。");
+			attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するため、削除できません。先にアサイン履歴情報を削除してください。");
 			return "redirect:/deleted-employees";
 		}
 
