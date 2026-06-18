@@ -27,7 +27,6 @@ public class DeletedAssignService {
 	 * 選択されたアカウントの情報を取得する（CSVエクスポート用）。
 	 *
 	 * @param ids 画面のチェックボックスで選択されたアカウントIDのリスト
-	 * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
 	 */
 	public List<Assignment> findAllByIds(List<Integer> ids) {
 		if (ids != null && !ids.isEmpty()) {
@@ -37,7 +36,7 @@ public class DeletedAssignService {
 	}
 
 	/**
-	 * 単一データをゴミ箱から復元する。
+	 * 単一データを論理削除済みアサイン履歴情報から復元する。
 	 */
 	@Transactional
 	public void restore(Integer id) {
@@ -45,7 +44,7 @@ public class DeletedAssignService {
 	}
 
 	/**
-	 * 選択された複数のデータを一括でゴミ箱から復元する。
+	 * 選択された複数のデータを一括で論理削除済みアサイン履歴情報から復元する。
 	 * * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
 	 */
 	@Transactional
@@ -105,6 +104,7 @@ public class DeletedAssignService {
 		int count = deletedAssignMapper.countByAssignId(excludeAssignId);
 		return count > 0;
 	}
+
 	/**
 	* 復元した結果、登録上限（500件）を超えるか判定する
 	* @param restoreCount 復元しようとしている件数（単一なら1、一括ならリストのサイズ）
