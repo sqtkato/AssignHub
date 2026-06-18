@@ -10,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,23 +18,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Account;
-import com.assignhub.form.AccountForm;
-import com.assignhub.service.AccountService;
 import com.assignhub.service.DeletedAccountService;
 
 @Controller
 @RequestMapping("/deleted-accounts")
 public class DeletedAccountController {
 	private final DeletedAccountService deletedAccountService;
-	private final AccountService accountService;
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param DeletedAccountService 企業サービス
 	 */
-	public DeletedAccountController(DeletedAccountService deletedAccountService,AccountService accountService) {
+	public DeletedAccountController(DeletedAccountService deletedAccountService) {
 		this.deletedAccountService = deletedAccountService;
-		this.accountService = accountService;
 	}
 
 	@GetMapping
@@ -54,13 +47,13 @@ public class DeletedAccountController {
     
     /* 単一復元 */
     @PostMapping("/{id}/restore") 
-    public String recover(@PathVariable("id") Integer id, @Validated @ModelAttribute("accountForm") AccountForm accountForm,BindingResult result, RedirectAttributes attributes) {
+    public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
     	if (deletedAccountService.isCompanyLimitReachedAfterRestore(1)) {
 			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
 			return "redirect:/deleted-accounts";
 		}
-    	if (accountService.isLoginIdDuplicate(accountForm.getLoginId(), id)) {
-			result.rejectValue("loginId","error.accountForm", "このログインIDは既に使用されています");
+    	if (deletedAccountService.isLoginIdDuplicate(id)) {
+    		attributes.addFlashAttribute("toastError", "このログインIDは既に使用されています");
 			return "redirect:/deleted-accounts";
 		}
         deletedAccountService.restore(id);
@@ -78,7 +71,7 @@ public class DeletedAccountController {
 			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
 			return "redirect:/deleted-accounts";
 		}
-        if (accountService.isLoginIdDuplicate(ids)) {
+        if (deletedAccountService.isLoginIdDuplicate(ids)) {
 			attributes.addFlashAttribute("toastError", "このログインIDは既に使用されています");
 			return "redirect:/deleted-accounts";
 		}

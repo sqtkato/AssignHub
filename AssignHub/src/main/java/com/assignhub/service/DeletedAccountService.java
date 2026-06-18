@@ -86,11 +86,30 @@ public class DeletedAccountService {
         return deletedAccountMapper.existEmployeesByAccountIds(ids) > 0;
     }
     
-    /** 復元時に重複するアカウントが存在するか判定 */
-    public boolean isLoginIdDuplicate(String loginId,Integer excludeAccountId) {
-		int count = deletedAccountMapper.existByLoginId(loginId,excludeAccountId);
+    /**
+	 * ログインIDがすでに登録されているか（重複しているか）を判定する。
+	 *
+	 * @param loginId        チェックするログインID
+	 * @return 重複していればtrue
+	 */
+	public boolean isLoginIdDuplicate(Integer excludeAccountId) {
+		int count = deletedAccountMapper.countByLoginId(excludeAccountId);
 		return count > 0;
-    }
+	}
+	
+	public boolean isLoginIdDuplicate(List<Integer> excludeAccountIds) {
+		int count = deletedAccountMapper.countByLoginIds(excludeAccountIds);
+		return count > 0;
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
 		/**
 		 * 復元した結果、登録上限（500件）を超えるか判定する
 		 * @param restoreCount 復元しようとしている件数（単一なら1、一括ならリストのサイズ）

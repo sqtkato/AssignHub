@@ -70,7 +70,10 @@ public interface DeletedAccountMapper {
 	/**
 	 * 復元時に重複するアカウントが存在するか判定
 	 */
-	int existByLoginId(@Param("loginId") String id, @Param("excludeAccountId") Integer excludeAccountId);
+	int countByLoginId(@Param("excludeAccountId") Integer excludeAccountId);
+
+	int countByLoginIds(@Param("excludeAccountIds") List<Integer> excludeAccountIds);
+	
 	/**
 	 * 現在有効な（削除されていない）企業総数をカウントする。
 	 * （500件登録上限チェック用）
