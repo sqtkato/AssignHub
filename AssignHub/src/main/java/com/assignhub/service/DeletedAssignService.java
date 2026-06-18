@@ -55,16 +55,6 @@ public class DeletedAssignService {
 		}
 	}
 
-	public boolean existsDuplicate(Assignment assignment) {
-		int count = deletedAssignMapper.countDuplicate(
-				assignment.getAssignmentId(),
-				assignment.getEmpId(),
-				assignment.getCompanyId(),
-				assignment.getContractStartDate(),
-				assignment.getContractEndDate());
-		return count > 0;
-	}
-
 	/**
 	 * 単一データをデータベースから完全に削除する。
 	 */
@@ -81,15 +71,6 @@ public class DeletedAssignService {
 		if (ids != null && !ids.isEmpty()) {
 			deletedAssignMapper.physicalDeleteBulk(ids);
 		}
-	}
-
-	public boolean isAssginLimitReachedAfterRestore(int restoreCount) {
-		// 1. 現在有効な（削除されていない）企業数を取得する
-		// ※ 既存のCompanyService等から取得するか、独自に count を取得してください
-		int currentActiveCount = deletedAssignMapper.countActiveAssigns();
-
-		// 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
-		return (currentActiveCount + restoreCount) > 500;
 	}
 
 	// =======================================================
@@ -117,19 +98,40 @@ public class DeletedAssignService {
 	}
 
 	/**
-	 * ログインIDがすでに登録されているか（重複しているか）を判定する。
-	 *
-	 * @param loginId        チェックするログインID
+	 * アサイン履歴情報の企業ID社員ID契約開始日契約終了日がすでに登録されているか（重複しているか）を判定する。
 	 * @return 重複していればtrue
 	 */
 	public boolean isAssignIdDuplicate(Integer excludeAssignId) {
 		int count = deletedAssignMapper.countByAssignId(excludeAssignId);
 		return count > 0;
 	}
-
+	/**
+	* 復元した結果、登録上限（500件）を超えるか判定する
+	* @param restoreCount 復元しようとしている件数（単一なら1、一括ならリストのサイズ）
+	* @return 500件を超える場合はtrue
+	*/
 	public boolean isAssignIdsDuplicate(List<Integer> excludeAssignIds) {
 		int count = deletedAssignMapper.countByAssignIds(excludeAssignIds);
 		return count > 0;
+	}
+
+	public boolean existsDuplicate(Assignment assignment) {
+		int count = deletedAssignMapper.countDuplicate(
+				assignment.getAssignmentId(),
+				assignment.getEmpId(),
+				assignment.getCompanyId(),
+				assignment.getContractStartDate(),
+				assignment.getContractEndDate());
+		return count > 0;
+	}
+
+	public boolean isAssginLimitReachedAfterRestore(int restoreCount) {
+		// 1. 現在有効な（削除されていない）企業数を取得する
+		// ※ 既存のCompanyService等から取得するか、独自に count を取得してください
+		int currentActiveCount = deletedAssignMapper.countActiveAssigns();
+
+		// 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
+		return (currentActiveCount + restoreCount) > 500;
 	}
 
 }

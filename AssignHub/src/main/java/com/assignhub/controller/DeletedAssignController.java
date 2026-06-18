@@ -30,6 +30,7 @@ import com.assignhub.service.DeletedAssignService;
 @RequestMapping("/deleted-assignments")
 public class DeletedAssignController {
 	private final DeletedAssignService deletedAssignService;
+
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
@@ -39,6 +40,11 @@ public class DeletedAssignController {
 		this.deletedAssignService = deletedAssignService;
 	}
 
+	/**
+	 * 論理削除済みアサイン履歴情報一覧画面を表示する。検索条件に応じたデータを取得する
+	 * @param model   画面描画用モデル
+	 * @return 一覧画面のテンプレートパス
+	 */
 	@GetMapping
 	public String index(@Validated @ModelAttribute("searchForm") SearchForm searchForm,
 			BindingResult result,
@@ -54,12 +60,11 @@ public class DeletedAssignController {
 
 		if (toastError != null) {
 			model.addAttribute("toastError", toastError);
-			// エラー時は全件（または空）を取得
+
 			model.addAttribute("assignments", deletedAssignService.findAll(null, null, null, null, null));
 			return "deleted_assign/index";
 		}
 
-		// 検索結果を取得してモデルに格納
 		model.addAttribute("assignments", deletedAssignService.findAll(
 				searchForm.getEmpName(),
 				searchForm.getAssignName(),
@@ -69,10 +74,16 @@ public class DeletedAssignController {
 
 		return "deleted_assign/index";
 	}
+
 	// ==========================================
 	// 復元処理
 	// ==========================================
-
+	/**
+	 * 論理削除済みアサイン履歴を一件復元
+	 *
+	 * @param id 復元対象のアカウントID
+	 * @return 一覧画面へのリダイレクトパス
+	 */
 	/* 単一復元 */
 	@PostMapping("/{id}/restore")
 	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
@@ -100,6 +111,13 @@ public class DeletedAssignController {
 		return "redirect:/deleted-assignments";
 	}
 
+	/**
+	 * 選択された複数の論理削除済みアサイン履歴情報を一括で復元する。
+	 *
+	 * @param ids        復元対象となるアカウントIDのリスト
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @return 一覧画面へのリダイレクトパス
+	 */
 	/* 一括復元 */
 	@PostMapping("/bulk-restore")
 	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
@@ -134,7 +152,12 @@ public class DeletedAssignController {
 	// ==========================================
 	// 物理削除処理
 	// ==========================================
-
+	/**
+	 * 論理削除済みアサイン履歴情報を一件物理削除
+	 *
+	 * @param id 削除対象のアカウントID
+	 * @return 一覧画面へのリダイレクトパス
+	 */
 	/* 単一削除 */
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
@@ -142,6 +165,13 @@ public class DeletedAssignController {
 		return "redirect:/deleted-assignments";
 	}
 
+	/**
+	 * 選択された複数の論理削除済みアサイン履歴情報を一括で物理削除する。
+	 *
+	 * @param ids        削除対象となるアカウントIDのリスト
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @return 一覧画面へのリダイレクトパス
+	 */
 	/* 一括削除 */
 	@PostMapping("/bulk-delete")
 	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
@@ -156,6 +186,12 @@ public class DeletedAssignController {
 	}
 
 	//エクスポート
+	/**
+	 * 検索条件に合致する論理削除済みアカウント情報をCSV形式でダウンロードする。
+	 *
+	 * @param ids    エクスポート対象となるアカウントIDのリスト 
+	 * @return ダウンロード用のCSVファイルバイナリデータ
+	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			Model model, RedirectAttributes attributes) {
