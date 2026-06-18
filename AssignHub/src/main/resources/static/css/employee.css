@@ -18,9 +18,9 @@
     text-align: center;
 }
 
-/* ID */
-.table th:nth-child(2),
-.table td:nth-child(2) {
+
+.employee-table th:nth-child(2),
+.employee-table td:nth-child(2) {
     width: 60px;
     min-width: 60px;
     text-align: center;
