@@ -19,8 +19,8 @@ import com.assignhub.entity.Employee;
 import com.assignhub.service.DeletedEmployeeService;
 
 /**
- * 社員管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
- * @author C3S) 野本
+ * 論理削除された社員情報の管理、復元、物理削除、エクスポートを処理するコントローラー。
+ * @author Cit)土手内
  */
 @Controller
 @RequestMapping("/deleted-employees")
@@ -33,7 +33,7 @@ public class DeletedEmployeeController {
 	 *
 	 * @param deletedEmployeeService 論理削除済み社員管理サービス
 	 */
-	public DeletedEmployeeController(DeletedEmployeeService deletedEmployeeService){
+	public DeletedEmployeeController(DeletedEmployeeService deletedEmployeeService) {
 		this.deletedEmployeeService = deletedEmployeeService;
 	}
 
@@ -70,7 +70,7 @@ public class DeletedEmployeeController {
 	 * @return 一覧画面へのリダイレクト
 	 */
 	@PostMapping("/{id}/restore")
-	public String recover(@PathVariable("id") Integer id,RedirectAttributes attributes) {
+	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		if (deletedEmployeeService.isEmployeeLimitReachedAfterRestore(1)) {
 			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
 			return "redirect:/deleted-employees";
@@ -117,7 +117,7 @@ public class DeletedEmployeeController {
 			attributes.addFlashAttribute("toastError", "所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
-		if(deletedEmployeeService.isEmailDuplicate(ids)) {
+		if (deletedEmployeeService.isEmailDuplicate(ids)) {
 			attributes.addFlashAttribute("toastError", "このメールアドレスは既に使用されています");
 			return "redirect:/deleted-employees";
 		}
@@ -125,6 +125,10 @@ public class DeletedEmployeeController {
 		return "redirect:/deleted-employees";
 	}
 
+	// ==========================================
+    // 物理削除処理
+    // ==========================================
+	
 	/**
 	 * 社員情報を1件物理削除する。
 	 *
@@ -151,7 +155,7 @@ public class DeletedEmployeeController {
 	 * @return 一覧画面へのリダイレクト
 	 */
 	@PostMapping("/bulk-delete")
-	public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids,
+	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
@@ -171,7 +175,7 @@ public class DeletedEmployeeController {
 	/**
 	 * 社員データのエクスポート画面を表示する。
 	 *
-	 * @param keyword     現在の検索キーワード（状態保持用）
+	 * @param ids    エクスポート対象となる社員IDのリスト 
 	 * @param model  画面描画用のモデル
 	 * @return エクスポート画面のテンプレートパス
 	 */
@@ -192,8 +196,9 @@ public class DeletedEmployeeController {
 	}
 
 	/**
-	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
+	 * 検索条件に合致する論理削除済みアカウント情報をCSV形式でダウンロードする。
 	 *
+	 * @param ids    エクスポート対象となる社員IDのリスト 
 	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
 	@PostMapping("/export/download")

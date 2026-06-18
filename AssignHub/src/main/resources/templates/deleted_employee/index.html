@@ -21,7 +21,7 @@
 					<div class="search-item">
 						<label>社員名</label>
 						<input type="text" name="empName" class="form-control" th:value="${empName}"
-							placeholder="例：山田 太郎">
+							placeholder="例：山田">
 					</div>
 					<div class="search-item">
 						<label>アサイン先企業</label>
@@ -60,7 +60,6 @@
 					</svg>
 					一括復元
 				</button>
-
 				<button type="submit" formaction="/deleted-employees/export" class="toolbar-btn"
 					title="チェックした項目をエクスポート">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -71,7 +70,6 @@
 					</svg>
 					エクスポート
 				</button>
-
 				<button type="button" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
 					onclick="openBulkDeleteModal()">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -121,7 +119,6 @@
 											<polyline points="21 21 21 16 16 16" />
 										</svg>
 									</button>
-
 									<button type="button" th:attr="data-id=${emp.empId}" class="btn-icon-svg delete"
 										title="削除" onclick="openDeleteModal(this.dataset.id)">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"

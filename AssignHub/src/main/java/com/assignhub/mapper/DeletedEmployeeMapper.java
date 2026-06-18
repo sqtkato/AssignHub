@@ -86,7 +86,7 @@ public interface DeletedEmployeeMapper {
 	 * 指定された社員IDリストのいずれかに紐づくアサイン履歴数をカウントする（一括物理削除の不在条件チェック用）。
 	 */
 	int existAssignmentsByEmployeeIds(@Param("ids") List<Integer> ids);
-	
+
 	/**
 	 * 指定されたメールアドレスの登録件数を取得する（指定IDを除外）。
 	 *
@@ -95,10 +95,9 @@ public interface DeletedEmployeeMapper {
 	 * @return 一致するメールアドレスの件数
 	 */
 	int countByEmail(@Param("excludeEmpId") Integer excludeEmpId);
-	
+
 	int countByEmails(@Param("excludeEmpIds") List<Integer> excludeEmpIds);
-	
-	
+
 	/**
 	 * 現在有効な（削除されていない）企業総数をカウントする。
 	 * （500件登録上限チェック用）
