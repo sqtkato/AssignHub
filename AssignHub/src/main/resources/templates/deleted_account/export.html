@@ -14,7 +14,6 @@
 		</div>
 		<div class="card form-card-wide">
 			<p class="instruction">以下の条件と内容でCSVファイルを出力します。よろしければ「エクスポート」ボタンを押してください。</p>
-
 			<div class="export-confirm-box">
 				<h4 class="export-confirm-title">出力条件の確認</h4>
 				<table class="export-table">
@@ -27,7 +26,6 @@
 						<td class="value">UTF-8 (BOMあり)</td>
 					</tr>
 				</table>
-
 				<div class="table-scroll export-table">
 					<table class="table header-only-table table-dark">
 						<thead>
@@ -54,11 +52,13 @@
 				<form th:action="@{/deleted-accounts/export/download(ids=${ids})}" method="post">
 					<div class="action-area action-area-wide">
 						<button type="submit" class="btn-export">エクスポート</button>
-						<button type="button" class="btn-back" th:onclick="|location.href='@{/deleted-accounts}'|">戻る</button>
+						<button type="button" class="btn-back"
+							th:onclick="|location.href='@{/deleted-accounts}'|">戻る</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </body>
+
 </html>
