@@ -21,6 +21,7 @@
 			    <input type="text" th:field="*{loginId}" class="form-control"
 			        th:classappend="${#fields.hasErrors('loginId')} ? 'input-error'">
 			    <div class="error-message" th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></div>
+			    <div class="error-message" th:if="${loginIdError}" th:text="${loginIdError}"></div>
 			</div>
 
 			<div class="form-group">
@@ -28,6 +29,7 @@
 			    <input type="password" th:field="*{passwordHash}" class="form-control"
 			        th:classappend="${#fields.hasErrors('passwordHash')} ? 'input-error'">
 			    <div class="error-message" th:if="${#fields.hasErrors('passwordHash')}" th:errors="*{passwordHash}"></div>
+				<div class="error-message" th:if="${loginId}" th:text="${loginId}"></div>
 			</div>
             <div class="form-group">
                 <label>権限付与</label>
