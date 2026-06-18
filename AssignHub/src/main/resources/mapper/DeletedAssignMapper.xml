@@ -252,7 +252,7 @@
 		INNER JOIN (
 			SELECT emp_id, company_id, contract_start_date, contract_end_date
 			FROM t_assignment
-			WHERE assignment_id = #{ids}  ) a2 ON a.emp_id = a2.emp_id 
+			WHERE assignment_id = #{id}  ) a2 ON a.emp_id = a2.emp_id 
 		    AND a.company_id = a2.company_id 
 		    AND a.contract_start_date = a2.contract_start_date 
 		    AND (a.contract_end_date = a2.contract_end_date OR (a.contract_end_date IS NULL AND a2.contract_end_date IS NULL))

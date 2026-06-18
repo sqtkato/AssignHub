@@ -13,9 +13,8 @@ public interface DeletedAssignMapper {
 	/**
 	 * 論理削除済みのアサイン履歴情報を全件取得する（一覧表示・検索用）。
 	 *
-	 * @param txtEmpName 社員名の検索キーワード
-	 * 
-	 * @param txtCompanyName 企業名の検索キーワード
+	 * @param EmpName 社員名の検索キーワード
+	 * @param CompanyName 企業名の検索キーワード
 	 * @return アサイン情報のリスト
 	 */
 	List<Assignment> findAll(
@@ -90,11 +89,10 @@ public interface DeletedAssignMapper {
 	 */
 	int existEmployeeByAssignIds(@Param("ids") List<Integer> ids);
 
-	/**
 	
 	/**
 	 * 指定されたIDのレコードがすでに存在しているか確認（重複チェック）。
 	 */
-	int isDuplicate(@Param("ids") Integer ids);
+	int isDuplicate(@Param("id") Integer id);
 
 }
