@@ -48,16 +48,14 @@
 				</table>
 			</div>
 
-			<div class="action-area">
-				<form th:action="@{/deleted-assigns/export/download}" method="post">
-					<div th:each="id : ${ids}">
-						<input type="hidden" name="ids" th:value="${id}">
-					</div>
 
-					<button type="submit" class="btn btn-primary btn-wide">エクスポート</button>
-					<a th:href="@{/deleted-assigns}" class="btn btn-secondary btn-wide">戻る</a>
-				</form>
-			</div>
+			<form th:action="@{/accounts/export/download(ids=${ids})}" method="post">
+						<div class="action-area action-area-wide">
+							<button type="submit" class="btn-export">エクスポート</button>
+							<button type="button" class="btn-back" th:onclick="|location.href='@{/deleted-employees}'|">戻る</button>
+						</div>
+					</form>
+
 			<p class="export-note">※詳細情報がエクスポートされます。</p>
 		</div>
 	</div>

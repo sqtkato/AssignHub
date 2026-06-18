@@ -51,11 +51,11 @@
 				<p class="export-note">※詳細情報がエクスポートされます。</p>
 			</div>
 			<div class="action-area">
-				<form th:action="@{/deleted-accounts/export/download}" method="post">
-					<input type="hidden" name="ids" th:value="${id}" th:each="id : ${ids}">
-					<button type="submit" class="btn btn-primary common-btn">エクスポート</button>
-					<button type="button" id="btn_account_back" class="btn-back"
-						th:onclick="|location.href='@{/deleted-accounts}'|">戻る</button>
+				<form th:action="@{/deleted-accounts/export/download(ids=${ids})}" method="post">
+					<div class="action-area action-area-wide">
+						<button type="submit" class="btn-export">エクスポート</button>
+						<button type="button" class="btn-back" th:onclick="|location.href='@{/deleted-accounts}'|">戻る</button>
+					</div>
 				</form>
 			</div>
 		</div>

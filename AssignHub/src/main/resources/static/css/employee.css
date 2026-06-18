@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+.form-group-search{
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 70px; 
+	row-gap: 20px;    
+}
+
+
+.fixed-half3 {
+	width: 4ch;
+	overflow: hidden;
+	font-family: monospace;
+	padding: 6px 8px;
+}
+
+.fixed-half7 {
+	width: 8ch;
+	overflow: hidden;
+	font-family: monospace;
+	padding: 6px 8px;
+}
+
+.fixed-half11 {
+	width: 12ch;
+	overflow: hidden;
+	font-family: monospace;
+	padding: 6px 8px;
+}
+
+.fixed-all30{
+	width: 31ch;
+	overflow: hidden;
+	font-family: monospace;
+	padding: 6px 8px;
+}
+
+/* export画面用テーブルのスクロール */
+.export-table-scroll {
+	max-height: 340px;
+	overflow-y: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

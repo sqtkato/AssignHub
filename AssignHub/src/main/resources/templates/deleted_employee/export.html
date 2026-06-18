@@ -52,10 +52,10 @@
 			</div>
 			<div class="action-area">
 				<form th:action="@{/deleted-employees/export/download(ids=${ids})}" method="post">
-					<input type="hidden" name="ids" th:each="id : ${ids}" th:value="${id}">
-					<button type="submit" class="btn-csv">エクスポート</button>
-					<button type="button" id="btn_account_back" class="btn-back"
-						th:onclick="|location.href='@{/deleted-employees}'|">戻る</button>
+					<div class="action-area action-area-wide">
+						<button type="submit" class="btn-export">エクスポート</button>
+						<button type="button" class="btn-back" th:onclick="|location.href='@{/deleted-employees}'|">戻る</button>
+					</div>
 				</form>
 			</div>
 		</div>
