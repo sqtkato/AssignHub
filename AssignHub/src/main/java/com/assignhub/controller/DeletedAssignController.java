@@ -131,7 +131,6 @@ public class DeletedAssignController {
 	@PostMapping("/{id}/delete")
 	public String deleted(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		deletedAssignService.physicalDelete(id);
-		attributes.addFlashAttribute("toastMessage", "アカウント情報を完全に削除しました");
 		return "redirect:/deleted-assignments";
 	}
 
@@ -145,7 +144,6 @@ public class DeletedAssignController {
 		}
 
 		deletedAssignService.physicalDeleteBulk(ids);
-		attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を完全に削除しました");
 		return "redirect:/deleted-assignments";
 	}
 
@@ -191,7 +189,7 @@ public class DeletedAssignController {
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment; filename=assignment.csv");
+		headers.add("Content-Disposition", "attachment; filename=deleted-assignments.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
