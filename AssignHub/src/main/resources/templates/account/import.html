@@ -93,7 +93,7 @@
             </div>
 
             <!-- 行単位の取り込み結果（件数 + エラー一覧） -->
-            <div th:if="${importResult != null}">
+            <div th:if="${importResult != null and globalError == null}">
 
                 <div class="summary-box">
 

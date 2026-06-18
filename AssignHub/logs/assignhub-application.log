@@ -100,3 +100,131 @@
 2026-06-18T10:50:07.936+09:00  INFO 27864 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 4 class path changes (0 additions, 0 deletions, 4 modifications)
 2026-06-18T10:50:07.938+09:00  INFO 27864 --- [Thread-47] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
 2026-06-18T10:50:08.117+09:00  INFO 27864 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-18T11:35:38.819+09:00  INFO 24384 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 24384 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-18T11:35:38.822+09:00  INFO 24384 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-18T11:35:38.973+09:00  INFO 24384 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-18T11:35:38.973+09:00  INFO 24384 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-18T11:35:39.540+09:00  INFO 24384 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-18T11:35:39.548+09:00  INFO 24384 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-18T11:35:39.548+09:00  INFO 24384 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-18T11:35:39.580+09:00  INFO 24384 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 607 ms
+2026-06-18T11:35:40.135+09:00  INFO 24384 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-18T11:35:40.139+09:00  INFO 24384 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 1.565 seconds (process running for 2.19)
+2026-06-18T11:36:07.940+09:00  INFO 24384 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-18T11:36:07.941+09:00  INFO 24384 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-18T11:36:07.943+09:00  INFO 24384 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-06-18T11:45:08.282+09:00  INFO 24384 --- [RMI TCP Connection(13)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-06-18T11:45:08.285+09:00  INFO 24384 --- [RMI TCP Connection(13)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-18T11:45:08.426+09:00  INFO 24384 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-18T11:45:10.038+09:00  INFO 5500 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 5500 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-18T11:45:10.041+09:00  INFO 5500 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-18T11:45:10.203+09:00  INFO 5500 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-18T11:45:10.203+09:00  INFO 5500 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-18T11:45:10.805+09:00  INFO 5500 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-18T11:45:10.813+09:00  INFO 5500 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-18T11:45:10.814+09:00  INFO 5500 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-18T11:45:10.842+09:00  INFO 5500 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 639 ms
+2026-06-18T11:45:11.385+09:00  INFO 5500 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-18T11:45:11.390+09:00  INFO 5500 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 1.621 seconds (process running for 2.025)
+2026-06-18T11:58:49.085+09:00  INFO 5500 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-18T11:58:49.089+09:00  INFO 5500 --- [Thread-1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-18T11:58:49.218+09:00  INFO 5500 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-18T11:58:49.276+09:00  INFO 5500 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 5500 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-18T11:58:49.276+09:00  INFO 5500 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-18T11:58:49.423+09:00  INFO 5500 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-18T11:58:49.424+09:00  INFO 5500 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-18T11:58:49.425+09:00  INFO 5500 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-18T11:58:49.435+09:00  INFO 5500 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 153 ms
+2026-06-18T11:58:49.580+09:00  INFO 5500 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-18T11:58:49.583+09:00  INFO 5500 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.323 seconds (process running for 820.219)
+2026-06-18T11:58:49.585+09:00  INFO 5500 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-18T13:02:29.087+09:00  INFO 5500 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-18T13:02:29.090+09:00  INFO 5500 --- [Thread-5] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-18T13:02:29.221+09:00  INFO 5500 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-18T13:02:29.262+09:00  INFO 5500 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 5500 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-18T13:02:29.262+09:00  INFO 5500 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-18T13:02:29.372+09:00  INFO 5500 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-18T13:02:29.373+09:00  INFO 5500 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-18T13:02:29.373+09:00  INFO 5500 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-18T13:02:29.384+09:00  INFO 5500 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 120 ms
+2026-06-18T13:02:29.489+09:00  INFO 5500 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-18T13:02:29.490+09:00  INFO 5500 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.24 seconds (process running for 4640.126)
+2026-06-18T13:02:29.491+09:00  INFO 5500 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-18T13:16:01.470+09:00  INFO 5500 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-18T13:16:01.471+09:00  INFO 5500 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-18T13:16:01.475+09:00  INFO 5500 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-06-18T13:16:01.833+09:00  WARN 5500 --- [http-nio-8080-exec-1] o.a.c.util.SessionIdGeneratorBase        : Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [114] milliseconds.
+2026-06-18T13:16:11.122+09:00  INFO 5500 --- [http-nio-8080-exec-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-18T13:16:11.529+09:00  INFO 5500 --- [http-nio-8080-exec-6] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@61a49d6c
+2026-06-18T13:16:11.534+09:00  INFO 5500 --- [http-nio-8080-exec-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-18T13:16:11.553+09:00 DEBUG 5500 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-18T13:16:11.613+09:00 DEBUG 5500 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: nagashima(String)
+2026-06-18T13:16:11.681+09:00 DEBUG 5500 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-18T13:16:11.969+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-18T13:16:11.972+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-18T13:16:11.985+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 0
+2026-06-18T13:16:12.241+09:00 DEBUG 5500 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-18T13:16:12.241+09:00 DEBUG 5500 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: nagashima(String)
+2026-06-18T13:16:12.250+09:00 DEBUG 5500 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-18T13:16:12.458+09:00 DEBUG 5500 --- [http-nio-8080-exec-9] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-18T13:16:12.463+09:00 DEBUG 5500 --- [http-nio-8080-exec-9] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-18T13:16:12.466+09:00 DEBUG 5500 --- [http-nio-8080-exec-9] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 0
+2026-06-18T13:16:12.533+09:00 DEBUG 5500 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-18T13:16:12.540+09:00 DEBUG 5500 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: nagashima(String)
+2026-06-18T13:16:12.544+09:00 DEBUG 5500 --- [http-nio-8080-exec-8] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-18T13:16:12.751+09:00 DEBUG 5500 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-18T13:16:12.751+09:00 DEBUG 5500 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: nagashima(String)
+2026-06-18T13:16:12.757+09:00 DEBUG 5500 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-18T13:16:12.965+09:00 DEBUG 5500 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findByLoginId   : ==>  Preparing: SELECT * FROM m_account WHERE login_id = ? AND delete_flg = 0
+2026-06-18T13:16:12.965+09:00 DEBUG 5500 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findByLoginId   : ==> Parameters: nagashima(String)
+2026-06-18T13:16:12.973+09:00 DEBUG 5500 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.findByLoginId   : <==      Total: 1
+2026-06-18T13:16:13.190+09:00 DEBUG 5500 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-18T13:16:13.194+09:00 DEBUG 5500 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-18T13:16:13.199+09:00 DEBUG 5500 --- [http-nio-8080-exec-2] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 0
+2026-06-18T13:17:19.822+09:00 DEBUG 5500 --- [http-nio-8080-exec-8] c.a.mapper.EmployeeMapper.findAll        : ==>  Preparing: SELECT e.*, c.company_name AS emp_company, c2.company_name AS emp_assign_company FROM m_employee e LEFT JOIN m_company c ON e.company_id = c.company_id LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null LEFT JOIN m_company c2 ON a.company_id = c2.company_id WHERE e.delete_flg = 0
+2026-06-18T13:17:19.822+09:00 DEBUG 5500 --- [http-nio-8080-exec-8] c.a.mapper.EmployeeMapper.findAll        : ==> Parameters: 
+2026-06-18T13:17:19.827+09:00 DEBUG 5500 --- [http-nio-8080-exec-8] c.a.mapper.EmployeeMapper.findAll        : <==      Total: 0
+2026-06-18T13:17:21.202+09:00 DEBUG 5500 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-18T13:17:21.202+09:00 DEBUG 5500 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-18T13:17:21.224+09:00 DEBUG 5500 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : <==      Total: 1
+2026-06-18T13:17:25.529+09:00 DEBUG 5500 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findById        : ==>  Preparing: SELECT * FROM m_account WHERE account_id = ?
+2026-06-18T13:17:25.530+09:00 DEBUG 5500 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findById        : ==> Parameters: 30(Integer)
+2026-06-18T13:17:25.539+09:00 DEBUG 5500 --- [http-nio-8080-exec-4] c.a.mapper.AccountMapper.findById        : <==      Total: 1
+2026-06-18T13:17:27.097+09:00 DEBUG 5500 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-18T13:17:27.099+09:00 DEBUG 5500 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-18T13:17:27.113+09:00 DEBUG 5500 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : <==      Total: 1
+2026-06-18T13:17:39.226+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.assignhub.mapper.AccountMapper.delete  : ==>  Preparing: UPDATE m_account SET delete_flg = 1, updated_at = NOW() WHERE account_id = ?
+2026-06-18T13:17:39.227+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.assignhub.mapper.AccountMapper.delete  : ==> Parameters: 30(Integer)
+2026-06-18T13:17:39.276+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.assignhub.mapper.AccountMapper.delete  : <==    Updates: 1
+2026-06-18T13:17:39.305+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.a.m.EmployeeMapper.deleteByAccountId   : ==>  Preparing: UPDATE m_employee SET delete_flg = 1, updated_at = NOW() WHERE account_id = ?
+2026-06-18T13:17:39.306+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.a.m.EmployeeMapper.deleteByAccountId   : ==> Parameters: 30(Integer)
+2026-06-18T13:17:39.310+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.a.m.EmployeeMapper.deleteByAccountId   : <==    Updates: 0
+2026-06-18T13:17:39.316+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.delete       : ==>  Preparing: UPDATE t_assignment SET delete_flg = 1, updated_at = NOW() WHERE assignment_id = ? AND delete_flg = 0
+2026-06-18T13:17:39.316+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.delete       : ==> Parameters: 30(Integer)
+2026-06-18T13:17:39.327+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.a.mapper.AssignmentMapper.delete       : <==    Updates: 0
+2026-06-18T13:17:39.359+09:00 DEBUG 5500 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-18T13:17:39.364+09:00 DEBUG 5500 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-18T13:17:39.373+09:00 DEBUG 5500 --- [http-nio-8080-exec-9] c.a.mapper.AccountMapper.findAll         : <==      Total: 0
+2026-06-18T13:17:52.336+09:00 DEBUG 5500 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-18T13:17:52.337+09:00 DEBUG 5500 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-18T13:17:52.341+09:00 DEBUG 5500 --- [http-nio-8080-exec-10] c.a.mapper.AccountMapper.findAll         : <==      Total: 0
+2026-06-18T13:17:53.945+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-18T13:17:53.946+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-18T13:17:53.960+09:00 DEBUG 5500 --- [http-nio-8080-exec-3] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-18T13:17:55.350+09:00 DEBUG 5500 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-18T13:17:55.352+09:00 DEBUG 5500 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-18T13:17:55.355+09:00 DEBUG 5500 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findAll         : <==      Total: 0
+2026-06-18T13:25:44.351+09:00  INFO 5500 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 7 class path changes (0 additions, 0 deletions, 7 modifications)
+2026-06-18T13:25:44.373+09:00  INFO 5500 --- [Thread-9] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-18T13:25:44.619+09:00  INFO 5500 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-18T13:25:44.621+09:00  INFO 5500 --- [Thread-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-18T13:25:44.635+09:00  INFO 5500 --- [Thread-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-18T13:25:44.745+09:00  INFO 5500 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 5500 (C:\Users\ff_us\git\AssignHub\AssignHub\target\classes started by ff_us in C:\Users\ff_us\git\AssignHub\AssignHub)
+2026-06-18T13:25:44.746+09:00  INFO 5500 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-18T13:25:44.959+09:00  INFO 5500 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-18T13:25:44.960+09:00  INFO 5500 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-18T13:25:44.960+09:00  INFO 5500 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-18T13:25:44.974+09:00  INFO 5500 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 220 ms
+2026-06-18T13:25:45.168+09:00  INFO 5500 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-18T13:25:45.170+09:00  INFO 5500 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.455 seconds (process running for 6035.806)
+2026-06-18T13:25:45.171+09:00  INFO 5500 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
