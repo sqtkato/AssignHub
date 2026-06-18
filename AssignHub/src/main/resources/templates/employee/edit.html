@@ -70,6 +70,7 @@
 						th:classappend="${#fields.hasErrors('zipCode')} ? 'form-control p-postal-code input-error' : 'form-control p-postal-code'">
 					<div class="error-message" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}">
 					</div>
+				</div>
 					<div class="form-group">
 						<label>住所1(自動入力されます) <span class="badge-required">必須</span></label>
 						<input type="text" th:field="*{address1}" class="form-control fixed-all30"
@@ -112,8 +113,8 @@
 						<div id="loginIdArea" style="display: none;">
 							    <label>ログインID<span class="badge-required">必須</span></label>
 							<select id="loginId" th:field="*{accountId}" class="dropdown form-control fixed-all30"
-								th:classappend="${#fields.hasErrors('accountId')} ? 'input-error select-error' : ''">>
-								<option value="" th:text="${employee?.account?.loginId ?: '未選択'}"></option>>
+								th:classappend="${#fields.hasErrors('accountId')} ? 'input-error select-error' : ''">
+								<option value="" th:text="${employee?.account?.loginId ?: '未選択'}"></option>
 								<option th:each="account : ${accounts}" th:value="${account.accountId}"th:text="${account.loginId}"></option>
 							</select>
 							<div class="error-message" th:if="${#fields.hasErrors('accountId')}"th:errors="*{accountId}"></div>
@@ -143,7 +144,7 @@
 								th:classappend="${#fields.hasErrors('jobTitle')} ? 'input-error'">
 							<div class="error-message" th:if="${#fields.hasErrors('jobTitle')}"th:errors="*{jobTitle}"></div>
 						</div>
-						<div class="form-actions  action-area action-area-wide">
+						<div class="form-actions  action-area-wide">
 							<button type="submit" class="btn btn-primary ">変更</button>
 							<a th:if="${fromPage == 'detail'}" th:href="@{/employees/{id}/detail(id=${id})}"class="btn btn-secondary ">戻る</a>
 							<a th:if="${fromPage != 'detail'}" th:href="@{/employees}"class="btn btn-secondary ">戻る</a>
@@ -151,49 +152,48 @@
 					</div>
 				</div>
 			</form>
-		</div>
-	</div>
+		
+		<script>
+			function calculateYearsOfService() {
+				const hireDateInput = document.getElementById('hireDate');
+				const yearsInput = document.getElementById('yearsOfService');
+				if (!hireDateInput.value) {
+					yearsInput.value = '';
+					return;
+				}
+				const hireDate = new Date(hireDateInput.value);
+				const today = new Date();
+				let years = today.getFullYear() - hireDate.getFullYear();
+				const monthDiff = today.getMonth() - hireDate.getMonth();
+				if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < hireDate.getDate())) {
+					years--;
+				}
+				yearsInput.value = years >= 0 ? years : 0;
+			}
+			document.getElementById('hireDate').addEventListener('change', calculateYearsOfService);
+			window.addEventListener('DOMContentLoaded', calculateYearsOfService);
 	
-	<script>
-		function calculateYearsOfService() {
-			const hireDateInput = document.getElementById('hireDate');
-			const yearsInput = document.getElementById('yearsOfService');
-			if (!hireDateInput.value) {
-				yearsInput.value = '';
-				return;
+			function toggleEngineerAreas() {
+				const engineerTypeSelect = document.getElementById('engineerType');
+				const loginIdArea = document.getElementById('loginIdArea');
+				const companyArea = document.getElementById('companyArea');
+				if (!engineerTypeSelect) return;
+				const currentType = engineerTypeSelect.value;
+				if (currentType === 'プロパー') {
+					loginIdArea.style.display = 'block';
+					companyArea.style.display = 'none';
+				} else if (currentType === 'パートナー') {
+					loginIdArea.style.display = 'none';
+					companyArea.style.display = 'block';
+				} else {
+					loginIdArea.style.display = 'none';
+					companyArea.style.display = 'none';
+				}
 			}
-			const hireDate = new Date(hireDateInput.value);
-			const today = new Date();
-			let years = today.getFullYear() - hireDate.getFullYear();
-			const monthDiff = today.getMonth() - hireDate.getMonth();
-			if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < hireDate.getDate())) {
-				years--;
-			}
-			yearsInput.value = years >= 0 ? years : 0;
-		}
-		document.getElementById('hireDate').addEventListener('change', calculateYearsOfService);
-		window.addEventListener('DOMContentLoaded', calculateYearsOfService);
-
-		function toggleEngineerAreas() {
-			const engineerTypeSelect = document.getElementById('engineerType');
-			const loginIdArea = document.getElementById('loginIdArea');
-			const companyArea = document.getElementById('companyArea');
-			if (!engineerTypeSelect) return;
-			const currentType = engineerTypeSelect.value;
-			if (currentType === 'プロパー') {
-				loginIdArea.style.display = 'block';
-				companyArea.style.display = 'none';
-			} else if (currentType === 'パートナー') {
-				loginIdArea.style.display = 'none';
-				companyArea.style.display = 'block';
-			} else {
-				loginIdArea.style.display = 'none';
-				companyArea.style.display = 'none';
-			}
-		}
-		document.getElementById('engineerType').addEventListener('change', toggleEngineerAreas);
-		window.addEventListener('DOMContentLoaded', toggleEngineerAreas);
-	</script>
+			document.getElementById('engineerType').addEventListener('change', toggleEngineerAreas);
+			window.addEventListener('DOMContentLoaded', toggleEngineerAreas);
+		</script>
+	</div>
 </body>
 
 </html>
