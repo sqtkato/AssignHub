@@ -9,6 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.assignhub.entity.Account;
 import com.assignhub.mapper.DeletedAccountMapper;
 
+/**
+ * 論理削除されたアカウント情報の管理、復元、物理削除、エクスポートを処理するサービス。
+ * @author C3S) 野本
+ */
 @Service
 public class DeletedAccountService {
 
@@ -26,7 +30,7 @@ public class DeletedAccountService {
      * 選択されたアカウントの情報を取得する（CSVエクスポート用）。
      *
      * @param ids 画面のチェックボックスで選択されたアカウントIDのリスト
-     * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
+     * @return 該当するアカウントエンティティ（存在しない場合はnull）
      */
     public List<Account> findByIds(List<Integer> ids) {
         if (ids != null && !ids.isEmpty()) {
@@ -36,7 +40,9 @@ public class DeletedAccountService {
     }
 
     /**
-     * 単一データをゴミ箱から復元する。
+     * 論理削除済みアカウントを一件復元する。
+     * 
+     * @param id 復元対象のアカウントID
      */
     @Transactional
     public void restore(Integer id) {
@@ -44,8 +50,9 @@ public class DeletedAccountService {
     }
 
     /**
-     * 選択された複数のデータを一括でゴミ箱から復元する。
-     * * @throws IllegalArgumentException 対象が選択されていない場合（画面へのエラーメッセージ用）
+     * 選択された複数の論理削除済みアカウント情報を一括で復元する。
+     * 
+     * @param ids        復元対象となるアカウントIDのリスト
      */
     @Transactional
     public void restoreBulk(List<Integer> ids) {
@@ -55,7 +62,9 @@ public class DeletedAccountService {
     }
 
     /**
-     * 単一データをデータベースから完全に削除する。
+     * 論理削除済みアカウントを一件物理削除する。
+     * 
+     * @param id 削除対象のアカウントID
      */
     @Transactional
     public void physicalDelete(Integer id) {
@@ -63,7 +72,9 @@ public class DeletedAccountService {
     }
 
     /**
-     * 選択された複数のデータをデータベースから完全に一括削除する。
+     * 選択された複数の論理削除済みアカウント情報を一括で物理削除する。
+	 *
+	 * @param ids 削除対象となるアカウントIDのリスト
      */
     @Transactional
     public void physicalDeleteBulk(List<Integer> ids) {
@@ -76,12 +87,22 @@ public class DeletedAccountService {
     // Controllerからのチェック用メソッド（booleanを返す）
     // =======================================================
 
-    /** 単一アカウントに紐づく社員情報が存在するか判定 */
+    /** 
+     * 単一アカウントに紐づく社員情報が存在するか判定する。
+     * 
+     * @param id 判定対象のアカウントID
+     * @return 存在していればtrue
+     */
     public boolean existEmployeesByAccountId(Integer id) {
         return deletedAccountMapper.existEmployeesByAccountId(id) > 0;
     }
 
-    /** 複数アカウントの中に、紐づく社員情報が存在するものが含まれているか判定 */
+    /**
+     * 複数アカウントの中に、紐づく社員情報が存在するものが含まれているか判定する。
+     * 
+     * @param id 判定対象のアカウントID
+     * @return 含まれていればtrue
+     */
     public boolean existEmployeesByAccountIds(List<Integer> ids) {
         return deletedAccountMapper.existEmployeesByAccountIds(ids) > 0;
     }
@@ -89,7 +110,7 @@ public class DeletedAccountService {
     /**
 	 * ログインIDがすでに登録されているか（重複しているか）を判定する。
 	 *
-	 * @param loginId        チェックするログインID
+	 * @param execludeAccountId チェックするログインID
 	 * @return 重複していればtrue
 	 */
 	public boolean isLoginIdDuplicate(Integer excludeAccountId) {
@@ -97,6 +118,12 @@ public class DeletedAccountService {
 		return count > 0;
 	}
 	
+	/**
+	 * 複数のログインIDがすでに一つでも登録されているか（重複しているか）を判定する。
+	 *
+	 * @param execludeAccountIds チェックするログインIDのリスト
+	 * @return 一つでも重複していればtrue
+	 */
 	public boolean isLoginIdDuplicate(List<Integer> excludeAccountIds) {
 		int count = deletedAccountMapper.countByLoginIds(excludeAccountIds);
 		return count > 0;
