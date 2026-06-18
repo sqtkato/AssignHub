@@ -99,7 +99,7 @@
 				</tr>
 				<tr>
 					<th>契約開始日</th>
-					<td th:text="${#temporals.format(employee.assignment.contractStartDate, 'yyyy/MM/dd')}"></td>
+					<td th:text="${employee.assignment?.contractStartDate} ? ${#temporals.format(employee.assignment.contractStartDate, 'yyyy/MM/dd')} : 'ー'"></td>
 				</tr>
 				<tr>
 					<th>契約終了日</th>
@@ -107,7 +107,7 @@
 				</tr>
 				<tr>
 					<th>契約単価</th>
-					<td th:text="${#numbers.formatInteger(employee.assignment.unitPrice, 3, 'COMMA')} + ' 円'"></td>
+					<td th:text="${employee.assignment?.unitPrice} ? (${#numbers.formatInteger(employee.assignment.unitPrice, 3, 'COMMA')} + ' 円') : 'ー'"></td>
 				</tr>
 			</table>
 			
