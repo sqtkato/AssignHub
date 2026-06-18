@@ -109,14 +109,38 @@
             #{id}
         </foreach>
     </select>
-    
-    <select id="existByLoginId" resultType="int">
-		SELECT COUNT(*) 
+	
+	<select id="countByLoginId" resultType="int">
+		SELECT COUNT(*) FROM m_account
+		WHERE delete_flg=0
+		AND login_id = IN(
+		SELECT login_id
 		FROM m_account
-		WHERE login_id = #{loginId}
-		AND delete_flg=0
+		WHERE account_id = #{excludeAccountId}
+		)
 		<if test="excludeAccountId != null">
 			AND account_id != #{excludeAccountId}
+		</if>
+	</select>
+
+	<select id="countByLoginIds" resultType="int">
+		SELECT COUNT(*) FROM m_account
+		WHERE delete_flg=0
+		AND login_id IN(
+		SELECT login_id
+		FROM m_account
+		WHERE account_id IN
+		<foreach item="excludeAccountId" index="index"
+			collection="excludeAccountIds" open="(" separator="," close=")">
+			#{excludeAccountId}
+		</foreach>
+		)
+		<if test="excludeAccountIds != null">
+			AND account_id NOT IN
+			<foreach item="excludeAccountId" index="index"
+				collection="excludeAccountIds" open="(" separator="," close=")">
+				#{excludeAccountId}
+			</foreach>
 		</if>
 	</select>
 	
