@@ -15,7 +15,6 @@
 		<div class="card">
 			<form th:action="@{/employees}" method="get" class="search-form">
 				<div class="form-group form-group-search">
-
 					<div class="search-item">
 						<label>社員名</label>
 						<input type="text" name="empName" class="form-control" th:value="${empName}"
@@ -56,8 +55,7 @@
 					</svg>
 					インポート
 				</button>
-				<button type="submit" formaction="/employees/export" class="toolbar-btn" title="現在の検索条件でCSV出力"
-					>
+				<button type="submit" formaction="/employees/export" class="toolbar-btn" title="現在の検索条件でCSV出力">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -67,7 +65,7 @@
 					エクスポート
 				</button>
 				<button type="button" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
-					onclick="openBulkDeleteModal()" >
+					onclick="openBulkDeleteModal()">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<polyline points="3 6 5 6 21 6"></polyline>
@@ -125,7 +123,6 @@
 								<td th:text="${emp.assignment?.company?.companyName} ?: 'ー'"></td>
 								<td th:text="${emp.engineerType}"></td>
 								<td th:text="${emp.company?.companyName} ?: 'ー'"></td>
-
 								<td class="col-action">
 									<a th:href="@{/employees/{id}/detail(id=${emp.empId})}" class="btn-icon-svg"
 										title="詳細" th:if="${session.permission == 1}">
@@ -162,6 +159,7 @@
 								<td colspan="6" class="text-center">該当するデータがありません。</td>
 							</tr>
 						</tbody>
+					</table>
 				</div>
 			</div>
 		</form>
