@@ -73,7 +73,7 @@
 					<div class="error-message" th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}">
 					</div>
 				</div>
-				<div class="form-actions common-actions">
+				<div class="form-actions form-actions-area-wide">
 					<button type="submit" class="btn btn-primary common-btn">更新</button>
 					<a th:if="${fromPage=='detail'}" th:href="@{/assignments/{id}/detail(id=${id})}"
 						class="btn btn-secondary common-btn">戻る</a>
