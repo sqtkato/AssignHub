@@ -101,20 +101,11 @@ public class DeletedAccountService {
 		int count = deletedAccountMapper.countByLoginIds(excludeAccountIds);
 		return count > 0;
 	}
-    
-    
-    
-    
-   
-    
-    
-    
-    
-		/**
-		 * 復元した結果、登録上限（500件）を超えるか判定する
-		 * @param restoreCount 復元しようとしている件数（単一なら1、一括ならリストのサイズ）
-		 * @return 500件を超える場合はtrue
-		 */
+	/**
+	* 復元した結果、登録上限（500件）を超えるか判定する
+	* @param restoreCount 復元しようとしている件数（単一なら1、一括ならリストのサイズ）
+	* @return 500件を超える場合はtrue
+	*/
 	public boolean isAccountLimitReachedAfterRestore(int restoreCount) {
 		// 1. 現在有効な（削除されていない）企業数を取得する
 		// ※ 既存のCompanyService等から取得するか、独自に count を取得してください
