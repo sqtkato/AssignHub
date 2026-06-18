@@ -52,14 +52,15 @@
     </foreach>
     </select>
 	
-	<!-- 重複チェック企業名 -->
+	<!-- 重複チェック -->
 	<select id="existsByCompanyNameAndTelAndFax" resultType="boolean">
         SELECT COUNT(*) > 0
         FROM m_company
         WHERE company_name = #{companyName}
         AND company_tel = #{companyTel}
-        AND (company_fax = #{companyFax}
-        OR (company_fax IS NULL AND #{companyFax} IS NULL))
+        <if test ="companyFax != null and companyFax != ''">
+        	AND company_fax = #{companyFax}
+        </if>
         AND delete_flg = 0
     <if test="companyId != null">
         AND company_id != #{companyId}
