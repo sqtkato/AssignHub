@@ -278,10 +278,6 @@ public class EmployeeController {
 	 */
 	@GetMapping("/import")
 	public String showImport(Model model, RedirectAttributes attributes) {
-		if (employeeService.isMaxCount()) {
-			attributes.addFlashAttribute("toastError", "登録件数が上限(500件)に達しているため登録できません。");
-			return "redirect:/employees";
-		}
 		return "employee/import";
 	}
 
