@@ -43,7 +43,8 @@
 						</div>
 						<div class="form-group">
 							<label>生年月日</label>
-							<input type="date" max="9999-12-31" th:field="*{birthDate}" class="form-control fixed-half13"
+							<input type="date" max="9999-12-31" th:field="*{birthDate}"
+								class="form-control fixed-half13"
 								th:classappend="${#fields.hasErrors('birthDate')} ? 'input-error'">
 							<div class="error-message" th:if="${#fields.hasErrors('birthDate')}"
 								th:errors="*{birthDate}"></div>
@@ -51,7 +52,8 @@
 						<div class="form-group">
 							<label>入社年月</label>
 							<input type="date" id="hireDate"   max="9999-12-31" th:field="*{hireDate}"
-								class="form-control fixed-half13" th:classappend="${#fields.hasErrors('hireDate')} ? 'input-error'">
+								class="form-control fixed-half13"
+								th:classappend="${#fields.hasErrors('hireDate')} ? 'input-error'">
 							<div class="error-message" th:if="${#fields.hasErrors('hireDate')}" th:errors="*{hireDate}">
 							</div>
 						</div>
@@ -111,59 +113,54 @@
 										<div class="error-message" th:if="${#fields.hasErrors('engineerType')}"
 											th:errors="*{engineerType}">
 										</div>
+									</div>
+									<div class="form-group">
+										<div id="loginIdArea" style="display: none;">
+											    <label>ログインID<span class="badge-required">必須</span></label>
+											<select id="loginId" th:field="*{accountId}"
+												class="dropdown form-control fixed-all30"
+												th:classappend="${#fields.hasErrors('accountId')} ? 'input-error select-error' : ''">
+												    <option value="">未選択</option>
+												<option th:each="account : ${accounts}" th:value="${account.accountId}"
+													th:text="${account.loginId}">
+												</option>
+											</select>
+											<div class="error-message" th:if="${#fields.hasErrors('accountId')}"
+												th:errors="*{accountId}"></div>
 										</div>
-										<div class="form-group">
-											<div id="loginIdArea" style="display: none;">
-												    <label>ログインID<span class="badge-required">必須</span></label>
-												<select id="loginId" th:field="*{accountId}"
-													class="dropdown form-control fixed-all30"
-													th:classappend="${#fields.hasErrors('accountId')} ? 'input-error select-error' : ''">
-													    <option value="">未選択</option>
-													<option th:each="account : ${accounts}"
-														th:value="${account.accountId}" th:text="${account.loginId}">
-													</option>
-												</select>
-												<div class="error-message" th:if="${#fields.hasErrors('accountId')}"
-													th:errors="*{accountId}"></div>
-											</div>
-											</div>
-											<div class="form-group">
-												<div id="companyArea" style="display: none;">
-													    <label>所属企業<span class="badge-required">必須</span></label>
-													<select id="companyId" th:field="*{companyId}"
-														class="dropdown form-control fixed-all30"
-														th:classappend="${#fields.hasErrors('companyId')} ? 'input-error select-error' : ''">
-														<option value="">未選択</option>
-														<option th:each="company : ${companies}"
-															th:value="${company.companyId}"
-															th:text="${company.companyName}"></option>
-													</select>
-													<div class="error-message" th:if="${#fields.hasErrors('companyId')}"
-														th:errors="*{companyId}"></div>
-												</div>
-												</div>
-												<div class="form-group">
-													<label>所属部署</label>
-													<input type="text" th:field="*{department}"
-														class="form-control fixed-all30"
-														th:classappend="${#fields.hasErrors('department')} ? 'input-error'">
-													<div class="error-message"
-														th:if="${#fields.hasErrors('department')}"
-														th:errors="*{department}"></div>
-												</div>
-												<div class="form-group">
-													<label>役職</label>
-													<input type="text" th:field="*{jobTitle}"
-														class="form-control fixed-all30"
-														th:classappend="${#fields.hasErrors('jobTitle')} ? 'input-error'">
-													<div class="error-message" th:if="${#fields.hasErrors('jobTitle')}"
-														th:errors="*{jobTitle}"></div>
-												</div>
-												<div class="form-actions common-actions ">
-													<button type="submit" class="btn btn-primary common-btn">登録</button>
-													<a th:href="@{/employees}"
-														class="btn btn-secondary common-btn">戻る</a>
-												</div>
+									</div>
+									<div class="form-group">
+										<div id="companyArea" style="display: none;">
+											    <label>所属企業<span class="badge-required">必須</span></label>
+											<select id="companyId" th:field="*{companyId}"
+												class="dropdown form-control fixed-all30"
+												th:classappend="${#fields.hasErrors('companyId')} ? 'input-error select-error' : ''">
+												<option value="">未選択</option>
+												<option th:each="company : ${companies}" th:value="${company.companyId}"
+													th:text="${company.companyName}"></option>
+											</select>
+											<div class="error-message" th:if="${#fields.hasErrors('companyId')}"
+												th:errors="*{companyId}"></div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label>所属部署</label>
+										<input type="text" th:field="*{department}" class="form-control fixed-all30"
+											th:classappend="${#fields.hasErrors('department')} ? 'input-error'">
+										<div class="error-message" th:if="${#fields.hasErrors('department')}"
+											th:errors="*{department}"></div>
+									</div>
+									<div class="form-group">
+										<label>役職</label>
+										<input type="text" th:field="*{jobTitle}" class="form-control fixed-all30"
+											th:classappend="${#fields.hasErrors('jobTitle')} ? 'input-error'">
+										<div class="error-message" th:if="${#fields.hasErrors('jobTitle')}"
+											th:errors="*{jobTitle}"></div>
+									</div>
+									<div class="form-actions  action-area-wide">
+										<button type="submit" class="btn btn-primary btn">登録</button>
+										<a th:href="@{/employees}" class="btn btn-secondary btn">戻る</a>
+									</div>
 				</form>
 			</div>
 		</div>
@@ -173,30 +170,30 @@
 				const yearsInput = document.getElementById('yearsOfService');
 
 				if (!hireDateInput.value) {
-					yearsInput.value = ''; 
+					yearsInput.value = '';
 					return;
 				}
 
 				const hireDate = new Date(hireDateInput.value);
 				const today = new Date();
 
-				
+
 				let years = today.getFullYear() - hireDate.getFullYear();
 				const monthDiff = today.getMonth() - hireDate.getMonth();
 
-				
+
 				if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < hireDate.getDate())) {
 					years--;
 				}
 
-				
+
 				yearsInput.value = years >= 0 ? years : 0;
 			}
 
-			
+
 			document.getElementById('hireDate').addEventListener('change', calculateYearsOfService);
 
-			
+
 			window.addEventListener('DOMContentLoaded', calculateYearsOfService);
 
 			document.getElementById('engineerType').addEventListener('change', function () {
