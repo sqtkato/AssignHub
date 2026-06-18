@@ -48,7 +48,7 @@ public class DeletedAccountController {
     /* 単一復元 */
     @PostMapping("/{id}/restore") 
     public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-    	if (deletedAccountService.isCompanyLimitReachedAfterRestore(1)) {
+    	if (deletedAccountService.isAccountLimitReachedAfterRestore(1)) {
 			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
 			return "redirect:/deleted-accounts";
 		}
@@ -67,7 +67,7 @@ public class DeletedAccountController {
             attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
             return "redirect:/deleted-accounts";
         }
-        if (deletedAccountService.isCompanyLimitReachedAfterRestore(ids.size())) {
+        if (deletedAccountService.isAccountLimitReachedAfterRestore(ids.size())) {
 			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
 			return "redirect:/deleted-accounts";
 		}
