@@ -27,7 +27,7 @@
 				</table>
 				<div class="export-contents">
 					<div class="table-scroll export-table">
-						<table class="table-dark">
+						<table class="table header-only-table table-dark">
 							<thead>
 								<tr>
 									<th>アサインID</th>
@@ -46,14 +46,15 @@
 					</div>
 					<p class="export-note">※詳細情報がエクスポートされます。</p>
 				</div>
+
+				<form th:action="@{/assignments/export/download(ids=${ids})}" method="post">
+					<div class="action-area action-area-wide">
+						<button type="submit" class="btn-export">エクスポート</button>
+						<button type="button" id="btn-back" class="btn-back"
+							th:onclick="|location.href='@{/assignments}'|">戻る</button>
+					</div>
+				</form>
 			</div>
-			<form th:action="@{/assignments/export/download(ids=${ids})}" method="post">
-				<div class="action-area action-area-wide">
-					<button type="submit" class="btn-export">エクスポート</button>
-					<button type="button" id="btn-back" class="btn-back"
-						th:onclick="|location.href='@{/assignments}'|">戻る</button>
-				</div>
-			</form>
 		</div>
 	</div>
 </body>
