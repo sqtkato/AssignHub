@@ -43,6 +43,8 @@ public class CompanyController {
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param companyService 企業サービス
+	 * @param employeeService 社員サービス
+	 * @param assignmentService アサインサービス
 	 */
 	public CompanyController(CompanyService companyService, EmployeeService employeeService,
 			AssignmentService assignmentService) {
@@ -54,9 +56,9 @@ public class CompanyController {
 	/**
 	 * 企業一覧画面を表示する。検索条件に応じたデータを取得する。
 	 *
-	 * @param companyNameSearch 企業名検索キーワード（任意）
-	 * @param companyTelSearch  TEL検索キーワード（任意）
-	 * @param model             画面描画用モデル
+	 * @param companyName 企業名検索キーワード（任意）
+	 * @param companyTel TEL検索キーワード（任意）
+	 * @param model 画面描画用モデル
 	 * @return 一覧画面のテンプレートパス
 	 */
 	@GetMapping
@@ -92,8 +94,8 @@ public class CompanyController {
 	 * 入力された企業情報をデータベースに登録する。
 	 *
 	 * @param companyForm 入力フォームデータ
-	 * @param result      バリデーション結果
-	 * @param attributes  リダイレクト先へ渡すフラッシュスコープ
+	 * @param result バリデーション結果
+	 * @param attributes リダイレクト先へ渡すフラッシュスコープ
 	 * @return 成功時は一覧画面へリダイレクト、失敗時は登録画面へ戻る
 	 */
 	@PostMapping
@@ -102,14 +104,11 @@ public class CompanyController {
 			BindingResult result,
 			RedirectAttributes attributes) {
 
-		// 設立年度チェック
-
 		Integer year = parseOrNull(companyForm.getFoundedYear());
 		if (year != null && year > java.time.Year.now().getValue()) {
 			result.rejectValue("foundedYear", "error", "設立年度は現在年度以前を入力してください");
 		}
 
-		// 重複チェック
 		if (companyService.isDuplicate(
 				companyForm.getCompanyName(),
 				companyForm.getCompanyTel(),
@@ -136,8 +135,8 @@ public class CompanyController {
 	 * 企業情報の編集画面を表示する。
 	 *
 	 * @param companyId 編集対象の企業ID
-	 * @param from      遷移元画面
-	 * @param model     画面描画用モデル
+	 * @param from 遷移元画面
+	 * @param model 画面描画用モデル
 	 * @return 編集画面のテンプレートパス
 	 */
 	@GetMapping("/{id}/edit")
@@ -171,12 +170,12 @@ public class CompanyController {
 	/**
 	 * 企業情報の更新処理を実行する。
 	 *
-	 * @param companyId   更新対象の企業ID
+	 * @param companyId 更新対象の企業ID
 	 * @param companyForm 入力フォームデータ
-	 * @param result      バリデーション結果
-	 * @param attributes  リダイレクト時にメッセージを引き継ぐための属性
-	 * @param fromPage    遷移元画面
-	 * @param model       画面描画用モデル
+	 * @param result バリデーション結果
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @param fromPage 遷移元画面
+	 * @param model 画面描画用モデル
 	 * @return 成功時はリダイレクト、失敗時は編集画面へ戻る
 	 */
 	@PostMapping("/{id}/edit")
@@ -188,23 +187,19 @@ public class CompanyController {
 			@RequestParam(value = "fromPage", required = false) String fromPage,
 			Model model) {
 
-		// 設立年度チェック
-
 		Integer year = parseOrNull(companyForm.getFoundedYear());
 		if (year != null && year > java.time.Year.now().getValue()) {
 			result.rejectValue("foundedYear", "error", "設立年度は現在年度以前を入力してください");
 		}
 
-		// 重複チェック
-				if (companyService.isDuplicate(
-						companyForm.getCompanyName(), 
-						companyForm.getCompanyTel(),
-						companyForm.getCompanyFax(),companyId)) {
-					result.rejectValue("companyName", "error.companyForm", "この企業名は既に使用されています");
-					result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に使用されています");
-					result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
-				}
-
+		if (companyService.isDuplicate(
+				companyForm.getCompanyName(),
+				companyForm.getCompanyTel(),
+				companyForm.getCompanyFax(), companyId)) {
+			result.rejectValue("companyName", "error.companyForm", "この企業名は既に使用されています");
+			result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に使用されています");
+			result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
+		}
 
 		if (result.hasErrors()) {
 			companyForm.setCompanyId(companyId);
@@ -230,8 +225,8 @@ public class CompanyController {
 	/**
 	 * 企業情報の詳細画面を表示する。
 	 *
-	 * @param id    表示対象の企業ID
-	 * @param from  遷移元画面
+	 * @param id 表示対象の企業ID
+	 * @param from 遷移元画面
 	 * @param model 画面描画用モデル
 	 * @return 詳細画面のテンプレートパス
 	 */
@@ -249,7 +244,7 @@ public class CompanyController {
 	/**
 	 * 企業情報を1件論理削除する。
 	 *
-	 * @param id         削除対象の企業ID
+	 * @param id 削除対象の企業ID
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクト
 	 */
@@ -267,7 +262,7 @@ public class CompanyController {
 	/**
 	 * 複数の企業情報を一括で論理削除する。
 	 *
-	 * @param ids        削除対象IDリスト
+	 * @param ids 取得対象の企業IDリスト
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクト
 	 */
@@ -299,7 +294,7 @@ public class CompanyController {
 	/**
 	 * CSVファイルを用いた企業データの一括インポート処理を実行する。
 	 *
-	 * @param file  アップロードされたCSVファイル
+	 * @param file アップロードされたCSVファイル
 	 * @param model 画面描画用のモデル
 	 * @return インポート画面のテンプレートパス
 	 */
@@ -354,6 +349,13 @@ public class CompanyController {
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
+	/**
+	 * 企業情報エクスポート画面を表示する。
+	 *
+	 * @param ids 選択された企業IDリスト
+	 * @param model  画面描画用のモデル
+	 * @return エクスポート画面のテンプレートパス
+	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model,
 			RedirectAttributes attributes) {
