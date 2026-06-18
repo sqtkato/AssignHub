@@ -28,9 +28,9 @@
 						<a id="lnk_csv_download" class="template-link"
 							th:href="@{/companies/import/template}">CSVテンプレートダウンロード</a>
 					</div>
-					<div class="action-area">
-						<button type="submit" id="btn_company_import" class="btn-import">インポート</button>
-						<button type="button" id="btn_company_back" class="btn-back"
+					<div class="form-actions form-actions-area-wide">
+						<button type="submit" id="btn_company_import" class="btn btn-import">インポート</button>
+						<button type="button" id="btn_company_back" class="btn btn-back"
 							th:onclick="|location.href='@{/companies}'|">戻る</button>
 					</div>
 					<p th:if="${errorMessage}" th:text="${errorMessage}" class="errorMessage"></p>

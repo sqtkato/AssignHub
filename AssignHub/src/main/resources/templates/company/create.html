@@ -125,9 +125,9 @@
 					<div class="error-message" th:if="${#fields.hasErrors('repFirstNameKana')}" th:errors="*{repFirstNameKana}">
 					</div>
 				</div>
-				<div class="form-actions" style="display: flex; justify-content: flex-end; gap: 8px;">
+				<div class="form-actions-area-wide" style="display: flex; justify-content:center;">
 					<button type="submit" class="btn btn-primary">登録</button>
-					<a th:href="@{/companies}" class="btn btn-secondary">戻る</a>
+					<button th:href="@{/companies}" class="btn btn-secondary">戻る</button>
 				</div>
 			</form>
 		</div>

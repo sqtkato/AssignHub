@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     <label>設立年度 </label>
-                    <input type="text" th:field="*{foundedYear}" class="form-control fixed-half5"
+                    <input type="text" th:field="*{foundedYear}" class="form-control fixed-half4"
                         th:classappend="${#fields.hasErrors('foundedYear')} ? 'input-error'">
                     <div class="error-message" th:if="${#fields.hasErrors('foundedYear')}" th:errors="*{foundedYear}">
                     </div>
@@ -50,7 +50,7 @@
                 <div class="form-group">
                     <input type="hidden" class="p-country-name" value="Japan">
                     <label>郵便番号<span class="badge-required">必須</span></label>
-                    <input type="text" th:field="*{companyZipCode}" class="form-control fixed-half5 p-postal-code"
+                    <input type="text" th:field="*{companyZipCode}" class="form-control fixed-half7 p-postal-code"
                         th:classappend="${#fields.hasErrors('companyZipCode')} ? 'input-error'">
                     <div class="error-message" th:if="${#fields.hasErrors('companyZipCode')}"
                         th:errors="*{companyZipCode}">
@@ -75,7 +75,7 @@
                 </div>
                 <div class="form-group">
                     <label>TEL <span class="badge-required">必須</span></label>
-                    <input type="text" th:field="*{companyTel}" class="form-control fixed-half20"
+                    <input type="text" th:field="*{companyTel}" class="form-control fixed-half11"
                         th:classappend="${#fields.hasErrors('companyTel')} ? 'input-error'">
                     <div class="error-message" th:if="${#fields.hasErrors('companyTel')}" th:errors="*{companyTel}">
                     </div>
@@ -117,16 +117,16 @@
                         th:errors="*{repFirstNameKana}">
                     </div>
                 </div>
-				<div class="form-actions " style="display: flex; justify-content: center; ">
-									<button type="submit" class="btn btn-primary ">変更</button>
+				<div class="form-actions form-actions-area-wide" style="display: flex; justify-content: center; ">
+									<button type="submit" class="btn btn-primary">変更</button>
 									
 									<a th:if="${fromPage == 'detail'}"
 									 th:href="@{/companies/{id}/detail(id=${companyForm.companyId})}"
-									class="btn btn-secondary ">戻る</a>
+									class="btn btn-secondary">戻る</a>
 
 									<a th:if="${fromPage != 'detail'}"
 									th:href="@{/companies}"
-									class="btn btn-secondary ">戻る</a>
+									class="btn btn-secondary">戻る</a>
                 </div>
                 
             </form>
