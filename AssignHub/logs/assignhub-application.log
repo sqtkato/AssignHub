@@ -1,0 +1,102 @@
+2026-06-18T00:14:31.607+09:00  INFO 27864 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-18T00:14:31.707+09:00  INFO 27864 --- [Thread-27] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-18T00:14:31.812+09:00  INFO 27864 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-18T00:14:31.843+09:00  INFO 27864 --- [Thread-27] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
+2026-06-18T00:14:31.848+09:00  INFO 27864 --- [Thread-27] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.
+2026-06-18T00:14:32.160+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 27864 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-18T00:14:32.160+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-18T00:14:32.435+09:00  INFO 27864 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-18T00:14:32.436+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-18T00:14:32.436+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-18T00:14:32.457+09:00  INFO 27864 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 290 ms
+2026-06-18T00:14:32.726+09:00  INFO 27864 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-18T00:14:32.727+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.602 seconds (process running for 46517.864)
+2026-06-18T00:14:32.729+09:00  INFO 27864 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-18T01:36:16.684+09:00  INFO 27864 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2026-06-18T01:36:16.693+09:00  INFO 27864 --- [Thread-31] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-18T01:36:16.812+09:00  INFO 27864 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-18T01:36:17.023+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 27864 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-18T01:36:17.025+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-18T01:36:17.345+09:00  INFO 27864 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-18T01:36:17.346+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-18T01:36:17.346+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-18T01:36:17.368+09:00  INFO 27864 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 338 ms
+2026-06-18T01:36:17.637+09:00  INFO 27864 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-18T01:36:17.640+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.671 seconds (process running for 51422.776)
+2026-06-18T01:36:17.640+09:00  INFO 27864 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-18T01:36:19.353+09:00  INFO 27864 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-18T01:36:19.353+09:00  INFO 27864 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-18T01:36:19.357+09:00  INFO 27864 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-06-18T01:36:19.361+09:00  INFO 27864 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Starting...
+2026-06-18T01:36:19.432+09:00  INFO 27864 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-7 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3bf9ce46
+2026-06-18T01:36:19.433+09:00  INFO 27864 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Start completed.
+2026-06-18T01:36:19.433+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-18T01:36:19.433+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-18T01:36:19.451+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-18T01:36:19.469+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-18T01:36:19.469+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-18T01:36:19.485+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : <==      Total: 25
+2026-06-18T01:36:30.018+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-18T01:36:30.019+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-18T01:36:30.024+09:00 DEBUG 27864 --- [http-nio-8080-exec-6] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-18T01:36:30.034+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-18T01:36:30.034+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-18T01:36:30.042+09:00 DEBUG 27864 --- [http-nio-8080-exec-7] c.a.mapper.AccountMapper.findAll         : <==      Total: 25
+2026-06-18T01:36:31.685+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-18T01:36:31.685+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-18T01:36:31.689+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-18T01:36:31.700+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==>  Preparing: SELECT a.*, e.last_name, e.first_name FROM m_account a left JOIN m_employee e ON a.account_id = e.account_id AND (e.delete_flg = 0 OR e.delete_flg IS NULL) WHERE a.delete_flg = 0 ORDER BY a.account_id ASC
+2026-06-18T01:36:31.700+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : ==> Parameters: 
+2026-06-18T01:36:31.706+09:00 DEBUG 27864 --- [http-nio-8080-exec-2] c.a.mapper.AccountMapper.findAll         : <==      Total: 25
+2026-06-18T01:36:41.846+09:00  INFO 27864 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2026-06-18T01:36:41.848+09:00  INFO 27864 --- [Thread-35] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-18T01:36:41.932+09:00  INFO 27864 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-18T01:36:41.935+09:00  INFO 27864 --- [Thread-35] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown initiated...
+2026-06-18T01:36:41.941+09:00  INFO 27864 --- [Thread-35] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown completed.
+2026-06-18T01:36:42.105+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 27864 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-18T01:36:42.105+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-18T01:36:42.305+09:00  INFO 27864 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-18T01:36:42.306+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-18T01:36:42.306+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-18T01:36:42.326+09:00  INFO 27864 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 218 ms
+2026-06-18T01:36:42.530+09:00  INFO 27864 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-18T01:36:42.532+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.466 seconds (process running for 51447.668)
+2026-06-18T01:36:42.534+09:00  INFO 27864 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-18T02:03:05.995+09:00  INFO 27864 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-18T02:03:05.995+09:00  INFO 27864 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-18T02:03:06.004+09:00  INFO 27864 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 9 ms
+2026-06-18T02:03:06.010+09:00  INFO 27864 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Starting...
+2026-06-18T02:03:06.051+09:00  INFO 27864 --- [http-nio-8080-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-8 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5fb31d6c
+2026-06-18T02:03:06.052+09:00  INFO 27864 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Start completed.
+2026-06-18T02:03:06.052+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.countAll        : ==>  Preparing: SELECT COUNT(*) FROM m_account WHERE delete_flg = 0
+2026-06-18T02:03:06.053+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.countAll        : ==> Parameters: 
+2026-06-18T02:03:06.064+09:00 DEBUG 27864 --- [http-nio-8080-exec-1] c.a.mapper.AccountMapper.countAll        : <==      Total: 1
+2026-06-18T02:05:19.769+09:00  INFO 27864 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-18T02:05:19.771+09:00  INFO 27864 --- [Thread-39] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-18T02:05:19.856+09:00  INFO 27864 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-18T02:05:19.859+09:00  INFO 27864 --- [Thread-39] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown initiated...
+2026-06-18T02:05:19.863+09:00  INFO 27864 --- [Thread-39] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown completed.
+2026-06-18T02:05:20.013+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 27864 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-18T02:05:20.014+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-18T02:05:20.290+09:00  INFO 27864 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-18T02:05:20.292+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-18T02:05:20.292+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-18T02:05:20.314+09:00  INFO 27864 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 293 ms
+2026-06-18T02:05:20.591+09:00  INFO 27864 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-18T02:05:20.594+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.612 seconds (process running for 53165.729)
+2026-06-18T02:05:20.594+09:00  INFO 27864 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-18T10:34:46.406+09:00  INFO 27864 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-18T10:34:46.475+09:00  INFO 27864 --- [Thread-43] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-18T10:34:46.681+09:00  INFO 27864 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-18T10:34:46.907+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : Starting AssignHubApplication using Java 17.0.13 with PID 27864 (C:\Users\お客様\git\AssignHub\AssignHub\target\classes started by お客様 in C:\Users\お客様\git\AssignHub\AssignHub)
+2026-06-18T10:34:46.907+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-06-18T10:34:47.065+09:00  INFO 27864 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-06-18T10:34:47.066+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-18T10:34:47.066+09:00  INFO 27864 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-18T10:34:47.078+09:00  INFO 27864 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 164 ms
+2026-06-18T10:34:47.228+09:00  INFO 27864 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-06-18T10:34:47.230+09:00  INFO 27864 --- [restartedMain] com.assignhub.AssignHubApplication       : Started AssignHubApplication in 0.349 seconds (process running for 83731.344)
+2026-06-18T10:34:47.231+09:00  INFO 27864 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-06-18T10:50:07.936+09:00  INFO 27864 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 4 class path changes (0 additions, 0 deletions, 4 modifications)
+2026-06-18T10:50:07.938+09:00  INFO 27864 --- [Thread-47] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-18T10:50:08.117+09:00  INFO 27864 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
