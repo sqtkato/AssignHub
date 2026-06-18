@@ -222,16 +222,11 @@ public class AccountController {
 	/**
 	 * アカウント情報のインポート画面を表示する。
 	 *
-	 * @param file       アップロードされたCSVファイル
-	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @param model 画面描画用のモデル
 	 * @return インポート画面のテンプレートパス
 	 */
 	@GetMapping("/import")
-	public String showImport(Model model, RedirectAttributes attributes) {
-		if (accountService.isAccountLimitReached()) {
-			attributes.addFlashAttribute("toastError", "アカウントの登録数が上限（500件）に達しているため、新規登録できません。");
-			return "redirect:/accounts";
-		}
+	public String showImport(Model model) {
 		return "account/import";
 	}
 
@@ -269,16 +264,13 @@ public class AccountController {
 			model.addAttribute("fileError", "UTF-8のCSVファイルを選択してください。");
 			return "account/import";
 		}
-		
-		try {
-			int total = accountService.countDataRows(file);
 
-			if (total > 500) {
-				model.addAttribute("globalError", "登録後の件数が上限に達しています。アカウント登録条件は500件です。");
-				return "account/import";
-			}
+		try {
 			AccountService.ImportResult result = accountService.importCsv(file);
 			model.addAttribute("importResult", result);
+			if (result.limitError != null) {
+				model.addAttribute("globalError", result.limitError);
+			}
 			return "account/import";
 		} catch (Exception e) {
 			model.addAttribute("fileError", "ファイルの読み込みに失敗しました");
@@ -328,7 +320,7 @@ public class AccountController {
 	}
 
 	/**
-	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
+	 * 検索条件に合致するアカウント情報をCSV形式でダウンロードする。
 	 *
 	 * @param ids    エクスポート対象となるアカウントIDのリスト 
 	 * @return ダウンロード用のCSVファイルバイナリデータ
