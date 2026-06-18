@@ -42,7 +42,7 @@
 				<div class="result-title-row">
 					<h3 class="result-title">処理結果</h3>
 				    <span th:if="${!importResult.errors.isEmpty() and importResult.errors[0].field == '上限'}" 
-					th:text="${importResult.errors[0].message}" class="result-error-message"></span>
+					th:text="${importResult.errors[0].message}" class="error-message"></span>
 				</div>
 				<div class="summary-box">
 					<div class="summary-item summary-success">

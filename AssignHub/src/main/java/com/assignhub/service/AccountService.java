@@ -1,5 +1,7 @@
 package com.assignhub.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.assignhub.entity.Account;
@@ -33,6 +35,14 @@ public class AccountService {
 	    return accountMapper.findByLoginId(loginId);
 	}
 
+	/**
+	 * どの社員にも紐づいていない（使用可能な）ログインIDの一覧を取得する。
+	 *
+	 * @return アカウントのリスト
+	 */
+	public List<Account> findLoginId() {
+		return accountMapper.findLoginId();
+	}
 //	/**
 //	 * 検索条件およびソート条件に合致するアカウント情報を全件取得する。
 //	 *

@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Employee;
 import com.assignhub.form.EmployeeForm;
+import com.assignhub.service.AccountService;
 import com.assignhub.service.CompanyService;
 import com.assignhub.service.EmployeeService;
 
@@ -40,14 +41,17 @@ public class EmployeeController {
 
 	private final EmployeeService employeeService;
 	private final CompanyService companyService;
+	private final AccountService accountService;
 
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param employeeService 社員サービス
 	 */
-	public EmployeeController(EmployeeService employeeService, CompanyService companyService) {
+	public EmployeeController(EmployeeService employeeService,AccountService accountService,
+			CompanyService companyService) {
 		this.employeeService = employeeService;
+		this.accountService = accountService;
 		this.companyService = companyService;
 
 	}
@@ -87,7 +91,7 @@ public class EmployeeController {
 		}
 		model.addAttribute("employeeForm", new EmployeeForm());
 		model.addAttribute("companies", companyService.findAll(null, null, null));
-		model.addAttribute("accounts", employeeService.findLoginId());
+		model.addAttribute("accounts", accountService.findLoginId());
 		return "employee/create";
 	}
 
@@ -113,7 +117,7 @@ public class EmployeeController {
 		if (result.hasErrors()) {
 			// 新規登録画面（create）を開いたときと同じように、コンボボックスのリストを再セットする
 			model.addAttribute("companies", companyService.findAll(null, null, null));
-			model.addAttribute("accounts", employeeService.findLoginId());
+			model.addAttribute("accounts", accountService.findLoginId());
 
 			return "employee/create";
 		}
@@ -169,7 +173,7 @@ public class EmployeeController {
 			model.addAttribute("fromPage", from);
 		}
 		model.addAttribute("companies", companyService.findAll(null, "emp_company_name", "asc"));
-		model.addAttribute("accounts", employeeService.findLoginId());
+		model.addAttribute("accounts", accountService.findLoginId());
 		return "employee/edit";
 	}
 
@@ -180,9 +184,9 @@ public class EmployeeController {
 			@RequestParam(value = "fromPage", required = false) String fromPage, Model model) {
 
 		if ("プロパー".equals(employeeForm.getEngineerType())) {
-			employeeForm.setCompanyId(null); // プロパーなら、企業の選択状態に関わらず必ずクリア
+			employeeForm.setCompanyId(null);
 		} else if ("パートナー".equals(employeeForm.getEngineerType())) {
-			employeeForm.setAccountId(null); // パートナーなら、アカウントの選択状態に関わらず必ずクリア
+			employeeForm.setAccountId(null); 
 		}
 
 		if ("プロパー".equals(employeeForm.getEngineerType()) && employeeForm.getAccountId() == null) {
@@ -201,7 +205,7 @@ public class EmployeeController {
 		if (result.hasErrors()) {
 			model.addAttribute("fromPage", fromPage);
 			model.addAttribute("companies", companyService.findAll(null, null, null));
-			model.addAttribute("accounts", employeeService.findLoginId());
+			model.addAttribute("accounts", accountService.findLoginId());
 			return "employee/edit";
 		}
 		
