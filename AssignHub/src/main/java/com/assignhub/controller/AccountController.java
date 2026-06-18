@@ -31,8 +31,8 @@ import com.assignhub.service.EmployeeService;
 /**
  * アカウント情報管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
  *
- * @version 1.03 2026/06/01
- * @author SQT）チームC
+ * @version 1.03 2026/06/18
+ * @author チームポケットモンスター
  */
 @Controller
 @RequestMapping("/accounts")
@@ -56,9 +56,9 @@ public class AccountController {
 	}
 	
 	/**
-	 * エラーメッセージの切替を行う
+	 * バインダーの設定
 	 *
-	 * @param binder エラーメッセージの設定
+	 * @param binder バインダーの設定
 	 */
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {

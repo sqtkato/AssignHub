@@ -1,52 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout/layout}" lang="ja">
+	layout:decorate="~{layout/layout}" lang="ja">
+
 <head>
-    <meta charset="UTF-8">
-    <title>アカウント情報登録入力</title>
-    <link rel="stylesheet" th:href="@{/css/account.css}">
+	<meta charset="UTF-8">
+	<title>アカウント情報登録入力</title>
+	<link rel="stylesheet" th:href="@{/css/account.css}">
 </head>
+
 <body>
-<div layout:fragment="content">
+	<div layout:fragment="content">
 
-    <div class="page-title-area">
-        <h2>アカウント情報登録入力</h2>
-    </div>
-	
-    <div class="card form-card">
-        <form th:action="@{/accounts/create}" method="post" th:object="${account}" class="input-form">
+		<div class="page-title-area">
+			<h2>アカウント情報登録入力</h2>
+		</div>
 
-			<div class="form-group">
-			    <label>ログインID <span class="badge-required">必須</span></label>
-			    <input type="text" th:field="*{loginId}" class="form-control"
-			        th:classappend="${#fields.hasErrors('loginId')} ? 'input-error'">
-			    <div class="error-message" th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></div>
-			    <div class="error-message" th:if="${loginIdError}" th:text="${loginIdError}"></div>
-			</div>
+		<div class="card form-card">
+			<form th:action="@{/accounts/create}" method="post" th:object="${account}" class="input-form">
 
-			<div class="form-group">
-			    <label>パスワード <span class="badge-required">必須</span></label>
-			    <input type="password" th:field="*{passwordHash}" class="form-control"
-			        th:classappend="${#fields.hasErrors('passwordHash')} ? 'input-error'">
-			    <div class="error-message" th:if="${#fields.hasErrors('passwordHash')}" th:errors="*{passwordHash}"></div>
-				<div class="error-message" th:if="${loginId}" th:text="${loginId}"></div>
-			</div>
-            <div class="form-group">
-                <label>権限付与</label>
-                <select th:field="*{permission}" class="form-control">
-                    <option value="0">一般</option>
-                    <option value="1">管理</option>
-                </select>
-            </div>
+				<div class="form-group">
+					<label>ログインID <span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{loginId}" class="form-control"
+						th:classappend="${#fields.hasErrors('loginId') or loginIdError != null} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></div>
+					<div class="error-message" th:if="${loginIdError}" th:text="${loginIdError}"></div>
+				</div>
 
-            <div class="form-actions form-actions-area-wide">
-                <button type="submit" class="btn btn-primary">登録</button>
-                <a th:href="@{/accounts}" class="btn btn-secondary">戻る</a>
-            </div>
+				<div class="form-group">
+					<label>パスワード <span class="badge-required">必須</span></label>
+					<input type="password" th:field="*{passwordHash}" class="form-control"
+						th:classappend="${#fields.hasErrors('passwordHash')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('passwordHash')}" th:errors="*{passwordHash}">
+					</div>
+					<div class="error-message" th:if="${loginId}" th:text="${loginId}"></div>
+				</div>
+				<div class="form-group">
+					<label>権限付与</label>
+					<select th:field="*{permission}" class="form-control">
+						<option value="0">一般</option>
+						<option value="1">管理</option>
+					</select>
+				</div>
 
-        </form>
-    </div>
+				<div class="form-actions form-actions-area-wide">
+					<button type="submit" class="btn btn-primary">登録</button>
+					<a th:href="@{/accounts}" class="btn btn-secondary">戻る</a>
+				</div>
 
-</div>
+			</form>
+		</div>
+
+	</div>
 </body>
+
 </html>

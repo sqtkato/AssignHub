@@ -21,7 +21,7 @@
 					<div class="search-item">
 						<label>権限検索</label>
 						<select name="permission" class="form-control">
-							<option value="" th:selected="${permission == null}">未選択</option>
+							<option value="">未選択</option>
 							<option value="0" th:selected="${permission == 0}">一般</option>
 							<option value="1" th:selected="${permission == 1}">管理</option>
 						</select>
@@ -45,7 +45,7 @@
 					</svg>
 					インポート
 				</button>
-				<button type="submit" formaction="/accounts/export" class="toolbar-btn" title="チェックした項目を削除">
+				<button type="submit" formaction="/accounts/export" class="toolbar-btn" title="アカウント情報をCSVファイルにしてダウンロード">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>

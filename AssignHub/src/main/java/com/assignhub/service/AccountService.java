@@ -22,8 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * アカウント情報に関するビジネスロジックを提供するサービスクラス。
  *
- * @version 1.00 2026/06/12
- * @author ATO）黒木
+ * @version 1.00 2026/06/18
+ * @author チームポケットモンスター
  */
 @Slf4j
 @Service
@@ -45,7 +45,7 @@ public class AccountService {
 	 * 検索条件およびソート条件に合致するアカウント情報を全件取得する。
 	 *
 	 * @param keyword 検索キーワード（社員名の部分一致）
-	 * @param permission  絞り込み対象の権限
+	 * @param permission  権限検索（選択した権限）
 	 * @return アカウントエンティティのリスト
 	 */
 	public List<Account> findAll(String keyword, Integer permission) {
@@ -76,7 +76,7 @@ public class AccountService {
 	 * アカウント情報を保存する。
 	 * IDが存在しない場合（nullまたは0）は新規登録（INSERT）、存在する場合は更新（UPDATE）を行う。
 	 *
-	 * @param accnount 登録または更新する社員アカウント
+	 * @param account 登録または更新するアカウント情報
 	 */
 	@Transactional
 	public void save(Account account) {
@@ -189,7 +189,6 @@ public class AccountService {
 				String rawPassword = cols[2].trim();
 				String permissionStr = cols[3].trim();
 
-				// 権限のチェック（「一般」→0、「管理」→1、それ以外・空白はエラー）
 				int permission = 0;
 				if (permissionStr.equals("一般")) {
 					permission = 0;
@@ -246,7 +245,6 @@ public class AccountService {
 					}
 				}
 
-				// 登録上限チェック（新規登録のみ。既存DB件数＋今回の新規予定が500件以上なら上限エラー）
 				if (!hasError && account.getAccountId() == null
 						&& (accountCount + insertPlan) >= 500) {
 					result.limitError = "登録後の件数が上限に達しています。アカウントの登録上限は500件です。";
@@ -288,7 +286,8 @@ public class AccountService {
 	/**
 	 * ログインIDがすでに登録されているか（重複しているか）を判定する。
 	 *
-	 * @param loginId        チェックするログインID
+	 * @param loginId          チェックするログインID
+	 * @param excludeAccountId 更新前のログインID（新規登録時はnull）
 	 * @return 重複していればtrue
 	 */
 	public boolean isLoginIdDuplicate(String loginId, Integer excludeAccountId) {
