@@ -133,18 +133,19 @@
 	width: 50%;
 }
 
-.edit-form{
+.input-form{
 	width: 800px;
 }
-.edit-form input,
-.edit-form select{
+.input-form input{
 	margin: auto;
 	width: 400px;
 	text-align: left;
 }
 
-.edit-form label{
-	padding-left: 100px;
+.input-form select{
+	width: 100px;
+	margin-right: auto;
+
 }
 
 .form-group {

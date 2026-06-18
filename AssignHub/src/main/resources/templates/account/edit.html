@@ -14,7 +14,7 @@
 			<h2>アカウント情報変更入力</h2>
 		</div>
 		<div class="card form-card">
-			<form th:action="@{/accounts/{id}/edit(id=${id})}" th:object="${accountForm}" method="post" class="edit-form">
+			<form th:action="@{/accounts/{id}/edit(id=${id})}" th:object="${accountForm}" method="post" class="input-form">
 				<input type="hidden" th:field="*{accountId}" />
 
 				<div class="form-group">
@@ -27,7 +27,7 @@
 
 				<div class="form-group">
 					<label for="passwordHash">変更後のパスワード <span class="badge-required">必須</span></label>
-					<input type="password" th:field="*{passwordHash}" id="passwordHash" class="form-control"
+					<input type="password" th:field="*{passwordHash}" class="form-control"
 						th:classappend="${#fields.hasErrors('passwordHash')} ? 'input-error'">
 					<div class="error-message" th:if="${#fields.hasErrors('passwordHash')}" th:errors="*{passwordHash}">
 					</div>
