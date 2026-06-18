@@ -48,7 +48,7 @@ public class EmployeeController {
 	 *
 	 * @param employeeService 社員サービス
 	 */
-	public EmployeeController(EmployeeService employeeService,AccountService accountService,
+	public EmployeeController(EmployeeService employeeService, AccountService accountService,
 			CompanyService companyService) {
 		this.employeeService = employeeService;
 		this.accountService = accountService;
@@ -143,6 +143,13 @@ public class EmployeeController {
 		return "employee/detail";
 	}
 
+	  /**
+     * 社員の編集画面を表示する。
+     *
+     * @param id    変更対象の社員ID
+     * @param model 画面描画用のモデル
+     * @return 社員編集画面のテンプレートパス
+     */
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable("id") Integer id,
 			@RequestParam(value = "from", required = false) String from,
@@ -177,6 +184,16 @@ public class EmployeeController {
 		return "employee/edit";
 	}
 
+	/**
+	 * 社員情報の更新処理を実行する。
+	 *
+	 * @param id           変更対象の社員ID
+	 * @param employeeForm 入力された社員情報フォーム
+	 * @param result       バリデーション結果
+	 * @param attributes   リダイレクト時にメッセージを引き継ぐための属性
+	 * @param model        画面描画用のモデル
+	* @return 成功時は遷移元に応じたリダイレクト（詳細画面または一覧画面）、失敗時は変更画面のテンプレートパス
+	 */
 	@PostMapping("/{id}/edit")
 	public String update(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
@@ -186,7 +203,7 @@ public class EmployeeController {
 		if ("プロパー".equals(employeeForm.getEngineerType())) {
 			employeeForm.setCompanyId(null);
 		} else if ("パートナー".equals(employeeForm.getEngineerType())) {
-			employeeForm.setAccountId(null); 
+			employeeForm.setAccountId(null);
 		}
 
 		if ("プロパー".equals(employeeForm.getEngineerType()) && employeeForm.getAccountId() == null) {
@@ -208,7 +225,6 @@ public class EmployeeController {
 			model.addAttribute("accounts", accountService.findLoginId());
 			return "employee/edit";
 		}
-		
 
 		Employee emp = new Employee();
 		emp.setEmpId(id);
@@ -278,41 +294,41 @@ public class EmployeeController {
 	 */
 	@PostMapping("/import")
 	public String importCsv(
-	        @RequestParam(name = "file", required = false) MultipartFile file,
-	        Model model) {
+			@RequestParam(name = "file", required = false) MultipartFile file,
+			Model model) {
 
-	    if (file == null || file.isEmpty()) {
-	        model.addAttribute("toastError", "ファイルを選択してください");
-	        return "employee/import";
-	    }
+		if (file == null || file.isEmpty()) {
+			model.addAttribute("toastError", "ファイルを選択してください");
+			return "employee/import";
+		}
 
-	    String filename = file.getOriginalFilename();
-	    if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
-	        model.addAttribute("toastError", "ファイルの形式が正しくありません。CSVファイルを選択してください");
-	        return "employee/import";
-	    }
+		String filename = file.getOriginalFilename();
+		if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
+			model.addAttribute("toastError", "ファイルの形式が正しくありません。CSVファイルを選択してください");
+			return "employee/import";
+		}
 
-	    if (file.getSize() > 5 * 1024 * 1024) {
-	        model.addAttribute("toastError", "ファイルサイズは5MB以内にしてください");
-	        return "employee/import";
-	    }
+		if (file.getSize() > 5 * 1024 * 1024) {
+			model.addAttribute("toastError", "ファイルサイズは5MB以内にしてください");
+			return "employee/import";
+		}
 
-	    try {
-	        EmployeeService.ImportResult result = employeeService.importCsv(file);
-	        model.addAttribute("importResult", result);
-	        if (result.errorCount > 0) {
-	            model.addAttribute("toastError", "一部の行でエラーが発生しました");
-	        } else {
-	            model.addAttribute("toastMessage", result.successCount + "件のインポート処理が完了しました");
-	        }
-	        return "employee/import";
-	    } catch (MalformedInputException e) {
-	        model.addAttribute("toastError", "UTF-8のCSVファイルを選択してください");
-	        return "employee/import";
-	    } catch (Exception e) {
-	        model.addAttribute("toastError", "ファイルの読み込みに失敗しました");
-	        return "employee/import";
-	    }
+		try {
+			EmployeeService.ImportResult result = employeeService.importCsv(file);
+			model.addAttribute("importResult", result);
+			if (result.errorCount > 0) {
+				model.addAttribute("toastError", "一部の行でエラーが発生しました");
+			} else {
+				model.addAttribute("toastMessage", result.successCount + "件のインポート処理が完了しました");
+			}
+			return "employee/import";
+		} catch (MalformedInputException e) {
+			model.addAttribute("toastError", "UTF-8のCSVファイルを選択してください");
+			return "employee/import";
+		} catch (Exception e) {
+			model.addAttribute("toastError", "ファイルの読み込みに失敗しました");
+			return "employee/import";
+		}
 	}
 
 	/**
@@ -322,7 +338,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/import/template")
 	public ResponseEntity<byte[]> downloadTemplate() {
-		String csvContent = "社員ID,社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,"
+		String csvContent = "社員ID(新規は空欄),社員姓,社員名,社員姓カナ,社員名カナ,入社年月日,勤続年数,"
 				+ "生年月日,郵便番号,住所1,住所2,エンジニアタイプ,ログインID,"
 				+ "所属企業,所属部署,役職,電話番号,メールアドレス\n";
 		byte[] csvBytes = csvContent.getBytes(StandardCharsets.UTF_8);
@@ -386,10 +402,7 @@ public class EmployeeController {
 					.append(emp.getAddress1()).append(",")
 					.append(emp.getAddress2() != null ? emp.getAddress2() : "").append(",")
 					.append(emp.getEngineerType()).append(",")
-					.append(emp.getAccount() != null && emp.getAccount().getLoginId() != null
-							? emp.getAccount().getLoginId()
-							: "")
-					.append(",")
+					.append(emp.getAccount() != null && emp.getAccount().getLoginId() != null? emp.getAccount().getLoginId(): "").append(",")
 					.append(emp.getCompany() != null ? emp.getCompany().getCompanyName() : "").append(",")
 					.append(emp.getDepartment() != null ? emp.getDepartment() : "").append(",")
 					.append(emp.getJobTitle() != null ? emp.getJobTitle() : "").append(",")
