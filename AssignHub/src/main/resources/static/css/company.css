@@ -41,6 +41,9 @@
 	padding: 6px 8px;
 }
 
+.detail-table td {
+	word-break: break-all;
+}
 
 .fixed-half20 {
 	width: 20ch;

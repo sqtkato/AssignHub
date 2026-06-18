@@ -92,19 +92,19 @@
 				</tr>
 			</table>
 
-				<div class="form-actions common-actions">
+				<div class="form-actions form-actions-area-wide">
 					<a th:href="@{/companies/{id}/edit(id=${company.companyId}, from='detail')}"
-						class="btn btn-primary common-btn">変更</a>
+						class="btn btn-primary">変更</a>
 								
 				
 						<form th:action="@{/companies/{id}/delete(id=${company.companyId})}" method="post" style="display:inline;">
-						    <button type="button" class="btn btn-danger common-btn"
+						    <button type="button" class="btn btn-danger"
 							th:onclick="|openDeleteModal(${company.companyId})|">削除</button>
 						</form>
 
 				
 								
-				<a th:href="@{/companies}" class ="btn btn-secondary common-btn">戻る</a>
+				<a th:href="@{/companies}" class ="btn btn-secondary">戻る</a>
 				
 
 				</div>
