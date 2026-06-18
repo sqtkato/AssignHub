@@ -144,7 +144,6 @@ public class AccountController {
 			AccountForm form = new AccountForm();
 			form.setAccountId(acc.getAccountId());
 			form.setLoginId(acc.getLoginId());
-			form.setPasswordHash(acc.getPasswordHash());
 			form.setPermission(acc.getPermission());
 			model.addAttribute("accountForm", form);
 		}
