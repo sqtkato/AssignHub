@@ -144,7 +144,7 @@
 		</if>
 	</select>
 	
-	<select id="existActiveAccounts" resultType="int">
+	<select id="countActiveAccounts" resultType="int">
 		SELECT COUNT(*)
 		FROM m_account
 		WHERE delete_flg = 0

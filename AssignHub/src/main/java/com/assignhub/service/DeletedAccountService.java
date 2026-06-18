@@ -109,7 +109,7 @@ public class DeletedAccountService {
 	public boolean isAccountLimitReachedAfterRestore(int restoreCount) {
 		// 1. 現在有効な（削除されていない）企業数を取得する
 		// ※ 既存のCompanyService等から取得するか、独自に count を取得してください
-		int currentActiveCount = deletedAccountMapper.existActiveAccounts();
+		int currentActiveCount = deletedAccountMapper.countActiveAccounts();
 		System.out.println(currentActiveCount);
 		// 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
 		return (currentActiveCount + restoreCount) > 500;

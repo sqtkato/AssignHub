@@ -78,5 +78,5 @@ public interface DeletedAccountMapper {
 	 * 現在有効な（削除されていない）企業総数をカウントする。
 	 * （500件登録上限チェック用）
 	 */
-	int existActiveAccounts();
+	int countActiveAccounts();
 }
