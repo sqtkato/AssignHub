@@ -86,8 +86,8 @@ public class CompanyService {
 	 * @param excludecompanyId 除外する企業ID（新規登録時はnullを渡す）
 	 * @return 重複していればtrue
 	 */
-	public boolean isCompanyNameDuplicate(String companyName, Integer companyId) {
-		return companyMapper.existsByCompanyName(companyName, companyId);
+	public boolean isDuplicate(String companyName,String companyTel,String companyFax, Integer companyId) {
+		return companyMapper.existsByCompanyNameAndTelAndFax(companyName, companyTel,companyFax,companyId);
 	}
 
 	public void delete(Integer id) {
@@ -106,27 +106,7 @@ public class CompanyService {
 			companyMapper.deleteBulk(ids);
 		}
 	}
-	/**
-	 * TELがすでに登録されているか（重複しているか）を判定する。
-	 *
-	 * @param TEL チェックするTEL
-	 * @param excludecompanyId 除外する企業ID（新規登録時はnullを渡す）
-	 * @return 重複していればtrue
-	 */
-	public boolean isCompanyTelDuplicate(String companyTel,Integer companyId ) {
-		return companyMapper.existsByCompanyTel(companyTel, companyId);
-	}
 	
-	/**
-	 * FAXがすでに登録されているか（重複しているか）を判定する。
-	 *
-	 * @param TEL チェックするFAX
-	 * @param excludecompanyId 除外する企業ID（新規登録時はnullを渡す）
-	 * @return 重複していればtrue
-	 */
-	public boolean isCompanyFaxDuplicate(String companyFax,Integer companyId ) {
-		return companyMapper.existsByCompanyFax(companyFax, companyId);
-	}
 
 	/**
 	 * インポート時の各行のエラー内容を保持するクラス。
@@ -227,9 +207,6 @@ public class CompanyService {
 					hasError = true;
 				} else if (companyName.length() > 50) {
 	                result.errors.add(new CsvRowError(rowNum, "企業名", "企業名は50文字以内で入力してください"));
-	                hasError = true;
-				} else if (isCompanyNameDuplicate(companyName, parsedId)) {
-	                result.errors.add(new CsvRowError(rowNum, "企業名", "この企業名は既に使用されています"));
 	                hasError = true;
 				} else {
 					company.setCompanyName(companyName);
@@ -343,6 +320,16 @@ public class CompanyService {
 		                    hasError = true;
 		                } else {
 		                    company.setCompanyFax(companyFax);
+		                }
+		            }
+		            
+		         // 重複チェック（企業名＋TEL＋FAXの組み合わせ）
+		            if (!hasError) {
+		                String faxForCheck = companyFax.isEmpty() ? null : companyFax;
+		                if (isDuplicate(companyName, companyTel, faxForCheck, parsedId)) {
+		                    result.errors.add(new CsvRowError(rowNum, "企業名/TEL/FAX",
+		                        "この企業名は既に使用されています"));
+		                    hasError = true;
 		                }
 		            }
 

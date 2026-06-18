@@ -109,19 +109,17 @@ public class CompanyController {
 			result.rejectValue("foundedYear", "error", "設立年度は現在年度以前を入力してください");
 		}
 
-		// 企業名重複チェック
-		if (companyService.isCompanyNameDuplicate(companyForm.getCompanyName(), null)) {
+		// 重複チェック
+		if (companyService.isDuplicate(
+				companyForm.getCompanyName(), 
+				companyForm.getCompanyTel(),
+				companyForm.getCompanyFax(),null)) {
 			result.rejectValue("companyName", "error.companyForm", "この企業名は既に使用されています");
+			result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に使用されています");
+			result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
+			
 		}
 
-		// TEL重複チェック
-		if (companyService.isCompanyTelDuplicate(companyForm.getCompanyTel(), null)) {
-			result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に使用されています");
-		}
-		// FAX重複チェック
-		if (companyService.isCompanyFaxDuplicate(companyForm.getCompanyFax(), null)) {
-			result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
-		}
 		if (result.hasErrors()) {
 			return "company/create";
 		}
@@ -196,20 +194,16 @@ public class CompanyController {
 			result.rejectValue("foundedYear", "error", "設立年度は現在年度以前を入力してください");
 		}
 
-		// 企業名重複チェック
-		if (companyService.isCompanyNameDuplicate(companyForm.getCompanyName(), companyId)) {
-			result.rejectValue("companyName", "error.companyForm", "この企業名はすでに使用されています");
-		}
+		// 重複チェック
+				if (companyService.isDuplicate(
+						companyForm.getCompanyName(), 
+						companyForm.getCompanyTel(),
+						companyForm.getCompanyFax(),companyId)) {
+					result.rejectValue("companyName", "error.companyForm", "この企業名は既に使用されています");
+					result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に使用されています");
+					result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
+				}
 
-		// TEL重複チェック
-		if (companyService.isCompanyTelDuplicate(companyForm.getCompanyTel(), companyId)) {
-			result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に使用されています");
-		}
-
-		// FAX重複チェック
-		if (companyService.isCompanyFaxDuplicate(companyForm.getCompanyFax(), companyId)) {
-			result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
-		}
 
 		if (result.hasErrors()) {
 			companyForm.setCompanyId(companyId);

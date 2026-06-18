@@ -53,30 +53,14 @@
     </select>
 	
 	<!-- 重複チェック企業名 -->
-	<select id="existsByCompanyName" resultType="boolean">
+	<select id="existsByCompanyNameAndTelAndFax" resultType="boolean">
         SELECT COUNT(*) > 0
         FROM m_company
         WHERE company_name = #{companyName}
-    <if test="companyId != null">
-        AND company_id != #{companyId}
-    </if>
-    </select>
-    
-    <!-- 重複チェックTEL -->
-    <select id="existsByCompanyTel" resultType="boolean">
-        SELECT COUNT(*) > 0
-        FROM m_company
-        WHERE company_tel = #{companyTel}
-    <if test="companyId != null">
-        AND company_id != #{companyId}
-    </if>
-    </select>
-    
-    <!-- 重複チェックFAX -->
-    <select id="existsByCompanyFax" resultType="boolean">
-        SELECT COUNT(*) > 0
-        FROM m_company
-        WHERE company_fax = #{companyFax}
+        AND company_tel = #{companyTel}
+        AND (company_fax = #{companyFax}
+        OR (company_fax IS NULL AND #{companyFax} IS NULL))
+        AND delete_flg = 0
     <if test="companyId != null">
         AND company_id != #{companyId}
     </if>
