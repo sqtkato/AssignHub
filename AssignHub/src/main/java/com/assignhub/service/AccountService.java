@@ -6,7 +6,9 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,8 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * アカウント情報に関するビジネスロジックを提供するサービスクラス。
  *
- * @version 1.00 2026/06/18
- * @author チームポケットモンスター
+ * @version 1.00 2026/06/12
+ * @author ATO）黒木
  */
 @Slf4j
 @Service
@@ -44,8 +46,8 @@ public class AccountService {
 	/**
 	 * 検索条件およびソート条件に合致するアカウント情報を全件取得する。
 	 *
-	 * @param keyword 検索キーワード（社員名の部分一致）
-	 * @param permission  権限検索（選択した権限）
+	 * @param keyword    検索キーワード（社員名の部分一致）
+	 * @param permission 絞り込み対象の権限
 	 * @return アカウントエンティティのリスト
 	 */
 	public List<Account> findAll(String keyword, Integer permission) {
@@ -76,12 +78,11 @@ public class AccountService {
 	 * アカウント情報を保存する。
 	 * IDが存在しない場合（nullまたは0）は新規登録（INSERT）、存在する場合は更新（UPDATE）を行う。
 	 *
-	 * @param account 登録または更新するアカウント情報
+	 * @param accnount 登録または更新する社員アカウント
 	 */
 	@Transactional
 	public void save(Account account) {
-		account.setPasswordHash(
-				passwordEncoder.encode(account.getPasswordHash()));
+		account.setPasswordHash(passwordEncoder.encode(account.getPasswordHash()));
 		if (account.getAccountId() == null) {
 			accountMapper.insert(account);
 		} else {
@@ -146,20 +147,14 @@ public class AccountService {
 	@Transactional(rollbackFor = Exception.class)
 	public ImportResult importCsv(MultipartFile file) throws Exception {
 		ImportResult result = new ImportResult();
-
+		Set<String> seenLoginIds = new HashSet<>();
 		int accountCount = accountMapper.countAll();
 		int insertPlan = 0;
-
-		CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
-				.onMalformedInput(CodingErrorAction.REPORT)
-				.onUnmappableCharacter(CodingErrorAction.REPORT);
-
-		try (BufferedReader br = new BufferedReader(
-				new InputStreamReader(file.getInputStream(), decoder))) {
+		CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT).onUnmappableCharacter(CodingErrorAction.REPORT);
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream(), decoder))) {
 			String line;
 			int rowNum = 1;
 			boolean isFirstLine = true;
-
 			while ((line = br.readLine()) != null) {
 				if (isFirstLine) {
 					isFirstLine = false;
@@ -170,20 +165,16 @@ public class AccountService {
 					rowNum++;
 					continue;
 				}
-
 				line = line.replace("\uFEFF", "");
 				String[] cols = line.split(",", -1);
-
 				if (cols.length < 4) {
 					result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています"));
 					result.errorCount++;
 					rowNum++;
 					continue;
 				}
-
 				boolean hasError = false;
 				Account account = new Account();
-
 				String accountIdStr = cols[0].trim();
 				String loginId = cols[1].trim();
 				String rawPassword = cols[2].trim();
@@ -203,15 +194,13 @@ public class AccountService {
 					try {
 						Integer accountId = Integer.parseInt(accountIdStr);
 						if (findById(accountId) == null) {
-							result.errors.add(new CsvRowError(rowNum, "アカウントID",
-									"指定されたアカウントIDが見つかりません。新規登録の場合はアカウントIDは空欄にしてください。"));
+							result.errors.add(new CsvRowError(rowNum, "アカウントID", "指定されたアカウントIDが見つかりません。新規登録の場合はアカウントIDは空欄にしてください。"));
 							hasError = true;
 						} else {
 							account.setAccountId(accountId);
 						}
 					} catch (Exception e) {
-						result.errors.add(new CsvRowError(rowNum, "アカウントID",
-								"指定されたアカウントIDが見つかりません。新規登録の場合はアカウントIDは空欄にしてください。"));
+						result.errors.add(new CsvRowError(rowNum, "アカウントID", "指定されたアカウントIDが見つかりません。新規登録の場合はアカウントIDは空欄にしてください。"));
 						hasError = true;
 					}
 				}
@@ -235,8 +224,7 @@ public class AccountService {
 					hasError = true;
 				} else {
 					if (!rawPassword.matches("^[a-zA-Z0-9@_]+$")) {
-						result.errors.add(new CsvRowError(rowNum, "パスワード",
-								"パスワードは半角英数字または記号(\"@\",\"_\")のみで入力してください"));
+						result.errors.add(new CsvRowError(rowNum, "パスワード", "パスワードは半角英数字または記号(\"@\",\"_\")のみで入力してください"));
 						hasError = true;
 					}
 					if (rawPassword.length() < 8 || rawPassword.length() > 20) {
@@ -245,8 +233,21 @@ public class AccountService {
 					}
 				}
 
-				if (!hasError && account.getAccountId() == null
-						&& (accountCount + insertPlan) >= 500) {
+				if (!hasError) {
+					if (!seenLoginIds.add(loginId)) {
+						result.errors.add(new CsvRowError(rowNum, "ログインID", "CSV内でログインIDが重複しています"));
+						hasError = true;
+					}
+				}
+
+				if (!hasError) {
+					if (isLoginIdDuplicate(loginId, account.getAccountId())) {
+						result.errors.add(new CsvRowError(rowNum, "ログインID", "このログインIDは既に使用されています"));
+						hasError = true;
+					}
+				}
+
+				if (!hasError && account.getAccountId() == null && (accountCount + insertPlan) >= 500) {
 					result.limitError = "登録後の件数が上限に達しています。アカウントの登録上限は500件です。";
 					rowNum++;
 					continue;
@@ -258,7 +259,6 @@ public class AccountService {
 						account.setLoginId(loginId);
 						account.setPasswordHash(passwordEncoder.encode(rawPassword));
 						account.setPermission(permission);
-
 						save(account);
 						if (isNew) {
 							insertPlan++;
@@ -274,7 +274,6 @@ public class AccountService {
 				}
 				rowNum++;
 			}
-
 			if (result.errorCount > 0 || result.limitError != null) {
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				result.successCount = 0;
@@ -286,8 +285,7 @@ public class AccountService {
 	/**
 	 * ログインIDがすでに登録されているか（重複しているか）を判定する。
 	 *
-	 * @param loginId          チェックするログインID
-	 * @param excludeAccountId 更新前のログインID（新規登録時はnull）
+	 * @param loginId チェックするログインID
 	 * @return 重複していればtrue
 	 */
 	public boolean isLoginIdDuplicate(String loginId, Integer excludeAccountId) {
