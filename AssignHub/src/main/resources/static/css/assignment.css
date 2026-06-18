@@ -51,11 +51,19 @@
 	width: 120px;
 	white-space: nowrap;
 }
+
+.table th:nth-child(3), .table td:nth-child(3) {
+	min-width: 10em;           
+	white-space: normal;
+	word-break: break-all;
+}
 /* 名前系の列が縦書きになるのを防ぐ */
-.table th:nth-child(3), .table td:nth-child(3),
+
 .table th:nth-child(4), .table td:nth-child(4),
 .table th:nth-child(5), .table td:nth-child(5) {
-	white-space: nowrap;
+	min-width: 15em;           
+	white-space: normal;
+	word-break: break-all;
 }
 
 .table-scroll {
