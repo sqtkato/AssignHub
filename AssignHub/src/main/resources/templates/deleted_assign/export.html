@@ -4,6 +4,7 @@
 
 <head>
 	<title>論理削除アサイン履歴情報エクスポート</title>
+	<meta charset="UTF-8">
 </head>
 
 <body>
@@ -49,7 +50,8 @@
 				<form th:action="@{/deleted-assignments/export/download(ids=${ids})}" method="post">
 					<div class="action-area action-area-wide">
 						<button type="submit" class="btn-export">エクスポート</button>
-						<button type="button" class="btn-back" th:onclick="|location.href='@{/deleted-assignments}'|">戻る</button>
+						<button type="button" class="btn-back"
+							th:onclick="|location.href='@{/deleted-assignments}'|">戻る</button>
 					</div>
 				</form>
 			</div>

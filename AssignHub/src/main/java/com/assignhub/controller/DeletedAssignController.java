@@ -22,11 +22,19 @@ import com.assignhub.entity.Assignment;
 import com.assignhub.form.SearchForm;
 import com.assignhub.service.DeletedAssignService;
 
+/**
+ * 論理削除されたアサイン履歴情報の管理、復元、物理削除、エクスポートを処理するコントローラー。
+ * @author SQT) 石田
+ */
 @Controller
 @RequestMapping("/deleted-assignments")
 public class DeletedAssignController {
 	private final DeletedAssignService deletedAssignService;
-
+	/**
+	 * コンストラクタによる依存性の注入。
+	 *
+	 * @param DeletedAssignService アサイン履歴サービス
+	 */
 	public DeletedAssignController(DeletedAssignService deletedAssignService) {
 		this.deletedAssignService = deletedAssignService;
 	}
@@ -94,7 +102,7 @@ public class DeletedAssignController {
 
 	/* 一括復元 */
 	@PostMapping("/bulk-restore")
-	public String bulkRestore(@RequestParam(name = "ids", required = false) List<Integer> ids,
+	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
@@ -129,14 +137,14 @@ public class DeletedAssignController {
 
 	/* 単一削除 */
 	@PostMapping("/{id}/delete")
-	public String deleted(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		deletedAssignService.physicalDelete(id);
 		return "redirect:/deleted-assignments";
 	}
 
 	/* 一括削除 */
 	@PostMapping("/bulk-delete")
-	public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids,
+	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "削除対象が選択されていません");

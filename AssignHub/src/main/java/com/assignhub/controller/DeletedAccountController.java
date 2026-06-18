@@ -20,6 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.assignhub.entity.Account;
 import com.assignhub.service.DeletedAccountService;
 
+/**
+ * 論理削除されたアカウント情報の管理、復元、物理削除、エクスポートを処理するコントローラー。
+ * @author C3S) 野本
+ */
 @Controller
 @RequestMapping("/deleted-accounts")
 public class DeletedAccountController {
@@ -27,12 +31,18 @@ public class DeletedAccountController {
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
-	 * @param DeletedAccountService 企業サービス
+	 * @param DeletedAccountService 論理削除済みアカウントサービス
 	 */
 	public DeletedAccountController(DeletedAccountService deletedAccountService) {
 		this.deletedAccountService = deletedAccountService;
 	}
-
+	
+	/**
+	 * 論理削除済みアカウント一覧画面を表示する。検索条件に応じたデータを取得する
+	 * @param empName 社員名検索キーワード（任意）
+	 * @param model   画面描画用モデル
+	 * @return 一覧画面のテンプレートパス
+	 */
 	@GetMapping
 	public String index(@RequestParam(name = "empName", required = false) String empName,
 			Model model,
@@ -45,7 +55,12 @@ public class DeletedAccountController {
     // 復元処理
     // ==========================================
     
-    /* 単一復元 */
+	/**
+	 * 論理削除済みアカウントを一件復元
+	 *
+	 * @param id 復元対象のアカウントID
+	 * @return 一覧画面へのリダイレクトパス
+	 */
     @PostMapping("/{id}/restore") 
     public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
     	if (deletedAccountService.isAccountLimitReachedAfterRestore(1)) {
@@ -59,8 +74,14 @@ public class DeletedAccountController {
         deletedAccountService.restore(id);
         return "redirect:/deleted-accounts"; 
     }
-
-    /* 一括復元 */
+    
+    /**
+	 * 選択された複数の論理削除済みアカウント情報を一括で復元する。
+	 *
+	 * @param ids        復元対象となるアカウントIDのリスト
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @return 一覧画面へのリダイレクトパス
+	 */
     @PostMapping("/bulk-restore")
     public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
         if (ids == null || ids.isEmpty()) {
@@ -82,11 +103,15 @@ public class DeletedAccountController {
     // ==========================================
     // 物理削除処理
     // ==========================================
-
-    /* 単一削除 */
+    
+    /**
+	 * 論理削除済みアカウントを一件物理削除
+	 *
+	 * @param id 削除対象のアカウントID
+	 * @return 一覧画面へのリダイレクトパス
+	 */
     @PostMapping("/{id}/delete")
-    public String deleted(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-        // Serviceの判定メソッドを使って不在条件をチェック
+    public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
         if (deletedAccountService.existEmployeesByAccountId(id)) {
             attributes.addFlashAttribute("toastError", "紐づく社員情報が存在するため、物理削除できません。先に社員情報を物理削除してください。");
             return "redirect:/deleted-accounts";
@@ -94,16 +119,21 @@ public class DeletedAccountController {
         deletedAccountService.physicalDelete(id);
         return "redirect:/deleted-accounts";
     }
-
-    /* 一括削除 */
+    
+    /**
+	 * 選択された複数の論理削除済みアカウント情報を一括で物理削除する。
+	 *
+	 * @param ids        削除対象となるアカウントIDのリスト
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @return 一覧画面へのリダイレクトパス
+	 */
     @PostMapping("/bulk-delete")
-    public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
+    public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids, RedirectAttributes attributes) {
         if (ids == null || ids.isEmpty()) {
             attributes.addFlashAttribute("toastError", "削除対象が選択されていません");
             return "redirect:/deleted-accounts";
         }
         
-        // Serviceの判定メソッドを使って一括不在条件をチェック
         if (deletedAccountService.existEmployeesByAccountIds(ids)) {
             attributes.addFlashAttribute("toastError", "紐づく社員情報が存在するアカウントが含まれているため、物理削除できません。");
             return "redirect:/deleted-accounts";
@@ -113,23 +143,32 @@ public class DeletedAccountController {
         return "redirect:/deleted-accounts";
     }
 	
-//	エクスポート画面へ遷移	
+    /**
+	 * 論理削除済みアカウント情報のエクスポート画面を表示する。
+	 *
+	 * @param ids    エクスポート対象となるアカウントIDのリスト 
+	 * @param model  画面描画用のモデル
+	 * @return エクスポート画面のテンプレートパス
+	 */
 	@PostMapping("/export")
 	public String showExport(@RequestParam(name = "ids", required = false) List<Integer> ids, Model model, RedirectAttributes attributes) {		
-		// チェックがなければ一覧へ戻す
 	    if (ids == null || ids.isEmpty()) {
 	        attributes.addFlashAttribute("toastError", "エクスポートする対象が選択されていません。");
 	        return "redirect:/deleted-accounts";
 	    }		
 	    List<Account> accounts = deletedAccountService.findByIds(ids);
-		// 取得した件数とリスト、IDをそれぞれ画面（Model）に引き渡す
-		model.addAttribute("count", accounts.size()); // 2回SQLが走らないように最適化
+		model.addAttribute("count", accounts.size());
 		model.addAttribute("accounts", accounts);
 		model.addAttribute("ids", ids);
 		return "deleted_account/export";
 	}
 	
-//エクスポートのダウンロード処理
+	/**
+	 * 検索条件に合致する論理削除済みアカウント情報をCSV形式でダウンロードする。
+	 *
+	 * @param ids    エクスポート対象となるアカウントIDのリスト 
+	 * @return ダウンロード用のCSVファイルバイナリデータ
+	 */
 	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
