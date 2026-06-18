@@ -9,7 +9,7 @@
 	<div layout:fragment="content">
 		<div class="import-container">
 			<div class="page-title-area">
-				<h2>企業履情報インポート</h2>
+				<h2>企業情報インポート</h2>
 			</div>
 			<div class="card">
 				<p class="instruction">CSVファイルを選択して企業情報を一括登録・更新します。<br>
@@ -20,7 +20,7 @@
 						<p class="upload-zone-title">企業情報CSVを選択してください</p>
 						<p class="upload-zone-format">対応形式: .csv (UTF-8) / BOMあり推奨、最大5MB</p>
 						<div class="upload-zone-filebox">
-							<input type="file" id="input_company_file_upload" name="input_company_file_upload"
+							<input type="file" id="input_company_file_upload" name="file"
 								accept=".csv" required>
 						</div>
 					</div>
@@ -29,10 +29,11 @@
 							th:href="@{/companies/import/template}">CSVテンプレートダウンロード</a>
 					</div>
 					<div class="action-area">
-						<button type="submit" class="btn-csv">インポート</button>
+						<button type="submit" id="btn_company_import" class="btn-csv">インポート</button>
 						<button type="button" id="btn_company_back" class="btn-back"
 							th:onclick="|location.href='@{/companies}'|">戻る</button>
 					</div>
+					<p th:if="${errorMessage}" th:text="${errorMessage}" class="errorMessage"></p>
 				</form>
 			</div>
 
@@ -55,7 +56,7 @@
 							th:text="${importResult.errorCount} + '件'">0件</div>
 					</div>
 				</div>
-				<div th:if="${importResult.errorCount > 0}">
+				<div th:if="${importResult.errorCount gt 0}">
 					<p class="error-table-msg">
 						以下の行でエラーが発生したため、取り込みをキャンセルしました。<br>
 						内容を修正して再アップロードしてください。

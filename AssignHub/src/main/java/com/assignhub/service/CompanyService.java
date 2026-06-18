@@ -2,6 +2,8 @@ package com.assignhub.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,6 +131,7 @@ public class CompanyService {
 		public int successCount = 0;
 		public int errorCount = 0;
 		public List<CsvRowError> errors = new ArrayList<>();
+		public String limitMessage = null;
 	}
 	
 	/**
@@ -146,16 +149,14 @@ public class CompanyService {
 		int companyCount = companyMapper.countAll();
 		int insertPlan = 0;
 		
-		java.nio.charset.CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
-		        .onMalformedInput(java.nio.charset.CodingErrorAction.REPORT)
-		        .onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT);
+				CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
+		        .onMalformedInput(CodingErrorAction.REPORT)
+		        .onUnmappableCharacter(CodingErrorAction.REPORT);
 		try (BufferedReader br = new BufferedReader(
 		        new InputStreamReader(file.getInputStream(), decoder))) {
 			String line;
 			int rowNum = 1;
 			boolean isFirstLine = true;
-			
-			 int currentCount = companyMapper.countAll();
 			
 			while ((line = br.readLine()) != null) {
 				if (isFirstLine) {
@@ -169,12 +170,13 @@ public class CompanyService {
 				}
 
 				String[] cols = line.split(",", -1);
-				if (cols.length < 14) {
-					result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています（14項目必要）"));
-					result.errorCount++;
-					rowNum++;
-					continue;
+				if (cols.length < 16) {
+				    result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています（16項目必要）"));
+				    result.errorCount++;
+				    rowNum++;
+				    continue;
 				}
+
 
 				boolean hasError = false;
 				Company company = new Company();
@@ -183,9 +185,9 @@ public class CompanyService {
 				
 				//企業ID
 
-				if (!cols[0].trim().isEmpty()) {
+				if (!cols[2].trim().isEmpty()) {
 					try {
-						parsedId = Integer.parseInt(cols[0].trim());
+						parsedId = Integer.parseInt(cols[2].trim());
 						if (findById(parsedId) == null) {
 							result.errors.add(new CsvRowError(rowNum, "企業ID",
 									"指定された企業ID（" + parsedId + "）は存在しません"));
@@ -201,19 +203,20 @@ public class CompanyService {
 				
 				
 				//企業名
-				String companyName = cols[1].trim();
+				String companyName = cols[3].trim();
 				if (companyName.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "企業名", "企業名は必須です"));
 					hasError = true;
 				} else if (companyName.length() > 50) {
 	                result.errors.add(new CsvRowError(rowNum, "企業名", "企業名は50文字以内で入力してください"));
 	                hasError = true;
-				} else {
+				}
+				else {
 					company.setCompanyName(companyName);
 				}
 				
 				//企業名カナ
-				String companyNameKana = cols[2].trim();
+				String companyNameKana = cols[4].trim();
 				if (companyNameKana.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "企業名カナ", "企業名カナは必須です"));
 					hasError = true;
@@ -225,30 +228,26 @@ public class CompanyService {
 				}
 				
 				
-				//設立年度
-				String foundedYear = cols[3].trim();
-				 if (!foundedYear.isEmpty()) {
-		                if (foundedYear.length() > 4) {
-		                    result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は4文字以内で入力してください"));
-		                    hasError = true;
-		                } else if (Integer.parseInt(foundedYear) > java.time.Year.now().getValue()) {
-		                    result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度の形式が不正です"));
-		                    hasError = true;
-		                }
-				 } else {
+				String foundedYear = cols[5].trim();
+				if (!foundedYear.isEmpty()) {
+				    if (!foundedYear.matches("^[0-9]{4}$")) {
+				        result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は4桁の数字で入力してください"));
+				        hasError = true;
+				    } else {
 				        int year = Integer.parseInt(foundedYear);
 				        int currentYear = java.time.Year.now().getValue();
 				        if (year > currentYear) {
 				            result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は" + currentYear + "年以前で入力してください"));
 				            hasError = true;
+				        } else {
+				            company.setFoundedYear(year);
 				        }
-		                else {
-		                    company.setFoundedYear(Integer.parseInt(foundedYear));
-		                }
-		            }
+				    }
+				}
+
 				 
 				 //社員数
-				 String employeeCount = cols[4].trim();
+				 String employeeCount = cols[6].trim();
 		            if (!employeeCount.isEmpty()) {
 		                if (employeeCount.length() > 5) {
 		                    result.errors.add(new CsvRowError(rowNum, "社員数", "社員数は5文字以内で入力してください"));
@@ -258,7 +257,7 @@ public class CompanyService {
 		                }
 		            }
 		            // 郵便番号
-		            String companyZipCode = cols[5].trim();
+		            String companyZipCode = cols[7].trim();
 		            if (companyZipCode.isEmpty()) {
 		                result.errors.add(new CsvRowError(rowNum, "郵便番号", "郵便番号は必須です"));
 		                hasError = true;
@@ -274,7 +273,7 @@ public class CompanyService {
 		            }
 
 		            // 住所1
-		            String companyAddress1 = cols[6].trim();
+		            String companyAddress1 = cols[8].trim();
 		            if (companyAddress1.isEmpty()) {
 		                result.errors.add(new CsvRowError(rowNum, "住所1", "住所1は必須です"));
 		                hasError = true;
@@ -286,7 +285,7 @@ public class CompanyService {
 		            }
 
 		            // 住所2
-		            String companyAddress2 = cols[7].trim();
+		            String companyAddress2 = cols[9].trim();
 		            if (companyAddress2.length() > 100) {
 		                result.errors.add(new CsvRowError(rowNum, "住所2", "住所2は100文字以内で入力してください"));
 		                hasError = true;
@@ -295,14 +294,14 @@ public class CompanyService {
 		            }
 
 		            // 電話番号
-		            String companyTel = cols[8].trim();
+		            String companyTel = cols[10].trim();
 		            if (companyTel.isEmpty()) {
 		                result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号は必須です"));
 		                hasError = true;
-		            }  if ((companyTel.length() < 10) || (companyTel.length() > 11)) {
+		            }else if ((companyTel.length() < 10) || (companyTel.length() > 11)) {
 		                result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号10桁または11桁で入力してください"));
 		                hasError = true;
-		            }   if (!companyTel.matches("^[0-9]*$")) {
+		            }else if (!companyTel.matches("^[0-9]*$")) {
 		                result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号の形式が正しくありません ハイフンなしで入力してください"));
 		                hasError = true;
 		            } else {
@@ -310,7 +309,7 @@ public class CompanyService {
 		            }
 
 		            // FAX
-		            String companyFax = cols[9].trim();
+		            String companyFax = cols[11].trim();
 		            if (!companyFax.isEmpty()) {
 		                if (companyFax.length() > 20) {
 		                    result.errors.add(new CsvRowError(rowNum, "FAX", "FAXは20桁以内で入力してください"));
@@ -334,7 +333,7 @@ public class CompanyService {
 		            }
 
 		            // 代表者姓
-		            String repLast = cols[10].trim();
+		            String repLast = cols[12].trim();
 		            if (repLast.length() > 50) {
 		                result.errors.add(new CsvRowError(rowNum, "代表者姓", "代表者姓は50文字以内で入力してください"));
 		                hasError = true;
@@ -343,7 +342,7 @@ public class CompanyService {
 		            }
 
 		            // 代表者名
-		            String repFirst = cols[11].trim();
+		            String repFirst = cols[13].trim();
 		            if (repFirst.length() > 50) {
 		                result.errors.add(new CsvRowError(rowNum, "代表者名", "代表者名は50文字以内で入力してください"));
 		                hasError = true;
@@ -352,7 +351,7 @@ public class CompanyService {
 		            }
 
 		            // 代表者姓カナ
-		            String repLastKana = cols[12].trim();
+		            String repLastKana = cols[14].trim();
 		            if (repLastKana.length() > 100) {
 		                result.errors.add(new CsvRowError(rowNum, "代表者姓カナ", "代表者姓カナは100文字以内で入力してください"));
 		                hasError = true;
@@ -361,7 +360,7 @@ public class CompanyService {
 		            }
 
 		            // 代表者名カナ
-		            String repFirstKana = cols[13].trim();
+		            String repFirstKana = cols[15].trim();
 		            if (repFirstKana.length() > 100) {
 		                result.errors.add(new CsvRowError(rowNum, "代表者名カナ", "代表者名カナは100文字以内で入力してください"));
 		                hasError = true;
