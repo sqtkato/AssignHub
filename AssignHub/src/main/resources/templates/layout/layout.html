@@ -10,9 +10,7 @@
 </head>
 
 <body>
-	<!-- =========================
-     サイドバー
-========================= -->
+
 	<div class="sidebar">
 		<h1>Assign Hub</h1>
 
@@ -32,30 +30,21 @@
 			</li>
 		</ul>
 
-		<!-- サイドバー フッター -->
 		<div class="sidebar-footer">
 			<span th:text="${session.loginId}"></span>
 			<button type="button" class="btn-logout toolbar-btn" onclick="openLogoutModal()"> ログアウト</button>
 		</div>
 	</div>
-	<!-- =========================
-     メイン
-========================= -->
+
 	<div class="main-content">
 		<div class="content-wrapper" layout:fragment="content"></div>
 	</div>
 
-	<!-- =========================
-     トースト
-========================= -->
 	<div id="toastMessage" class="toast" th:if="${toastMessage != null or toastError != null}"
 		th:classappend="${toastError != null} ? 'toast-error' : ''">
 		<span th:text="${toastMessage != null ? toastMessage : toastError}"></span>
 	</div>
 
-	<!-- =========================
-     ログアウトモーダル
-========================= -->
 	<div id="logoutOverlay" class="modal-overlay" onclick="closeLogoutModal()">
 		<div class="modal-box" onclick="event.stopPropagation()">
 			<div class="modal-icon modal-icon-danger">
@@ -77,9 +66,6 @@
 		</div>
 	</div>
 
-	<!-- =========================
-     削除モーダル
-========================= -->
 	<div id="deleteOverlay" class="modal-overlay" onclick="closeDeleteModal()">
 		<div class="modal-box" onclick="event.stopPropagation()">
 			<div class="modal-icon modal-icon-danger">
@@ -100,9 +86,6 @@
 		</div>
 	</div>
 
-	<!-- =========================
-     一括削除モーダル
-========================= -->
 	<div id="bulkDeleteOverlay" class="modal-overlay" onclick="closeBulkDeleteModal()">
 		<div class="modal-box" onclick="event.stopPropagation()">
 			<div class="modal-icon modal-icon-danger">
@@ -120,11 +103,7 @@
 			</div>
 		</div>
 	</div>
-	
-	<!-- =========================
-		     復元モーダル
-		========================= -->
-		
+
 		<div id="restoreOverlay" class="modal-overlay" onclick="closeRestoreModal()">
 			<div class="modal-box" onclick="event.stopPropagation()">
 				<div class="modal-icon modal-icon-success">
@@ -152,9 +131,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- =========================
-		     一括復元モーダル
-		========================= -->
+
 		<div id="bulkRestoreOverlay" class="modal-overlay" onclick="closeBulkRestoreModal()">
 			<div class="modal-box" onclick="event.stopPropagation()">
 				<div class="modal-icon modal-icon-success">
