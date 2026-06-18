@@ -4,6 +4,7 @@
 
 <head>
 	<title>企業情報一覧</title>
+	<link rel="stylesheet" th:href="@{/css/company.css}">
 </head>
 
 <body>
@@ -16,13 +17,11 @@
 			<form th:action="@{/companies}" method="get" class="search-form">
 				<div class="form-group form-group-search">
 					<label>企業名</label>
-					<input type="text" name="companyName" class="form-control" th:value="${companyName}"
-						placeholder="例：テクノ">
+					<input type="text" name="companyName" class="form-control fixed-all30" th:value="${companyName}">
 				</div>
 				<div class="form-group form-group-search">
 					<label>電話番号</label>
-					<input type="text" name="companyTel" class="form-control" th:value="${companyTel}"
-						placeholder="例：0000000000">
+					<input type="text" name="companyTel" class="form-control fixed-half20" th:value="${companyTel}">
 				</div>
 				<button type="submit" class="btn btn-secondary">検索</button>
 			</form>

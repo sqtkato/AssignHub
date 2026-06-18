@@ -9,15 +9,16 @@
 }
 
 
-.fixed-half4 {
-	width: 7ch;
+.fixed-half20 {
+	width: 20ch;
 	overflow: hidden;
 	font-family: monospace;
 	padding: 6px 8px;
 }
 
 
-.fixed-half11 {
+
+.fixed-half5 {
 	width: 15ch;
 	overflow: hidden;
 	font-family: monospace;
@@ -25,21 +26,6 @@
 }
 
 
-.fixed-half5 {
-	width: 8ch;
-	overflow: hidden;
-	font-family: monospace;
-	padding: 6px 8px;
-}
-
-
-
-.fixed-half7 {
-	width: 10ch;
-	overflow: hidden;
-	font-family: monospace;
-	padding: 6px 8px;
-}
 
 .detail-table td {
 	word-break: break-all;
