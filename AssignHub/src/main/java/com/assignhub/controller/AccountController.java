@@ -45,22 +45,30 @@ public class AccountController {
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
-	 * @param companyService 企業サービス
+	 * @param accountService    アカウントサービス
+	 * @param employeeService   社員サービス
+	 * @param assignmentService アサインサービス
 	 */
 	public AccountController(AccountService accountService, EmployeeService employeeService, AssignmentService assignmentService) {
 		this.accountService = accountService;
 		this.employeeService = employeeService;
 		this.assignmentService = assignmentService;
 	}
-
+	
+	/**
+	 * エラーメッセージの切替を行う
+	 *
+	 * @param binder エラーメッセージの設定
+	 */
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 	    binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
+	
 	/**
-	 * アカウント一覧画面を表示する。検索・ソート条件に応じたデータを取得する
-	 * @param keywordEmpName 社員名検索キーワード（任意）
-	 * @param model 画面描画用モデル
+	 * アカウント一覧画面を表示する。検索条件に応じたデータを取得する
+	 * @param empName 社員名検索キーワード（任意）
+	 * @param model   画面描画用モデル
 	 * @return 一覧画面のテンプレートパス
 	 */
 	@GetMapping
@@ -76,7 +84,8 @@ public class AccountController {
 	/**
 	 * アカウント情報の新規登録画面を表示する。
 	 *
-	 * @param model 画面描画用のモデル
+	 * @param model      画面描画用のモデル
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return アカウント情報新規登録画面のテンプレートパス
 	 */
 	@GetMapping("/new")
@@ -96,10 +105,10 @@ public class AccountController {
 	/**
 	 * アカウント情報の新規登録処理を実行する。
 	 *
-	 * @param form 入力されたアカウント情報フォーム
-	 * @param result       バリデーション結果
-	 * @param attributes   リダイレクト時にメッセージを引き継ぐための属性
-	 * @param model        画面描画用のモデル
+	 * @param form       入力されたアカウント情報フォーム
+	 * @param result     バリデーション結果
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @param model      画面描画用のモデル
 	 * @return 成功時は一覧画面へのリダイレクト、失敗時は登録画面のテンプレートパス
 	 */
 	@PostMapping("/create")
@@ -146,16 +155,15 @@ public class AccountController {
 	 * アカウント情報の更新処理を実行する。
 	 *
 	 * @param id           更新対象のアカウントID
-	 * @param accountForm 入力されたアカウント情報フォーム
+	 * @param accountForm  入力されたアカウント情報フォーム
 	 * @param result       バリデーション結果
 	 * @param attributes   リダイレクト時にメッセージを引き継ぐための属性
-	 * @param model        画面描画用のモデル
 	 * @return 成功時は一覧画面へのリダイレクト、失敗時は編集画面のテンプレートパス
 	 */
 	@PostMapping("/{id}/edit")
 	public String update(@PathVariable("id") Integer id,
 			@Validated @ModelAttribute("accountForm") AccountForm accountForm,
-			BindingResult result,RedirectAttributes attributes,Model model) {
+			BindingResult result,RedirectAttributes attributes) {
 
 		if (result.hasErrors()) {
 			return "account/edit";
@@ -191,11 +199,11 @@ public class AccountController {
 	}
 
 	/**
-	 * 選択された複数の社員情報を一括で物理削除する。
+	 * 選択された複数のアカウント情報を一括で物理削除する。
 	 *
 	 * @param ids        削除対象となるアカウントIDのリスト
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
-	 * @return 一覧画面へのリダイレクト
+	 * @return 一覧画面へのリダイレクトパス
 	 */
 	@PostMapping("/bulk-delete")
 	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
@@ -210,7 +218,14 @@ public class AccountController {
 		attributes.addFlashAttribute("toastMessage", ids.size() + "件のアカウント情報を削除しました");
 		return "redirect:/accounts";
 	}
-
+	
+	/**
+	 * アカウント情報のインポート画面を表示する。
+	 *
+	 * @param file       アップロードされたCSVファイル
+	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
+	 * @return インポート画面のテンプレートパス
+	 */
 	@GetMapping("/import")
 	public String showImport(Model model, RedirectAttributes attributes) {
 		if (accountService.isAccountLimitReached()) {
@@ -221,7 +236,7 @@ public class AccountController {
 	}
 
 	/**
-	 * CSVファイルを用いた社員データの一括インポート処理を実行する。
+	 * CSVファイルを用いたアカウント情報の一括インポート処理を実行する。
 	 *
 	 * @param file  アップロードされたCSVファイル
 	 * @param model 画面描画用のモデル
@@ -254,7 +269,7 @@ public class AccountController {
 			model.addAttribute("fileError", "UTF-8のCSVファイルを選択してください。");
 			return "account/import";
 		}
-
+		
 		try {
 			int total = accountService.countDataRows(file);
 
@@ -262,7 +277,6 @@ public class AccountController {
 				model.addAttribute("globalError", "登録後の件数が上限に達しています。アカウント登録条件は500件です。");
 				return "account/import";
 			}
-
 			AccountService.ImportResult result = accountService.importCsv(file);
 			model.addAttribute("importResult", result);
 			return "account/import";
@@ -293,10 +307,9 @@ public class AccountController {
 	}
 
 	/**
-	 * 社員データのエクスポート画面を表示する。
+	 * アカウント情報のエクスポート画面を表示する。
 	 *
-	 * @param keyword     現在の検索キーワード（状態保持用）
-	 * @param deptId 現在の絞り込み部署ID
+	 * @param ids    エクスポート対象となるアカウントIDのリスト 
 	 * @param model  画面描画用のモデル
 	 * @return エクスポート画面のテンプレートパス
 	 */
@@ -317,8 +330,7 @@ public class AccountController {
 	/**
 	 * 検索条件に合致する社員データをCSV形式でダウンロードする。
 	 *
-	 * @param keyword 検索キーワード
-	 * @param deptId  絞り込み部署ID
+	 * @param ids    エクスポート対象となるアカウントIDのリスト 
 	 * @return ダウンロード用のCSVファイルバイナリデータ
 	 */
 	@PostMapping("/export/download")
@@ -350,6 +362,12 @@ public class AccountController {
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
 
+	/**
+	 * フォームオブジェクトからエンティティオブジェクトへプロパティを詰め替える。
+	 *
+	 * @param f 入力フォーム（コピー元）
+	 * @param e エンティティ（コピー先）
+	 */
 	private void copyFormToEntity(AccountForm f, Account e) {
 		e.setAccountId(f.getAccountId());
 		e.setLoginId(f.getLoginId());
