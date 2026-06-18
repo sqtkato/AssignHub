@@ -55,14 +55,14 @@ public class CompanyForm {
 	private String repLastName;
 
 	@Size(max = 100, message = "代表者姓カナは100文字以内で入力してください")
-	@Pattern(regexp = "^[ァ-ヶー]*$", message = "全角カタカナで入力してください")
+	@Pattern(regexp = "^[ァ-ヶー]*$", message = "全角カナで入力してください")
 	private String repLastNameKana;
 
 	@Size(max = 50, message = "代表者名は50文字以内で入力してください")
 	private String repFirstName;
 
 	@Size(max = 100, message = "代表者名カナは100文字以内で入力してください")
-	@Pattern(regexp = "^[ァ-ヶー]*$", message = "全角カタカナで入力してください")
+	@Pattern(regexp = "^[ァ-ヶー]*$", message = "全角カナで入力してください")
 	private String repFirstNameKana;
 
 	private LocalDateTime createdAt;

@@ -48,6 +48,9 @@ public interface DeletedCompanyMapper {
 	boolean existsByCompanyName(@Param("companyName") String companyName,@Param("companyId") Integer companyId);
     boolean existsByCompanyTel(@Param("companyTel") String companyTel,@Param("companyId") Integer companyId);
     boolean existsByCompanyFax(@Param("companyFax") String companyFax,@Param("companyId") Integer companyId);
-
-
+    /**
+	 * 指定されたIDのレコードがすでに存在しているか確認（重複チェック）。
+	 */
+	int countByCompanyId(@Param("excludeCompanyId") Integer excludeCompanyId);
+	int countByCompanyIds(@Param("excludeCompanyIds") List<Integer> excludeCompanyIds);
 }

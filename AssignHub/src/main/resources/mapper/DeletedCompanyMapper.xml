@@ -139,5 +139,39 @@
             AND company_id != #{companyId}
         </if>
     </select>
+    
+    <select id="countByCompanyId" resultType="int">
+		SELECT COUNT(*)
+		FROM m_company c
+		INNER JOIN (
+			SELECT company_name, company_tel, company_fax
+			FROM m_company
+			WHERE company_id = #{excludeCompanyId}  ) c2 ON c.company_name = c2.company_name 
+		    AND c.company_tel = c2.company_tel 
+		    AND (c.company_fax = c2.company_fax OR (c.company_fax IS NULL AND c2.company_fax IS NULL))
+		WHERE c.delete_flg = 0
+	</select>
+	
+	<select id="countByCompanyIds" resultType="int">
+	    SELECT COUNT(*)
+	    FROM m_company c
+	    INNER JOIN (
+	        SELECT company_name, company_tel, company_fax
+	        FROM m_company
+	        WHERE company_id IN
+	        <foreach item="excludeCompanyId" index="index" collection="excludeCompanyIds" open="(" separator="," close=")">
+	            #{excludeCompanyId}
+	        </foreach>
+	    ) c2 ON c.company_name = c2.company_name
+	        AND c.company_tel = c2.company_tel 
+	        AND (c.company_fax = c2.company_fax OR (c.company_fax IS NULL AND c2.company_fax IS NULL)) 
+	    WHERE c.delete_flg = 0
+	    <if test="excludeCompanyIds != null and !excludeCompanyIds.isEmpty()">
+	        AND c.company_id NOT IN
+	        <foreach item="excludeCompanyId" index="index" collection="excludeCompanyIds" open="(" separator="," close=")">
+	            #{excludeCompanyId}
+	        </foreach>
+	    </if>
+	</select>
 
 </mapper>
