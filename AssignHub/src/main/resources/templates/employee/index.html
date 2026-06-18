@@ -57,7 +57,7 @@
 					インポート
 				</button>
 				<button type="submit" formaction="/employees/export" class="toolbar-btn" title="現在の検索条件でCSV出力"
-					th:onclick="|location.href='@{/employees/export}'|">
+					>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -89,7 +89,7 @@
 
 			<div class="card">
 				<div class="table-scroll">
-					<table class="table">
+					<table class="table employee-table">
 						<thead class="table-dark">
 							<tr>
 								<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
