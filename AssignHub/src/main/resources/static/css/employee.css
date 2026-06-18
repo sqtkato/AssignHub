@@ -8,7 +8,23 @@
 	row-gap: 20px;    
 }
 
+.employee-table {
+    table-layout: fixed; 
+}
 
+.col-checkbox {
+    width: 40px;
+    min-width: 40px;
+    text-align: center;
+}
+
+/* ID */
+.table th:nth-child(2),
+.table td:nth-child(2) {
+    width: 60px;
+    min-width: 60px;
+    text-align: center;
+}
 
 
 .fixed-half3 {
