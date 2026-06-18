@@ -3,43 +3,47 @@
 	layout:decorate="~{layout/layout}">
 
 <head>
-	<meta charset="UTF-8">
 	<title>社員情報インポート</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
+		<div class="import-container">
 			<div class="page-title-area">
 			 <h2>社員情報インポート</h2>
 			</div>
-			<div class="card form-card-wide">
+			<div class="card">
 				<p class="instruction">CSVファイルを選択して社員情報を一括登録・更新します。
 					<br>※既存の社員IDと一致する場合は上書き更新、空欄の場合は新規登録されます。
 					<br>※エンジニアタイプにより、登録される項目が異なります。
 					<br>・プロパー … ログインIDのみ登録（所属企業は登録されません）
 					<br>・パートナー … 所属企業のみ登録（ログインIDは登録されません）
 				</p>
-			<form th:action="@{/employees/import}" method="post" enctype="multipart/form-data">
-				<div class="upload-zone">
-					<p class="upload-zone-text">社員情報データCSVを選択してください</p>
-					<p class="upload-zone-sub">対応形式: .csv (UTF-8 / BOMあり推奨、最大 5MB)</p>
-					<input type="file" name="file" accept=".csv" required class="form-control">
-				</div>
-				<div class="template-link-area">
-					<a th:href="@{/employees/import/template}" class="template-link">CSVテンプレートをダウンロード</a>
-				</div>
-				<div class="action-area action-area-wide form-actions common-actions" >
-					<button type="submit" class="btn-import">インポート</button>
-					<button type="button" class="btn-back" th:onclick="|location.href='@{/employees}'|">戻る</button>
-				</div>
-				<p th:if="${errorMessage}" th:text="${errorMessage}" class="errorMessage"></p>
-			</form>
-
-			<div class="result-area" th:if="${importResult != null}">
-				<h3 class="result-title">処理結果
+					
+				<form th:action="@{/employees/import}" method="post" enctype="multipart/form-data">
+					<div class="upload-zone">
+						<p class="upload-zone-title">社員情報データCSVを選択してください</p>
+						<p class="upload-zone-format">対応形式: .csv (UTF-8 / BOMあり推奨、最大 5MB)</p>
+						<div class="upload-zone-filebox">
+							<input type="file" name="file" accept=".csv" required class="form-control">
+						</div>
+					</div>
+					<div class="template-link-area">
+						<a th:href="@{/employees/import/template}" class="template-link">CSVテンプレートをダウンロード</a>
+					</div>
+					<div class="action-area action-area-wide form-actions common-actions" >
+						<button type="submit" class="btn-import">インポート</button>
+						<button type="button" class="btn-back" th:onclick="|location.href='@{/employees}'|">戻る</button>
+					</div>
+					<p th:if="${errorMessage}" th:text="${errorMessage}" class="errorMessage"></p>
+				</form>
+			</div>
+			<div class="card result-area" th:if="${importResult != null}">
+				<div class="result-title-row">
+					<h3 class="result-title">処理結果</h3>
 				    <span th:if="${!importResult.errors.isEmpty() and importResult.errors[0].field == '上限'}" 
 					th:text="${importResult.errors[0].message}" class="result-error-message"></span>
-				</h3>
+				</div>
 				<div class="summary-box">
 					<div class="summary-item summary-success">
 						正常取り込み
