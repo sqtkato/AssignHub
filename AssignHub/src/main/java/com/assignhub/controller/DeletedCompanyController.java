@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Company;
-import com.assignhub.form.CompanyForm;
 import com.assignhub.service.DeletedCompanyService;
 
 /**
@@ -56,13 +52,12 @@ public class DeletedCompanyController {
 	// ==========================================
 
 	@PostMapping("/{id}/restore")
-	public String recover(@PathVariable("id") Integer id,
-			@Validated @ModelAttribute("companyForm") CompanyForm companyForm, RedirectAttributes attributes) {
+	public String recover(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		if (deletedCompanyService.isCompanyLimitReachedAfterRestore(1)) {
 			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
 			return "redirect:/deleted-companies";
 		}
-		if (deletedCompanyService.countByCompanyId(id)) {
+		if (deletedCompanyService.isCompanyIdDuplicate(id)) {
 			attributes.addFlashAttribute("toastError", "企業名、電話番号、FAX番号は既に使用されています。");
 			return "redirect:/deleted-companies";
 		}
@@ -72,8 +67,7 @@ public class DeletedCompanyController {
 
 	@PostMapping("/bulk-restore")
 	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
-			@Validated @ModelAttribute("companyForm") CompanyForm companyForm,
-			BindingResult result, RedirectAttributes attributes) {
+			 RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
 			return "redirect:/deleted-companies";
@@ -83,7 +77,7 @@ public class DeletedCompanyController {
 			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
 			return "redirect:/deleted-companies";
 		}
-		if (deletedCompanyService.countByCompanyIds(ids)) {
+		if (deletedCompanyService.isCompanyIdDuplicate(ids)) {
 			attributes.addFlashAttribute("toastError", "企業名、電話番号、FAX番号は既に使用されています。");
 			return "redirect:/deleted-companies";
 		}
@@ -97,7 +91,7 @@ public class DeletedCompanyController {
 	// ==========================================
 
 	@PostMapping("/{id}/delete")
-	public String deleted(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		if (deletedCompanyService.existEmployeesByCompanyId(id)) {
 			attributes.addFlashAttribute("toastError", "紐づく社員情報が存在するため、物理削除できません。");
 			return "redirect:/deleted-companies";
@@ -112,7 +106,7 @@ public class DeletedCompanyController {
 	}
 
 	@PostMapping("/bulk-delete")
-	public String bulkDeleted(@RequestParam(name = "ids", required = false) List<Integer> ids,
+	public String bulkDelete(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
 			attributes.addFlashAttribute("toastError", "削除対象が選択されていません");

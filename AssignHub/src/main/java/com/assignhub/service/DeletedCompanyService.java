@@ -128,12 +128,12 @@ public class DeletedCompanyService {
 	 * @return 重複していればtrue
 	 */
 	// DeletedCompanyService.java 内
-	public boolean countByCompanyId(Integer excludeCompanyId) {
+	public boolean isCompanyIdDuplicate(Integer excludeCompanyId) {
 		// 1件ずつの id を渡す（Mapper側で自動的に "ids" に翻訳されてXMLへ届きます）
 		int count = deletedCompanyMapper.countByCompanyId(excludeCompanyId);
 		return count > 0;	
 	}
-	public boolean countByCompanyIds(List<Integer> excludeCompanyIds) {
+	public boolean isCompanyIdDuplicate(List<Integer> excludeCompanyIds) {
 		int count = deletedCompanyMapper.countByCompanyIds(excludeCompanyIds);
 		return count > 0;
 	}
