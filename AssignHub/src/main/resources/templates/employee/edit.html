@@ -70,6 +70,7 @@
 						th:classappend="${#fields.hasErrors('zipCode')} ? 'form-control p-postal-code input-error' : 'form-control p-postal-code'">
 					<div class="error-message" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}">
 					</div>
+				</div>
 					<div class="form-group">
 						<label>住所1(自動入力されます) <span class="badge-required">必須</span></label>
 						<input type="text" th:field="*{address1}" class="form-control fixed-all30"
@@ -112,8 +113,8 @@
 						<div id="loginIdArea" style="display: none;">
 							    <label>ログインID<span class="badge-required">必須</span></label>
 							<select id="loginId" th:field="*{accountId}" class="dropdown form-control fixed-all30"
-								th:classappend="${#fields.hasErrors('accountId')} ? 'input-error select-error' : ''">>
-								<option value="" th:text="${employee?.account?.loginId ?: '未選択'}"></option>>
+								th:classappend="${#fields.hasErrors('accountId')} ? 'input-error select-error' : ''">
+								<option value="" th:text="${employee?.account?.loginId ?: '未選択'}"></option>
 								<option th:each="account : ${accounts}" th:value="${account.accountId}"th:text="${account.loginId}"></option>
 							</select>
 							<div class="error-message" th:if="${#fields.hasErrors('accountId')}"th:errors="*{accountId}"></div>
@@ -151,9 +152,7 @@
 					</div>
 				</div>
 			</form>
-		</div>
-	</div>
-	
+		
 	<script>
 		function calculateYearsOfService() {
 			const hireDateInput = document.getElementById('hireDate');
@@ -194,6 +193,7 @@
 		document.getElementById('engineerType').addEventListener('change', toggleEngineerAreas);
 		window.addEventListener('DOMContentLoaded', toggleEngineerAreas);
 	</script>
+	</div>
 </body>
 
 </html>
