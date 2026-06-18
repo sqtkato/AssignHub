@@ -38,3 +38,32 @@
 	padding: 6px 8px;
 }
 
+.company-table-scroll {
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.company-export-table {
+	width: 100%;
+	border-spacing: 0 10px;
+	font-size: 0.95rem;
+	max-height: 330px;
+}
+
+
+.company-export-table td.label {
+	width: 180px;
+	color: #666;
+}
+
+.company-export-table td.value {
+	font-weight: bold;
+	text-align: center;
+}
+
+.company-export-note {
+	margin-top: 20px;
+	font-size: 0.85rem;
+	color: #999;
+	text-align: center;
+}
