@@ -216,6 +216,41 @@
 			#{id}
 		</foreach>
 	</select>
+	
+	
+	<select id="countByEmail" resultType="int">
+		SELECT COUNT(*) FROM m_employee
+		WHERE delete_flg = 0
+		AND email = (
+		SELECT email
+		FROM m_employee
+		WHERE emp_id = #{excludeEmpId}
+		)
+		<if test="excludeEmpId != null">
+			AND emp_id != #{excludeEmpId}
+		</if>
+	</select>
+
+	<select id="countByEmails" resultType="int">
+		SELECT COUNT(*) FROM m_employee
+		WHERE delete_flg = 0
+		AND email IN (
+		SELECT email
+		FROM m_employee
+		WHERE emp_id IN
+		<foreach item="excludeEmpId" index="index"
+			collection="excludeEmpIds" open="(" separator="," close=")">
+			#{excludeEmpId}
+		</foreach>
+		)
+		<if test="excludeEmpIds != null">
+			AND emp_id NOT IN
+			<foreach item="excludeEmpId" index="index"
+				collection="excludeEmpIds" open="(" separator="," close=")">
+				#{excludeEmpId}
+			</foreach>
+		</if>
+	</select>
 
 	<select id="countActiveEmployees" resultType="int">
 		SELECT COUNT(*)

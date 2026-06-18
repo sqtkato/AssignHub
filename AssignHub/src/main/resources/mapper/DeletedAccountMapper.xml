@@ -113,7 +113,7 @@
 	<select id="countByLoginId" resultType="int">
 		SELECT COUNT(*) FROM m_account
 		WHERE delete_flg=0
-		AND login_id = IN(
+		AND login_id = (
 		SELECT login_id
 		FROM m_account
 		WHERE account_id = #{excludeAccountId}

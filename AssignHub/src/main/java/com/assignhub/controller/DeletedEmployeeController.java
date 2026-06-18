@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignhub.entity.Employee;
-import com.assignhub.form.EmployeeForm;
 import com.assignhub.service.DeletedEmployeeService;
-import com.assignhub.service.EmployeeService;
 
 /**
  * 社員管理機能の画面遷移およびHTTPリクエストを処理するコントローラー。
@@ -32,16 +27,14 @@ import com.assignhub.service.EmployeeService;
 public class DeletedEmployeeController {
 
 	private final DeletedEmployeeService deletedEmployeeService;
-	private final EmployeeService employeeService;
 
 	/**
 	 * コンストラクタによる依存性の注入。
 	 *
 	 * @param deletedEmployeeService 論理削除済み社員管理サービス
 	 */
-	public DeletedEmployeeController(DeletedEmployeeService deletedEmployeeService, EmployeeService employeeService) {
+	public DeletedEmployeeController(DeletedEmployeeService deletedEmployeeService){
 		this.deletedEmployeeService = deletedEmployeeService;
-		this.employeeService = employeeService;
 	}
 
 	/**
@@ -77,9 +70,7 @@ public class DeletedEmployeeController {
 	 * @return 一覧画面へのリダイレクト
 	 */
 	@PostMapping("/{id}/restore")
-	public String recover(@PathVariable("id") Integer id,
-			@Validated @ModelAttribute("employeeForm") EmployeeForm employeeForm,
-			BindingResult result, RedirectAttributes attributes) {
+	public String recover(@PathVariable("id") Integer id,RedirectAttributes attributes) {
 		if (deletedEmployeeService.isEmployeeLimitReachedAfterRestore(1)) {
 			attributes.addFlashAttribute("toastError", "登録件数が上限（500件）に達するため、復元できません。");
 			return "redirect:/deleted-employees";
@@ -92,8 +83,9 @@ public class DeletedEmployeeController {
 			attributes.addFlashAttribute("toastMessage", "所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
-		if (employeeService.isEmailDuplicate(employeeForm.getEmail(), id)) {
-			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
+		if (deletedEmployeeService.isEmailDuplicate(id)) {
+			attributes.addFlashAttribute("toastError", "このメールアドレスは既に使用されています");
+			return "redirect:/deleted-employees";
 		}
 		deletedEmployeeService.restore(id);
 		return "redirect:/deleted-employees";
@@ -125,8 +117,9 @@ public class DeletedEmployeeController {
 			attributes.addFlashAttribute("toastError", "所属元の企業情報が削除状態のため、復元できません。先に企業情報を復元してください。");
 			return "redirect:/deleted-employees";
 		}
-		if(employeeService.isEmailDuplicate(ids)) {
+		if(deletedEmployeeService.isEmailDuplicate(ids)) {
 			attributes.addFlashAttribute("toastError", "このメールアドレスは既に使用されています");
+			return "redirect:/deleted-employees";
 		}
 		deletedEmployeeService.restoreBulk(ids);
 		return "redirect:/deleted-employees";

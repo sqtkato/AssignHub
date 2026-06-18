@@ -107,6 +107,26 @@ public class DeletedEmployeeService {
         return deletedEmployeeMapper.existAssignmentsByEmployeeIds(ids) > 0;
     }
 
+    
+    /**
+	 * メールアドレスがすでに登録されているか（重複しているか）を判定する。
+	 *
+	 * @param email        チェックするメールアドレス
+	 * @param excludeEmpId 除外する社員ID（新規登録時はnullを渡す）
+	 * @return 重複していればtrue
+	 */
+	public boolean isEmailDuplicate(Integer excludeEmpId) {
+		int count = deletedEmployeeMapper.countByEmail(excludeEmpId);
+		return count > 0;
+	}
+	
+	public boolean isEmailDuplicate(List<Integer> excludeEmpIds) {
+		int count = deletedEmployeeMapper.countByEmails(excludeEmpIds);
+		return count > 0;
+	}
+	
+    
+    
     /**
 	 * 復元した結果、登録上限（500件）を超えるか判定する
 	 * @param restoreCount 復元しようとしている件数（単一なら1、一括ならリストのサイズ）
