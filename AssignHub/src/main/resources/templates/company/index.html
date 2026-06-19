@@ -17,11 +17,11 @@
 			<form th:action="@{/companies}" method="get" class="search-form">
 				<div class="form-group form-group-search">
 					<label>企業名</label>
-					<input type="text" name="companyName" class="form-control fixed-all30" th:value="${companyName}">
+					<input type="text" name="companyName" class="form-control fixed-all30" th:value="${companyName}" placeholder="例：株式会社システム">
 				</div>
 				<div class="form-group form-group-search">
 					<label>電話番号</label>
-					<input type="text" name="companyTel" class="form-control fixed-all30" th:value="${companyTel}">
+					<input type="text" name="companyTel" class="form-control fixed-all30" th:value="${companyTel}" placeholder="例：0000000000">
 				</div>
 				<button type="submit" class="company-btn-search">検索</button>
 			</form>
