@@ -184,7 +184,7 @@ public class CompanyService {
 
 				String[] cols = line.split(",", -1);
 				if (cols.length < 16) {
-					result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています（16項目必要）"));
+					result.errors.add(new CsvRowError(rowNum, "全体", "項目数が不足しています"));
 					result.errorCount++;
 					rowNum++;
 					continue;
@@ -205,7 +205,7 @@ public class CompanyService {
 							company.setCompanyId(parsedId);
 						}
 					} catch (Exception e) {
-						result.errors.add(new CsvRowError(rowNum, "企業ID", "企業形式が正しくありません"));
+						result.errors.add(new CsvRowError(rowNum, "企業ID", "企業IDの形式が正しくありません"));
 						hasError = true;
 					}
 				}
@@ -235,13 +235,13 @@ public class CompanyService {
 				String foundedYear = cols[5].trim();
 				if (!foundedYear.isEmpty()) {
 					if (!foundedYear.matches("^[0-9]{4}$")) {
-						result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は4桁の数字で入力してください"));
+						result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は4桁で入力してください"));
 						hasError = true;
 					} else {
 						int year = Integer.parseInt(foundedYear);
 						int currentYear = java.time.Year.now().getValue();
 						if (year > currentYear) {
-							result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は" + currentYear + "年以前で入力してください"));
+							result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は" + currentYear + "現在年度以前を入力してください"));
 							hasError = true;
 						} else {
 							company.setFoundedYear(year);
@@ -263,10 +263,10 @@ public class CompanyService {
 				if (companyZipCode.isEmpty()) {
 					result.errors.add(new CsvRowError(rowNum, "郵便番号", "郵便番号は必須です"));
 					hasError = true;
-				} else if (!companyZipCode.matches("^[0-9]*$")) {
+				} else if (companyZipCode.contains("-")) {
 					result.errors.add(new CsvRowError(rowNum, "郵便番号", "郵便番号の形式が正しくありません ハイフンなしで入力してください"));
 					hasError = true;
-				} else if (companyZipCode.length() != 7) {
+				} else if (companyZipCode.length() > 7) {
 					result.errors.add(new CsvRowError(rowNum, "郵便番号", "郵便番号は7桁以内で入力してください"));
 					hasError = true;
 				} else {
@@ -299,7 +299,7 @@ public class CompanyService {
 				} else if ((companyTel.length() < 10) || (companyTel.length() > 11)) {
 					result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号10桁または11桁で入力してください"));
 					hasError = true;
-				} else if (!companyTel.matches("^[0-9]*$")) {
+				} else if (companyTel.contains("-")) {
 					result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号の形式が正しくありません ハイフンなしで入力してください"));
 					hasError = true;
 				} else {
@@ -309,9 +309,9 @@ public class CompanyService {
 				String companyFax = cols[11].trim();
 				if (!companyFax.isEmpty()) {
 					if (companyFax.length() > 20) {
-						result.errors.add(new CsvRowError(rowNum, "FAX", "FAXは20桁以内で入力してください"));
+						result.errors.add(new CsvRowError(rowNum, "FAX", "FAX番号は20桁以内で入力してください"));
 						hasError = true;
-					} else if (!companyFax.matches("\\d+")) {
+					} else if (companyFax.contains("-")) {
 						result.errors.add(new CsvRowError(rowNum, "FAX", "FAX番号の形式が正しくありません ハイフンなしで入力してください"));
 						hasError = true;
 					} else {
