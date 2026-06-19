@@ -118,8 +118,8 @@
 								<td th:text="${assign.employee.lastName} + ' ' + ${assign.employee.firstName}"></td>
 								<td th:text="${assign.company.companyName}"></td>
 								<td th:text="${assign.employee.company != null ? assign.employee.company.companyName : 'ー'}"></td>
-								<td th:text="${assign.contractStartDate}"></td>
-								<td th:text="${assign.contractEndDate != null ? assign.contractEndDate : 'ー'}"></td>
+								<td th:text="${#temporals.format(assign.contractStartDate, 'yyyy/MM/dd')}"></td>
+								<td th:text="${assign.contractEndDate != null ? #temporals.format(assign.contractEndDate, 'yyyy/MM/dd') : 'ー'}"></td>
 								<td th:text="${assign.unitPrice}"></td>
 								<td>
 									<button type="button" class="btn_assign_detail btn-icon-svg detail" title="詳細"
