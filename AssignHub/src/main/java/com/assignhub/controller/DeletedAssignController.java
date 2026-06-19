@@ -77,7 +77,7 @@ public class DeletedAssignController {
 	/**
 	 * 論理削除済みアサイン履歴を一件復元する。
 	 *
-	 * @param id 復元対象のアカウントID
+	 * @param id 復元対象のアサインID
 	 * @return 一覧画面へのリダイレクトパス
 	 */
 	/* 単一復元 */
@@ -110,7 +110,7 @@ public class DeletedAssignController {
 	/**
 	 * 選択された複数の論理削除済みアサイン履歴情報を一括で復元する。
 	 *
-	 * @param ids        復元対象となるアカウントIDのリスト
+	 * @param ids        復元対象となるアサインIDのリスト
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクトパス
 	 */
@@ -124,7 +124,7 @@ public class DeletedAssignController {
 		}
 
 		if (deletedAssignService.isAssginLimitReachedAfterRestore(ids.size())) {
-			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
+			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。アサイン履歴情報の登録上限は500件です。");
 			return "redirect:/deleted-assignments";
 		}
 
@@ -148,7 +148,7 @@ public class DeletedAssignController {
 	/**
 	 * 論理削除済みアサイン履歴情報を一件物理削除する。
 	 *
-	 * @param id 削除対象のアカウントID
+	 * @param id 削除対象のアサインID
 	 * @return 一覧画面へのリダイレクトパス
 	 */
 	/* 単一削除 */
@@ -161,7 +161,7 @@ public class DeletedAssignController {
 	/**
 	 * 選択された複数の論理削除済みアサイン履歴情報を一括で物理削除する。
 	 *
-	 * @param ids        削除対象となるアカウントIDのリスト
+	 * @param ids        削除対象となるアサインIDのリスト
 	 * @param attributes リダイレクト時にメッセージを引き継ぐための属性
 	 * @return 一覧画面へのリダイレクトパス
 	 */
@@ -179,7 +179,7 @@ public class DeletedAssignController {
 	}
 
 	/**
-	 * 検索条件に合致する論理削除済みアカウント情報をCSV形式でダウンロードする。
+	 * 検索条件に合致する論理削除済みアサイン履歴情報をCSV形式でダウンロードする。
 	 *
 	 * @param ids    エクスポート対象となるアカウントIDのリスト 
 	 * @return ダウンロード用のCSVファイルバイナリデータ

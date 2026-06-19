@@ -83,7 +83,7 @@ public interface DeletedAssignMapper {
 	int existEmployeeByAssignIds(@Param("ids") List<Integer> ids);
 
 	/**
-	 * 復元時に重複するアカウントが存在するか判定
+	 * 復元時に重複するアサインが存在するか判定
 	 */
 	int countByAssignId(@Param("excludeAssignId") Integer excludeAssignId);
 
