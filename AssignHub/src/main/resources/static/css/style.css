@@ -942,3 +942,7 @@ a:hover {
 .modal-btn-danger:hover {
 	background: #c82333;
 }
+
+.error-message{
+font-weight: 700; 
+}

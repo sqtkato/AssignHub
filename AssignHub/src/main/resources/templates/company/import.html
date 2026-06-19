@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
+
 <head>
 	<meta charset="UTF-8">
 	<title>企業情報インポート</title>
 </head>
+
 <body>
 	<div layout:fragment="content">
 		<div class="import-container">
@@ -20,8 +22,7 @@
 						<p class="upload-zone-title">企業情報CSVを選択してください</p>
 						<p class="upload-zone-format">対応形式: .csv (UTF-8) / BOMあり推奨、最大5MB</p>
 						<div class="upload-zone-filebox">
-							<input type="file" id="input_company_file_upload" name="file"
-								accept=".csv" required>
+							<input type="file" id="input_company_file_upload" name="file" accept=".csv" required>
 						</div>
 					</div>
 					<div class="template-link-area">
@@ -33,16 +34,16 @@
 						<button type="button" id="btn_company_back" class="btn btn-back"
 							th:onclick="|location.href='@{/companies}'|">戻る</button>
 					</div>
-					<p th:if="${errorMessage}" th:text="${errorMessage}" class="errorMessage"></p>
+					<p th:if="${errorMessage}" th:text="${errorMessage}" class="error-message"></p>
 				</form>
 			</div>
 
 			<div class="card result-area" th:if="${importResult != null}">
 				<div class="result-title-row">
 					<h3 class="result-title">処理結果</h3>
-					<span class="result-limit-msg"
-						th:if="${importResult.limitMessage != null}"
-						th:text="${importResult.limitMessage}"></span>
+					    <span th:if="${!importResult.errors.isEmpty() and importResult.errors[0].field == '上限'}"
+						      th:text="${importResult.errors[0].message}" class="error-message">
+					</span>        
 				</div>
 				<div class="summary-box">
 					<div class="summary-item summary-success">
@@ -52,8 +53,8 @@
 					</div>
 					<div class="summary-item summary-error">
 						<div class="summary-label">エラー</div>
-						<div id="txt_company_faild" class="summary-value"
-							th:text="${importResult.errorCount} + '件'">0件</div>
+						<div id="txt_company_faild" class="summary-value" th:text="${importResult.errorCount} + '件'">0件
+						</div>
 					</div>
 				</div>
 				<div th:if="${importResult.errorCount gt 0}">
@@ -70,8 +71,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="err : ${importResult.errors}" th:if="${err.field != '上限'}"
-								class="error-row">
+							<tr th:each="err : ${importResult.errors}" th:if="${err.field != '上限'}" class="error-row">
 								<td th:text="${err.rowNum} + '行目'"></td>
 								<td th:text="${err.field}"></td>
 								<td th:text="${err.message}"></td>
@@ -83,4 +83,5 @@
 		</div>
 	</div>
 </body>
+
 </html>
