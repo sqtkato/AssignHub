@@ -359,12 +359,13 @@ public class CompanyService {
 				} else {
 					company.setRepFirstNameKana(repFirstKana);
 				}
-
+				if (!hasError && (company.getCompanyId() == null)) {
 				if ((companyCount + insertPlan) >= 500) {
 				    result.errors.add(new CsvRowError(rowNum, "上限",
 				        "登録後の件数が上限に達しています。企業情報の登録上限は500件です。"));
 				    result.limitMessage = "登録後の件数が上限に達しています。企業情報の登録上限は500件です。"; // ← thêm dòng này
 				    hasError = true;
+				}
 				}
 				if (!hasError) {
 					try {
