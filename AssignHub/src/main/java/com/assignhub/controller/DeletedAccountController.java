@@ -48,7 +48,8 @@ public class DeletedAccountController {
 			Model model,
 			@RequestParam(name = "permission", required = false) Integer permission) {
 		model.addAttribute("accounts", deletedAccountService.findAll(empName, permission));
-
+		model.addAttribute("empName", empName);
+		model.addAttribute("permission", permission);
 		return "deleted_account/index";
 	}
     
