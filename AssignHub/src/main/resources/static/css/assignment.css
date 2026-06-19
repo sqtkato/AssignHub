@@ -78,3 +78,12 @@
 .table-scroll {
     max-height: 340px;
 }
+
+/* 入力欄の幅を調整 */
+.form-a {
+    width: 50%;
+}
+
+.form-b {
+    width: 20%;
+}
