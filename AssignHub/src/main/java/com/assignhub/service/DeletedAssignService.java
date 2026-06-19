@@ -9,6 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.assignhub.entity.Assignment;
 import com.assignhub.mapper.DeletedAssignMapper;
 
+/**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ */
 @Service
 public class DeletedAssignService {
 	@Autowired
@@ -72,26 +81,18 @@ public class DeletedAssignService {
 		}
 	}
 
-	// =======================================================
-	// Controllerからのチェック用メソッド（booleanを返す）
-	// =======================================================
-
-	//    単一復元の不在条件
 	public boolean existCompanyDispatchsByAssignId(Integer id) {
 		return deletedAssignMapper.existCompanyDispatchsByAssignId(id) > 0;
 	}
 
-	//    一括復元の生存条件
 	public boolean existCompanyDispatchsByAssignIds(List<Integer> ids) {
 		return deletedAssignMapper.existCompanyDispatchsByAssignIds(ids) > 0;
 	}
 
-	//    単一復元の生存条件
 	public boolean existEmployeeByAssignId(Integer id) {
 		return deletedAssignMapper.existEmployeeByAssignId(id) > 0;
 	}
 
-	//    一括復元の生存条件
 	public boolean existEmployeeByAssignIds(List<Integer> ids) {
 		return deletedAssignMapper.existEmployeeByAssignIds(ids) > 0;
 	}
@@ -126,11 +127,8 @@ public class DeletedAssignService {
 	}
 
 	public boolean isAssginLimitReachedAfterRestore(int restoreCount) {
-		// 1. 現在有効な（削除されていない）企業数を取得する
-		// ※ 既存のCompanyService等から取得するか、独自に count を取得してください
 		int currentActiveCount = deletedAssignMapper.countActiveAssigns();
 
-		// 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
 		return (currentActiveCount + restoreCount) > 500;
 	}
 

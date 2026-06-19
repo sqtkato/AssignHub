@@ -75,9 +75,6 @@ public class DeletedAssignController {
 		return "deleted_assign/index";
 	}
 
-	// ==========================================
-	// 復元処理
-	// ==========================================
 	/**
 	 * 論理削除済みアサイン履歴を一件復元する。
 	 *
@@ -149,9 +146,6 @@ public class DeletedAssignController {
 		return "redirect:/deleted-assignments";
 	}
 
-	// ==========================================
-	// 物理削除処理
-	// ==========================================
 	/**
 	 * 論理削除済みアサイン履歴情報を一件物理削除する。
 	 *
@@ -185,7 +179,6 @@ public class DeletedAssignController {
 		return "redirect:/deleted-assignments";
 	}
 
-	//エクスポート
 	/**
 	 * 検索条件に合致する論理削除済みアカウント情報をCSV形式でダウンロードする。
 	 *
