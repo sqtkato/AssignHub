@@ -51,9 +51,6 @@ public class DeletedAccountController {
 
 		return "deleted_account/index";
 	}
-    // ==========================================
-    // 復元処理
-    // ==========================================
     
 	/**
 	 * 論理削除済みアカウントを一件復元する。
@@ -99,10 +96,6 @@ public class DeletedAccountController {
         deletedAccountService.restoreBulk(ids);
         return "redirect:/deleted-accounts";
     }
-    
-    // ==========================================
-    // 物理削除処理
-    // ==========================================
     
     /**
 	 * 論理削除済みアカウントを一件物理削除する。
@@ -178,8 +171,7 @@ public class DeletedAccountController {
 			String Permission = "";
 			if(acc.getPermission() == 0) {
 				Permission = "一般";
-			}
-			else {
+			}else {
 				Permission = "管理";
 			}
 			csvBuilder.append(acc.getAccountId()).append(",")

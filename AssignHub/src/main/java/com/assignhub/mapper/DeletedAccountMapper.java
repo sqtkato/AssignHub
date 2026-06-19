@@ -9,6 +9,7 @@ import com.assignhub.entity.Account;
 
 @Mapper
 public interface DeletedAccountMapper {
+	
 	/**
 	 * 条件に一致する論理削除済み企業情報を全件取得する。
 	 *
