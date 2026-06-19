@@ -60,7 +60,6 @@ public class DeletedAssignController {
 
 		if (toastError != null) {
 			model.addAttribute("toastError", toastError);
-
 			model.addAttribute("assignments", deletedAssignService.findAll(null, null, null, null, null));
 			return "deleted_assign/index";
 		}
@@ -91,7 +90,7 @@ public class DeletedAssignController {
 		}
 
 		if (deletedAssignService.existCompanyDispatchsByAssignId(id)) {
-			attributes.addFlashAttribute("toastError", "紐づく派遣先企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
+			attributes.addFlashAttribute("toastError", "紐づくアサイン先企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
 			return "redirect:/deleted-assignments";
 		}
 
@@ -130,7 +129,7 @@ public class DeletedAssignController {
 		}
 
 		if (deletedAssignService.existCompanyDispatchsByAssignIds(ids)) {
-			attributes.addFlashAttribute("toastError", "紐づく派遣先企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
+			attributes.addFlashAttribute("toastError", "紐づくアサイン先企業が削除状態のため、復元できません。先に該当する企業情報を復元してください。");
 			return "redirect:/deleted-assignments";
 		}
 
