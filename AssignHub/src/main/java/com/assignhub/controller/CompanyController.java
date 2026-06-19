@@ -1,5 +1,7 @@
 package com.assignhub.controller;
 
+
+
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -337,7 +339,7 @@ public class CompanyController {
 	 */
 	@GetMapping("/import/template")
 	public ResponseEntity<byte[]> downloadTemplate() {
-		String csvContent = "企業ID,企業名,企業名カナ,設立年度,社員数,郵便番号,住所1,住所2,TEL,FAX,代表者姓,代表者名,代表者姓カナ,代表者名カナ\n";
+		String csvContent = "作成日時,更新日時,企業ID,企業名,企業名カナ,設立年度,社員数,郵便番号,住所1,住所2,TEL,FAX,代表者姓,代表者名,代表者姓カナ,代表者名カナ\n";
 		byte[] csvBytes = csvContent.getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
 		byte[] result = new byte[bom.length + csvBytes.length];
@@ -377,7 +379,7 @@ public class CompanyController {
 	 * 選択された企業情報をCSVでエクスポートする。
 	 *
 	 * @param ids 選択された企業IDリスト（nullの場合全件）
-	 * @return ダウンロード用のCSVファイルバイナリデータ
+	 * @return ダウンロード用のCSVファイルバイナリデータfi
 	 */
 	@PostMapping("/export/download")
 	public ResponseEntity<byte[]> downloadCsv(
