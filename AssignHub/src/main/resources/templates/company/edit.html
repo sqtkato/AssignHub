@@ -1,136 +1,137 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout/layout}">
+	layout:decorate="~{layout/layout}">
+
 <head>
-    <script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
-    <title>企業情報変更入力</title>
+	<script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+	<title>企業情報変更入力</title>
 	<link rel="stylesheet" th:href="@{/css/company.css}">
 </head>
-<body>
-    <div layout:fragment="content">
-        <div class="page-title-area">
-            <h2>企業情報変更入力</h2>
-        </div>
-        <div class="card form-card">
-            <form th:action="@{/companies/{id}/edit(id =${companyForm.companyId})}" th:object="${companyForm}" method="post" class="h-adr">
-                <input type="hidden" name="fromPage" th:value="${fromPage}" />
-                <div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}">
-                    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
-                </div>
-                <div class="form-group ">
-                    <label>企業名 <span class="badge-required">必須</span></label>
-                    <input type="text" th:field="*{companyName}"  class="form-control fixed-all30"
-                        th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'">
-                    <div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>企業名カナ <span class="badge-required">必須</span></label>
-                    <input type="text" th:field="*{companyNameKana}" class="form-control fixed-all30"
-                        th:classappend="${#fields.hasErrors('companyNameKana')} ? 'input-error'">
-                    <div class="error-message" th:if="${#fields.hasErrors('companyNameKana')}"
-                        th:errors="*{companyNameKana}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>設立年度 </label>
-                    <input type="text" th:field="*{foundedYear}" class="form-control fixed-half4"
-                        th:classappend="${#fields.hasErrors('foundedYear')} ? 'input-error'">
-                    <div class="error-message" th:if="${#fields.hasErrors('foundedYear')}" th:errors="*{foundedYear}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>社員数 </label>
-                    <input type="text" th:field="*{employeeCount}" class="form-control fixed-half5"
-                        th:classappend="${#fields.hasErrors('employeeCount')} ? 'input-error'">
-                    <div class="error-message" th:if="${#fields.hasErrors('employeeCount')}"
-                        th:errors="*{employeeCount}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="hidden" class="p-country-name" value="Japan">
-                    <label>郵便番号<span class="badge-required">必須</span></label>
-                    <input type="text" th:field="*{companyZipCode}" class="form-control fixed-half7 p-postal-code"
-                        th:classappend="${#fields.hasErrors('companyZipCode')} ? 'input-error'">
-                    <div class="error-message" th:if="${#fields.hasErrors('companyZipCode')}"
-                        th:errors="*{companyZipCode}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>住所1(自動入力されます) <span class="badge-required">必須</span></label>
-                    <input type="text" th:field="*{companyAddress1}"
-                        class="form-control fixed-all30 p-region p-locality p-street-address p-extended-address"
-                        th:classappend="${#fields.hasErrors('companyAddress1')} ? 'input-error'">
-                    <div class="error-message" th:if="${#fields.hasErrors('companyAddress1')}"
-                        th:errors="*{companyAddress1}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>住所2 </label>
-                    <input type="text" th:field="*{companyAddress2}" class="form-control fixed-all30"
-                        th:classappend="${#fields.hasErrors('companyAddress2')} ? 'input-error'">
-                    <div class="error-message " th:if="${#fields.hasErrors('companyAddress2')}"
-                        th:errors="*{companyAddress2}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>TEL <span class="badge-required">必須</span></label>
-                    <input type="text" th:field="*{companyTel}" class="form-control fixed-half11"
-                        th:classappend="${#fields.hasErrors('companyTel')} ? 'input-error'">
-                    <div class="error-message" th:if="${#fields.hasErrors('companyTel')}" th:errors="*{companyTel}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>FAX </label>
-                    <input type="text" th:field="*{companyFax}" class="form-control fixed-half20"
-                        th:classappend="${#fields.hasErrors('companyFax')} ? 'input-error'">
-                    <div class="error-message" th:if="${#fields.hasErrors('companyFax')}" th:errors="*{companyFax}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>代表者姓</label>
-                    <input type="text" th:field="*{repLastName}" class="form-control fixed-all30"
-                        th:classappend="${#fields.hasErrors('repLastName')} ? 'input-error'">
-                    <div class="error-message" th:if="${#fields.hasErrors('repLastName')}" th:errors="*{repLastName}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>代表者名</label>
-                    <input type="text" th:field="*{repFirstName}" class="form-control fixed-all30"
-                        th:classappend="${#fields.hasErrors('repFirstName')} ? 'input-error'">
-                    <div class="error-message" th:if="${#fields.hasErrors('repFirstName')}" th:errors="*{repFirstName}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>代表者姓カナ</label>
-                    <input type="text" th:field="*{repLastNameKana}" class="form-control fixed-all30"
-                        th:classappend="${#fields.hasErrors('repLastNameKana')} ? 'input-error'">
-                    <div class="error-message" th:if="${#fields.hasErrors('repLastNameKana')}"
-                        th:errors="*{repLastNameKana}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>代表者名カナ</label>
-                    <input type="text" th:field="*{repFirstNameKana}" class="form-control  fixed-all30"
-                        th:classappend="${#fields.hasErrors('repFirstNameKana')} ? 'input-error'">
-                    <div class="error-message" th:if="${#fields.hasErrors('repFirstNameKana')}"
-                        th:errors="*{repFirstNameKana}">
-                    </div>
-                </div>
-				<div class="form-actions form-actions-area-wide" style="display: flex; justify-content: center; ">
-									<button type="submit" class="btn btn-primary">変更</button>
-									
-									<a th:if="${fromPage == 'detail'}"
-									 th:href="@{/companies/{id}/detail(id=${companyForm.companyId})}"
-									class="btn btn-secondary">戻る</a>
 
-									<a th:if="${fromPage != 'detail'}"
-									th:href="@{/companies}"
-									class="btn btn-secondary">戻る</a>
-                </div>
-                
-            </form>
-        </div>
-    </div>
+<body>
+	<div layout:fragment="content">
+		<div class="page-title-area">
+			<h2>企業情報変更入力</h2>
+		</div>
+		<div class="card form-card">
+			<form th:action="@{/companies/{id}/edit(id =${companyForm.companyId})}" th:object="${companyForm}"
+				method="post" class="h-adr">
+				<input type="hidden" name="fromPage" th:value="${fromPage}" />
+				<div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}">
+					<p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+				</div>
+				<div class="form-group ">
+					<label>企業名 <span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{companyName}" class="form-control fixed-all30"
+						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>企業名カナ <span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{companyNameKana}" class="form-control fixed-all30"
+						th:classappend="${#fields.hasErrors('companyNameKana')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('companyNameKana')}"
+						th:errors="*{companyNameKana}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>設立年度 </label>
+					<input type="text" th:field="*{foundedYear}" class="form-control fixed-half5"
+						th:classappend="${#fields.hasErrors('foundedYear')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('foundedYear')}" th:errors="*{foundedYear}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>社員数 </label>
+					<input type="text" th:field="*{employeeCount}" class="form-control fixed-half5"
+						th:classappend="${#fields.hasErrors('employeeCount')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('employeeCount')}"
+						th:errors="*{employeeCount}">
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="hidden" class="p-country-name" value="Japan">
+					<label>郵便番号<span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{companyZipCode}" class="form-control fixed-half5 p-postal-code"
+						th:classappend="${#fields.hasErrors('companyZipCode')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('companyZipCode')}"
+						th:errors="*{companyZipCode}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>住所1(自動入力されます) <span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{companyAddress1}"
+						class="form-control fixed-all30 p-region p-locality p-street-address p-extended-address"
+						th:classappend="${#fields.hasErrors('companyAddress1')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('companyAddress1')}"
+						th:errors="*{companyAddress1}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>住所2 </label>
+					<input type="text" th:field="*{companyAddress2}" class="form-control fixed-all30"
+						th:classappend="${#fields.hasErrors('companyAddress2')} ? 'input-error'">
+					<div class="error-message " th:if="${#fields.hasErrors('companyAddress2')}"
+						th:errors="*{companyAddress2}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>TEL <span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{companyTel}" class="form-control fixed-half20"
+						th:classappend="${#fields.hasErrors('companyTel')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('companyTel')}" th:errors="*{companyTel}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>FAX </label>
+					<input type="text" th:field="*{companyFax}" class="form-control fixed-half20"
+						th:classappend="${#fields.hasErrors('companyFax')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('companyFax')}" th:errors="*{companyFax}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>代表者姓</label>
+					<input type="text" th:field="*{repLastName}" class="form-control fixed-all30"
+						th:classappend="${#fields.hasErrors('repLastName')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('repLastName')}" th:errors="*{repLastName}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>代表者名</label>
+					<input type="text" th:field="*{repFirstName}" class="form-control fixed-all30"
+						th:classappend="${#fields.hasErrors('repFirstName')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('repFirstName')}" th:errors="*{repFirstName}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>代表者姓カナ</label>
+					<input type="text" th:field="*{repLastNameKana}" class="form-control fixed-all30"
+						th:classappend="${#fields.hasErrors('repLastNameKana')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('repLastNameKana')}"
+						th:errors="*{repLastNameKana}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>代表者名カナ</label>
+					<input type="text" th:field="*{repFirstNameKana}" class="form-control  fixed-all30"
+						th:classappend="${#fields.hasErrors('repFirstNameKana')} ? 'input-error'">
+					<div class="error-message" th:if="${#fields.hasErrors('repFirstNameKana')}"
+						th:errors="*{repFirstNameKana}">
+					</div>
+				</div>
+				<div class="form-actions form-actions-area-wide" style="display: flex; justify-content: center; ">
+					<button type="submit" class="btn btn-primary">変更</button>
+
+					<a th:if="${fromPage == 'detail'}" th:href="@{/companies/{id}/detail(id=${companyForm.companyId})}"
+						class="btn btn-secondary">戻る</a>
+
+					<a th:if="${fromPage != 'detail'}" th:href="@{/companies}" class="btn btn-secondary">戻る</a>
+				</div>
+
+			</form>
+		</div>
+	</div>
 </body>
+
 </html>

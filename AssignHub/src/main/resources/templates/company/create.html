@@ -24,7 +24,7 @@
 					<label>企業名 <span class="badge-required">必須</span></label>
 					<input type="text" th:field="*{companyName}" class="form-control fixed-all30"
 						th:classappend="${#fields.hasErrors('companyName')} ? 'input-error'"
-						placeholder="例：株式会社テクノソリューション">
+						placeholder="例：株式会社システム">
 					<div class="error-message" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">
 					</div>
 				</div>
@@ -38,7 +38,7 @@
 				</div>
 				<div class="form-group">
 					<label>設立年度 </label>
-					<input type="text" th:field="*{foundedYear}" class="form-control fixed-half5"
+					<input type="number" th:field="*{foundedYear}" class="form-control fixed-half5"
 						th:classappend="${#fields.hasErrors('foundedYear')} ? 'input-error'"
 						placeholder="例：2026">
 					<div class="error-message" th:if="${#fields.hasErrors('foundedYear')}" th:errors="*{foundedYear}">
