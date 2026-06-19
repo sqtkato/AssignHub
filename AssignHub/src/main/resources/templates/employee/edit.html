@@ -101,7 +101,7 @@
 						<label>エンジニアタイプ<span class="badge-required">必須</span></label>
 						<select id="engineerType" name="engineerType" th:field="*{engineerType}"
 							class="dropdown form-control fixed-all30"
-							th:classappend="${#fields.hasErrors('engineerType')} ? 'input-error'">
+							th:classappend="${#fields.hasErrors('engineerType')} ? 'input-error select-error' : ''">
 							    <option value="">未選択</option>
 							    <option value="プロパー">プロパー</option>
 							    <option value="パートナー">パートナー</option>
