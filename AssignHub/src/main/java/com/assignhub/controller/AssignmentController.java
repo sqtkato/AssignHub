@@ -316,7 +316,7 @@ public class AssignmentController {
 	 */
 	@GetMapping("/import/template")
 	public ResponseEntity<byte[]> downloadTemplate() {
-		String csvContent = "アサインID,社員ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n";
+		String csvContent = "アサインID,社員ID,企業ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n";
 		byte[] csvBytes = csvContent.getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
 		byte[] result = new byte[bom.length + csvBytes.length];
