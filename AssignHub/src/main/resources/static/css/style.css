@@ -182,6 +182,9 @@ a:hover {
 	max-height: 400px;
 	overflow-y: auto;
 }
+.table-scroll.export-table {
+	max-height: 340px;
+}
 
 .table thead th {
 	position: sticky;
