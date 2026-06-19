@@ -24,7 +24,7 @@ public class DeletedAssignService {
 	private DeletedAssignMapper deletedAssignMapper;
 
 	/**
-	 * 論理削除済みのアカウント情報を全件取得する（一覧表示・検索用）。
+	 * 論理削除済みのアサイン情報を全件取得する（一覧表示・検索用）。
 	 */
 	public List<Assignment> findAll(String empName, String assignName, String companyName,
 			String contractStartDate, String contractEndDate) {
@@ -33,7 +33,7 @@ public class DeletedAssignService {
 	}
 
 	/**
-	 * 選択されたアカウントの情報を取得する（CSVエクスポート用）。
+	 * 選択されたアサイン履歴の情報を取得する（CSVエクスポート用）。
 	 *
 	 * @param ids 画面のチェックボックスで選択されたアカウントIDのリスト
 	 */
