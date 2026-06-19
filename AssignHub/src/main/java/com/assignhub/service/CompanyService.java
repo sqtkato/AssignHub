@@ -369,12 +369,13 @@ public class CompanyService {
 				}
 				if (!hasError) {
 					try {
+						boolean isNew = (company.getCompanyId() == null); 
 						save(company);
-						result.successCount++;
-						if (parsedId == null)
-							insertPlan++;
+						if (isNew) {
+				            insertPlan++;
+				        }
+				        result.successCount++;		
 					} catch (Exception e) {
-						log.error("CSVインポート中エラー（{}行目）: データの保存に失敗しました。", rowNum, e);
 						result.errors.add(new CsvRowError(rowNum, "DB登録", "保存に失敗しました"));
 						result.errorCount++;
 					}
