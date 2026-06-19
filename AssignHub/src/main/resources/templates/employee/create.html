@@ -16,27 +16,27 @@
 					<div class="form-group">
 						<label>社員姓<span class="badge-required">必須</span></label>
 						<input type="text" th:field="*{lastName}" class="form-control fixed-all30"
-							th:classappend="${#fields.hasErrors('lastName')} ? 'input-error'">
+							th:classappend="${#fields.hasErrors('lastName')} ? 'input-error'" placeholder="例：山田">
 						<div class="error-message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
 						</div>
 						<div class="form-group">
 							<label>社員名<span class="badge-required">必須</span></label>
 							<input type="text" th:field="*{firstName}" class="form-control fixed-all30"
-								th:classappend="${#fields.hasErrors('firstName')} ? 'input-error'">
+								th:classappend="${#fields.hasErrors('firstName')} ? 'input-error'" placeholder="例：太郎">
 							<div class="error-message" th:if="${#fields.hasErrors('firstName')}"
 								th:errors="*{firstName}"></div>
 						</div>
 						<div class="form-group">
 							<label>社員姓カナ<span class="badge-required">必須</span></label>
 							<input type="text" th:field="*{lastNameKana}" class="form-control fixed-all30"
-								th:classappend="${#fields.hasErrors('lastNameKana')} ? 'input-error'">
+								th:classappend="${#fields.hasErrors('lastNameKana')} ? 'input-error'" placeholder="例：ヤマダ">
 							<div class="error-message" th:if="${#fields.hasErrors('lastNameKana')}"
 								th:errors="*{lastNameKana}"></div>
 						</div>
 						<div class="form-group">
 							<label>社員名カナ<span class="badge-required">必須</span></label>
 							<input type="text" th:field="*{firstNameKana}" class="form-control fixed-all30"
-								th:classappend="${#fields.hasErrors('firstNameKana')} ? 'input-error'">
+								th:classappend="${#fields.hasErrors('firstNameKana')} ? 'input-error'" placeholder="例：タロウ">
 							<div class="error-message" th:if="${#fields.hasErrors('firstNameKana')}"
 								th:errors="*{firstNameKana}"></div>
 						</div>
@@ -69,34 +69,36 @@
 							<input type="hidden" class="p-country-name" value="Japan">
 							<label>郵便番号<span class="badge-required">必須</span></label>
 							<input type="text" th:field="*{zipCode}" class="form-control fixed-half7"
-								th:classappend="${#fields.hasErrors('zipCode')} ? 'form-control p-postal-code input-error' : 'form-control p-postal-code'">
+								th:classappend="${#fields.hasErrors('zipCode')} ? 'form-control p-postal-code input-error' : 'form-control p-postal-code'"
+								placeholder="例：1000000">
 							<div class="error-message" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}">
 							</div>
 							<div class="form-group">
 								<label>住所1(自動入力されます)<span class="badge-required">必須</span></label>
 								<input type="text" th:field="*{address1}" class="form-control fixed-all30"
-									th:classappend="${#fields.hasErrors('address1')} ? 'form-control p-region p-locality p-street-address p-extended-address input-error' : 'form-control p-region p-locality p-street-address p-extended-address'">
+									th:classappend="${#fields.hasErrors('address1')} ? 'form-control p-region p-locality p-street-address p-extended-address input-error' : 'form-control p-region p-locality p-street-address p-extended-address'"
+									placeholder="例：東京都千代田区">
 								<div class="error-message" th:if="${#fields.hasErrors('address1')}"
 									th:errors="*{address1}">
 								</div>
 								<div class="form-group">
 									<label>住所２</label>
 									<input type="text" th:field="*{address2}" class="form-control fixed-all30"
-										th:classappend="${#fields.hasErrors('address2')} ? 'input-error'">
+										th:classappend="${#fields.hasErrors('address2')} ? 'input-error'" placeholder="例：マンション101号室">
 									<div class="error-message" th:if="${#fields.hasErrors('address2')}"
 										th:errors="*{address2}"></div>
 								</div>
 								<div class="form-group">
 									<label>電話番号<span class="badge-required">必須</span></label>
 									<input type="text" th:field="*{empTel}" class="form-control fixed-half11"
-										th:classappend="${#fields.hasErrors('empTel')} ? 'input-error'">
+										th:classappend="${#fields.hasErrors('empTel')} ? 'input-error'" placeholder="例：0123456789">
 									<div class="error-message" th:if="${#fields.hasErrors('empTel')}"
 										th:errors="*{empTel}"></div>
 								</div>
 								<div class="form-group">
 									<label>メールアドレス<span class="badge-required">必須</span></label>
 									<input type="text" th:field="*{email}" class="form-control fixed-all30"
-										th:classappend="${#fields.hasErrors('email')} ? 'input-error'">
+										th:classappend="${#fields.hasErrors('email')} ? 'input-error'" placeholder="例：yamada@example.com">
 									<div class="error-message" th:if="${#fields.hasErrors('email')}"
 										th:errors="*{email}"></div>
 								</div>
@@ -145,14 +147,14 @@
 								<div class="form-group">
 									<label>所属部署</label>
 									<input type="text" th:field="*{department}" class="form-control fixed-all30"
-										th:classappend="${#fields.hasErrors('department')} ? 'input-error'">
+										th:classappend="${#fields.hasErrors('department')} ? 'input-error'" placeholder="例：開発部">
 									<div class="error-message" th:if="${#fields.hasErrors('department')}"
 										th:errors="*{department}"></div>
 								</div>
 								<div class="form-group">
 									<label>役職</label>
 									<input type="text" th:field="*{jobTitle}" class="form-control fixed-all30"
-										th:classappend="${#fields.hasErrors('jobTitle')} ? 'input-error'">
+										th:classappend="${#fields.hasErrors('jobTitle')} ? 'input-error'" placeholder="例：エンジニア">
 									<div class="error-message" th:if="${#fields.hasErrors('jobTitle')}"
 										th:errors="*{jobTitle}"></div>
 								</div>
