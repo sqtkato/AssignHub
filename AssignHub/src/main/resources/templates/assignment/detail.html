@@ -20,12 +20,12 @@
 
 					<tr>
 						<th>作成日時</th>
-						<td th:text="${#temporals.format(assignment.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+						<td th:text="${#temporals.format(assignment.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
 					</tr>
 
 					<tr>
 						<th>更新日時</th>
-						<td th:text="${#temporals.format(assignment.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+						<td th:text="${#temporals.format(assignment.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
 					</tr>
 
 					<tr>
@@ -61,11 +61,12 @@
 
 					<tr>
 						<th>契約開始日</th>
-						<td th:text="${assignment.contractStartDate}"></td>
+						<td th:text="${#temporals.format(assignment.contractStartDate, 'yyyy/MM/dd')}"></td>
 					</tr>
+					
 					<tr>
 						<th>契約終了日</th>
-						<td th:text="${assignment.contractEndDate != null ? assignment.contractEndDate : 'ー'}"></td>
+						<td th:text="${assignment.contractEndDate != null ? #temporals.format(assignment.contractEndDate, 'yyyy/MM/dd') : 'ー'}"></td>
 					</tr>
 
 					<tr>
