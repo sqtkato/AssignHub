@@ -114,7 +114,10 @@
 									<input type="checkbox" name="ids" th:value="${assign.assignmentId}"
 										class="chk_assign_select row-checkbox">
 								</td>
-								<td th:text="${#strings.substring(assign.assignmentId.toString(), 0, 5)}"></td>
+								<td th:text="${#strings.length(assign.assignmentId.toString()) >= 5
+								    ? #strings.substring(assign.assignmentId.toString(), 0, 5)
+								    : assign.assignmentId.toString()}">
+								</td>
 								<td th:text="${assign.employee.lastName} + ' ' + ${assign.employee.firstName}"></td>
 								<td th:text="${assign.company.companyName}"></td>
 								<td th:text="${assign.employee.company != null ? assign.employee.company.companyName : 'ー'}"></td>
