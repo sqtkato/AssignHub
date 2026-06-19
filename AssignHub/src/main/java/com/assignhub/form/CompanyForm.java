@@ -27,7 +27,7 @@ public class CompanyForm {
 	
 	@NotBlank(message = "企業名カナは必須です")
 	@Size(max = 100, message = "企業名カナは100文字以内で入力してください")
-	@Pattern(regexp = "^[ァ-ヶー]*$", message = "全角カタカナで入力してください")
+	@Pattern(regexp = "^[ァ-ヶー]*$", message = "全角カナで入力してください")
 	private String companyNameKana;
 	
 	@NotBlank(message = "郵便番号は必須です")
