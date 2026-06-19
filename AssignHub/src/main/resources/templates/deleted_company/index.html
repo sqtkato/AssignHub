@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>企業情報削除/復元一覧</title>
-	<link rel="stylesheet" href="/css/popup.css">
+	<link rel="stylesheet" th:href="@{/css/company.css}">
 </head>
 
 <body>
@@ -15,17 +15,17 @@
 		</div>
 		<div class="card acc">
 			<form th:action="@{/deleted-companies}" method="get" class="search-form">
-				<div class="search-item">
+				<div class="form-group form-group-search">
 					<label>企業名</label>
-					<input type="text" name="companyName" class="form-control" th:value="${companyName}"
+					<input type="text" name="companyName" class="form-control fixed-all30" th:value="${companyName}"
 						placeholder="例：株式会社システム">
 				</div>
-				<div class="search-item">
+				<div class="form-group form-group-search">
 					<label>電話番号</label>
-					<input type="text" name="companyTel" class="form-control" th:value="${companyTel}"
+					<input type="text" name="companyTel" class="form-control fixed-all30" th:value="${companyTel}"
 						placeholder="例：0901111111">
 				</div>
-				<button type="submit" class="btn btn-secondary btn-search">検索</button>
+				<button type="submit" class="company-btn-search">検索</button>
 			</form>
 		</div>
 		<form method="post" id="listForm">

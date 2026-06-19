@@ -1,0 +1,214 @@
+@charset "UTF-8";@charset "UTF-8";
+
+/* =========================================
+   Components (カード、テーブル)
+========================================= */
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table th,
+.table td {
+	border-bottom: 1px solid #ddd;
+	padding: 12px;
+	text-align: center;
+}
+
+.table th {
+	font-weight: bold;
+}
+
+.table-dark th:col-checkbox {
+	width: 50px;
+	text-align:center;
+	background-color: #2c3e50;
+	color: white;
+	border-bottom: none;
+}
+
+.export-table .value{
+	text-align: center;
+	transform: translate(-100px, 0);
+	
+}
+
+.export-contents p{
+	width: 700px;
+	margin:20px auto 0;	
+}
+
+.table-scroll.export-table {
+	max-height: 340px;
+	width: 700px;
+	margin:20px auto 0;
+}
+
+/* アカウントID（半角3文字） */
+.table-dark th:nth-child(2),
+.table-dark td:nth-child(2){
+	width: 4em;
+    white-space: nowrap;
+}
+
+/* ログインID（半角12文字） */
+.table-dark th:nth-child(3),
+.table-dark td:nth-child(3) {
+    width: 12em;
+    white-space: nowrap;
+}
+
+/* 権限（全角2文字） */
+.table-dark th:nth-child(4),
+.table-dark td:nth-child(4) {
+    width: 4em;
+    white-space: nowrap;
+}
+
+/* 社員名 */
+.table-dark th:nth-child(5),
+.table-dark td:nth-child(5) {
+    width: 20em;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* 操作列 */
+.table-dark .col-action {
+    width: 5em;
+}
+
+/* アカウントID（半角3文字） */
+.acc_id{
+	width:6em ;
+}
+
+.acc_logId{
+	width:12em !important;
+}
+
+.acc_per{
+	width:4em !important;
+}
+
+.acc_pas{
+	width:8em !important;
+}
+
+/* =========================================*/
+/*   Buttons & Toolbars (ボタンとツールバー)*/
+/*========================================= */
+
+.btn-search-position{
+	transform:translate(-10px, 15px);
+	padding: 7px 12px;
+}
+/* =========================================
+   Forms & Validation (入力フォームとエラー)
+========================================= */
+.search-row {
+	display: flex;
+	gap: 20px;
+}
+
+.search-row .form-group {
+	flex: 1;
+}
+.search-form{
+	display: flex;
+    gap: 30px;
+	width: 100%;
+}
+
+.search-item.button{
+    flex: 0 0 auto;
+}
+
+.input-form{
+	width: 800px;
+}
+
+.input-form .form-group{
+	width: 50%;
+}
+
+.input-form{
+	width: 800px;
+}
+.input-form input{
+	margin: auto;
+	width: 400px;
+	text-align: left;
+}
+
+.input-form select{
+	width: 100px;
+	margin-right: auto;
+
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+	margin-bottom: 15px;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 50px;
+}
+
+.form-group-search {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    align-items: center;
+}
+
+.search-form .form-group{
+	padding: 0;
+	width: 100%;
+}
+.search-item{
+	width: 300px;
+}
+
+.form-group .error-message{
+	width: 400px;
+	height: 20px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+	width: 100%;
+}
+
+.form-control {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.form-card {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.form-help-text {
+	font-size: 0.85rem;
+	color: #64748b;
+	margin-top: 0;
+	margin-bottom: 8px;
+}
+
+.form-actions {
+	margin-top: 25px;
+	display: flex;
+	gap: 90px;
+	justify-content: center;
+	width: 100%;
+}
