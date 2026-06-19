@@ -415,7 +415,7 @@ public class AssignmentController {
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment; filename=assignment.csv");
+		headers.add("Content-Disposition", "attachment; filename=assignments.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}
