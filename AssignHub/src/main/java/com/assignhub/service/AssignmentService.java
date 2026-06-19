@@ -323,9 +323,9 @@ public class AssignmentService {
 
 				if (!hasError && (asm.getAssignmentId() == null)) {
 					if ((assignmentCount + insertPlan) >= 500) {
-						String limitMsg = "登録後の件数が上限に達しています。アサインの登録上限は500件です";
-						result.errors.add(new CsvRowError(rowNum, "上限", limitMsg));
-						result.limitMessage = limitMsg;
+						String limitError = "登録後の件数が上限に達しています。アサインの登録上限は500件です";
+						result.errors.add(new CsvRowError(rowNum, "上限", limitError));
+						result.limitMessage = limitError;
 						hasError = true;
 					}
 				}
