@@ -106,7 +106,7 @@ public class DeletedEmployeeController {
 			return "redirect:/deleted-employees";
 		}
 		if (deletedEmployeeService.isEmployeeLimitReachedAfterRestore(ids.size())) {
-			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。企業情報の登録上限は500件です。");
+			attributes.addFlashAttribute("toastError", "復元後の件数が上限に達しています。社員情報の登録上限は500件です。");
 			return "redirect:/deleted-employees";
 		}
 		if (deletedEmployeeService.existAccountsByEmployeeIds(ids)) {
