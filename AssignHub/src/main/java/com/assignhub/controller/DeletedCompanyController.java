@@ -51,10 +51,6 @@ public class DeletedCompanyController {
 		model.addAttribute("companyTel", companyTel);
 		return "deleted_company/index";
 	}
-
-	// ==========================================
-	// 復元処理
-	// ==========================================
 	/**
 	 * 論理削除済み企業を一件復元する。
 	 *
@@ -101,10 +97,6 @@ public class DeletedCompanyController {
 		deletedCompanyService.restoreBulk(ids);
 		return "redirect:/deleted-companies";
 	}
-
-	// ==========================================
-	// 物理削除処理
-	// ==========================================
 	/**
 	 * 論理削除済み企業を一件物理削除する。
 	 *
@@ -124,8 +116,7 @@ public class DeletedCompanyController {
 
 		deletedCompanyService.physicalDelete(id);
 		return "redirect:/deleted-companies";
-	}
-	
+	}	
 	/**
 	 * 選択された複数の論理削除済み企業情報を一括で物理削除する。
 	 *
@@ -153,11 +144,6 @@ public class DeletedCompanyController {
 		deletedCompanyService.physicalDeleteBulk(ids);
 		return "redirect:/deleted-companies";
 	}
-
-	// ==========================================
-	// エクスポート処理
-	// ==========================================
-	
 	 /**
 	 * 論理削除済み企業情報のエクスポート画面を表示する。
 	 *

@@ -66,11 +66,7 @@ public class DeletedCompanyService {
 			deletedCompanyMapper.physicalDeleteBulk(ids);
 		}
 	}
-
-	// =======================================================
-	// Controllerからのチェック用メソッド（booleanを返す）
-	// =======================================================
-
+	
 	/** * 単一企業に紐づく社員情報（派遣先 または パートナー所属元）が存在するか判定 
 	 */
 	public boolean existEmployeesByCompanyId(Integer id) {
@@ -101,9 +97,7 @@ public class DeletedCompanyService {
 	 * @param id 復元するアサイン履歴のid
 	 * @return 重複していればtrue
 	 */
-	// DeletedCompanyService.java 内
 	public boolean isCompanyIdDuplicate(Integer excludeCompanyId) {
-		// 1件ずつの id を渡す（Mapper側で自動的に "ids" に翻訳されてXMLへ届きます）
 		int count = deletedCompanyMapper.countByCompanyId(excludeCompanyId);
 		return count > 0;	
 	}
@@ -117,12 +111,8 @@ public class DeletedCompanyService {
 	 * @return 500件を超える場合はtrue
 	 */
 	public boolean isCompanyLimitReachedAfterRestore(int restoreCount) {
-		// 1. 現在有効な（削除されていない）企業数を取得する
-		// ※ 既存のCompanyService等から取得するか、独自に count を取得してください
 		int currentActiveCount = deletedCompanyMapper.countActiveCompanies();
 
-		// 2. 現在の有効数 + これから復元する件数 が 500 を超えるかチェック
 		return (currentActiveCount + restoreCount) > 500;
 	}
-
 }
