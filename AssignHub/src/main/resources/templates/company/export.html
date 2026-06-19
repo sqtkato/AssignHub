@@ -5,7 +5,6 @@
 <head>
 	<title>企業情報エクスポート</title>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
 </head>
 
 <body>
@@ -56,16 +55,15 @@
 								<td th:text="${comp.companyTel}"></td>
 							</tr>
 							<tr th:if="${#lists.isEmpty(companies)}">
-								<td colspan="5" class="text-center">該当するデータがありません。</td>
+								<td colspan="4" class="text-center">該当するデータがありません。</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-				<p class="company-export-note">※詳細画面がエクスポートされます</p>
+				<p class="company-export-note">※詳細情報がエクスポートされます</p>
 			</div>
-			<div>
-				<form th:action="@{/companies/export/download(ids=${ids})}" method="post"
-					class="action-area action-area-wide">
+			<div class="action-area">
+				<form th:action="@{/companies/export/download(ids=${ids})}" method="post">
 					<button type="submit" class="btn-export">エクスポート</button>
 					<button type="button" id="btn_account_back" class="btn-back"
 						th:onclick="|location.href='@{/companies}'|">戻る</button>
