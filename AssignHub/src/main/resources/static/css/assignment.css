@@ -56,13 +56,13 @@
 	white-space: nowrap;
 }
 
-.table td:last-child {
-	font-size: 0;
-}
+.table tr.clickable-row td:last-child {
+      font-size: 0;
+  }
 
 /* 社員名の幅を調整 */
 .table th:nth-child(3), .table td:nth-child(3) {
-	min-width: 10em;           
+	min-width: 10em;
 	white-space: normal;
 	word-break: break-all;
 }
@@ -86,4 +86,4 @@
 
 .form-b {
     width: 20%;
-}
+} 
