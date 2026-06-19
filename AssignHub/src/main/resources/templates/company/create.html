@@ -38,7 +38,7 @@
 				</div>
 				<div class="form-group">
 					<label>設立年度 </label>
-					<input type="number" th:field="*{foundedYear}" class="form-control fixed-half5"
+					<input type="text" th:field="*{foundedYear}" class="form-control fixed-half5"
 						th:classappend="${#fields.hasErrors('foundedYear')} ? 'input-error'"
 						placeholder="例：2026">
 					<div class="error-message" th:if="${#fields.hasErrors('foundedYear')}" th:errors="*{foundedYear}">
