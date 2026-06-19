@@ -63,8 +63,9 @@
 				</div>
 				<p class="company-export-note">※詳細画面がエクスポートされます</p>
 			</div>
-			<div class="action-area">
-				<form th:action="@{/companies/export/download(ids=${ids})}" method="post">
+			<div>
+				<form th:action="@{/companies/export/download(ids=${ids})}" method="post"
+					class="action-area action-area-wide">
 					<button type="submit" class="btn-export">エクスポート</button>
 					<button type="button" id="btn_account_back" class="btn-back"
 						th:onclick="|location.href='@{/companies}'|">戻る</button>
