@@ -97,8 +97,8 @@
 						class="btn btn-primary">変更</a>
 								
 				
-						<form th:action="@{/companies/{id}/delete(id=${company.companyId})}" method="post" style="display:inline;">
-						    <button type="button" class="btn btn-danger"
+						<form>
+						   <button type="button" class="btn btn-danger"
 							th:onclick="|openDeleteModal(${company.companyId})|">削除</button>
 						</form>
 
