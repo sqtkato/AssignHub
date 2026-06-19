@@ -15,14 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.assignhub.entity.Company;
 import com.assignhub.mapper.CompanyMapper;
 
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 企業情報（顧客・パートナー）管理に関するビジネスロジックを提供するサービスクラス。
  * * @version 1.00 2026/06/01
  * @author SQT）チームC
  */
-@Slf4j
+
 @Service
 public class CompanyService {
 
@@ -228,6 +227,9 @@ public class CompanyService {
 				} else if (companyNameKana.length() > 100) {
 					result.errors.add(new CsvRowError(rowNum, "企業名カナ", "企業名カナは100文字以内で入力してください"));
 					hasError = true;
+				} else if (!companyNameKana.matches("^[ァ-ヶー]+$")) {
+					result.errors.add(new CsvRowError(rowNum, "企業名カナ", "企業名カナは全角カナで入力してください"));
+					hasError = true;
 				} else {
 					company.setCompanyNameKana(companyNameKana);
 				}
@@ -254,6 +256,9 @@ public class CompanyService {
 					if (employeeCount.length() > 5) {
 						result.errors.add(new CsvRowError(rowNum, "社員数", "社員数は5文字以内で入力してください"));
 						hasError = true;
+					}else if (!employeeCount.matches("^[0-9]+$")) {
+				        result.errors.add(new CsvRowError(rowNum, "社員数", "社員数は数字で入力してください"));
+				        hasError = true;
 					} else {
 						company.setEmployeeCount(Integer.parseInt(employeeCount));
 					}
@@ -328,36 +333,42 @@ public class CompanyService {
 					}
 				}
 
-				String repLast = cols[12].trim();
-				if (repLast.length() > 50) {
+				String repLastName = cols[12].trim();
+				if (repLastName.length() > 50) {
 					result.errors.add(new CsvRowError(rowNum, "代表者姓", "代表者姓は50文字以内で入力してください"));
 					hasError = true;
 				} else {
-					company.setRepLastName(repLast);
+					company.setRepLastName(repLastName);
 				}
 
-				String repFirst = cols[13].trim();
-				if (repFirst.length() > 50) {
+				String repFirstName = cols[13].trim();
+				if (repFirstName.length() > 50) {
 					result.errors.add(new CsvRowError(rowNum, "代表者名", "代表者名は50文字以内で入力してください"));
 					hasError = true;
 				} else {
-					company.setRepFirstName(repFirst);
+					company.setRepFirstName(repFirstName);
 				}
 
-				String repLastKana = cols[14].trim();
-				if (repLastKana.length() > 100) {
+				String repLastNameKana = cols[14].trim();
+				if (repLastNameKana.length() > 100) {
 					result.errors.add(new CsvRowError(rowNum, "代表者姓カナ", "代表者姓カナは100文字以内で入力してください"));
 					hasError = true;
-				} else {
-					company.setRepLastNameKana(repLastKana);
-				}
-
-				String repFirstKana = cols[15].trim();
-				if (repFirstKana.length() > 100) {
-					result.errors.add(new CsvRowError(rowNum, "代表者名カナ", "代表者名カナは100文字以内で入力してください"));
+				} else if (!repLastNameKana.matches("^[ァ-ヶー]+$")) {
+					result.errors.add(new CsvRowError(rowNum, "代表者姓カナ", "代表者姓カナは全角カナで入力してください"));
 					hasError = true;
 				} else {
-					company.setRepFirstNameKana(repFirstKana);
+					company.setRepLastNameKana(repLastNameKana);
+				}
+
+				String repFirstNameKana = cols[15].trim();
+				if (repFirstNameKana.length() > 100) {
+					result.errors.add(new CsvRowError(rowNum, "代表者名カナ", "代表者名カナは100文字以内で入力してください"));
+					hasError = true;
+				} else if (!repFirstNameKana.matches("^[ァ-ヶー]+$")) {
+					result.errors.add(new CsvRowError(rowNum, "代表者名カナ", "代表者名カナは全角カナで入力してください"));
+					hasError = true;	
+				} else {
+					company.setRepFirstNameKana(repFirstNameKana);
 				}
 				if (!hasError && (company.getCompanyId() == null)) {
 				if ((companyCount + insertPlan) >= 500) {
