@@ -65,34 +65,6 @@
 
 /* export画面用テーブルのスクロール */
 .export-table-scroll {
-	max-height: 290px;
-	overflow-y: auto;
-}
-
-
-/* 一覧画面用テーブルのスクロール */
-.table-scroll {
 	max-height: 340px;
 	overflow-y: auto;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
