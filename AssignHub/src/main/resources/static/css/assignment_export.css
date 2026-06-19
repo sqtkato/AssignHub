@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.table-scroll.export-table .table th:nth-child(2),
+  .table-scroll.export-table .table td:nth-child(2) {
+      max-width: 21em;
+      white-space: normal;
+      overflow-wrap: break-word;
+  }
+
+  .table-scroll.export-table .table th:nth-child(3),
+  .table-scroll.export-table .table td:nth-child(3) {
+      max-width: 25em;
+      white-space: normal;
+      overflow-wrap: break-word;
+  }
