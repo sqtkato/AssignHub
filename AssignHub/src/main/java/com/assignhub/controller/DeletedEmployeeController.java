@@ -162,7 +162,6 @@ public class DeletedEmployeeController {
 			return "redirect:/deleted-employees";
 		}
 
-		// Serviceの判定メソッドを使って一括不在条件をチェック
 		if (deletedEmployeeService.existAssignmentsByEmployeeIds(ids)) {
 			attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するアカウントが含まれているため、物理削除できません。先にアサイン履歴情報を削除してください。");
 			return "redirect:/deleted-employees";
