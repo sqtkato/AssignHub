@@ -92,7 +92,7 @@ public class DeletedCompanyService {
 	}
 
 	/**
-	 * アサイン履歴がすでに登録されているか（重複しているか）を判定する。
+	 * 企業情報がすでに登録されているか（重複しているか）を判定する。
 	 *
 	 * @param id 復元するアサイン履歴のid
 	 * @return 重複していればtrue
