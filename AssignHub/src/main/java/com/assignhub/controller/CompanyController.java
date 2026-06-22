@@ -117,9 +117,7 @@ public class CompanyController {
 				companyForm.getCompanyFax(), null)) {
 			result.rejectValue("companyName", "error.companyForm", "この企業名は既に使用されています");
 			result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に使用されています");
-			if (companyForm.getCompanyFax() != null && !companyForm.getCompanyFax().trim().isEmpty()) {
-				result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
-			}
+			result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
 		}
 
 		if (result.hasErrors()) {
@@ -200,9 +198,7 @@ public class CompanyController {
 				companyForm.getCompanyFax(), companyId)) {
 			result.rejectValue("companyName", "error.companyForm", "この企業名は既に使用されています");
 			result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に使用されています");
-			if (companyForm.getCompanyFax() != null && !companyForm.getCompanyFax().trim().isEmpty()) {
-				result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
-			}
+			result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
 		}
 
 		if (result.hasErrors()) {
