@@ -297,16 +297,19 @@ public class EmployeeService {
 
 				String zipCode = cols[8].trim();
 				if (zipCode.isEmpty()) {
-					result.errors.add(new CsvRowError(rowNum, "郵便番号", "郵便番号は必須です"));
-					hasError = true;
-				} else if (zipCode.length() > 7) {
-					result.errors.add(new CsvRowError(rowNum, "郵便番号", "郵便番号は7桁以内で入力してください"));
-					hasError = true;
+				    result.errors.add(new CsvRowError(rowNum, "郵便番号", "郵便番号は必須です"));
+				    hasError = true;
 				} else if (zipCode.contains("-")) {
-					result.errors.add(new CsvRowError(rowNum, "郵便番号", "郵便番号の形式が正しくありません\nハイフンなしで入力してください"));
-					hasError = true;
+				    result.errors.add(new CsvRowError(rowNum, "郵便番号", "郵便番号の形式が正しくありません\nハイフンなしで入力してください"));
+				    hasError = true;
+				} else if (!zipCode.matches("^[0-9]+$")) {
+				    result.errors.add(new CsvRowError(rowNum, "郵便番号", "郵便番号は数値で入力してください"));
+				    hasError = true;
+				} else if (zipCode.length() > 7) {
+				    result.errors.add(new CsvRowError(rowNum, "郵便番号", "郵便番号は7桁以内で入力してください"));
+				    hasError = true;
 				} else {
-					emp.setZipCode(zipCode);
+				    emp.setZipCode(zipCode);
 				}
 
 				String address1 = cols[9].trim();
@@ -387,16 +390,20 @@ public class EmployeeService {
 				}
 
 				String empTel = cols[16].trim();
-				if (!empTel.isEmpty()) {
-					if (empTel.contains("-")) {
-						result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号の形式が正しくありません\nハイフンなしで入力してください"));
-						hasError = true;
-					} else if (empTel.length() != 10 && empTel.length() != 11) {
-						result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号は10桁または11桁で入力してください"));
-						hasError = true;
-					} else {
-						emp.setEmpTel(empTel);
-					}
+				if (empTel.isEmpty()) {
+				    result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号は必須です"));
+				    hasError = true;
+				} else if (empTel.contains("-")) {
+				    result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号の形式が正しくありません\nハイフンなしで入力してください"));
+				    hasError = true;
+				} else if (!empTel.matches("^[0-9]+$")) {
+				    result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号は数値で入力してください"));
+				    hasError = true;
+				} else if (empTel.length() != 10 && empTel.length() != 11) {
+				    result.errors.add(new CsvRowError(rowNum, "電話番号", "電話番号は10桁または11桁で入力してください"));
+				    hasError = true;
+				} else {
+				    emp.setEmpTel(empTel);
 				}
 
 				String email = cols[17].trim();
