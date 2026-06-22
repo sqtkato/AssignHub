@@ -106,11 +106,11 @@ public class DeletedCompanyController {
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
 		if (deletedCompanyService.existEmployeesByCompanyId(id)) {
-			attributes.addFlashAttribute("toastError", "紐づく社員情報が存在するため、物理削除できません。");
+			attributes.addFlashAttribute("toastError", "紐づく社員情報（パートナー）が存在するため、削除できません。先に社員情報を削除してください。");
 			return "redirect:/deleted-companies";
 		}
 		if (deletedCompanyService.existAssignmentsByCompanyId(id)) {
-			attributes.addFlashAttribute("toastError", "紐づくアサイン履歴が存在するため、物理削除できません。");
+			attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するため、削除できません。先にアサイン履歴情報を削除してください。");
 			return "redirect:/deleted-companies";
 		}
 
@@ -133,11 +133,11 @@ public class DeletedCompanyController {
 		}
 
 		if (deletedCompanyService.existEmployeesByCompanyIds(ids)) {
-			attributes.addFlashAttribute("toastError", "紐づく社員情報が存在する企業が含まれているため、一括削除できません。");
+			attributes.addFlashAttribute("toastError", "紐づく社員情報（パートナー）が存在するため、削除できません。先に社員情報を削除してください。");
 			return "redirect:/deleted-companies";
 		}
 		if (deletedCompanyService.existAssignmentsByCompanyIds(ids)) {
-			attributes.addFlashAttribute("toastError", "紐づくアサイン履歴が存在する企業が含まれているため、一括削除できません。");
+			attributes.addFlashAttribute("toastError", "紐づくアサイン履歴情報が存在するため、削除できません。先にアサイン履歴情報を削除してください。");
 			return "redirect:/deleted-companies";
 		}
 
