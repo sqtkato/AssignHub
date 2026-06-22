@@ -52,7 +52,7 @@ public class CompanyForm {
 	private String companyFax;
 	
 	
-	@Pattern(regexp = "^{4}?$", message = "設立年度は4桁で入力してください")
+	@Pattern(regexp = "^[0-9]{4}$", message = "設立年度は4桁で入力してください")
 	@Pattern(regexp = "^[0-9]*$", message = "設立年度は数字で入力してください")
 	private String foundedYear;
 
