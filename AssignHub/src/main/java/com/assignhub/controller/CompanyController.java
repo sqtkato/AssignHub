@@ -2,7 +2,6 @@ package com.assignhub.controller;
 
 
 
-import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -118,7 +117,9 @@ public class CompanyController {
 				companyForm.getCompanyFax(), null)) {
 			result.rejectValue("companyName", "error.companyForm", "この企業名は既に使用されています");
 			result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に使用されています");
-			result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
+			if (companyForm.getCompanyFax() != null && !companyForm.getCompanyFax().trim().isEmpty()) {
+				result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
+			}
 		}
 
 		if (result.hasErrors()) {
@@ -199,7 +200,9 @@ public class CompanyController {
 				companyForm.getCompanyFax(), companyId)) {
 			result.rejectValue("companyName", "error.companyForm", "この企業名は既に使用されています");
 			result.rejectValue("companyTel", "error.companyForm", "この電話番号は既に使用されています");
-			result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
+			if (companyForm.getCompanyFax() != null && !companyForm.getCompanyFax().trim().isEmpty()) {
+				result.rejectValue("companyFax", "error.companyForm", "このFAX番号は既に使用されています");
+			}
 		}
 
 		if (result.hasErrors()) {
@@ -325,7 +328,7 @@ public class CompanyController {
 				model.addAttribute("toastMessage", result.successCount + "件のインポート処理が完了しました");
 			}
 			return "company/import";
-		} catch (MalformedInputException e) {
+		} catch (java.nio.charset.MalformedInputException e) {
 			model.addAttribute("errorMessage", "UTF-8のCSVファイルを選択してください");
 			return "company/import";
 		}
