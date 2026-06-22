@@ -63,12 +63,12 @@ public interface DeletedAssignMapper {
 
 
 	/**
-	 * 指定されたアサインIDに紐づく企業数(派遣先)をカウントする（単一復元の生存チェック用）。
+	 * 指定されたアサインIDに紐づく企業数(アサイン先)をカウントする（単一復元の生存チェック用）。
 	 */
 	int existCompanyDispatchsByAssignId(@Param("id") Integer id);
 
 	/**
-	 * 指定されたアサインIDのいずれかに紐づく企業数(派遣先)をカウントする（一括復元の生存条件チェック用）。
+	 * 指定されたアサインIDのいずれかに紐づく企業数(アサイン先)をカウントする（一括復元の生存条件チェック用）。
 	 */
 	int existCompanyDispatchsByAssignIds(@Param("ids") List<Integer> ids);
 

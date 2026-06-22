@@ -35,7 +35,7 @@ public class DeletedAssignService {
 	/**
 	 * 選択されたアサイン履歴の情報を取得する（CSVエクスポート用）。
 	 *
-	 * @param ids 画面のチェックボックスで選択されたアカウントIDのリスト
+	 * @param ids 画面のチェックボックスで選択されたアサインIDのリスト
 	 */
 	public List<Assignment> findAllByIds(List<Integer> ids) {
 		if (ids != null && !ids.isEmpty()) {
