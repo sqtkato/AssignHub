@@ -409,11 +409,21 @@ public class AssignmentService {
 		return assignmentMapper.countAll() >= 500;
 	}
 	
+	/**
+	 * 指定された社員IDのデータを論理削除する。
+	 *
+	 * @param id 削除対象の社員ID
+	 */
 	@Transactional
 	public void deleteByEmpId(Integer id) {
 		assignmentMapper.deleteByEmpId(id);
 	}
 	
+	/**
+	 * 指定された複数の社員IDのデータを一括で論理削除する。
+	 *
+	 * @param ids 削除対象となる社員IDのリスト
+	 */
 	@Transactional
 	public void deleteBulkByEmpId(List<Integer> ids) {
 		assignmentMapper.deleteBulkByEmpId(ids);

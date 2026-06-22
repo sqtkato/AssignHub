@@ -113,7 +113,15 @@ public interface AssignmentMapper {
 
 	int countAll();
 	
+	/**
+     * アサイン情報を論理削除する。
+     * @param id 社員ID
+     */
 	void deleteByEmpId(@Param("id") Integer id);
 	
+	 /**
+	  * 複数のアサイン情報を一括で論理削除する。
+	  * @param ids 削除対象の社員IDリスト
+	  */
 	void deleteBulkByEmpId(@Param("ids") List<Integer> ids);
 }
