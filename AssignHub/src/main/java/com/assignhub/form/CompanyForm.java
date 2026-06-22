@@ -51,7 +51,8 @@ public class CompanyForm {
 	@Pattern(regexp = "^[0-9]*$",message = "FAX番号の形式が正しくありません　ハイフンなしで入力してください")
 	private String companyFax;
 	
-	@Size(min = 4, max = 4, message = "設立年度は4桁で入力してください")
+	
+	@Pattern(regexp = "^{4}?$", message = "設立年度は4桁で入力してください")
 	@Pattern(regexp = "^[0-9]*$", message = "設立年度は数字で入力してください")
 	private String foundedYear;
 
