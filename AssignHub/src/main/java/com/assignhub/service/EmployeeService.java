@@ -355,7 +355,7 @@ public class EmployeeService {
 					        result.errors.add(new CsvRowError(rowNum, "ログインID", "指定されたログインIDは存在しません"));
 					        hasError = true;
 					    } else if (isAccountIdUsed(account.getAccountId(), parsedId)) {
-					        result.errors.add(new CsvRowError(rowNum, "ログインID", "このログインIDは既に他の社員に使用されています"));
+					        result.errors.add(new CsvRowError(rowNum, "ログインID", "このログインIDは既に使用されています"));
 					        hasError = true;
 					    } else {
 					        emp.setAccountId(account.getAccountId());
