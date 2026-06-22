@@ -19,12 +19,12 @@
 				<tr>
 					<th>作成日時</th>
 			
-					<td th:text="${#temporals.format(company.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					<td th:text="${#temporals.format(company.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
 				</tr>
 
 				<tr>
 					<th>更新日時</th>
-					<td th:text="${#temporals.format(company.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					<td th:text="${#temporals.format(company.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
 				</tr>
 
 				<tr>
@@ -96,12 +96,8 @@
 					<a th:href="@{/companies/{id}/edit(id=${company.companyId}, from='detail')}"
 						class="btn btn-primary">変更</a>
 								
-				
-				
 						   <button type="button" class="btn btn-danger"
 							th:onclick="|openDeleteModal(${company.companyId})|">削除</button>
-						
-
 				
 								
 				<a th:href="@{/companies}" class ="btn btn-secondary">戻る</a>
