@@ -335,8 +335,10 @@ public class CompanyService {
 				                "この企業名は既に使用されています"));
 				        result.errors.add(new CsvRowError(rowNum, "TEL",
 				                "この電話番号は既に使用されています"));
-				        result.errors.add(new CsvRowError(rowNum, "FAX",
-				                "このFAX番号は既に使用されています"));
+				        if (faxForCheck != null) {
+				            result.errors.add(new CsvRowError(rowNum, "FAX",
+				            	"このFAX番号は既に使用されています"));
+				        }
 				        hasError = true;
 				    }
 				}
