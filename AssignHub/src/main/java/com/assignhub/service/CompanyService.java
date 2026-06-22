@@ -240,6 +240,9 @@ public class CompanyService {
 					if (foundedYear.length() > 4){
 						result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は4桁で入力してください"));
 						hasError = true;
+					}else if (!foundedYear.matches("^[0-9]+$")) {
+				        result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は数字で入力してください"));
+				        hasError = true;
 					} else {
 						int year = Integer.parseInt(foundedYear);
 						int currentYear = Year.now().getValue();
@@ -331,7 +334,7 @@ public class CompanyService {
 				        result.errors.add(new CsvRowError(rowNum, "企業名",
 				                "この企業名は既に使用されています"));
 				        result.errors.add(new CsvRowError(rowNum, "TEL",
-				                "この電話番号Lは既に使用されています"));
+				                "この電話番号は既に使用されています"));
 				        result.errors.add(new CsvRowError(rowNum, "FAX",
 				                "このFAX番号は既に使用されています"));
 				        hasError = true;
