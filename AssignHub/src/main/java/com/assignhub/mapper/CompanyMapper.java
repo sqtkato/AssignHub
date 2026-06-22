@@ -22,7 +22,7 @@ public interface CompanyMapper {
 	 * @param order   ソート順（asc または desc）
 	 * @return 企業エンティティのリスト
 	 */
-	List<Company> findAll(@Param("keyword") String keyword, @Param("sort") String sort, @Param("order") String order);
+	List<Company> findAll(@Param("companyName") String companyName, @Param("companyTel") String companyTel);
 
 	/**
 	 * 企業IDを指定して企業情報を1件取得する。

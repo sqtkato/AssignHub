@@ -46,13 +46,11 @@ public class CompanyController {
 	 * @return 一覧画面のテンプレートパス
 	 */
 	@GetMapping
-	public String index(@RequestParam(name = "keyword", required = false) String keyword,
-			@RequestParam(name = "sort", defaultValue = "company_id") String sort,
-			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-		model.addAttribute("companies", companyService.findAll(keyword, sort, order));
-		model.addAttribute("keyward", keyword);
-		model.addAttribute("currentSort", sort);
-		model.addAttribute("currentOrder", order);
+	public String index(@RequestParam(name = "companyName", required = false) String companyName,
+			@RequestParam(name = "companyTel", required = false) String companyTel, Model model) {
+		model.addAttribute("companies", companyService.findAll(companyName, companyTel));
+		model.addAttribute("companyName", companyName);
+		model.addAttribute("companyTel", companyTel);
 		return "company/index";
 	}
 

@@ -12,12 +12,16 @@
 		<result property="updatedAt" column="updated_at" />
 	</resultMap>
 
-<select id="findAll" resultMap="companyResultMap">
+    <select id="findAll" resultMap="companyResultMap">
 		SELECT *FROM m_company
 		<where>
-		<if test=" keyword != null and keyword != ''">
-			company_name LIKE CONCAT('%', #{keyword}, '%')
-		</if>
+			delete_flg=0
+			<if test="companyName != null and companyName != ''">
+				AND company_name LIKE CONCAT('%', #{companyName}, '%')
+			</if>
+			<if test="companyTel != null and companyTel != ''">
+				AND company_tel LIKE CONCAT('%', #{companyTel}, '%')
+			</if>
 		</where>
 		ORDER BY company_id ASC
 	</select>

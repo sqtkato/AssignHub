@@ -90,7 +90,7 @@ public class EmployeeController {
 			return "redirect:/employees";
 		}
 		model.addAttribute("employeeForm", new EmployeeForm());
-		model.addAttribute("companies", companyService.findAll(null, null, null));
+		model.addAttribute("companies", companyService.findAll(null, null));
 		model.addAttribute("accounts", accountService.findLoginId());
 		return "employee/create";
 	}
@@ -116,7 +116,7 @@ public class EmployeeController {
 
 		if (result.hasErrors()) {
 			// 新規登録画面（create）を開いたときと同じように、コンボボックスのリストを再セットする
-			model.addAttribute("companies", companyService.findAll(null, null, null));
+			model.addAttribute("companies", companyService.findAll(null, null));
 			model.addAttribute("accounts", accountService.findLoginId());
 
 			return "employee/create";
@@ -179,7 +179,7 @@ public class EmployeeController {
 			model.addAttribute("employeeForm", form);
 			model.addAttribute("fromPage", from);
 		}
-		model.addAttribute("companies", companyService.findAll(null, "emp_company_name", "asc"));
+		model.addAttribute("companies", companyService.findAll(null, null));
 		model.addAttribute("accounts", accountService.findLoginId());
 		return "employee/edit";
 	}
@@ -221,7 +221,7 @@ public class EmployeeController {
 
 		if (result.hasErrors()) {
 			model.addAttribute("fromPage", fromPage);
-			model.addAttribute("companies", companyService.findAll(null, null, null));
+			model.addAttribute("companies", companyService.findAll(null, null));
 			model.addAttribute("accounts", accountService.findLoginId());
 			return "employee/edit";
 		}

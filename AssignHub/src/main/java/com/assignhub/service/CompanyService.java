@@ -38,8 +38,8 @@ public class CompanyService {
 	 * @param order   昇順（asc）または降順（desc）
 	 * @return 企業エンティティのリスト
 	 */
-	public List<Company> findAll(String keyword, String sort, String order) {
-		return companyMapper.findAll(keyword, sort, order);
+	public List<Company> findAll(String companyName, String companyTel) {
+		return companyMapper.findAll(companyName, companyTel);
 	}
 	
 	
