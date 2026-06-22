@@ -312,11 +312,11 @@ public class CompanyController {
 		}
 		String filename = file.getOriginalFilename();
 		if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
-			model.addAttribute("errorMessage", "ファイル形式が正しくありません。CSVファイルを選択してください。");
+			model.addAttribute("toastError", "ファイル形式が正しくありません。CSVファイルを選択してください。");
 			return "company/import";
 		}
 		if (file.getSize() > 5 * 1024 * 1024) {
-			model.addAttribute("errorMessage", "ファイルサイズは5MB以内にしてください");
+			model.addAttribute("toastError", "ファイルサイズは5MB以内にしてください");
 			return "company/import";
 		}
 		try {
@@ -329,7 +329,7 @@ public class CompanyController {
 			}
 			return "company/import";
 		} catch (java.nio.charset.MalformedInputException e) {
-			model.addAttribute("errorMessage", "UTF-8のCSVファイルを選択してください");
+			model.addAttribute("toastError", "UTF-8のCSVファイルを選択してください");
 			return "company/import";
 		}
 	}
