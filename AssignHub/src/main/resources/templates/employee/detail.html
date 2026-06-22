@@ -43,11 +43,13 @@
 				</tr>
 				<tr>
 					<th>生年月日</th>
-					<td th:text="${#temporals.format(employee.birthDate,'yyyy/MM/dd')}"></td>
+					<td th:text="${employee.birthDate} ? ${#temporals.format(employee.birthDate, 'yyyy/MM/dd')} : 'ー'">
+					</td>
 				</tr>
 				<tr>
-					<th>入社年月</th>
-					<td th:text="${#temporals.format(employee.hireDate,'yyyy/MM/dd')}"></td>
+					<th>入社年月日</th>
+					<td th:text="${employee.hireDate} ? ${#temporals.format(employee.hireDate, 'yyyy/MM/dd')} : 'ー'">
+					</td>
 				</tr>
 				<tr>
 					<th>勤続年数</th>
@@ -82,12 +84,12 @@
 					<td th:text="${employee.company?.companyName} ?: 'ー'"></td>
 				</tr>
 				<tr>
-					<th>所属部署</th>
-					<td th:text="${employee.department} ?: 'ー'"></td>
+				    <th>所属部署</th>
+				    <td th:text="${employee.department ?: 'ー'}"></td>
 				</tr>
 				<tr>
-					<th>役職</th>
-					<td th:text="${employee.jobTitle}"></td>
+				    <th>役職</th>
+				    <td th:text="${employee.jobTitle ?: 'ー'}"></td>
 				</tr>
 				<tr>
 					<th>ログインID</th>
@@ -99,18 +101,24 @@
 				</tr>
 				<tr>
 					<th>契約開始日</th>
-					<td th:text="${employee.assignment?.contractStartDate} ? ${#temporals.format(employee.assignment.contractStartDate, 'yyyy/MM/dd')} : 'ー'"></td>
+					<td
+						th:text="${employee.assignment?.contractStartDate} ? ${#temporals.format(employee.assignment.contractStartDate, 'yyyy/MM/dd')} : 'ー'">
+					</td>
 				</tr>
 				<tr>
 					<th>契約終了日</th>
-					<td th:text="${employee.assignment?.contractEndDate} ? (${#temporals.format(employee.assignment.contractEndDate, 'yyyy/MM/dd')}) : 'ー'"></td>
+					<td
+						th:text="${employee.assignment?.contractEndDate} ? (${#temporals.format(employee.assignment.contractEndDate, 'yyyy/MM/dd')}) : 'ー'">
+					</td>
 				</tr>
 				<tr>
 					<th>契約単価</th>
-					<td th:text="${employee.assignment?.unitPrice} ? (${#numbers.formatInteger(employee.assignment.unitPrice, 3, 'COMMA')} + ' 円') : 'ー'"></td>
+					<td
+						th:text="${employee.assignment?.unitPrice} ? (${#numbers.formatInteger(employee.assignment.unitPrice, 3, 'COMMA')} + ' 円') : 'ー'">
+					</td>
 				</tr>
 			</table>
-			
+
 			<div class="form-actions form-actions-area-wide">
 				<a th:href="@{/employees/{id}/edit(id=${employee.empId},from='detail')}" class="btn btn-primary ">変更</a>
 				<form th:action="@{/employees/{id}/delete(id=${employee.empId})}" method="post" style="display:inline;">
