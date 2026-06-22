@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.assignhub.entity.Employee;
 import com.assignhub.form.EmployeeForm;
 import com.assignhub.service.AccountService;
+import com.assignhub.service.AssignmentService;
 import com.assignhub.service.CompanyService;
 import com.assignhub.service.EmployeeService;
 
@@ -42,6 +43,7 @@ public class EmployeeController {
 	private final EmployeeService employeeService;
 	private final CompanyService companyService;
 	private final AccountService accountService;
+	private final AssignmentService assignmentService;
 
 	/**
 	 * コンストラクタによる依存性の注入。
@@ -49,10 +51,12 @@ public class EmployeeController {
 	 * @param employeeService 社員サービス
 	 */
 	public EmployeeController(EmployeeService employeeService, AccountService accountService,
-			CompanyService companyService) {
+			CompanyService companyService, AssignmentService assignmentService) {
 		this.employeeService = employeeService;
 		this.accountService = accountService;
 		this.companyService = companyService;
+		this.assignmentService = assignmentService;
+		
 
 	}
 
@@ -251,6 +255,7 @@ public class EmployeeController {
 	 */
 	@PostMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
+		assignmentService.deleteByEmpId(id);
 		employeeService.delete(id);
 		attributes.addFlashAttribute("toastMessage", "社員情報を削除しました");
 		return "redirect:/employees";
@@ -270,6 +275,7 @@ public class EmployeeController {
 			attributes.addFlashAttribute("toastError", "削除する対象が選択されていません");
 			return "redirect:/employees";
 		}
+		assignmentService.deleteBulkByEmpId(ids);
 		employeeService.deleteBulk(ids);
 		attributes.addFlashAttribute("toastMessage", ids.size() + "件の社員情報を削除しました");
 		return "redirect:/employees";
