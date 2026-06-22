@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -236,12 +237,12 @@ public class CompanyService {
 
 				String foundedYear = cols[5].trim();
 				if (!foundedYear.isEmpty()) {
-					if (!foundedYear.matches("^[0-9]{4}$")) {
+					if (foundedYear.length() > 4){
 						result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は4桁で入力してください"));
 						hasError = true;
 					} else {
 						int year = Integer.parseInt(foundedYear);
-						int currentYear = java.time.Year.now().getValue();
+						int currentYear = Year.now().getValue();
 						if (year > currentYear) {
 							result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は" + currentYear + "現在年度以前を入力してください"));
 							hasError = true;
@@ -325,12 +326,16 @@ public class CompanyService {
 				}
 
 				if (!hasError) {
-					String faxForCheck = companyFax.isEmpty() ? null : companyFax;
-					if (isDuplicate(companyName, companyTel, faxForCheck, parsedId)) {
-						result.errors.add(new CsvRowError(rowNum, "企業名/TEL/FAX",
-								"この企業名は既に使用されています"));
-						hasError = true;
-					}
+				    String faxForCheck = companyFax.isEmpty() ? null : companyFax;
+				    if (isDuplicate(companyName, companyTel, faxForCheck, parsedId)) {
+				        result.errors.add(new CsvRowError(rowNum, "企業名",
+				                "この企業名は既に使用されています"));
+				        result.errors.add(new CsvRowError(rowNum, "TEL",
+				                "この電話番号Lは既に使用されています"));
+				        result.errors.add(new CsvRowError(rowNum, "FAX",
+				                "このFAX番号は既に使用されています"));
+				        hasError = true;
+				    }
 				}
 
 				String repLastName = cols[12].trim();
@@ -372,9 +377,9 @@ public class CompanyService {
 				}
 				if (!hasError && (company.getCompanyId() == null)) {
 				if ((companyCount + insertPlan) >= 500) {
-				    result.errors.add(new CsvRowError(rowNum, "上限",
-				        "登録後の件数が上限に達しています。企業情報の登録上限は500件です。"));
-				    result.limitMessage = "登録後の件数が上限に達しています。企業情報の登録上限は500件です。"; // ← thêm dòng này
+					String limitError = "登録後の件数が上限に達しています。企業情報の登録上限は500件です";
+					result.errors.add(new CsvRowError(rowNum, "上限", limitError));
+				    result.limitMessage = limitError;
 				    hasError = true;
 				}
 				}

@@ -2,6 +2,7 @@ package com.assignhub.controller;
 
 
 
+import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -324,7 +325,7 @@ public class CompanyController {
 				model.addAttribute("toastMessage", result.successCount + "件のインポート処理が完了しました");
 			}
 			return "company/import";
-		} catch (java.nio.charset.MalformedInputException e) {
+		} catch (MalformedInputException e) {
 			model.addAttribute("errorMessage", "UTF-8のCSVファイルを選択してください");
 			return "company/import";
 		}

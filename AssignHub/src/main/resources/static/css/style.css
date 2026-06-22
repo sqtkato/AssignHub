@@ -466,9 +466,11 @@ a:hover {
 
 .error-message {
 	color: #dc3545;
-	font-size: 0.85rem;
+	font-size: 1rem;
 	margin-top: 5px;
 	font-weight: 700;
+	text-align: center;
+	padding-top: 15px;
 }
 
 /* =========================================
@@ -941,8 +943,4 @@ a:hover {
 
 .modal-btn-danger:hover {
 	background: #c82333;
-}
-
-.error-message{
-font-weight: 700; 
 }

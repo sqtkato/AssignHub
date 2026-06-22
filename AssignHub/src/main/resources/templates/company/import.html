@@ -17,7 +17,7 @@
 				<p class="instruction">CSVファイルを選択して企業情報を一括登録・更新します。<br>
 					※既存の企業IDと一致する場合は上書き更新、空欄の場合は新規登録されます。</p>
 
-				<form th:action="@{/companies/import}" method="post" enctype="multipart/form-data" id="importForm">
+				<form th:action="@{/companies/import}" method="post" enctype="multipart/form-data" >
 					<div class="upload-zone">
 						<p class="upload-zone-title">企業情報CSVを選択してください</p>
 						<p class="upload-zone-format">対応形式: .csv (UTF-8) / BOMあり推奨、最大5MB</p>
@@ -41,8 +41,9 @@
 			<div class="card result-area" th:if="${importResult != null}">
 				<div class="result-title-row">
 					<h3 class="result-title">処理結果</h3>
-					    <span th:if="${!importResult.errors.isEmpty() and importResult.errors[0].field == '上限'}"
-						      th:text="${importResult.errors[0].message}" class="error-message">
+					    <span class="result-limit-msg"
+						th:if="${importResult.limitMessage != null}"
+						th:text="${importResult.limitMessage}">
 					</span>        
 				</div>
 				<div class="summary-box">
@@ -57,7 +58,7 @@
 						</div>
 					</div>
 				</div>
-				<div th:if="${importResult.errorCount gt 0}">
+				<div th:if="${importResult.errorCount > 0}">
 					<p class="error-table-msg">
 						以下の行でエラーが発生したため、取り込みをキャンセルしました。<br>
 						内容を修正して再アップロードしてください。
