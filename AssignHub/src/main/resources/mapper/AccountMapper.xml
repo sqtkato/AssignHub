@@ -21,13 +21,15 @@
 		e.delete_flg IS NULL)
 		<where>
 			a.delete_flg = 0
-			<if test="keyword != null and keyword != ''"> AND ( e.first_name LIKE CONCAT('%', #{keyword}, '%') OR
+			<if test="keyword != null and keyword != ''"> 
+				AND ( e.first_name LIKE CONCAT('%', #{keyword}, '%') OR
 				e.last_name LIKE CONCAT('%', #{keyword}, '%') ) </if>
 			<if test="permission != null"> AND permission = #{permission} </if>
 		</where>
 		ORDER BY a.account_id ASC
 	</select>
-	<select id="findById" resultMap="accountResultMap"> SELECT * FROM m_account WHERE
+	<select id="findById" resultMap="accountResultMap"> 
+		SELECT * FROM m_account WHERE
 		account_id = #{accountId}
 	</select>
 	<select id="findByIds" resultMap="accountResultMap">
@@ -38,18 +40,22 @@
 		<foreach collection="ids" item="id" open="(" separator=","
 			close=")"> #{id} </foreach>
 	</select>
-	<select id="findByLoginId" resultMap="accountResultMap"> SELECT * FROM m_account
+	<select id="findByLoginId" resultMap="accountResultMap"> 
+		SELECT * FROM m_account
 		WHERE login_id = #{loginId} AND delete_flg = 0
 	</select>
-	<insert id="insert" parameterType="com.assignhub.entity.Account"> INSERT INTO m_account
+	<insert id="insert" parameterType="com.assignhub.entity.Account"> 
+		INSERT INTO m_account
 		(login_id, password_hash, permission, delete_flg) VALUES (#{loginId},
 		#{passwordHash}, #{permission}, 0)
 	</insert>
-	<update id="update"> UPDATE m_account SET login_id =#{loginId},
+	<update id="update">
+		UPDATE m_account SET login_id =#{loginId},
 		permission= #{permission}, password_Hash = #{passwordHash}, updated_at
 		= NOW() WHERE account_id =#{accountId}
 	</update>
-	<update id="delete"> UPDATE m_account SET delete_flg = 1, updated_at =
+	<update id="delete"> 
+		UPDATE m_account SET delete_flg = 1, updated_at =
 		NOW() WHERE account_id = #{id}
 	</update>
 	<update id="deleteBulk">
@@ -61,9 +67,11 @@
 	<select id="countByLoginId" resultType="int">
 		SELECT COUNT(*) FROM m_account WHERE login_id = #{loginId} AND
 		delete_flg=0
-		<if test="excludeAccountId != null"> AND account_id != #{excludeAccountId} </if>
+		<if test="excludeAccountId != null"> 
+			AND account_id != #{excludeAccountId} </if>
 	</select>
-	<select id="countAll" resultType="int"> SELECT COUNT(*) FROM m_account
+	<select id="countAll" resultType="int"> 
+		SELECT COUNT(*) FROM m_account
 		WHERE delete_flg = 0
 	</select>
 </mapper>

@@ -32,7 +32,7 @@
                 <span class="required-badge">必須</span>
 
                 <input type="password" id="txt_account_password" class="form-input" th:field="*{password}" 
-				 maxlength="20" autocomplete="new-password">
+				 maxlength="20" autocomplete="off">
 
                 <div class="error-area">
                     <p th:each="error : ${#fields.errors('password')}" th:text="${error}"></p>
