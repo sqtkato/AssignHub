@@ -33,7 +33,7 @@
 .table th,
 .table td {
 	padding: 8px 4px;
-	font-size: 13px;
+	font-size: 12px;
 }
 
 /* ID列幅の調整 */
@@ -56,9 +56,9 @@
 	white-space: nowrap;
 }
 
-.table td:last-child {
-	font-size: 0;
-}
+.table tr.clickable-row td:last-child {
+      font-size: 0;
+  }
 
 /* 社員名の幅を調整 */
 .table th:nth-child(3), .table td:nth-child(3) {
@@ -77,4 +77,13 @@
 
 .table-scroll {
     max-height: 340px;
-	}
+}
+
+/* 入力欄の幅を調整 */
+.form-a {
+    width: 50%;
+}
+
+.form-b {
+    width: 20%;
+}
