@@ -113,6 +113,10 @@ public class EmployeeController {
 		if ("パートナー".equals(form.getEngineerType()) && form.getCompanyId() == null) {
 			result.rejectValue("companyId", "error.employeeForm", "所属企業は必須です");
 		}
+		
+		if (employeeService.isEmailDuplicate(form.getEmail(), null)) {
+			result.rejectValue("email", "error.employeeForm", "このメールアドレスは既に使用されています");
+		}
 
 		if (result.hasErrors()) {
 			// 新規登録画面（create）を開いたときと同じように、コンボボックスのリストを再セットする
