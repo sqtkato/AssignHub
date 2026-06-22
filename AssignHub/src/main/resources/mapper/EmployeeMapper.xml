@@ -188,5 +188,13 @@
 	<select id="countAll" resultType="int">
     	SELECT COUNT(*) FROM m_employee WHERE delete_flg = 0
 	</select>
+	
+	<select id="countByAccountId" resultType="int">
+    	SELECT COUNT(*) FROM m_employee
+    	WHERE account_id = #{accountId} AND delete_flg = 0
+    <if test="excludeEmpId != null">
+        AND emp_id != #{excludeEmpId}
+    </if>
+</select>
 
 </mapper>

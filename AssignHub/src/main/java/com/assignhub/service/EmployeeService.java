@@ -350,13 +350,16 @@ public class EmployeeService {
 						result.errors.add(new CsvRowError(rowNum, "ログインID", "プロパーの場合、ログインIDは必須です"));
 						hasError = true;
 					} else {
-						Account account = accountService.findByLoginId(loginId);
-						if (account == null) {
-							result.errors.add(new CsvRowError(rowNum, "ログインID", "指定されたログインIDは存在しません"));
-							hasError = true;
-						} else {
-							emp.setAccountId(account.getAccountId());
-						}
+					    Account account = accountService.findByLoginId(loginId);
+					    if (account == null) {
+					        result.errors.add(new CsvRowError(rowNum, "ログインID", "指定されたログインIDは存在しません"));
+					        hasError = true;
+					    } else if (isAccountIdUsed(account.getAccountId(), parsedId)) {
+					        result.errors.add(new CsvRowError(rowNum, "ログインID", "このログインIDは既に他の社員に使用されています"));
+					        hasError = true;
+					    } else {
+					        emp.setAccountId(account.getAccountId());
+					    }
 					}
 				} else if (engineerType.equals("パートナー")) {
 					if (companyName.isEmpty()) {
@@ -471,6 +474,18 @@ public class EmployeeService {
 	public boolean isEmailDuplicate(String email, Integer excludeEmpId) {
 		int count = employeeMapper.countByEmail(email, excludeEmpId);
 		return count > 0;
+	}
+	
+	/**
+	 * 指定したアカウントID（ログインID）が、すでに他の社員に使用されているかを判定する。
+	 *
+	 * @param accountId    チェックするアカウントID
+	 * @param excludeEmpId 除外する社員ID（新規登録時はnullを渡す）
+	 * @return 既に使用されていればtrue
+	 */
+	public boolean isAccountIdUsed(Integer accountId, Integer excludeEmpId) {
+	    int count = employeeMapper.countByAccountId(accountId, excludeEmpId);
+	    return count > 0;
 	}
 
 	/**

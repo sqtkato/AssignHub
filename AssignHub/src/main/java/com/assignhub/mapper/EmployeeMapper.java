@@ -84,4 +84,6 @@ public interface EmployeeMapper {
 	 * @return 論理削除されていない社員の登録件数
 	 */
 	int countAll();
+	
+	int countByAccountId(@Param("accountId") Integer accountId, @Param("excludeEmpId") Integer excludeEmpId);
 }
