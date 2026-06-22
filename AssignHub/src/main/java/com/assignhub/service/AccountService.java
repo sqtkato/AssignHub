@@ -237,11 +237,7 @@ public class AccountService {
 					if (!seenLoginIds.add(loginId)) {
 						result.errors.add(new CsvRowError(rowNum, "ログインID", "CSV内でログインIDが重複しています"));
 						hasError = true;
-					}
-				}
-
-				if (!hasError) {
-					if (isLoginIdDuplicate(loginId, account.getAccountId())) {
+					} else if (isLoginIdDuplicate(loginId, account.getAccountId())) {
 						result.errors.add(new CsvRowError(rowNum, "ログインID", "このログインIDは既に使用されています"));
 						hasError = true;
 					}
