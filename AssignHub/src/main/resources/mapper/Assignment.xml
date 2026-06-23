@@ -270,11 +270,11 @@
 			updated_at = NOW()
 		WHERE emp_id IN
 		(
-		SELECT emp_id FROM m_employee WHERE account_id = #{accountId}
+		SELECT emp_id FROM m_employee WHERE account_id = #{id}
 		)
 	</update>
 
-	<update id="deleteBulkByAccountIds">
+	<update id="deleteBulkByAccountId">
 		UPDATE t_assignment
 		SET	delete_flg = 1,
 			updated_at = NOW()

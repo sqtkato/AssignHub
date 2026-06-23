@@ -115,13 +115,13 @@ public class AssignmentService {
 	
 	@Transactional
 	public void deleteByAccountId(Integer id) {
-		assignmentMapper.delete(id);
+		assignmentMapper.deleteByAccountId(id);
 	}
 
 	@Transactional
 	public void deleteBulkByAccountId(List<Integer> ids) {
 		if (ids != null && !ids.isEmpty()) {
-			assignmentMapper.deleteBulk(ids);
+			assignmentMapper.deleteBulkByAccountId(ids);
 		}
 	}
 

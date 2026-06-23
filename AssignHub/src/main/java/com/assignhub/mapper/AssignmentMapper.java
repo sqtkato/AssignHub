@@ -73,7 +73,7 @@ public interface AssignmentMapper {
     
     void deleteByAccountId(@Param("id") Integer id);
     
-    void deleteBulkByAccountId(@Param("ids") Integer id);
+    void deleteBulkByAccountId(@Param("ids") List<Integer> ids);
     
     /**
      * 指定した社員IDが有効な社員として存在するか確認する。

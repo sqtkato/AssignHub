@@ -77,15 +77,10 @@
         </div>
 
         <div class="card result-area"
-             th:if="${importResult != null or fileError != null or globalError != null}">
+             th:if="${importResult != null or globalError != null}">
 
             <div class="result-title-row">
                 <h3 class="result-title">処理結果</h3>
-
-                <!-- ファイル単位のエラー（処理結果タイトル横に表示） -->
-                <span class="result-limit-msg"
-                      th:if="${fileError != null}"
-                      th:text="${fileError}"></span>
 
                 <span class="result-limit-msg"
                       th:if="${globalError != null}"

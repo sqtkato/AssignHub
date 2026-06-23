@@ -87,7 +87,7 @@ public class EmployeeService {
 	@Transactional
 	public void deleteBulkByAccountId(List<Integer> ids) {
 		if (ids != null && !ids.isEmpty()) {
-			employeeMapper.deleteBulk(ids);
+			employeeMapper.deleteBulkByAccountId(ids);
 		}
 	}
 }

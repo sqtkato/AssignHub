@@ -238,43 +238,43 @@ public class AccountController {
 	 */
 	@PostMapping("/import")
 	public String importCsv(@RequestParam("file") MultipartFile file, Model model) {
-		if (file == null || file.isEmpty()) {
-			model.addAttribute("fileError", "ファイルを選択してください");
-			return "account/import";
-		}
+	    if (file == null || file.isEmpty()) {
+	        model.addAttribute("toastError", "ファイルを選択してください");
+	        return "account/import";
+	    }
 
-		String filename = file.getOriginalFilename();
-		if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
-			model.addAttribute("fileError", "ファイル形式が正しくありません。.csvファイルを選択してください。");
-			return "account/import";
-		}
+	    String filename = file.getOriginalFilename();
+	    if (filename == null || !filename.toLowerCase().endsWith(".csv")) {
+	        model.addAttribute("toastError", "ファイル形式が正しくありません。.csvファイルを選択してください。");
+	        return "account/import";
+	    }
 
-		if (file.getSize() > 5 * 1024 * 1024) {
-			model.addAttribute("fileError", "ファイルサイズは5MB以内にしてください。");
-			return "account/import";
-		}
+	    if (file.getSize() > 5 * 1024 * 1024) {
+	        model.addAttribute("toastError", "ファイルサイズは5MB以内にしてください。");
+	        return "account/import";
+	    }
 
-		try {
-			java.nio.charset.CharsetDecoder decoder = java.nio.charset.StandardCharsets.UTF_8.newDecoder();
-			decoder.onMalformedInput(java.nio.charset.CodingErrorAction.REPORT);
-			decoder.onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT);
-			decoder.decode(java.nio.ByteBuffer.wrap(file.getBytes()));
-		} catch (Exception e) {
-			model.addAttribute("fileError", "UTF-8のCSVファイルを選択してください。");
-			return "account/import";
-		}
+	    try {
+	        java.nio.charset.CharsetDecoder decoder = java.nio.charset.StandardCharsets.UTF_8.newDecoder();
+	        decoder.onMalformedInput(java.nio.charset.CodingErrorAction.REPORT);
+	        decoder.onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT);
+	        decoder.decode(java.nio.ByteBuffer.wrap(file.getBytes()));
+	    } catch (Exception e) {
+	        model.addAttribute("toastError", "UTF-8のCSVファイルを選択してください。");
+	        return "account/import";
+	    }
 
-		try {
-			AccountService.ImportResult result = accountService.importCsv(file);
-			model.addAttribute("importResult", result);
-			if (result.limitError != null) {
-				model.addAttribute("globalError", result.limitError);
-			}
-			return "account/import";
-		} catch (Exception e) {
-			model.addAttribute("fileError", "ファイルの読み込みに失敗しました");
-			return "account/import";
-		}
+	    try {
+	        AccountService.ImportResult result = accountService.importCsv(file);
+	        model.addAttribute("importResult", result);
+	        if (result.limitError != null) {
+	            model.addAttribute("globalError", result.limitError);
+	        }
+	        return "account/import";
+	    } catch (Exception e) {
+	        model.addAttribute("toastError", "ファイルの読み込みに失敗しました");
+	        return "account/import";
+	    }
 	}
 
 	/**
