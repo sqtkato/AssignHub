@@ -112,9 +112,11 @@
 					<div class="form-group">
 						<div id="loginIdArea" style="display: none;">
 							    <label>ログインID<span class="badge-required">必須</span></label>
-							<select id="loginId" th:field="*{accountId}" class="dropdown form-control fixed-all30"
+							<select id="loginId" name="accountId"class="dropdown form-control fixed-all30"
 								th:classappend="${#fields.hasErrors('accountId')} ? 'input-error select-error' : ''">
 								<option value="" th:text="${employee?.account?.loginId ?: '未選択'}"></option>
+								<option th:if="*{accountId != null}" th:value="*{accountId}" th:text="${employee != null and employee.account != null} ? ${employee.account.loginId} : ''
+								"selected="selected"></option>
 								<option th:each="account : ${accounts}" th:value="${account.accountId}"th:text="${account.loginId}"></option>
 							</select>
 							<div class="error-message" th:if="${#fields.hasErrors('accountId')}"th:errors="*{accountId}"></div>
