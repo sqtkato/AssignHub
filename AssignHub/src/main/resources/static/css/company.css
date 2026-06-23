@@ -31,17 +31,13 @@
 	word-break: break-all;
 }
 
+.col-checkbox {
+	    width: 100%;
+	    table-layout: fixed;
+}
+
 .table-scroll {
     overflow-x: auto;
-}
-
-.table {
-    min-width: 1200px; /* 必要な幅 */
-    width: 100%;
-}
-
-.col-checkbox {
-    width: 50px;
 }
 
 .col-id {
@@ -49,19 +45,19 @@
 }
 
 .col-company {
-    width: 350px;
+    width: 405px;
 }
 
 .col-address {
-    width: 300px;
+    width: 405px;
 }
 
 .col-tel {
-    width: 180px;
+    width: 100px;
 }
 
 .col-action {
-    width: 120px;
+    width: 170px;
 }
 
 .fixed-half20 {
