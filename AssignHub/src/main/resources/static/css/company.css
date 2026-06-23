@@ -31,9 +31,13 @@
 	word-break: break-all;
 }
 
-.col-checkbox {
-	    width: 100%;
-	    table-layout: fixed;
+.table-scroll {
+    overflow-x: auto;
+}
+
+.table {
+    min-width: 1200px; /* 必要な幅 */
+    width: 100%;
 }
 
 .col-checkbox {
