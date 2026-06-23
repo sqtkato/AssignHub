@@ -151,7 +151,7 @@ a:hover {
 	background-color: #e2e3e5 !important;
 }
 
-/*詳細情報テーブル(列幅指定は除く)*/
+/*詳細情報テーブル*/
 .detail-table {
 	border: 1px solid #333;
 	border-collapse: collapse;
@@ -181,6 +181,9 @@ a:hover {
 .table-scroll {
 	max-height: 400px;
 	overflow-y: auto;
+}
+.table-scroll.export-table {
+	max-height: 340px;
 }
 
 .table thead th {
@@ -470,7 +473,6 @@ a:hover {
 	margin-top: 5px;
 	font-weight: bold;
 }
-
 /* =========================================
    共通メッセージ(トースト)
 ========================================= */
