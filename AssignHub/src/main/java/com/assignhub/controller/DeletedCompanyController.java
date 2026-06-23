@@ -81,7 +81,7 @@ public class DeletedCompanyController {
 	public String bulkRecover(@RequestParam(name = "ids", required = false) List<Integer> ids,
 			 RedirectAttributes attributes) {
 		if (ids == null || ids.isEmpty()) {
-			attributes.addFlashAttribute("toastError", "復元する対象が選択されていません");
+			attributes.addFlashAttribute("toastError", "復元対象が選択されていません");
 			return "redirect:/deleted-companies";
 		}
 
