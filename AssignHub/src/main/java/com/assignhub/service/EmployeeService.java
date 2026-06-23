@@ -39,8 +39,9 @@ public class EmployeeService {
 	 * @param order   昇順（asc）または降順（desc）
 	 * @return 社員エンティティのリスト
 	 */
-	public List<Employee> findAll(String keyword, String sort, String order) {
-		return employeeMapper.findAll(keyword, sort, order);
+	public List<Employee> findAll(String empName, String empAssignCompany, String empCompany, String empEngineerType, String sort, String order) {
+		// Controller から受け取った6つの引数を、そのまま Mapper へ中継します
+		return employeeMapper.findAll(empName, empAssignCompany, empCompany, empEngineerType, sort, order);
 	}
 
 	/**
@@ -62,5 +63,31 @@ public class EmployeeService {
 	@Transactional(rollbackFor = Exception.class)
 	public void save(Employee employee) {
 		employeeMapper.insert(employee);
+	}
+	
+	
+
+	@Transactional
+	public void delete(Integer id) {
+		employeeMapper.delete(id);
+	}
+
+	@Transactional
+	public void deleteBulk(List<Integer> ids) {
+		if (ids != null && !ids.isEmpty()) {
+			employeeMapper.deleteBulk(ids);
+		}
+	}
+	
+	@Transactional
+	public void deleteByAccountId(Integer id) {
+		employeeMapper.deleteByAccountId(id);
+	}
+	
+	@Transactional
+	public void deleteBulkByAccountId(List<Integer> ids) {
+		if (ids != null && !ids.isEmpty()) {
+			employeeMapper.deleteBulkByAccountId(ids);
+		}
 	}
 }

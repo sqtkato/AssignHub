@@ -5,28 +5,110 @@
 	<resultMap id="employeeResultMap"
 		type="com.assignhub.entity.Employee">
 		<id property="empId" column="emp_id" />
-		<result property="empName" column="emp_name" />
-		<result property="hireYear" column="hire_year" />
+		<result property="lastName" column="last_name" />
+		<result property="firstName" column="first_name" />
+		<result property="lastNameKana" column="last_name_kana" />
+		<result property="firstNameKana" column="first_name_kana" />
+		<result property="hireDate" column="hire_date" />
+		<result property="yearsOfService" column="years_of_servise" />
+		<result property="BirthDate" column="birth_date" />
+		<result property="zipCode" column="zip_code" />
+		<result property="address1" column="address1" />
+		<result property="address2" column="address2" />
+		<result property="engineerType" column="engineer_type" />
+		<result property="accountId" column="account_id" />
+		<result property="companyId" column="company_id" />
+		<result property="department" column="department" />
+		<result property="jobTitle" column="job_title" />
+		<result property="empTel" column="emp_tel" />
+		<result property="email" column="email" />
+		<result property="deleteFlg" column="delete_flg" />
 		<result property="createdAt" column="created_at" />
 		<result property="updatedAt" column="updated_at" />
+
+		<association property="company"
+			javaType="com.assignhub.entity.Company">
+			<id property="companyId" column="company_id" />
+			<result property="companyName" column="emp_company" />
+		</association>
+
+		<association property="assignment"
+			javaType="com.assignhub.entity.Assignment">
+			<id property="assignmentId" column="assignment_id" />
+		<result property="contractStartDate"
+			column="contract_start_date_assign" />
+		<result property="contractEndDate"
+			column="contract_end_date_assign" />
+		<result property="unitPrice" column="unit_price_assign" />
+
+			<association property="company"
+				javaType="com.assignhub.entity.Company">
+				<id property="companyId" column="assign_company_id" />
+				<result property="companyName" column="emp_assign_company" />
+			</association>
+
+		</association>
+
+		<association property="Account"
+			javaType="com.assignhub.entity.Account">
+			<id property="accountId" column="account_id" />
+		<result property="loginId" column="login_id" />
+		</association>
+
 	</resultMap>
 
 	<select id="findAll" resultMap="employeeResultMap">
-		SELECT *
-		FROM m_employee
-		<if test="keyword != null and keyword != ''">
-			<where>
-				emp_name LIKE CONCAT('%', #{keyword}, '%')
-			</where>
-		</if>
-		ORDER BY ${sort} ${order}
+		SELECT e.*,
+		c.company_name AS emp_company,
+		c2.company_name AS
+		emp_assign_company
+		FROM m_employee e
+		LEFT JOIN m_company c
+		ON
+		e.company_id = c.company_id
+		LEFT JOIN t_assignment a
+		ON a.emp_id =
+		e.emp_id
+		AND a.contract_end_date is null
+		LEFT JOIN m_company c2
+		ON
+		a.company_id = c2.company_id
+<where>
+    e.delete_flg = 0
+    <if test="empName != null and empName != ''">
+        AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%', #{empName}, '%')
+    </if>
+    <if test="empAssignCompany != null and empAssignCompany != ''">
+        AND c2.company_name LIKE CONCAT('%', #{empAssignCompany}, '%')
+    </if>
+    <if test="empCompany != null and empCompany != ''">
+        AND c.company_name LIKE CONCAT('%', #{empCompany}, '%')
+    </if>
+    <if test="empEngineerType != null and empEngineerType != ''">
+        AND e.engineer_type LIKE CONCAT('%', #{empEngineerType}, '%')
+    </if>
+</where>
+
 	</select>
 
 	<select id="findById" resultMap="employeeResultMap">
-		SELECT *
-		FROM m_employee
-		WHERE
-		emp_id = #{id}
+		SELECT
+		e.*,
+		c.company_name AS emp_company,
+		a.assignment_id AS assignment_id,
+		a.contract_start_date AS contract_start_date_assign,
+		a.contract_end_date AS contract_end_date_assign,
+		a.unit_price AS unit_price_assign,
+		a.company_id AS assign_company_id,
+		c2.company_name AS emp_assign_company,
+		ac.login_id AS login_id
+		FROM m_employee e
+		LEFT JOIN m_company c ON e.company_id = c.company_id
+		LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date IS
+		NULL
+		LEFT JOIN m_company c2 ON a.company_id = c2.company_id
+		LEFT JOIN m_account ac ON e.account_id = ac.account_id
+		WHERE e.emp_id = #{id}
 	</select>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="empId">
@@ -37,4 +119,84 @@
 		#{empName}, #{hireYear}, NOW(), NOW()
 		)
 	</insert>
+
+	<update id="delete">
+		UPDATE m_employee
+		SET delete_flg = 1,
+			updated_at = NOW()
+		WHERE
+		emp_id =
+		#{id}
+	</update>
+
+	<update id="deleteBulk">
+		UPDATE m_employee
+		SET delete_flg = 1,
+			updated_at = NOW()
+		WHERE emp_id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</update>
+
+	<update id="deleteByAccountId">
+		UPDATE m_employee
+		SET delete_flg = 1,
+			updated_at = NOW()
+		WHERE account_id = #{id}
+	</update>
+	
+	<update id="deleteBulkByAccountId">
+		UPDATE m_employee
+		SET delete_flg = 1,
+			updated_at = NOW()
+		WHERE account_id IN
+		<foreach collection="ids" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</update>
+
+	<update id="update">
+		UPDATE m_employee
+
+		SET last_name = #{lastName},
+		first_name =
+		#{firstName},
+		last_name_kana = #{lastNameKana},
+		first_name_kana =
+		#{firstNameKana},
+		hire_date = #{hireDate},
+		years_of_servise =
+		#{yearsOfService},
+		birth_date = #{birthDate},
+		zip_code = #{zipCode},
+		address1 = #{address1},
+		address2 = #{address2},
+		engineer_type =
+		#{engineerType},
+		account_id = #{accountId},
+		company_id = #{companyId},
+		department = #{department},
+		job_title = #{jobTitle},
+		emp_tel =
+		#{empTel},
+		email = #{email}
+
+		<where>
+			emp_id = #{empId}
+		</where>
+
+	</update>
+
+
+	<select id="countByEmail" resultType="int">
+		SELECT COUNT(*) FROM m_employee
+		WHERE email = #{email}
+		<if test="excludeEmpId != null">
+			AND emp_id != #{excludeEmpId}
+		</if>
+	</select>
+
 </mapper>

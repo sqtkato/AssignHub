@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<title>アカウント情報エクスポート</title>
+	<link rel="stylesheet" th:href="@{/css/account.css}">
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="page-title-area">
+			<h2>アカウント情報エクスポート</h2>
+		</div>
+		<div class="card form-card-wide">
+			<p class="instruction">以下の内容でCSVファイルを出力します。
+				<br>
+				よろしければ「エクスポート」ボタンを押してください。
+			</p>
+
+			<div class="export-confirm-box">
+				<h4 class="export-confirm-title">出力内容の確認</h4>
+				<table class="export-table">
+					<tr>
+						<td class="label">出力対象件数:</td>
+						<td class="value"><span class="export-count" th:text="${count}">0</span> 件</td>
+					</tr>
+					<tr>
+						<td class="label">文字コード:</td>
+						<td class="value">UTF-8 (BOMあり)</td>
+					</tr>
+				</table>
+				<div class="export-contents">
+					<div class="table-scroll export-table">
+						<table class="table">
+							<thead class="table-dark">
+								<tr>
+									<th class="acc_id">アカウントID</th>
+									<th class="acc_logId">ログインID</th>
+									<th class="acc_pas">パスワード</th>
+									<th class="acc_per">権限</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="account : ${accounts}">
+									<td th:text="${account.accountId}" class="acc_id"></td>
+									<td th:text="${account.loginId}" class="acc_logId"></td>
+									<td th:text="''" class="acc_pas"></td>
+									<td th:text="${account.permission == 1 ? '管理' : '一般'}" class="acc_per"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<p class="export-note">※詳細情報がエクスポートされます。</p>
+				</div>
+			</div>
+			<form th:action="@{/accounts/export/download(ids=${ids})}" method="post">
+				<div class="action-area action-area-wide">
+					<button type="submit" class="btn-export">エクスポート</button>
+					<button type="button" class="btn-back" th:onclick="|location.href='@{/accounts}'|">戻る</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

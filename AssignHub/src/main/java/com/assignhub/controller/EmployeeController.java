@@ -29,7 +29,7 @@ public class EmployeeController {
 
 	/**
 	 * コンストラクタによる依存性の注入。
-	 *
+	 *a
 	 * @param employeeService 社員サービス
 	 */
 	public EmployeeController(EmployeeService employeeService) {
@@ -46,13 +46,25 @@ public class EmployeeController {
 	 * @return 一覧画面のテンプレートパス
 	 */
 	@GetMapping
-	public String index(@RequestParam(name = "keyword", required = false) String keyword,
+	public String index(
+			@RequestParam(name = "empName", required = false) String empName,
+			@RequestParam(name = "empAssignCompany", required = false) String empAssignCompany,
+			@RequestParam(name = "empCompany", required = false) String empCompany,
+			@RequestParam(name = "empEngineerType", required = false) String empEngineerType,
 			@RequestParam(name = "sort", defaultValue = "emp_id") String sort,
 			@RequestParam(name = "order", defaultValue = "asc") String order, Model model) {
-		model.addAttribute("employees", employeeService.findAll(keyword, sort, order));
-		model.addAttribute("keyward", keyword);
+		
+		// ServiceのfindAllにすべての検索条件を渡す
+		model.addAttribute("employees", employeeService.findAll(empName, empAssignCompany, empCompany, empEngineerType, sort, order));
+		
+		// 画面に検索値を保持させるためのアトリビュート
+		model.addAttribute("empName", empName);
+		model.addAttribute("empAssignCompany", empAssignCompany);
+		model.addAttribute("empCompany", empCompany);
+		model.addAttribute("empEngineerType", empEngineerType);
 		model.addAttribute("currentSort", sort);
 		model.addAttribute("currentOrder", order);
+		
 		return "employee/index";
 	}
 
@@ -98,7 +110,7 @@ public class EmployeeController {
 	 * @param e 更新対象のエンティティ
 	 */
 	private void copyFormToEntity(EmployeeForm f, Employee e) {
-		e.setEmpName(f.getEmpName());
-		e.setHireYear(20);
+//		e.setEmpName(f.getEmpName());
+//		e.setHireYear(20);
 	}
 }
