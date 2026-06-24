@@ -1,0 +1,89 @@
+@charset "UTF-8";
+/* 検索ボタン様式 */
+.search-button-area {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.search-row {
+    display: flex;
+    gap: 20px;
+}
+.search-row .form-group-search {
+    flex: 1;
+}
+
+/* 日付範囲入力のスタイル */
+.date-range {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+}
+.date-range .form-control {
+      flex: 1;
+      min-width: 0;
+	  height: 33px;
+}
+.date-range-sep {
+      flex: 0 0 auto;
+      color: #666;
+}
+
+/* アサイン一覧テーブルの間隔・列幅調整 */
+.table th,
+.table td {
+	padding: 8px 4px;
+	font-size: 12px;
+}
+
+/* ID列幅の調整 */
+.table th:nth-child(2),
+.table td:nth-child(2) {
+	width: 40px;
+}
+
+/* 日付列の改行を防ぐ */
+.table th:nth-child(6),
+.table td:nth-child(6),
+.table th:nth-child(7),
+.table td:nth-child(7) {
+	white-space: nowrap;
+}
+
+/* 操作列の改行を防ぐ */
+.table th:last-child,
+.table td:last-child {
+	white-space: nowrap;
+}
+
+.table tr.clickable-row td:last-child {
+      font-size: 0;
+  }
+
+/* 社員名の幅を調整 */
+.table th:nth-child(3), .table td:nth-child(3) {
+	min-width: 10em;
+	white-space: normal;
+	word-break: break-all;
+}
+
+/* 企業名の幅を調整 */
+.table th:nth-child(4), .table td:nth-child(4),
+.table th:nth-child(5), .table td:nth-child(5) {
+	min-width: 15em;           
+	white-space: normal;
+	word-break: break-all;
+}
+
+.table-scroll {
+    max-height: 340px;
+}
+
+/* 入力欄の幅を調整 */
+.form-a {
+    width: 50%;
+}
+
+.form-b {
+    width: 20%;
+} 

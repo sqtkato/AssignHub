@@ -3,11 +3,12 @@ package com.assignhub.form;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -34,7 +35,7 @@ public class AssignmentForm {
 
     /** 契約単価 */
     @NotNull(message = "契約単価は必須です")
-    @DecimalMin(value = "1", message = "この値は入力できません")
+    @DecimalMin(value = "0", message = "この値は入力できません")
     @Digits(integer = 10, fraction = 0, message = "契約単価は10文字以内で入力してください")
     private BigDecimal unitPrice;
 

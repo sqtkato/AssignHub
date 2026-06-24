@@ -221,6 +221,7 @@ public class AssignmentController {
 			@RequestParam(value = "fromPage", required = false) String fromPage, Model model) {
 		Assignment assignment = new Assignment();
 		copyFormToEntity(form, assignment);
+		assignment.setAssignmentId(id);
 		if (assignment.getContractEndDate() != null
 				&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
 			result.rejectValue(
@@ -235,7 +236,15 @@ public class AssignmentController {
 			model.addAttribute("role", roleService.findAll());
 			return "assignment/edit";
 		}
-		assignment.setAssignmentId(id);
+		if (assignmentService.existsDuplicate(assignment)) {
+			result.reject(
+					"duplicate",
+					"既に同じ内容が登録されています");
+			model.addAttribute("employees", employeeService.findAll(null, null, null, null));
+			model.addAttribute("companies", companyService.findAll(null, null));
+			model.addAttribute("role", roleService.findAll());
+			return "assignment/edit";
+		}
 		assignmentService.save(assignment);
 		attributes.addFlashAttribute("toastMessage", "アサイン履歴情報を更新しました");
 		if ("detail".equals(fromPage)) {
@@ -384,10 +393,11 @@ public class AssignmentController {
 	public ResponseEntity<byte[]> downloadCsv(
 			@RequestParam(name = "ids", required = false) List<Integer> ids) {
 		List<Assignment> assignments = assignmentService.findByIds(ids);
-		StringBuilder csvBuilder = new StringBuilder("アサインID,社員ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n");
+		StringBuilder csvBuilder = new StringBuilder("アサインID,社員ID,アサイン先企業ID,社員姓,社員名,アサイン先企業名,作成日時,更新日時,契約開始日,契約終了日,契約単価,役割\n");
 		for (Assignment asn : assignments) {
 			csvBuilder.append(asn.getAssignmentId()).append(",")
 					.append(asn.getEmpId()).append(",")
+					.append(asn.getCompanyId()).append(",")
 					.append(asn.getEmployee().getLastName()).append(",")
 					.append(asn.getEmployee().getFirstName()).append(",")
 					.append(asn.getCompany().getCompanyName()).append(",")
@@ -395,8 +405,8 @@ public class AssignmentController {
 					.append(asn.getUpdatedAt()).append(",")
 					.append(asn.getContractStartDate()).append(",")
 					.append(asn.getContractEndDate() != null ? asn.getContractEndDate() : "ー").append(",")
-					.append(asn.getUnitPrice()).append(",");
-//					.append(asn.getRole().getRole()).append("\n");
+					.append(asn.getUnitPrice()).append(",")
+					.append(asn.getRole().getRole()).append("\n");
 		}
 		byte[] csvBytes = csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
 		byte[] bom = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
@@ -405,7 +415,7 @@ public class AssignmentController {
 		System.arraycopy(csvBytes, 0, result, bom.length, csvBytes.length);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment; filename=assignment.csv");
+		headers.add("Content-Disposition", "attachment; filename=assignments.csv");
 		headers.add("Content-Type", "text/csv; charset=UTF-8");
 		return new ResponseEntity<>(result, headers, HttpStatus.OK);
 	}

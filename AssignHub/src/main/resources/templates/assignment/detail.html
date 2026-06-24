@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>アサイン履歴情報詳細</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+
+		<div>
+			<div class="page-title-area">
+				<h2>アサイン履歴情報詳細</h2>
+			</div>
+
+			<div class="card">
+				<table class="table detail-table">
+
+					<tr>
+						<th>作成日時</th>
+						<td th:text="${#temporals.format(assignment.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
+					</tr>
+
+					<tr>
+						<th>更新日時</th>
+						<td th:text="${#temporals.format(assignment.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
+					</tr>
+
+					<tr>
+						<th>社員名</th>
+						<td th:text="${assignment.employee.lastName} + ' ' + ${assignment.employee.firstName}"></td>
+					</tr>
+
+					<tr>
+						<th>社員名カナ</th>
+						<td th:text="${assignment.employee.lastNameKana} + ' ' + ${assignment.employee.firstNameKana}">
+						</td>
+					</tr>
+
+					<tr>
+						<th>アサイン先企業</th>
+						<td th:text="${assignment.company.companyName}"></td>
+					</tr>
+
+					<tr>
+						<th>エンジニアタイプ</th>
+						<td th:text="${assignment.employee.engineerType}"></td>
+					</tr>
+
+					<tr>
+						<th>所属企業</th>
+						<td th:text="${assignment.employee.company != null ? assignment.employee.company.companyName : 'ー'}"></td>
+					</tr>
+
+					<tr>
+						<th>所属企業カナ</th>
+						<td th:text="${assignment.employee.company != null ? assignment.employee.company.companyNameKana : 'ー'}"></td>
+					</tr>
+
+					<tr>
+						<th>契約開始日</th>
+						<td th:text="${#temporals.format(assignment.contractStartDate, 'yyyy/MM/dd')}"></td>
+					</tr>
+					
+					<tr>
+						<th>契約終了日</th>
+						<td th:text="${assignment.contractEndDate != null ? #temporals.format(assignment.contractEndDate, 'yyyy/MM/dd') : 'ー'}"></td>
+					</tr>
+
+					<tr>
+						<th>契約単価</th>
+						<td th:text="${#numbers.formatInteger(assignment.unitPrice, 3, 'COMMA')+ ' 円'}"></td>
+					</tr>
+					<tr>
+						<th>役割</th>
+						<td th:text="${assignment.role.role}"></td>
+					</tr>
+				</table>
+				<div class="form-actions form-actions-area-wide">
+					<a th:href="@{/assignments/{id}/edit(id=${assignment.assignmentId}, from='detail')}"
+						class="btn btn-primary common-btn">変更
+					</a>
+
+
+
+					<button type="button" class="btn modal-btn-danger common-btn"
+						th:onclick="|openDeleteModal(${assignment.assignmentId})|">削除
+					</button>
+
+					<a th:href="@{/assignments}" class="btn btn-secondary common-btn">戻る
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
