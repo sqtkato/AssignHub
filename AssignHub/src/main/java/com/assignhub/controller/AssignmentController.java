@@ -113,7 +113,7 @@ public class AssignmentController {
 			return "redirect:/assignments";
 		}
 		model.addAttribute("employees", employeeService.findAll(null, null, null, null, null, null));
-		model.addAttribute("companies", companyService.findAll(null, null, null));
+		model.addAttribute("companies", companyService.findAll(null, null));
 		model.addAttribute("role", roleService.findAll());
 		return "assignment/create";
 	}
@@ -141,7 +141,7 @@ public class AssignmentController {
 		}
 		if (result.hasErrors()) {
 			model.addAttribute("employees", employeeService.findAll(null, null, null, null, null, null));
-			model.addAttribute("companies", companyService.findAll(null, null, null));
+			model.addAttribute("companies", companyService.findAll(null, null));
 			model.addAttribute("role", roleService.findAll());
 			return "assignment/create";
 		}
@@ -150,7 +150,7 @@ public class AssignmentController {
 					"duplicate",
 					"既に同じ内容が登録されています");
 			model.addAttribute("employees", employeeService.findAll(null, null, null, null, null, null));
-			model.addAttribute("companies", companyService.findAll(null, null, null));
+			model.addAttribute("companies", companyService.findAll(null, null));
 			model.addAttribute("role", roleService.findAll());
 			return "assignment/create";
 		}
@@ -199,7 +199,7 @@ public class AssignmentController {
 		}
 		model.addAttribute("fromPage", from);
 		model.addAttribute("employees", employeeService.findAll(null, null, null, null, from, from));
-		model.addAttribute("companies", companyService.findAll(null, null, from));
+		model.addAttribute("companies", companyService.findAll(null, null));
 		model.addAttribute("role", roleService.findAll());
 		return "assignment/edit";
 	}
@@ -231,7 +231,7 @@ public class AssignmentController {
 		if (result.hasErrors()) {
 			model.addAttribute("fromPage", fromPage);
 			model.addAttribute("employees", employeeService.findAll(null, null, null, null, fromPage, fromPage));
-			model.addAttribute("companies", companyService.findAll(null, null, fromPage));
+			model.addAttribute("companies", companyService.findAll(null, null));
 			model.addAttribute("role", roleService.findAll());
 			return "assignment/edit";
 		}

@@ -410,4 +410,16 @@ public class AssignmentService {
 	public boolean isMaxCount() {
 		return assignmentMapper.countAll() >= 500;
 	}
+	
+	@Transactional
+	public void deleteByCompanyId(Integer id) {
+        assignmentMapper.deleteByCompanyId(id);
+    }
+	
+	@Transactional
+	public void deleteBulkByCompanyId(List<Integer> ids) {
+		if (ids != null && !ids.isEmpty()) {
+			assignmentMapper.deleteBulkByCompanyId(ids);
+		}
+	}
 }

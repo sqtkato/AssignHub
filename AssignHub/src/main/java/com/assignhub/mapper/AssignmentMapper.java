@@ -102,4 +102,12 @@ public interface AssignmentMapper {
     	    @Param("contractEndDate") LocalDate contractEndDate);
 
 	int countAll();
+	
+	/**
+     * アサイン情報を論理削除する。
+     * @param id
+     */
+    void deleteByCompanyId(@Param("id") Integer id);
+    
+    void deleteBulkByCompanyId(@Param("ids") List<Integer> ids);
 }

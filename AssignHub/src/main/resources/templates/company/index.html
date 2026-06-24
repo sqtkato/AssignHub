@@ -4,6 +4,7 @@
 
 <head>
 	<title>企業情報一覧</title>
+	<link rel="stylesheet" th:href="@{/css/company.css}">
 </head>
 
 <body>
@@ -15,60 +16,131 @@
 		<div class="card">
 			<form th:action="@{/companies}" method="get" class="search-form">
 				<div class="form-group form-group-search">
-					<label>キーワード検索（企業名）</label>
-					<input type="text" name="keyword" class="form-control" th:value="${keyword}" placeholder="例：テクノ">
+					<label>企業名</label>
+					<input type="text" name="companyName" class="form-control fixed-all30" th:value="${companyName}" placeholder="例：株式会社システム">
 				</div>
-				<button type="submit" class="btn btn-secondary">検索</button>
+				<div class="form-group form-group-search">
+					<label>電話番号</label>
+					<input type="text" name="companyTel" class="form-control fixed-all30" th:value="${companyTel}" placeholder="例：0000000000">
+				</div>
+				<button type="submit" class="company-btn-search">検索</button>
 			</form>
 		</div>
 
 		<form th:action="@{/companies/bulk-delete}" method="post" id="listForm">
 			<div class="table-toolbar">
-				<a th:href="@{/companies/new}" class="toolbar-btn toolbar-btn-primary" title="新しい企業を登録">
+				<button type="button" class="toolbar-btn" title="CSVファイルから一括登録"
+					th:onclick="|location.href='@{/companies/import}'|">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="7 10 12 15 17 10"></polyline>
+						<line x1="12" y1="15" x2="12" y2="3"></line>
+					</svg>
+					インポート
+				</button>
+
+				<button type="submit" class="toolbar-btn" formaction="/companies/export" formmethod="post"
+					title="現在の検索条件でCSV出力">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="17 8 12 3 7 8"></polyline>
+						<line x1="12" y1="3" x2="12" y2="15"></line>
+					</svg>
+					エクスポート
+				</button>
+				<button type="button" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
+					onclick="openBulkDeleteModal()">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="3 6 5 6 21 6"></polyline>
+						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+						</path>
+					</svg>
+					一括削除
+				</button>
+				<button type="button" class="toolbar-btn toolbar-btn-primary" title="新しい企業情報を登録"
+					th:onclick="|location.href='@{/companies/new}'|">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<line x1="12" y1="5" x2="12" y2="19"></line>
 						<line x1="5" y1="12" x2="19" y2="12"></line>
 					</svg>
 					新規登録
-				</a>
+				</button>
 			</div>
 
 			<div class="card">
-				<table class="table">
-					<thead class="table-dark">
-						<tr>
-							<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
-							<th>
-								<a class="sortable-header"
-									th:href="@{/companies(keyword=${keyword}, sort='company_id', order=${currentSort == 'company_id' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-									ID <span class="sort-icon"
-										th:classappend="${currentSort == 'company_id'} ? 'active'"
-										th:text="${currentSort == 'company_id' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
-								</a>
-							</th>
-							<th>
-								<a class="sortable-header"
-									th:href="@{/companies(keyword=${keyword}, sort='company_name', order=${currentSort == 'company_name' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-									企業名 <span class="sort-icon"
-										th:classappend="${currentSort == 'company_name'} ? 'active'"
-										th:text="${currentSort == 'company_name' and currentOrder == 'desc' ? '▼' : '▲'}"></span>
-								</a>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="comp : ${companies}" class="clickable-row">
-							<td class="col-checkbox"><input type="checkbox" name="ids" th:value="${comp.companyId}"
-									class="row-checkbox"></td>
-							<td th:text="${comp.companyId}"></td>
-							<td th:text="${comp.companyName}"></td>
-						</tr>
-						<tr th:if="${#lists.isEmpty(companies)}">
-							<td colspan="5" class="text-center">該当するデータがありません。</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="table-scroll">
+					<table class="table">
+						<thead class="table-dark">
+							<tr>
+								<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
+								<th class="col-id">
+									企業ID
+								</th>
+								<th class="col-company">
+									企業名
+								</th>
+								<th class="col-address">
+									住所1
+								</th>
+								<th class="col-tel">
+									電話番号
+								</th>
+								<th class="col-action">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="comp : ${companies}" class="clickable-row ">
+								<td class="col-checkbox"><input type="checkbox" name="ids" th:value="${comp.companyId}"
+										class="row-checkbox"></td>
+								<td th:text="${comp.companyId}"></td>
+								<td th:text="${comp.companyName}"></td>
+								<td th:text="${comp.companyAddress1}"></td>
+								<td th:text="${comp.companyTel}"></td>
+								<td class="col-action">
+									<a th:href="@{/companies/{id}/detail(id=${comp.companyId})}" class="btn-icon-svg"
+										title="詳細">
+										     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											         stroke="#5A6A85" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round">
+											         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+											         <line x1="12" y1="12" x2="12" y2="16"></line>
+											         <circle cx="12" cy="8" r="0.5" fill="#5A6A85"></circle>
+											     </svg>
+									</a>
+
+									<a th:href="@{/companies/{id}/edit(id=${comp.companyId})}" class="btn-icon-svg"
+										title="変更">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+											<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+										</svg>
+									</a>
+
+									<button type="button"
+										th:formaction="@{/companies/{id}/delete(id=${comp.companyId})}"
+										class="btn-icon-svg delete" title="削除" th:onclick="|openDeleteModal(${comp.companyId})|">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<polyline points="3 6 5 6 21 6"></polyline>
+											<path
+												d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+											</path>
+										</svg>
+									</button>
+
+								</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(companies)}">
+								<td colspan="5" class="text-center">該当するデータがありません。</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</form>
 	</div>
