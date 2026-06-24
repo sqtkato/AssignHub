@@ -86,8 +86,6 @@ public class CompanyService {
 		} else {
 			companyMapper.update(company);
 		}
-		companyMapper.insert(company);
-		
 	}
 	
 	public Company findByCompanyName(String companyName) {
