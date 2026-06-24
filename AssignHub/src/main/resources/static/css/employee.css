@@ -26,6 +26,19 @@
     text-align: center;
 }
 
+.employee-export-table th:nth-child(2),
+.employee-export-table td:nth-child(2) {
+    width: 192px;
+    min-width: 192px;
+    text-align: center;
+}
+
+.employee-export-table th:nth-child(3),
+.employee-export-table td:nth-child(3) {
+    width: 288px;
+    min-width: 288px;
+    text-align: center;
+}
 
 .fixed-half3 {
 	width: 7ch;
