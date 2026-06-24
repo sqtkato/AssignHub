@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<title>社員情報詳細</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="page-title-area">
+			<h2>社員情報詳細</h2>
+		</div>
+		<div class="card">
+			<table class="table employee-detail-table">
+				<tr>
+					<th>作成日時</th>
+					<td th:text="${#temporals.format(employee.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
+				</tr>
+				<tr>
+					<th>更新日時</th>
+					<td th:text="${#temporals.format(employee.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
+				</tr>
+				<tr>
+					<th>社員ID</th>
+					<td th:text="${employee.empId}"></td>
+				</tr>
+				<tr>
+					<th>社員姓</th>
+					<td th:text="${employee.lastName}"></td>
+				</tr>
+				<tr>
+					<th>社員名</th>
+					<td th:text="${employee.firstName}"></td>
+				</tr>
+				<tr>
+					<th>社員姓カナ</th>
+					<td th:text="${employee.lastNameKana}"></td>
+				</tr>
+				<tr>
+					<th>社員名カナ</th>
+					<td th:text="${employee.firstNameKana}"></td>
+				</tr>
+				<tr>
+					<th>生年月日</th>
+					<td th:text="${employee.birthDate} ? ${#temporals.format(employee.birthDate, 'yyyy/MM/dd')} : 'ー'">
+					</td>
+				</tr>
+				<tr>
+					<th>入社年月日</th>
+					<td th:text="${employee.hireDate} ? ${#temporals.format(employee.hireDate, 'yyyy/MM/dd')} : 'ー'">
+					</td>
+				</tr>
+				<tr>
+					<th>勤続年数</th>
+					<td th:text="${employee.yearsOfService} ? (${employee.yearsOfService} + '年') : 'ー'"></td>
+				</tr>
+				<tr>
+					<th>郵便番号</th>
+					<td th:text="${employee.zipCode}"></td>
+				</tr>
+				<tr>
+					<th>住所1</th>
+					<td th:text="${employee.address1}"></td>
+				</tr>
+				<tr>
+					<th>住所2</th>
+					<td th:text="${employee.address2 ?: 'ー'}"></td>
+				</tr>
+				<tr>
+					<th>電話番号</th>
+					<td th:text="${employee.empTel}"></td>
+				</tr>
+				<tr>
+					<th>メールアドレス</th>
+					<td th:text="${employee.email}"></td>
+				</tr>
+				<tr>
+					<th>エンジニアタイプ</th>
+					<td th:text="${employee.engineerType}"></td>
+				</tr>
+				<tr>
+					<th>所属企業</th>
+					<td th:text="${employee.company?.companyName} ?: 'ー'"></td>
+				</tr>
+				<tr>
+				    <th>所属部署</th>
+				    <td th:text="${employee.department ?: 'ー'}"></td>
+				</tr>
+				<tr>
+				    <th>役職</th>
+				    <td th:text="${employee.jobTitle ?: 'ー'}"></td>
+				</tr>
+				<tr>
+					<th>ログインID</th>
+					<td th:text="${employee.account?.loginId} ?: 'ー'"></td>
+				</tr>
+				<tr>
+					<th>アサイン先企業</th>
+					<td th:text="${employee.assignment?.company?.companyName} ?: 'ー'"></td>
+				</tr>
+				<tr>
+					<th>契約開始日</th>
+					<td
+						th:text="${employee.assignment?.contractStartDate} ? ${#temporals.format(employee.assignment.contractStartDate, 'yyyy/MM/dd')} : 'ー'">
+					</td>
+				</tr>
+				<tr>
+					<th>契約終了日</th>
+					<td
+						th:text="${employee.assignment?.contractEndDate} ? (${#temporals.format(employee.assignment.contractEndDate, 'yyyy/MM/dd')}) : 'ー'">
+					</td>
+				</tr>
+				<tr>
+					<th>契約単価</th>
+					<td
+						th:text="${employee.assignment?.unitPrice} ? (${#numbers.formatInteger(employee.assignment.unitPrice, 3, 'COMMA')} + ' 円') : 'ー'">
+					</td>
+				</tr>
+			</table>
+
+			<div class="form-actions form-actions-area-wide">
+				<a th:href="@{/employees/{id}/edit(id=${employee.empId},from='detail')}" class="btn btn-primary ">変更</a>
+				<form th:action="@{/employees/{id}/delete(id=${employee.empId})}" method="post" style="display:inline;">
+					<button type="button" class="btn btn-danger "
+						th:onclick="|openDeleteModal(${employee.empId})|">削除</button>
+				</form>
+				<a th:href="@{/employees}" class="btn btn-secondary ">戻る</a>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,3 +1,4 @@
+
 package com.assignhub.controller;
 
 import java.nio.charset.StandardCharsets;
@@ -366,3 +367,4 @@ public class AccountController {
 		e.setPermission(f.getPermission());
 	}
 }
+

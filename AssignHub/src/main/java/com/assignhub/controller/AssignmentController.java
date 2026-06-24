@@ -112,7 +112,7 @@ public class AssignmentController {
 					"登録件数が上限（500件）に達しています");
 			return "redirect:/assignments";
 		}
-		model.addAttribute("employees", employeeService.findAll(null, null, null, null, null, null));
+		model.addAttribute("employees", employeeService.findAll(null, null, null, null));
 		model.addAttribute("companies", companyService.findAll(null, null));
 		model.addAttribute("role", roleService.findAll());
 		return "assignment/create";
@@ -140,7 +140,7 @@ public class AssignmentController {
 					"契約開始日より前の日付は入力できません");
 		}
 		if (result.hasErrors()) {
-			model.addAttribute("employees", employeeService.findAll(null, null, null, null, null, null));
+			model.addAttribute("employees", employeeService.findAll(null, null, null, null));
 			model.addAttribute("companies", companyService.findAll(null, null));
 			model.addAttribute("role", roleService.findAll());
 			return "assignment/create";
@@ -149,7 +149,7 @@ public class AssignmentController {
 			result.reject(
 					"duplicate",
 					"既に同じ内容が登録されています");
-			model.addAttribute("employees", employeeService.findAll(null, null, null, null, null, null));
+			model.addAttribute("employees", employeeService.findAll(null, null, null, null));
 			model.addAttribute("companies", companyService.findAll(null, null));
 			model.addAttribute("role", roleService.findAll());
 			return "assignment/create";
@@ -198,7 +198,7 @@ public class AssignmentController {
 			model.addAttribute("assignmentForm", form);
 		}
 		model.addAttribute("fromPage", from);
-		model.addAttribute("employees", employeeService.findAll(null, null, null, null, from, from));
+		model.addAttribute("employees", employeeService.findAll(null, null, null, null));
 		model.addAttribute("companies", companyService.findAll(null, null));
 		model.addAttribute("role", roleService.findAll());
 		return "assignment/edit";
@@ -230,7 +230,7 @@ public class AssignmentController {
 		}
 		if (result.hasErrors()) {
 			model.addAttribute("fromPage", fromPage);
-			model.addAttribute("employees", employeeService.findAll(null, null, null, null, fromPage, fromPage));
+			model.addAttribute("employees", employeeService.findAll(null, null, null, null));
 			model.addAttribute("companies", companyService.findAll(null, null));
 			model.addAttribute("role", roleService.findAll());
 			return "assignment/edit";

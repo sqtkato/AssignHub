@@ -47,3 +47,4 @@ public class Assignment {
 	/** 結合先の役割情報 */
 	private Role role;
 }
+

@@ -11,7 +11,7 @@
 		<result property="firstNameKana" column="first_name_kana" />
 		<result property="hireDate" column="hire_date" />
 		<result property="yearsOfService" column="years_of_servise" />
-		<result property="BirthDate" column="birth_date" />
+		<result property="birthDate" column="birth_date" />
 		<result property="zipCode" column="zip_code" />
 		<result property="address1" column="address1" />
 		<result property="address2" column="address2" />
@@ -41,15 +41,15 @@
 			column="contract_end_date_assign" />
 		<result property="unitPrice" column="unit_price_assign" />
 
-			<association property="company"
+			  <association property="company"
 				javaType="com.assignhub.entity.Company">
 				<id property="companyId" column="assign_company_id" />
 				<result property="companyName" column="emp_assign_company" />
-			</association>
+			</association>  
 
 		</association>
 
-		<association property="Account"
+		<association property="account"
 			javaType="com.assignhub.entity.Account">
 			<id property="accountId" column="account_id" />
 		<result property="loginId" column="login_id" />
@@ -59,37 +59,33 @@
 
 	<select id="findAll" resultMap="employeeResultMap">
 		SELECT e.*,
-		c.company_name AS emp_company,
-		c2.company_name AS
-		emp_assign_company
+		    c.company_name AS emp_company,
+		    c2.company_name AS
+		    emp_assign_company
 		FROM m_employee e
-		LEFT JOIN m_company c
-		ON
-		e.company_id = c.company_id
-		LEFT JOIN t_assignment a
-		ON a.emp_id =
-		e.emp_id
-		AND a.contract_end_date is null
-		LEFT JOIN m_company c2
-		ON
-		a.company_id = c2.company_id
-<where>
-    e.delete_flg = 0
-    <if test="empName != null and empName != ''">
-        AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%', #{empName}, '%')
-    </if>
-    <if test="empAssignCompany != null and empAssignCompany != ''">
-        AND c2.company_name LIKE CONCAT('%', #{empAssignCompany}, '%')
-    </if>
-    <if test="empCompany != null and empCompany != ''">
-        AND c.company_name LIKE CONCAT('%', #{empCompany}, '%')
-    </if>
-    <if test="empEngineerType != null and empEngineerType != ''">
-        AND e.engineer_type LIKE CONCAT('%', #{empEngineerType}, '%')
-    </if>
-</where>
-
+		LEFT JOIN m_company c ON e.company_id = c.company_id
+		LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null
+		LEFT JOIN m_company c2 ON a.company_id = c2.company_id
+		<where>
+			e.delete_flg = 0
+			<if test="empName != null and empName != ''">
+				AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%',
+				#{empName}, '%')
+			</if>
+			<if test="empAssignCompany != null and  empAssignCompany != ''">
+				AND c2.company_name LIKE CONCAT('%', #{empAssignCompany},
+				'%')
+			</if>
+			<if test="empCompany != null and  empCompany != ''">
+				AND c.company_name LIKE CONCAT('%', #{empCompany}, '%')
+			</if>
+			<if test="empEngineerType != null and empEngineerType != ''">
+				AND e.engineer_type LIKE CONCAT('%', #{empEngineerType},
+				'%')
+			</if>
+		</where>
 	</select>
+
 
 	<select id="findById" resultMap="employeeResultMap">
 		SELECT
@@ -110,14 +106,39 @@
 		LEFT JOIN m_account ac ON e.account_id = ac.account_id
 		WHERE e.emp_id = #{id}
 	</select>
+	
+	<select id="findByIds" resultMap="employeeResultMap">
+	    SELECT
+	        e.*,
+	        c.company_name AS emp_company,
+	        c2.company_name AS emp_assign_company,
+	        ac.login_id AS login_id
+	    FROM m_employee e
+	    LEFT JOIN m_company c ON e.company_id = c.company_id
+	    LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date IS NULL
+	    LEFT JOIN m_company c2 ON a.company_id = c2.company_id
+	    LEFT JOIN m_account ac ON e.account_id = ac.account_id
+	    WHERE e.emp_id IN
+	    <foreach collection="ids" item="id" open="(" separator="," close=")">
+	        #{id}
+	    </foreach>
+	</select>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="empId">
 		INSERT
 		INTO m_employee (
-		emp_name, hire_year, created_at, updated_at
-		) VALUES (
-		#{empName}, #{hireYear}, NOW(), NOW()
-		)
+    	last_name, first_name, last_name_kana, first_name_kana,
+    	years_of_service,
+    	birth_date, hire_date, zip_code, address1, address2, emp_tel,
+    	email, engineer_type, account_id, company_id,
+   		department, job_title
+    	) VALUES (
+    	#{lastName}, #{firstName}, #{lastNameKana}, #{firstNameKana},
+    	#{yearsOfService},
+    	#{birthDate}, #{hireDate}, #{zipCode}, #{address1}, #{address2},
+    	#{empTel}, #{email}, #{engineerType}, #{accountId},
+    	#{companyId}, #{department}, #{jobTitle}
+    	)
 	</insert>
 
 	<update id="delete">
@@ -159,45 +180,47 @@
 	</update>
 
 	<update id="update">
-		UPDATE m_employee
-
-		SET last_name = #{lastName},
-		first_name =
-		#{firstName},
-		last_name_kana = #{lastNameKana},
-		first_name_kana =
-		#{firstNameKana},
-		hire_date = #{hireDate},
-		years_of_servise =
-		#{yearsOfService},
-		birth_date = #{birthDate},
-		zip_code = #{zipCode},
-		address1 = #{address1},
-		address2 = #{address2},
-		engineer_type =
-		#{engineerType},
-		account_id = #{accountId},
-		company_id = #{companyId},
-		department = #{department},
-		job_title = #{jobTitle},
-		emp_tel =
-		#{empTel},
-		email = #{email}
-
-		<where>
-			emp_id = #{empId}
-		</where>
-
+    	UPDATE m_employee
+    	SET last_name = #{lastName},
+        first_name = #{firstName},
+        last_name_kana = #{lastNameKana},
+        first_name_kana = #{firstNameKana},
+        years_of_service = #{yearsOfService},
+        birth_date = #{birthDate},
+        hire_date = #{hireDate},
+        zip_code = #{zipCode},
+        address1 = #{address1},
+        address2 = #{address2},
+        emp_tel = #{empTel},
+        email = #{email},
+        engineer_type = #{engineerType},
+        account_id = #{accountId},
+        company_id = #{companyId},
+        department = #{department},
+        job_title = #{jobTitle},
+        updated_at = NOW()
+    	WHERE emp_id = #{empId}
 	</update>
-
 
 	<select id="countByEmail" resultType="int">
 		SELECT COUNT(*) FROM m_employee
-		WHERE email = #{email}
+		WHERE email = #{email} AND delete_flg = 0
 		<if test="excludeEmpId != null">
 			AND emp_id != #{excludeEmpId}
 		</if>
 	</select>
+
+    <select id="countAll" resultType="int">
+    	SELECT COUNT(*) FROM m_employee WHERE delete_flg = 0
+	</select>
+
+    <select id="countByAccountId" resultType="int">
+    	SELECT COUNT(*) FROM m_employee
+    	WHERE account_id = #{accountId} AND delete_flg = 0
+    <if test="excludeEmpId != null">
+        AND emp_id != #{excludeEmpId}
+    </if>
+    </select>
 	
 	<update id="deleteByCompanyId">
 		UPDATE m_employee

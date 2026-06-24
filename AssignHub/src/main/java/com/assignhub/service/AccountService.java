@@ -297,4 +297,12 @@ public class AccountService {
 	public boolean isMaxCount() {
 		return accountMapper.countAll() >= 500;
 	}
+	
+	public Account findByLoginId(String loginId) {
+	    return accountMapper.findByLoginId(loginId);
+	}
+	
+	public List<Account> findLoginId() {
+		return accountMapper.findLoginId();
+	}
 }

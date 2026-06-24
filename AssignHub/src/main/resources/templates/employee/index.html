@@ -15,125 +15,151 @@
 		<div class="card">
 			<form th:action="@{/employees}" method="get" class="search-form">
 				<div class="form-group form-group-search">
-					<label>社員名</label>
-					<input type="text" name="empName" class="form-control" th:value="${empName}" placeholder="例：山田 太郎">
+					<div class="search-item">
+						<label>社員名</label>
+						<input type="text" name="empName" class="form-control" th:value="${empName}"
+							placeholder="例：山田">
+					</div>
+					<div class="search-item">
+						<label>アサイン先企業</label>
+						<input type="text" name="empAssignCompany" class="form-control" th:value="${empAssignCompany}"
+							placeholder="例：株式会社システム">
+					</div>
+					<div class="search-item">
+						<label>所属企業</label>
+						<input type="text" name="empCompany" class="form-control" th:value="${empCompany}"
+							placeholder="例：株式会社システム">
+					</div>
+					<div class="search-item">
+						<label>エンジニアタイプ</label>
+						<select name="empEngineerType" class="form-control">
+							<option value>未選択</option>
+							<option value="プロパー" th:selected="${empEngineerType == 'プロパー'}">プロパー</option>
+							<option value="パートナー" th:selected="${empEngineerType == 'パートナー'}">パートナー</option>
+						</select>
+					</div>
 				</div>
-			    <div class="form-group form-group-search">
-					<label>アサイン先企業</label>
-					<input type="text" name="empAssignCompany" class="form-control" th:value="${empAssignCompany}" placeholder="例：山田 太郎">
-				</div>
-				<div class="form-group form-group-search">
-					<label>所属企業</label>
-					<input type="text" name="empCompany" class="form-control" th:value="${empCompany}" placeholder="例：山田 太郎">
-				</div>
-				<div class="form-group form-group-search">
-					<label>エンジニアタイプ</label>
-					<select name="empEngineerType" class="form-control">
-					    <option value>未選択</option>
-					    <option value="プロパー" th:selected="${empEngineerType == 'プロパー'}">プロパー</option>
-					    <option value="パートナー" th:selected="${empEngineerType == 'パートナー'}">パートナー</option>
-					</select>
-				</div>
-				<button type="submit" class="btn btn-secondary">検索</button>
+				<button type="submit" class="btn-search btn-search-position">検索</button>
 			</form>
 		</div>
 
-		<form th:action="@{/employees/bulk-delete}" method="post" id="listForm">
-			<div class="table-toolbar"  th:if="${session.permission == 1}">
-					<a th:href="@{/employees/import}" class="toolbar-btn" title="CSVファイルから一括登録">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-							stroke-linecap="round" stroke-linejoin="round">
-							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-							<polyline points="7 10 12 15 17 10"></polyline>
-							<line x1="12" y1="15" x2="12" y2="3"></line>
-						</svg>
-						インポート
-					</a>
-					<a th:href="@{/employees/export}" class="toolbar-btn"
-						title="現在の検索条件でCSV出力">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-							stroke-linecap="round" stroke-linejoin="round">
-							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-							<polyline points="17 8 12 3 7 8"></polyline>
-							<line x1="12" y1="3" x2="12" y2="15"></line>
-						</svg>
-						エクスポート
-					</a>
-					<button type="button" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
+		<form method="post" id="listForm">
+			<div class="table-toolbar" th:if="${session.permission == 1}">
+				<button type="button" class="toolbar-btn" title="CSVファイルから一括登録"
+					th:onclick="|location.href='@{/employees/import}'|">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="7 10 12 15 17 10"></polyline>
+						<line x1="12" y1="15" x2="12" y2="3"></line>
+					</svg>
+					インポート
+				</button>
+				<button type="submit" formaction="/employees/export" class="toolbar-btn" title="現在の検索条件でCSV出力">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="17 8 12 3 7 8"></polyline>
+						<line x1="12" y1="3" x2="12" y2="15"></line>
+					</svg>
+					エクスポート
+				</button>
+				<button type="button" class="toolbar-btn toolbar-btn-danger" title="チェックした項目を削除"
 					onclick="openBulkDeleteModal()">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-							stroke-linecap="round" stroke-linejoin="round">
-							<polyline points="3 6 5 6 21 6"></polyline>
-							<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-						</svg>
-						一括削除
-					</button>
-				<a th:href="@{/employees/new}" class="toolbar-btn toolbar-btn-primary" title="新しい社員を登録">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-linecap="round" stroke-linejoin="round">
+						<polyline points="3 6 5 6 21 6"></polyline>
+						<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+						</path>
+					</svg>
+					一括削除
+				</button>
+				<button type="button" class="toolbar-btn toolbar-btn-primary" title="新しいアカウントを登録"
+					th:onclick="|location.href='@{/employees/new}'|">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 						stroke-linecap="round" stroke-linejoin="round">
 						<line x1="12" y1="5" x2="12" y2="19"></line>
 						<line x1="5" y1="12" x2="19" y2="12"></line>
 					</svg>
 					新規登録
-				</a>
+				</button>
 			</div>
 
 			<div class="card">
-				<table class="table">
-					<thead class="table-dark">
-						<tr>
-							<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
-							<th>
-								<a class="sortable-header"
-									th:href="@{/employees(keyword=${keyword}, sort='emp_id', order=${currentSort == 'emp_id' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+				<div class="table-scroll">
+					<table class="table employee-table">
+						<thead class="table-dark">
+							<tr>
+								<th class="col-checkbox"><input type="checkbox" id="selectAll"></th>
+								<th>
+									<a class="sortable-header"></a>
 									ID
-								</a>
-							</th>
-							<th>
-								<a class="sortable-header"
-									th:href="@{/employees(keyword=${keyword}, sort='emp_name', order=${currentSort == 'emp_name' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+								</th>
+								<th>
+									<a class="sortable-header"></a>
 									社員名
-								</a>
-							</th>
-							<th>
-								<a class="sortable-header"
-									th:href="@{/employees(keyword=${keyword}, sort='company_name_assign', order=${currentSort == 'company_name_assign' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+								</th>
+								<th>
+									<a class="sortable-header"></a>
 									アサイン先企業
-								</a>
-							</th>
-							<th>
-								<a class="sortable-header"
-									th:href="@{/employees(keyword=${keyword}, sort='engineer_type', order=${currentSort == 'engineer_type' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+								</th>
+								<th>
+									<a class="sortable-header"></a>
 									エンジニアタイプ
-								</a>
-							</th>
-							<th>
-								<a class="sortable-header"
-									th:href="@{/employees(keyword=${keyword}, sort='company_name_belong', order=${currentSort == 'company_name_belong' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
+								</th>
+								<th>
+									<a class="sortable-header"></a>
 									所属先企業
-								</a>
-							</th>
-							<th  th:if="${session.permission == 1}">
-								<a class="sortable-header"
-									th:href="@{/employees(keyword=${keyword}, sort='', order=${currentSort == '' and currentOrder == 'asc' ? 'desc' : 'asc'})}">
-									操作
-								</a>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="emp : ${employees}" class="clickable-row">
-							<td class="col-checkbox"><input type="checkbox" name="ids" th:value="${emp.empId}"
-									class="row-checkbox"></td>
-							<td th:text="${emp.empId}"></td>
-							<td th:text="${emp.lastName + ' ' + emp.firstName}"></td>
-							</td>
-						</tr>
-						<tr th:if="${#lists.isEmpty(employees)}">
-							<td colspan="6" class="text-center">該当するデータがありません。</td>
-						</tr>
-					</tbody>
-				</table>
+								</th>
+								<th class="col-action">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="emp : ${employees}" class="clickable-row">
+								<td class="col-checkbox"><input type="checkbox" name="ids" th:value="${emp.empId}"
+										class="row-checkbox"></td>
+								<td th:text="${emp.empId}"></td>
+								<td th:text="${emp.lastName} + ' ' + ${emp.firstName}"></td>
+								<td th:text="${emp.assignment?.company?.companyName} ?: 'ー'"></td>
+								<td th:text="${emp.engineerType}"></td>
+								<td th:text="${emp.company?.companyName} ?: 'ー'"></td>
+								<td class="col-action">
+									<a th:href="@{/employees/{id}/detail(id=${emp.empId})}" class="btn-icon-svg"
+										title="詳細" th:if="${session.permission == 1}">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<rect x="2" y="2" width="20" height="20" rx="5"></rect>
+											<path d="M12 16v-4"></path>
+											<path d="M12 8h.01"></path>
+										</svg>
+									</a>
+									<a th:href="@{/employees/{id}/edit(id=${emp.empId})}" class="btn-icon-svg"
+										title="編集" th:if="${session.permission == 1}">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+											<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+										</svg>
+									</a>
+									<button type="button" th:attr="data-id=${emp.empId}" class="btn-icon-svg delete"
+										title="削除" onclick="openDeleteModal(this.dataset.id)"
+										th:if="${session.permission == 1}">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+											stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+											<polyline points="3 6 5 6 21 6"></polyline>
+											<path
+												d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+											</path>
+										</svg>
+									</button>
+								</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(employees)}">
+								<td colspan="6" class="text-center">該当するデータがありません。</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</form>
 	</div>

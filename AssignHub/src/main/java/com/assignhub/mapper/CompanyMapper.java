@@ -87,5 +87,7 @@ public interface CompanyMapper {
 	 * 登録済みの企業情報を数える。
 	 */
 	int countAll();
+	
+	Company findByCompanyName(String companyName);
 
 }

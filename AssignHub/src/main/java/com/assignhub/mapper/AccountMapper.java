@@ -91,4 +91,6 @@ public interface AccountMapper {
 	 * @return 論理削除されていないアカウント数
 	 */
 	int countAll();
+	
+	List<Account> findLoginId();
 }

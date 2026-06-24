@@ -47,7 +47,8 @@ public class CompanyService {
 	public List<Company> findAll(String companyName, String companyTel) {
 		return companyMapper.findAll(companyName, companyTel);
 	}
-
+	
+	
 	/**
 	 * 
 	 * 選択された複数の企業情報を表示する。
@@ -85,6 +86,12 @@ public class CompanyService {
 		} else {
 			companyMapper.update(company);
 		}
+		companyMapper.insert(company);
+		
+	}
+	
+	public Company findByCompanyName(String companyName) {
+	    return companyMapper.findByCompanyName(companyName);
 	}
 
 	/**

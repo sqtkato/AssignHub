@@ -3,6 +3,7 @@ package com.assignhub.form;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
 import lombok.Data;
 
 /**
@@ -31,3 +32,8 @@ public class LoginForm {
              message = "パスワードは半角英数字または記号(\"@\",\"_\")のみで入力してください")
     private String password;
 }
+
+
+
+
+   

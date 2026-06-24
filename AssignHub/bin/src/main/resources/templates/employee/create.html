@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<title>社員情報登録</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="page-title-area">
+			<h2>社員情報登録</h2>
+		</div>
+		<div class="card form-card">
+			<form th:action="@{/employees}" th:object="${employeeForm}" method="post">
+
+				<div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}">
+					<p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+				</div>
+
+				<div class="form-group">
+					<label>社員名 <span class="badge-required">必須</span></label>
+					<input type="text" th:field="*{empName}" class="form-control"
+						th:classappend="${#fields.hasErrors('empName')} ? 'input-error'" placeholder="例：鈴木 梨沙">
+					<div class="error-message" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></div>
+				</div>
+				<div class="form-group">
+					<label>入社年 <span class="badge-required">必須</span></label>
+					<input type="number" th:field="*{hireYear}" class="form-control"
+						th:classappend="${#fields.hasErrors('hireYear')} ? 'input-error'" placeholder="例：2026">
+					<div class="error-message" th:if="${#fields.hasErrors('hireYear')}" th:errors="*{hireYear}"></div>
+				</div>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">登録</button>
+					<a th:href="@{/employees}" class="btn btn-secondary">戻る</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

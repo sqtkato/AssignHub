@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 /**
- * 社員（エンジニア）情報を保持するエンティティクラス。
- * データベースの m_employee テーブルに対応する。
- * * @version 1.01 2026/06/01
- * @author SQT）チームB
- */
+ * 社員（エンジニア）情報を保持するエンティティクラス。
+ * データベースの m_employee テーブルに対応する。
+ * * @version 1.01 2026/06/01
+ * @author SQT）チームB
+ */
 @Data
 public class Employee {
 	/** 社員ID（主キー） */
@@ -41,7 +41,7 @@ public class Employee {
 	private Integer yearsOfService;
 	
 	/** 生年月日 */
-	private LocalDate BirthDate;
+	private LocalDate birthDate;
 	
 	/** 郵便番号 */
 	private String zipCode;
@@ -77,11 +77,11 @@ public class Employee {
 	private LocalDateTime updatedAt;
 	
 	/** アサイン情報 （外部DBからの取得）*/
-	private Assignment Assignment;
+	private Assignment assignment;
 	
 	/** アカウント情報 （外部DBからの取得）*/
-	private Account Account;
+	private Account account;
 	
 	/** 企業情報 （外部DBからの取得）*/
-	private Company Company;
+	private Company company;
 }

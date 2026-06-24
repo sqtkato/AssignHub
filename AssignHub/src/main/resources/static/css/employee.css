@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+.form-group-search{
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 70px; 
+	row-gap: 20px;    
+}
+
+.employee-table {
+    table-layout: fixed; 
+}
+
+.col-checkbox {
+    width: 40px;
+    min-width: 40px;
+    text-align: center;
+}
+
+
+.employee-table th:nth-child(2),
+.employee-table td:nth-child(2) {
+    width: 60px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.employee-export-table th:nth-child(2),
+.employee-export-table td:nth-child(2) {
+    width: 192px;
+    min-width: 192px;
+    text-align: center;
+}
+
+.employee-export-table th:nth-child(3),
+.employee-export-table td:nth-child(3) {
+    width: 288px;
+    min-width: 288px;
+    text-align: center;
+}
+
+.fixed-half3 {
+	width: 7ch;
+	overflow: hidden;
+	font-family: monospace;
+	padding: 6px 8px;
+}
+
+.fixed-half7 {
+	width: 10ch;
+	overflow: hidden;
+	font-family: monospace;
+	padding: 6px 8px;
+}
+
+.fixed-half11 {
+	width: 15ch;
+	overflow: hidden;
+	font-family: monospace;
+	padding: 6px 8px;
+}
+
+.fixed-half13 {
+	width: 17ch;
+	overflow: hidden;
+	font-family: monospace;
+	padding: 6px 8px;
+}
+
+
+.fixed-all30{
+	width: 55ch;
+	overflow: hidden;
+	font-family: monospace;
+	padding: 6px 8px;
+}
+
+/* export画面用テーブルのスクロール */
+.export-table-scroll {
+	max-height: 340px;
+	overflow-y: auto;
+}
+/*詳細情報テーブル(列幅指定は除く)*/
+.employee-detail-table {
+	border: 1px solid #333;
+	border-collapse: collapse;
+}
+
+.employee-detail-table th {
+	background-color: #2c3e50;
+	color: #fff;
+	width: 200px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.employee-detail-table td {
+	background-color: #fff;
+	text-align: left;
+	padding-left: 20px;
+	word-break: break-all;
+}
+
+.employee-detail-table th,
+.employee-detail-table td {
+	border: 1px solid #333;
+	padding: 12px;
+}
+
+/*詳細画面のレイアウト*/

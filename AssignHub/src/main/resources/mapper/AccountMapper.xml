@@ -43,7 +43,7 @@
 	<select id="findByLoginId" resultMap="accountResultMap"> 
 		SELECT * FROM m_account
 		WHERE login_id = #{loginId} AND delete_flg = 0
-	</select>
+	</select> 
 	<insert id="insert" parameterType="com.assignhub.entity.Account"> 
 		INSERT INTO m_account
 		(login_id, password_hash, permission, delete_flg) VALUES (#{loginId},
@@ -64,6 +64,7 @@
 		<foreach collection="ids" item="id" open="(" separator=","
 			close=")"> #{id} </foreach>
 	</update>
+	
 	<select id="countByLoginId" resultType="int">
 		SELECT COUNT(*) FROM m_account WHERE login_id = #{loginId} AND
 		delete_flg=0
@@ -73,5 +74,19 @@
 	<select id="countAll" resultType="int"> 
 		SELECT COUNT(*) FROM m_account
 		WHERE delete_flg = 0
-	</select>
+	</select> 
+	
+<select id="findLoginId">
+   SELECT login_id,account_id
+   FROM m_account
+   WHERE login_id NOT IN (
+       SELECT login_id
+       FROM m_account
+       WHERE account_id IN (
+           SELECT account_id 
+           FROM m_employee
+           WHERE account_id IS NOT NULL
+          )
+   );
+   </select> 
 </mapper>
