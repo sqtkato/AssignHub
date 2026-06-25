@@ -296,7 +296,7 @@ public class AssignmentService {
 					hasError = true;
 				} else {
 					BigDecimal price = new BigDecimal(sPrice);
-					if (price.compareTo(BigDecimal.ZERO) <= 0) {
+					if (price.compareTo(BigDecimal.ZERO) < 0) {
 						result.errors.add(new CsvRowError(rowNum, "契約単価", "この値は入力できません"));
 						hasError = true;
 					} else {
