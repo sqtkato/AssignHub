@@ -132,7 +132,7 @@ public class AssignmentController {
 			BindingResult result, RedirectAttributes attributes, Model model) {
 		Assignment assignment = new Assignment();
 		copyFormToEntity(form, assignment);
-		if (assignment.getContractEndDate() != null
+		if (assignment.getContractStartDate() != null && assignment.getContractEndDate() != null
 				&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
 			result.rejectValue(
 					"contractEndDate",
@@ -222,7 +222,7 @@ public class AssignmentController {
 		Assignment assignment = new Assignment();
 		copyFormToEntity(form, assignment);
 		assignment.setAssignmentId(id);
-		if (assignment.getContractEndDate() != null
+		if (assignment.getContractStartDate() != null && assignment.getContractEndDate() != null
 				&& assignment.getContractStartDate().isAfter(assignment.getContractEndDate())) {
 			result.rejectValue(
 					"contractEndDate",
