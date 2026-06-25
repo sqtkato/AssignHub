@@ -242,7 +242,7 @@ public class CompanyService {
 
 				String foundedYear = cols[5].trim();
 				if (!foundedYear.isEmpty()) {
-					if (foundedYear.length() > 4){
+					if (foundedYear.length() != 4){
 						result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は4桁で入力してください"));
 						hasError = true;
 					}else if (!foundedYear.matches("^[0-9]+$")) {
@@ -252,7 +252,7 @@ public class CompanyService {
 						int year = Integer.parseInt(foundedYear);
 						int currentYear = Year.now().getValue();
 						if (year > currentYear) {
-							result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は" + currentYear + "現在年度以前を入力してください"));
+							result.errors.add(new CsvRowError(rowNum, "設立年度", "設立年度は"  + "現在年度以前を入力してください"));
 							hasError = true;
 						} else {
 							company.setFoundedYear(year);
