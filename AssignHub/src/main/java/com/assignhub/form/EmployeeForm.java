@@ -2,15 +2,14 @@ package com.assignhub.form;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.Data;
 
 /**
@@ -80,7 +79,7 @@ public class EmployeeForm {
 	/**電話番号（必須、最大10桁または11桁、正しい形式かチェック） */
 	@NotBlank(message = "電話番号は必須です")
 	@Pattern(regexp = "^[^\\-]*$", message = "電話番号の形式が正しくありませんハイフンなしで入力してください")
-	@Pattern(regexp = "^0[0-9]{9,10}$", message = "電話番号は10桁または11桁で入力してください")
+	@Pattern(regexp = "^[0-9]{10,11}$", message = "電話番号は10桁または11桁で入力してください")
 	private String empTel;
 
 	/**メールアドレス（必須、最大255文字） */
