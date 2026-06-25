@@ -10,7 +10,7 @@
 		<result property="lastNameKana" column="last_name_kana" />
 		<result property="firstNameKana" column="first_name_kana" />
 		<result property="hireDate" column="hire_date" />
-		<result property="yearsOfService" column="years_of_servise" />
+		<result property="yearsOfService" column="years_of_service" />
 		<result property="birthDate" column="birth_date" />
 		<result property="zipCode" column="zip_code" />
 		<result property="address1" column="address1" />
