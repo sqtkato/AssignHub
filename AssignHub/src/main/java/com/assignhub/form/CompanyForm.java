@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-
 import lombok.Data;
 /**
  * 企業登録・編集画面の入力値を受け取るフォームクラス。
@@ -53,7 +52,7 @@ public class CompanyForm {
 	
 	
 	@Pattern(regexp = "^[0-9]{4}$", message = "設立年度は4桁で入力してください")
-	@Pattern(regexp = "^[0-9]*$", message = "設立年度は数字で入力してください")
+	@Pattern(regexp = "^[0-9]*$", message = "設立年度は半角数字で入力してください")
 	private String foundedYear;
 
 	@Size(max = 5, message = "社員数は5桁以内で入力してください")
