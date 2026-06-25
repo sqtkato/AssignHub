@@ -271,6 +271,11 @@ public class AccountController {
 	        if (result.limitError != null) {
 	            model.addAttribute("globalError", result.limitError);
 	        }
+	        if(result.errorCount > 0) {
+	        	 model.addAttribute("toastError", "一部の行でエラーが発生しました");
+	        }else {
+	        	model.addAttribute("toastMessage", result.successCount + "件のインポート処理が完了しました");
+	        }
 	        return "account/import";
 	    } catch (Exception e) {
 	        model.addAttribute("toastError", "ファイルの読み込みに失敗しました");
