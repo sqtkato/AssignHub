@@ -30,7 +30,7 @@ public class CompanyForm {
 	private String companyNameKana;
 	
 	@NotBlank(message = "郵便番号は必須です")
-	@Size(max = 7, message = "郵便番号は7桁以内で入力してください")
+	@Size(min = 7, max = 7, message = "郵便番号は7桁で入力してください")
 	@Pattern(regexp = "^[0-9]*$",message = "郵便番号の形式が正しくありません　ハイフンなしで入力してください")
 	private String companyZipCode;
 	
