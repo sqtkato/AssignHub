@@ -64,10 +64,10 @@
 		    emp_assign_company
 		FROM m_employee e
 		LEFT JOIN m_company c ON e.company_id = c.company_id
-		LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date is null
+		LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND (a.contract_end_date is null OR a.contract_end_date > NOW()) AND (a.delete_flg = 0 OR a.delete_flg IS NULL) 
 		LEFT JOIN m_company c2 ON a.company_id = c2.company_id
 		<where>
-			e.delete_flg = 0
+			e.delete_flg = 0 
 			<if test="empName != null and empName != ''">
 				AND CONCAT(e.last_name, e.first_name) LIKE CONCAT('%',
 				#{empName}, '%')
@@ -100,8 +100,7 @@
 		ac.login_id AS login_id
 		FROM m_employee e
 		LEFT JOIN m_company c ON e.company_id = c.company_id
-		LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date IS
-		NULL
+		LEFT JOIN t_assignment a ON a.emp_id = e.emp_id  AND (a.contract_end_date is null OR a.contract_end_date > NOW()) AND (a.delete_flg = 0 OR a.delete_flg IS NULL) 
 		LEFT JOIN m_company c2 ON a.company_id = c2.company_id
 		LEFT JOIN m_account ac ON e.account_id = ac.account_id
 		WHERE e.emp_id = #{id}
@@ -115,7 +114,7 @@
 	        ac.login_id AS login_id
 	    FROM m_employee e
 	    LEFT JOIN m_company c ON e.company_id = c.company_id
-	    LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND a.contract_end_date IS NULL
+	    LEFT JOIN t_assignment a ON a.emp_id = e.emp_id AND (a.contract_end_date is null OR a.contract_end_date > NOW())
 	    LEFT JOIN m_company c2 ON a.company_id = c2.company_id
 	    LEFT JOIN m_account ac ON e.account_id = ac.account_id
 	    WHERE e.emp_id IN
