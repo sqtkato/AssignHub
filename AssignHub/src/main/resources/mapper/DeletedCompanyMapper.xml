@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assignhub.mapper.DeletedCompanyMapper">
+
+	<resultMap id="companyResultMap" type="com.assignhub.entity.Company">
+		<id property="companyId" column="company_id" />
+		<result property="companyName" column="company_name" />
+		<result property="companyNameKana" column="company_name_kana" />
+		<result property="companyZipCode" column="company_zipcode" />
+		<result property="companyAddress1" column="company_address1" />
+		<result property="companyAddress2" column="company_address2" />
+		<result property="companyTel" column="company_tel" />
+		<result property="companyFax" column="company_fax" />
+		<result property="foundedYear" column="founded_year" />
+		<result property="employeeCount" column="employee_count" />
+		<result property="repLastName" column="rep_lastname" />
+		<result property="repLastNameKana" column="rep_lastname_kana" />
+		<result property="repFirstName" column="rep_firstname" />
+		<result property="repFirstNameKana" column="rep_firstname_kana" />
+		<result property="createdAt" column="created_at" />
+		<result property="updatedAt" column="updated_at" />
+		<result property="deleteFlg" column="delete_flg" />
+	</resultMap>
+
+	<select id="findAll" resultMap="companyResultMap">
+		SELECT * FROM m_company
+		<where>
+			delete_flg = 1                              
+			<if test="companyName != null and companyName != ''">
+				AND company_name LIKE CONCAT('%', #{companyName}, '%')                               
+			</if>                                               
+			<if test="companyTel != null and companyTel != ''">
+				AND company_tel LIKE CONCAT('%', #{companyTel}, '%')                               
+			</if>                                               
+		</where>
+		ORDER BY company_id ASC                  
+	</select>
+
+	<select id="findByIds" resultMap="companyResultMap">
+		SELECT *
+		FROM m_company
+		WHERE delete_flg = 1
+		AND company_id IN
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+
+	<update id="restore">
+		UPDATE m_company
+		SET delete_flg = 0
+		WHERE company_id = #{id} AND delete_flg = 1
+	</update>
+
+	<update id="restoreBulk">
+		UPDATE m_company
+		SET delete_flg = 0
+		WHERE company_id IN
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+		AND delete_flg = 1
+	</update>
+
+	<delete id="physicalDelete">
+		DELETE FROM m_company
+		WHERE company_id = #{id}
+	</delete>
+
+	<delete id="physicalDeleteBulk">
+		DELETE FROM m_company
+		WHERE company_id IN
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="existEmployeesByCompanyId" resultType="int">
+		SELECT COUNT(*)
+		FROM m_employee
+		WHERE company_id = #{id}
+	</select>
+
+	<select id="existEmployeesByCompanyIds" resultType="int">
+		SELECT COUNT(*)
+		FROM m_employee
+		WHERE company_id IN
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+
+	<select id="existAssignmentsByCompanyId" resultType="int">
+		SELECT COUNT(*)
+		FROM t_assignment
+		WHERE company_id = #{id}
+	</select>
+
+	<select id="existAssignmentsByCompanyIds" resultType="int">
+		SELECT COUNT(*)
+		FROM t_assignment
+		WHERE company_id IN
+		<foreach item="id" collection="ids" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
+    
+    <select id="countByCompanyId" resultType="int">
+		SELECT COUNT(*)
+		FROM m_company c
+		INNER JOIN (
+			SELECT company_name, company_tel, company_fax
+			FROM m_company
+			WHERE company_id = #{excludeCompanyId}  ) c2 ON c.company_name = c2.company_name 
+		    AND c.company_tel = c2.company_tel 
+		    AND (c.company_fax = c2.company_fax OR (c.company_fax IS NULL AND c2.company_fax IS NULL))
+		WHERE c.delete_flg = 0
+	</select>
+	
+	<select id="countByCompanyIds" resultType="int">
+	    SELECT COUNT(*)
+	    FROM m_company c
+	    INNER JOIN (
+	        SELECT company_name, company_tel, company_fax
+	        FROM m_company
+	        WHERE company_id IN
+	        <foreach item="excludeCompanyId" index="index" collection="excludeCompanyIds" open="(" separator="," close=")">
+	            #{excludeCompanyId}
+	        </foreach>
+	    ) c2 ON c.company_name = c2.company_name
+	        AND c.company_tel = c2.company_tel 
+	        AND (c.company_fax = c2.company_fax OR (c.company_fax IS NULL AND c2.company_fax IS NULL)) 
+	    WHERE c.delete_flg = 0
+	    <if test="excludeCompanyIds != null and !excludeCompanyIds.isEmpty()">
+	        AND c.company_id NOT IN
+	        <foreach item="excludeCompanyId" index="index" collection="excludeCompanyIds" open="(" separator="," close=")">
+	            #{excludeCompanyId}
+	        </foreach>
+	    </if>
+	</select>
+	
+	<select id="countActiveCompanies" resultType="int">
+		SELECT COUNT(*)
+		FROM m_company
+		WHERE delete_flg = 0
+	</select>
+
+</mapper>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assignhub.mapper.DeletedAccountMapper">
+
+	<resultMap id="accountResultMap" type="com.assignhub.entity.Account">
+		<id property="accountId" column="account_id"/>
+		<result property="loginId" column="login_id"/>
+		<result property="permission" column="permission"/>
+		<result property="passwordHash" column="password_hash"/>
+		<result property="createdAt" column="created_at"/>
+		<result property="updatedAt" column="updated_at"/>
+		<association property="employee" javaType="com.assignhub.entity.Employee">
+			<id property="employeeId" column="employee_id"/>
+			<result property="lastName" column="last_name"/>
+			<result property="firstName" column="first_name"/>
+		</association>
+	</resultMap>
+	<!-- 一覧表示 -->
+    <select id="findAll" resultMap="accountResultMap">
+		SELECT 
+			a.*, 
+			e.last_name, 
+			e.first_name 
+		FROM m_account a 
+		LEFT JOIN m_employee e ON a.account_id = e.account_id
+		<where>
+			a.delete_flg = 1
+			
+			<if test="empName != null and empName != ''"> 
+				AND ( e.first_name LIKE CONCAT('%', #{empName}, '%') OR e.last_name LIKE CONCAT('%', #{empName}, '%') ) 
+			</if>
+			<if test="permission != null"> 
+				AND a.permission = #{permission} 
+			</if>
+		</where>
+		ORDER BY a.account_id ASC
+	</select>
+	<!-- エクスポート用 -->
+    <select id="findByIds" resultMap="accountResultMap">
+        SELECT 
+            a.*,
+            CONCAT(e.last_name, ' ', e.first_name) AS emp_name
+        FROM m_account a
+        LEFT JOIN m_employee e ON a.account_id = e.account_id
+        WHERE a.delete_flg = 1
+          AND a.account_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+	<!-- 復元 -->
+    <update id="restore">
+        UPDATE m_account
+        SET delete_flg = 0
+        WHERE account_id = #{id} AND delete_flg = 1
+    </update>
+	<!-- 一括復元 -->
+    <update id="restoreBulk">
+        UPDATE m_account
+        SET delete_flg = 0
+        WHERE account_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND delete_flg = 1
+    </update>
+	<!-- 削除 -->
+    <delete id="physicalDelete">
+        DELETE FROM m_account
+        WHERE account_id = #{id}
+    </delete>
+	<!-- 一括削除 -->
+    <delete id="physicalDeleteBulk">
+        DELETE FROM m_account
+        WHERE account_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <select id="existEmployeesByAccountId" resultType="int">
+        SELECT COUNT(*) 
+        FROM m_employee 
+        WHERE account_id = #{id}
+    </select>
+
+    <select id="existEmployeesByAccountIds" resultType="int">
+        SELECT COUNT(*) 
+        FROM m_employee 
+        WHERE account_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    
+    <select id="existAssignmentsByAccountId" resultType="int">
+        SELECT COUNT(a.assignment_id) 
+        FROM t_assignment a
+        INNER JOIN m_employee e ON a.emp_id = e.emp_id
+        WHERE e.account_id = #{id}
+    </select>
+
+    <select id="existAssignmentsByAccountIds" resultType="int">
+        SELECT COUNT(a.assignment_id) 
+        FROM t_assignment a
+        INNER JOIN m_employee e ON a.emp_id = e.emp_id
+        WHERE e.account_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+	
+	<select id="countByLoginId" resultType="int">
+		SELECT COUNT(*) FROM m_account
+		WHERE delete_flg=0
+		AND login_id = (
+		SELECT login_id
+		FROM m_account
+		WHERE account_id = #{excludeAccountId}
+		)
+		<if test="excludeAccountId != null">
+			AND account_id != #{excludeAccountId}
+		</if>
+	</select>
+
+	<select id="countByLoginIds" resultType="int">
+		SELECT COUNT(*) FROM m_account
+		WHERE delete_flg=0
+		AND login_id IN(
+		SELECT login_id
+		FROM m_account
+		WHERE account_id IN
+		<foreach item="excludeAccountId" index="index"
+			collection="excludeAccountIds" open="(" separator="," close=")">
+			#{excludeAccountId}
+		</foreach>
+		)
+		<if test="excludeAccountIds != null">
+			AND account_id NOT IN
+			<foreach item="excludeAccountId" index="index"
+				collection="excludeAccountIds" open="(" separator="," close=")">
+				#{excludeAccountId}
+			</foreach>
+		</if>
+	</select>
+	
+	<select id="countActiveAccounts" resultType="int">
+		SELECT COUNT(*)
+		FROM m_account
+		WHERE delete_flg = 0
+	</select>
+
+</mapper>      

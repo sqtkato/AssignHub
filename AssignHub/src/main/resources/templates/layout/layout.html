@@ -23,10 +23,10 @@
 			<li>
 				<span class="menu-title" th:if="${session.permission == 1}">削除・復元一覧</span>
 				<ul class="submenu" th:if="${session.permission == 1}"s>
-					<li><a th:href="@{/deleted/employees}">社員情報</a></li>
-					<li><a th:href="@{/deleted/companies}">企業情報</a></li>
-					<li><a th:href="@{/deleted/accounts}">アカウント情報</a></li>
-					<li><a th:href="@{/deleted/assignments}">アサイン履歴情報</a></li>
+					<li><a th:href="@{/deleted-employees}">社員情報</a></li>
+					<li><a th:href="@{/deleted-companies}">企業情報</a></li>
+					<li><a th:href="@{/deleted-accounts}">アカウント情報</a></li>
+					<li><a th:href="@{/deleted-assignments}">アサイン履歴情報</a></li>
 				</ul>
 			</li>
 		</ul>
