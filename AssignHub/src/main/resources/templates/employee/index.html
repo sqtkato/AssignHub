@@ -4,6 +4,7 @@
 
 <head>
 	<title>社員情報一覧</title>
+	<link rel="stylesheet" th:href="@{/css/employee.css}">
 </head>
 
 <body>
@@ -17,8 +18,7 @@
 				<div class="form-group form-group-search">
 					<div class="search-item">
 						<label>社員名</label>
-						<input type="text" name="empName" class="form-control" th:value="${empName}"
-							placeholder="例：山田">
+						<input type="text" name="empName" class="form-control" th:value="${empName}" placeholder="例：山田">
 					</div>
 					<div class="search-item">
 						<label>アサイン先企業</label>
