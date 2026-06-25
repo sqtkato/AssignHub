@@ -253,7 +253,7 @@ public class AccountService {
 					try {
 						boolean isNew = (account.getAccountId() == null);
 						account.setLoginId(loginId);
-						account.setPasswordHash(passwordEncoder.encode(rawPassword));
+						account.setPasswordHash(rawPassword);
 						account.setPermission(permission);
 						save(account);
 						if (isNew) {
